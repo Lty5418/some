@@ -1,0 +1,2723 @@
+<!DOCTYPE html> <html lang="zh-CN"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"> <title>Old State Photo - Ohio</title>
+<style>*{margin:0;padding:0;box-sizing:border-box;-webkit-user-select:none;user-select:none}
+body{background:#050505;overflow:hidden;width:100vw;height:100vh;color:#c8b896;font-family:'Microsoft YaHei',sans-serif;touch-action:none}
+canvas{position:fixed;top:0;left:0;z-index:1}
+#ui{position:fixed;top:0;left:0;width:100%;height:100%;z-index:10;pointer-events:none}
+.panel{position:absolute;background:rgba(5,5,5,0.95);border:1px solid rgba(200,184,150,0.3);pointer-events:auto}
+#money{top:15px;right:10px;padding:6px 14px;font-size:0.8rem;color:#c8a85c}
+#invBar{bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;padding:6px}
+.invSlot{width:48px;height:48px;border:1px solid rgba(200,184,150,0.2);display:flex;align-items:center;justify-content:center;font-size:1.3rem;position:relative;cursor:pointer}
+.invSlot.on{border-color:#c8a85c;box-shadow:0 0 8px rgba(200,168,92,0.3)}
+.invSlot .num{position:absolute;bottom:1px;right:3px;font-size:0.55rem;color:#c8a85c}
+#hint{bottom:70px;left:50%;transform:translateX(-50%);padding:5px 16px;font-size:0.75rem;color:#c8a85c;letter-spacing:2px;display:none;animation:pulse 1.5s infinite}
+#hint.show{display:block}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+#dialogue{bottom:80px;left:50%;transform:translateX(-50%);width:92%;max-width:480px;padding:16px;display:none;opacity:0}
+#dialogue.show{display:block;animation:dialogueIn 0.25s ease-out forwards}
+@keyframes dialogueIn{0%{opacity:0;transform:translateX(-50%) translateY(20px)}100%{opacity:1;transform:translateX(-50%) translateY(0)}}
+#dialogue .who{color:#c8a85c;font-size:0.8rem;margin-bottom:6px}
+#dialogue .what{color:#b0a080;font-size:0.82rem;line-height:1.7;margin-bottom:10px}
+#dialogue .choices{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+#dialogue .choice{background:rgba(200,168,92,0.1);border:1px solid rgba(200,168,92,0.3);padding:10px;cursor:pointer;text-align:center;color:#c8a85c;font-size:0.8rem}
+#dialogue .choice:hover{background:rgba(200,168,92,0.2)}
+#dialogue .tap{text-align:right;color:#666;font-size:0.65rem;margin-top:8px}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:100;display:none;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s}
+.modal.show{display:flex;animation:modalFade 0.3s ease-out forwards}
+@keyframes modalFade{0%{opacity:0}100%{opacity:1}}
+.modalBox{background:#0a0a0a;border:1px solid rgba(200,184,150,0.3);width:90%;max-width:420px;padding:20px;max-height:85vh;overflow-y:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch;transform:translateY(20px);animation:boxIn 0.3s ease-out forwards}
+@keyframes boxIn{0%{transform:translateY(20px);opacity:0}100%{transform:translateY(0);opacity:1}}
+.modalClose{float:right;color:#666;cursor:pointer;font-size:1.2rem}
+.shopItem{display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #222;margin:6px 0;cursor:pointer}
+.shopItem:hover{border-color:#c8a85c}
+.shopItem .n{color:#b0a080;font-size:0.8rem}
+.shopItem .p{color:#c8a85c;font-size:0.8rem}
+#refreshBtn{width:100%;padding:10px;margin-top:10px;background:rgba(200,168,92,0.1);border:1px solid rgba(200,168,92,0.3);color:#c8a85c;cursor:pointer}
+#shutterBtn{position:fixed;bottom:80px;right:20px;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,#c8a85c 0%,#8b7355 100%);border:3px solid #f5f5dc;z-index:20;display:flex;align-items:center;justify-content:center;font-size:1.8rem;cursor:pointer;box-shadow:0 0 20px rgba(200,168,92,0.4);transition:transform 0.1s}
+#shutterBtn:active{transform:scale(0.9)}
+#shutterBtn::after{content:'';position:absolute;width:85px;height:85px;border-radius:50%;border:2px solid rgba(200,168,92,0.3);top:-10px;left:-10px}
+.flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:white;z-index:50;pointer-events:none;opacity:0;transition:opacity 0.1s}
+.flash-overlay.on{opacity:1}
+#payAnim{position:fixed;top:40%;left:50%;transform:translate(-50%,-50%);color:#50c878;font-size:2rem;z-index:300;pointer-events:none;display:none;animation:payUp 1.5s forwards}
+#payAnim.show{display:block}
+@keyframes payUp{0%{opacity:1;transform:translate(-50%,-50%)}100%{opacity:0;transform:translate(-50%,-150%)}}
+#logoScreen{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+#logoScreen.fade{opacity:0;pointer-events:none;transition:opacity 1.2s}
+#logoScreen img{max-width:120px;margin-bottom:20px;border-radius:50%;opacity:0;animation:logoImgIn 1.6s 0.6s ease-out forwards}
+@keyframes logoImgIn{0%{opacity:0;transform:scale(0.7);filter:blur(8px)}100%{opacity:1;transform:scale(1);filter:blur(0)}}
+#logoScreen h2{color:#c8a85c;font-size:1.2rem;letter-spacing:6px;margin-bottom:10px;opacity:0;animation:logoTextIn 1.2s 1.4s ease-out forwards}
+#logoScreen p{color:#666;font-size:0.75rem;letter-spacing:2px;opacity:0;animation:logoTextIn 1.2s 1.8s ease-out forwards}
+@keyframes logoTextIn{0%{opacity:0;transform:translateY(15px)}100%{opacity:1;transform:translateY(0)}}
+#logoScreen .particle{position:absolute;width:4px;height:4px;background:radial-gradient(circle,#c8a85c,transparent);border-radius:50%;opacity:0;animation:particleFloat 2.5s ease-out forwards}
+@keyframes particleFloat{0%{opacity:0;transform:scale(0.3)}30%{opacity:1}100%{opacity:0;transform:scale(1.5) translate(var(--dx),var(--dy))}}
+#logoScreen .glow{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(200,168,92,0.15) 0%,transparent 70%);animation:glowPulse 3s ease-in-out infinite}
+@keyframes glowPulse{0%,100%{transform:scale(0.9);opacity:0.6}50%{transform:scale(1.1);opacity:1}}
+#credits{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:2000;display:none;flex-direction:column;align-items:center;justify-content:center;color:#c8a85c;overflow-y:auto;padding:40px 20px}
+#credits.show{display:flex}
+#credits h2{font-size:1.3rem;letter-spacing:6px;margin-bottom:20px;color:#c8a85c}
+#credits p{font-size:0.9rem;line-height:2;color:#b0a080;text-align:center;margin:2px 0}
+#credits .big{color:#c8a85c;font-size:1.1rem;margin:12px 0 6px 0;letter-spacing:2px}
+#credits .role{color:#666;font-size:0.75rem;margin-bottom:8px}
+#credits .thanks{color:#c8a85c;font-size:1rem;margin-bottom:24px;letter-spacing:2px}
+#credits .divider{width:60px;height:1px;background:rgba(200,168,92,0.3);margin:18px 0}
+#credits .studio{color:#c8b896;font-size:0.85rem;line-height:1.8}
+#darkness{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.93);z-index:5;pointer-events:none;display:none}
+#darkness.on{display:block}
+#flash{position:absolute;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,200,0.25) 0%,transparent 70%)}
+#noise{position:fixed;top:0;left:0;width:100%;height:100%;z-index:4;pointer-events:none;opacity:0.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")}
+#joystick{position:fixed;bottom:70px;left:15px;width:110px;height:110px;z-index:25;touch-action:none}
+#jBase{position:absolute;width:90px;height:90px;border:2px solid rgba(200,184,150,0.3);border-radius:50%;top:10px;left:10px;background:rgba(200,184,150,0.05)}
+#jKnob{position:absolute;width:36px;height:36px;background:#c8a85c;border-radius:50%;top:37px;left:37px;box-shadow:0 0 15px rgba(200,168,92,0.6);pointer-events:none}
+#gunBtn{position:fixed;top:20px;left:20px;width:50px;height:50px;border-radius:50%;background:#8b0000;border:2px solid #c8a85c;z-index:20;display:none;align-items:center;justify-content:center;font-size:1.5rem;cursor:pointer}
+#gunBtn.show{display:flex}
+#bloodOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle,rgba(139,0,0,0.4) 0%,transparent 70%);z-index:15;pointer-events:none;display:none;opacity:0;transition:opacity 0.5s}
+#bloodOverlay.on{display:block;opacity:1}
+#agentGun{position:fixed;font-size:2rem;z-index:180;pointer-events:none;display:none;transition:transform 0.5s,opacity 0.3s}
+#agentGun.show{display:block}
+#muzzleFlash{position:fixed;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,200,0.95) 0%,rgba(255,200,50,0.6) 40%,transparent 70%);z-index:190;pointer-events:none;display:none}
+#muzzleFlash.show{display:block;animation:muzzleFlash 0.4s forwards}
+@keyframes muzzleFlash{0%{opacity:1;transform:scale(0.5)}100%{opacity:0;transform:scale(1.8)}}
+#coffeeAnim{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:4rem;z-index:220;pointer-events:none;display:none}
+#coffeeAnim.show{display:block;animation:coffeeFade 1.2s forwards}
+@keyframes coffeeFade{0%{opacity:0;transform:translate(-50%,-50%) scale(0.5)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.5)}}
+#timerBar{position:fixed;bottom:130px;left:50%;transform:translateX(-50%);width:200px;height:10px;background:#222;border:1px solid #444;z-index:200;display:none;overflow:hidden}
+#timerBar.show{display:block}
+#timerBarInner{height:100%;width:0%;background:#c8a85c}
+#printSelect{max-height:200px;overflow-y:auto;flex-shrink:1;touch-action:pan-y;-webkit-overflow-scrolling:touch}
+#toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(10,10,10,0.95);border:1px solid rgba(200,168,92,0.5);color:#c8a85c;padding:14px 24px;font-size:0.85rem;z-index:400;pointer-events:none;display:none;text-align:center;max-width:80%;line-height:1.6;box-shadow:0 0 30px rgba(200,168,92,0.2)}
+#toast.show{display:block;animation:toastIn 0.3s ease-out}
+@keyframes toastIn{0%{opacity:0;transform:translate(-50%,-50%) scale(0.9)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+#viewfinder{position:fixed;top:0;left:0;width:100%;height:100%;z-index:150;display:none;pointer-events:none;background:rgba(0,0,0,0.35)}
+#viewfinder.show{display:block}
+#vfCornerTL,#vfCornerTR,#vfCornerBL,#vfCornerBR{position:absolute;width:50px;height:50px;border-color:#c8a85c;border-style:solid;border-width:0}
+#vfCornerTL{top:40px;left:40px;border-top-width:3px;border-left-width:3px}
+#vfCornerTR{top:40px;right:40px;border-top-width:3px;border-right-width:3px}
+#vfCornerBL{bottom:40px;left:40px;border-bottom-width:3px;border-left-width:3px}
+#vfCornerBR{bottom:40px;right:40px;border-bottom-width:3px;border-right-width:3px}
+#vfFocus{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:160px;height:160px;border:1px solid rgba(200,168,92,0.5)}
+#vfFocus::before,#vfFocus::after{content:'';position:absolute;width:20px;height:20px;border-color:#c8a85c;border-style:solid;border-width:0}
+#vfFocus::before{top:-1px;left:-1px;border-top-width:2px;border-left-width:2px}
+#vfFocus::after{bottom:-1px;right:-1px;border-bottom-width:2px;border-right-width:2px}
+#vfTop{position:absolute;top:40px;left:50%;transform:translateX(-50%);color:#c8a85c;font-size:0.75rem;letter-spacing:2px;font-family:'Courier New',monospace;display:flex;gap:18px}
+#vfRec{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);color:#c8a85c;font-size:0.75rem;letter-spacing:2px;font-family:'Courier New',monospace;display:flex;gap:8px;align-items:center}
+#vfRecDot{width:10px;height:10px;background:#ff3030;border-radius:50%;animation:recBlink 1s infinite}
+@keyframes recBlink{0%,100%{opacity:1}50%{opacity:0.2}}
+#vfGrid{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
+#vfGrid::before,#vfGrid::after{content:'';position:absolute;background:rgba(200,168,92,0.15)}
+#vfGrid::before{left:33.33%;top:0;width:1px;height:100%}
+#vfGrid::after{left:66.66%;top:0;width:1px;height:100%}
+#vfGridH1,#vfGridH2{position:absolute;background:rgba(200,168,92,0.15);height:1px;width:100%;left:0}
+#vfGridH1{top:33.33%}
+#vfGridH2{top:66.66%}
+#vfCancel{position:fixed;bottom:90px;left:30px;width:60px;height:60px;border-radius:50%;background:rgba(20,20,20,0.9);border:2px solid #c8a85c;z-index:160;display:none;align-items:center;justify-content:center;font-size:1.5rem;cursor:pointer;color:#c8a85c;pointer-events:auto}
+#vfCancel.show{display:flex}
+#vfShutter{position:fixed;bottom:80px;right:20px;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,#c8a85c 0%,#8b7355 100%);border:3px solid #f5f5dc;z-index:160;display:none;align-items:center;justify-content:center;font-size:1.8rem;cursor:pointer;box-shadow:0 0 25px rgba(200,168,92,0.6);pointer-events:auto;animation:vfShutterPulse 1.5s infinite}
+#vfShutter.show{display:flex}
+@keyframes vfShutterPulse{0%,100%{box-shadow:0 0 25px rgba(200,168,92,0.6)}50%{box-shadow:0 0 40px rgba(200,168,92,0.9)}}</style>
+</head> <body> <div id="logoScreen"> <div class="glow"></div> <img src="https://i.postimg.cc/GmNkJqWn/retouch-2026071016200543.png" alt="流筠工作室"> <h2>流筠工作室</h2> <p>LIUYUN STUDIO</p> </div> <canvas id="c"></canvas> <div id="noise"></div> <div class="flash-overlay" id="flashOverlay"></div> <div id="bloodOverlay"></div> <div id="agentGun">🔫</div> <div id="muzzleFlash"></div> <div id="coffeeAnim">☕</div> <div id="timerBar"><div id="timerBarInner"></div></div> <div id="toast"></div> <div id="viewfinder"> <div id="vfGrid"></div> <div id="vfGridH1"></div> <div id="vfGridH2"></div> <div id="vfCornerTL"></div> <div id="vfCornerTR"></div> <div id="vfCornerBL"></div> <div id="vfCornerBR"></div> <div id="vfFocus"></div> <div id="vfTop"><span>ISO 400</span><span>F2.8</span><span>🔋</span></div> <div id="vfRec"><span id="vfRecDot"></span><span>REC</span></div> </div> <div id="vfCancel" onclick="cancelViewfinder()">✕</div> <div id="vfShutter" onclick="shootFromViewfinder()">📷</div> <div id="payAnim">💵 +$<span id="payAmount">0</span></div> <div id="ui"> <div class="panel" id="money">💰 $10</div> <div class="panel" id="invBar"> <div class="invSlot on" id="s-camera" onclick="sel('camera')">📷<span class="num">∞</span></div> <div class="invSlot" id="s-paper" onclick="sel('paper')">📄<span class="num" id="n-paper">10</span></div> <div class="invSlot" id="s-ink" onclick="sel('ink')">🖋<span class="num" id="n-ink">5</span></div> <div class="invSlot" id="s-bag" onclick="sel('bag')">🛍<span class="num" id="n-bag">5</span></div> <div class="invSlot" id="s-gas" onclick="sel('gas')" style="display:none">⛽<span class="num" id="n-gas">0</span></div> <div class="invSlot" id="s-broom" onclick="sel('broom')" style="display:none">🧹</div> <div class="invSlot" id="s-letter" onclick="sel('letter')" style="display:none">✉</div> <div class="invSlot" id="s-coffee" onclick="sel('coffee')" style="display:none">☕<span class="num" id="n-coffee">0</span></div> <div class="invSlot" id="s-wrench" onclick="sel('wrench')" style="display:none">🔧</div> </div> <div class="panel" id="hint"></div> <div class="panel" id="dialogue"> <div class="who" id="dWho"></div> <div class="what" id="dWhat"></div> <div class="choices" id="dChoices"></div> <div class="tap" id="dTap">点击继续 ▼</div> </div> </div> <div id="shutterBtn" onclick="openViewfinder()">📷</div> <div id="gunBtn" onclick="useGun()">🔫</div> <div id="joystick"> <div id="jBase"></div> <div id="jKnob"></div> </div> <div id="credits"> <p class="thanks">Thank you for playing the Demo</p> <p class="role">Credits</p> <p class="big">DeepSeek</p> <p class="divider"></p> <p class="big">流筠工作室</p> <p class="studio">Publisher / 发行商</p> <p class="divider"></p> <p class="big">流筠制作组</p> <p class="studio">Production Team</p> <p class="divider"></p> <p class="big">金边逸空工作室</p> <p class="studio">Co-Development / Technical Help</p> <p class="studio">联合开发 / 技术帮助</p> <p class="divider"></p> <p class="big">kimi</p> <p class="studio">Original Prototype / 制作雏形</p> <p style="margin-top:40px;color:#666;font-size:0.8rem">TO BE CONTINUED...</p> </div> <div id="darkness"><div id="flash"></div></div> <div class="modal" id="m-wanted"> <div class="modalBox"> <span class="modalClose" onclick="closeM('m-wanted')">✕</span> <div style="background:#f5f5dc;color:#333;padding:15px;border:3px solid #8b4513;text-align:center"> <h3 style="color:#8b0000;font-size:1.1rem;letter-spacing:4px;margin-bottom:10px">★ WANTED ★</h3> <div style="width:80px;height:100px;background:#333;margin:0 auto;border:2px solid #8b0000;display:flex;align-items:center;justify-content:center;font-size:2.5rem">🍺</div> <p style="font-size:0.75rem;margin:4px 0"><b>Name:</b> Owen</p> <p style="font-size:0.75rem;margin:4px 0"><b>Charge:</b> Public Intoxication</p> <p style="font-size:0.75rem;margin:4px 0"><b>Features:</b> Flushed face, staggering gait</p> <p style="font-size:0.75rem;margin:4px 0"><b>Reward:</b> $500</p> <p style="color:#8b0000;margin-top:8px;font-size:0.75rem">⚠ Non-violent but extremely loud</p> </div> </div> </div> <div class="modal" id="m-pc"> <div class="modalBox" style="max-width:400px"> <span class="modalClose" onclick="closeM('m-pc')">✕</span> <div id="pcHome" style="text-align:center"> <h2 style="color:#c8a85c;font-size:1rem;letter-spacing:3px;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid #333">🖥 Old State PC</h2> <div style="display:flex;flex-direction:column;gap:12px"> <div style="display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #333;cursor:pointer" onclick="showPCPage('shop')"> <div style="font-size:2rem">🛒</div> <div style="text-align:left"><div style="color:#c8a85c;font-size:0.9rem">Store</div><div style="color:#666;font-size:0.7rem;margin-top:3px">Buy supplies</div></div> </div> <div style="display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #333;cursor:pointer" onclick="showPCPage('news')"> <div style="font-size:2rem">📰</div> <div style="text-align:left"><div style="color:#c8a85c;font-size:0.9rem">News</div><div style="color:#666;font-size:0.7rem;margin-top:3px">Local headlines</div></div> </div> </div> </div> <div id="pcShop" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="backToPCHome()">← Back</span> <span style="color:#c8a85c;margin-left:10px">Store</span> </div> <div style="text-align:center;color:#666;font-size:0.7rem;margin-bottom:15px">Balance: $<span id="pcMoney" style="color:#c8a85c">10</span></div> <div class="shopItem" onclick="buy('paper')"><span class="n">📄 Photo Paper (5)</span><span class="p">$20</span></div> <div class="shopItem" onclick="buy('ink')"><span class="n">🖋 Ink (3)</span><span class="p">$30</span></div> <div class="shopItem" onclick="buy('bag')"><span class="n">🛍 Bags (10)</span><span class="p">$10</span></div> <div class="shopItem" onclick="buy('coffee')"><span class="n">☕ Coffee Powder (5)</span><span class="p">$5</span></div> <div class="shopItem" id="gunShopItem" onclick="buy('gun')" style="display:none"><span class="n">🔫 Revolver</span><span class="p">$200</span></div> <button id="refreshBtn" onclick="refresh()">🔄 Refresh</button> </div> <div id="pcNews" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="backToPCHome()">← Back</span> <span style="color:#c8a85c;margin-left:10px">News</span> </div> <div style="display:flex;flex-direction:column;gap:10px"> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(0)"> <div style="display:flex;gap:10px;align-items:center"> <div style="font-size:1.8rem">☢️</div> <div> <div style="color:#c8a85c;font-size:0.85rem">Nuclear Plant Leak Reported</div> <div style="color:#666;font-size:0.65rem;margin-top:3px">Ohio — official says "no danger"</div> </div> </div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(1)"> <div style="display:flex;gap:10px;align-items:center"> <div style="font-size:1.8rem">🚨</div> <div> <div style="color:#c8a85c;font-size:0.85rem">7 Missing Persons This Month</div> <div style="color:#666;font-size:0.65rem;margin-top:3px">Police have no leads</div> </div> </div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(2)"> <div style="display:flex;gap:10px;align-items:center"> <div style="font-size:1.8rem">👥</div> <div> <div style="color:#c8a85c;font-size:0.85rem">Residents Report Strange Behavior</div> <div style="color:#666;font-size:0.65rem;margin-top:3px">"My neighbor doesn't sleep anymore"</div> </div> </div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(3)"> <div style="display:flex;gap:10px;align-items:center"> <div style="font-size:1.8rem">🏪</div> <div> <div style="color:#c8a85c;font-size:0.85rem">Violence at Elm St. Convenience Store</div> <div style="color:#666;font-size:0.65rem;margin-top:3px">Witnesses "mentally broken"</div> </div> </div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(4)"> <div style="display:flex;gap:10px;align-items:center"> <div style="font-size:1.8rem">📍</div> <div> <div style="color:#c8a85c;font-size:0.85rem">Area Near Old State Photo Blocked</div> <div style="color:#666;font-size:0.65rem;margin-top:3px">"Just 2 miles from here"</div> </div> </div> </div> </div> </div> <div id="pcNewsDetail" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="showPCPage('news')">← Back</span> <span style="color:#c8a85c;margin-left:10px">Article</span> </div> <div id="newsDetailBody"></div> </div> </div> </div> <div class="modal" id="m-printer"> <div class="modalBox printerBox" style="text-align:center;display:flex;flex-direction:column;max-height:85vh"> <span class="modalClose" onclick="closeM('m-printer')">✕</span> <p style="color:#c8a85c;margin-bottom:10px">🖨 Printer</p> <div id="printStatus" style="display:flex;flex-direction:column;flex:1;min-height:0"> <p style="color:#666;font-size:0.75rem">Need: 1 Paper + 1 Ink per copy</p> <div style="margin:12px 0;font-size:0.8rem"><div>📄 <span id="pPaper">10</span> | 🖋 <span id="pInk">5</span> | 🛍 <span id="pBag">5</span></div></div> <p style="color:#666;font-size:0.7rem;margin-bottom:10px">Select photo:</p> <div id="printSelect" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;padding-right:4px;flex-shrink:1"></div> <div id="printFooter" style="flex-shrink:0"> <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px"> <span style="color:#b0a080;font-size:0.8rem">Copies:</span> <button onclick="changeCopies(-1)" style="background:#222;color:#c8a85c;border:1px solid #444;width:30px;height:30px;cursor:pointer">−</button> <span id="copyCount" style="color:#c8a85c;font-size:1rem;min-width:30px">1</span> <button onclick="changeCopies(1)" style="background:#222;color:#c8a85c;border:1px solid #444;width:30px;height:30px;cursor:pointer">+</button> </div> <p id="matStatus" style="color:#50c878;font-size:0.7rem;margin-bottom:10px">Materials OK</p> <button onclick="doPrint()" style="background:#c8a85c;color:#000;border:none;padding:8px 24px;cursor:pointer">Print</button> </div> </div> <div id="printing" style="display:none"> <p style="color:#c8a85c">Printing...</p> <div style="width:100%;height:8px;background:#222;margin:10px 0;overflow:hidden"><div style="width:30%;height:100%;background:#c8a85c;animation:slide 1.5s linear infinite"></div></div> </div> <div id="printDone" style="display:none"> <p style="color:#50c878">✓ Done!</p> <button onclick="bagPhoto()" style="background:#c8a85c;color:#000;border:none;padding:8px 20px;cursor:pointer;margin-top:10px">Bag for customer</button> </div> </div> </div> <div class="modal" id="m-storage"> <div class="modalBox"> <span class="modalClose" onclick="closeM('m-storage')">✕</span> <h2 style="color:#c8a85c;text-align:center;margin-bottom:15px;font-size:1rem">📦 Storage Room</h2> <p style="color:#666;font-size:0.75rem;text-align:center;margin-bottom:10px">Dark and cluttered...</p> <div id="gasItem" style="display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #222;margin:6px 0;cursor:pointer" onclick="takeGas()"> <span style="color:#b0a080;font-size:0.8rem">⛽ Spare Gas Can</span> <span style="color:#c8a85c;font-size:0.8rem">Take</span> </div> <div id="broomItem" style="display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #222;margin:6px 0;cursor:pointer" onclick="takeBroom()"> <span style="color:#b0a080;font-size:0.8rem">🧹 Broom</span> <span style="color:#c8a85c;font-size:0.8rem">Take</span> </div> <p id="gasStatus" style="color:#666;font-size:0.7rem;text-align:center">A spare gas can sits in corner</p> </div> </div> <div class="modal" id="m-cateye"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-cateye')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">🔒 Peephole</h2> <div style="background:#050505;border:1px solid #333;padding:20px;margin-bottom:12px"> <p style="color:#666;font-size:0.8rem;line-height:1.8">
+You peer through the tiny lens...<br><br> <span style="color:#8b0000">Nothing but darkness.</span><br><br> <span style="color:#555;font-size:0.7rem">...something moves?</span> </p> </div> <p style="color:#666;font-size:0.7rem">Father said: never open this door.</p> </div> </div> <div class="modal" id="m-letter"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-letter')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">✉ Letter</h2> <div style="background:#f5f5dc;color:#333;padding:20px;text-align:left;font-family:Georgia,serif"> <p style="margin-bottom:12px;font-size:0.9rem">Dear Owner of Old State Photo Studio,</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">
+This is to inform you that <b>EMT — The Bureau of Anomalous Affairs</b> will visit your establishment shortly.
+</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">
+Please remain calm and cooperate fully. Do not attempt to hide anything unusual.
+</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">
+We are aware of the situation in Ohio.
+</p> <p style="text-align:right;font-size:0.8rem;color:#8b0000">— EMT Bureau Director</p> </div> </div> </div> <div class="modal" id="m-coffee"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-coffee')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">☕ Coffee Machine</h2> <div style="background:#0a0a0a;border:1px solid #333;padding:20px;margin-bottom:12px"> <p style="color:#b0a080;font-size:0.85rem;margin-bottom:8px">Coffee powder: <span id="coffeePowderView" style="color:#c8a85c">5</span> / 5</p> <p style="color:#b0a080;font-size:0.85rem;margin-bottom:8px">Cup ready: <span id="cupStatus" style="color:#c8a85c">No</span></p> <p style="color:#666;font-size:0.75rem">Brewing time: 10s</p> </div> <button id="brewBtn" onclick="startBrew()" style="background:#c8a85c;color:#000;border:none;padding:10px 24px;cursor:pointer;margin-bottom:8px">▶ Brew</button> <button id="refillBtn" onclick="refillCoffee()" style="background:rgba(200,168,92,0.1);color:#c8a85c;border:1px solid #c8a85c;padding:10px 24px;cursor:pointer;display:none">💰 Refill Coffee Powder ($5)</button> <p id="coffeeMsg" style="color:#666;font-size:0.75rem;margin-top:10px"></p> </div> </div>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+function resize(){c.width=innerWidth;c.height=innerHeight}
+window.addEventListener('resize',resize);resize();
+
+let audioCtx=null;
+function initAudio(){
+if(!audioCtx){
+try{audioCtx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}
+}
+if(audioCtx&&audioCtx.state==='suspended'){audioCtx.resume();}
+}
+document.addEventListener('touchstart',initAudio,{once:true});
+document.addEventListener('mousedown',initAudio,{once:true});
+
+function playShutter(){
+if(!audioCtx)return;
+const t=audioCtx.currentTime;
+const o1=audioCtx.createOscillator(),g1=audioCtx.createGain();
+o1.type='square';
+o1.frequency.setValueAtTime(2400,t);
+o1.frequency.exponentialRampToValueAtTime(900,t+0.025);
+g1.gain.setValueAtTime(0.22,t);
+g1.gain.exponentialRampToValueAtTime(0.001,t+0.035);
+o1.connect(g1);g1.connect(audioCtx.destination);
+o1.start(t);o1.stop(t+0.04);
+const o2=audioCtx.createOscillator(),g2=audioCtx.createGain();
+o2.type='square';
+o2.frequency.setValueAtTime(1800,t+0.045);
+o2.frequency.exponentialRampToValueAtTime(500,t+0.095);
+g2.gain.setValueAtTime(0.18,t+0.045);
+g2.gain.exponentialRampToValueAtTime(0.001,t+0.11);
+o2.connect(g2);g2.connect(audioCtx.destination);
+o2.start(t+0.045);o2.stop(t+0.12);
+}
+
+function playPrinter(){
+if(!audioCtx)return;
+const t=audioCtx.currentTime;
+for(let i=0;i<8;i++){
+const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+o.type='sawtooth';
+o.frequency.setValueAtTime(120+Math.random()*40,t+i*0.12);
+g.gain.setValueAtTime(0.06,t+i*0.12);
+g.gain.exponentialRampToValueAtTime(0.001,t+i*0.12+0.09);
+o.connect(g);g.connect(audioCtx.destination);
+o.start(t+i*0.12);o.stop(t+i*0.12+0.1);
+}
+}
+
+function playGunshot(){
+if(!audioCtx)return;
+const t=audioCtx.currentTime;
+const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+o.type='square';
+o.frequency.setValueAtTime(180,t);
+o.frequency.exponentialRampToValueAtTime(30,t+0.15);
+g.gain.setValueAtTime(0.3,t);
+g.gain.exponentialRampToValueAtTime(0.001,t+0.25);
+o.connect(g);g.connect(audioCtx.destination);
+o.start(t);o.stop(t+0.26);
+}
+
+function playWhisper(){
+if(!audioCtx)return;
+const t=audioCtx.currentTime;
+const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+o.type='sine';
+o.frequency.setValueAtTime(60,t);
+o.frequency.linearRampToValueAtTime(80,t+0.5);
+o.frequency.linearRampToValueAtTime(55,t+1.0);
+g.gain.setValueAtTime(0.001,t);
+g.gain.linearRampToValueAtTime(0.08,t+0.3);
+g.gain.linearRampToValueAtTime(0.001,t+1.0);
+o.connect(g);g.connect(audioCtx.destination);
+o.start(t);o.stop(t+1.1);
+}
+
+let toastTimer=null;
+function toast(msg,dur){
+const el=document.getElementById('toast');
+if(!el)return;
+el.textContent=msg;
+el.classList.remove('show');
+void el.offsetWidth;
+el.classList.add('show');
+if(toastTimer)clearTimeout(toastTimer);
+toastTimer=setTimeout(()=>{el.classList.remove('show');},dur||2000);
+}
+
+function spawnLogoParticles(){
+const ls=document.getElementById('logoScreen');
+if(!ls)return;
+for(let i=0;i<24;i++){
+const p=document.createElement('div');
+p.className='particle';
+const angle=Math.random()*Math.PI*2;
+const dist=100+Math.random()*200;
+p.style.left='50%';
+p.style.top='50%';
+p.style.setProperty('--dx',Math.cos(angle)*dist+'px');
+p.style.setProperty('--dy',Math.sin(angle)*dist+'px');
+p.style.animationDelay=(Math.random()*0.8)+'s';
+ls.appendChild(p);
+}
+}
+
+const newsData=[
+{icon:'☢️',title:'Nuclear Plant Leak Reported',sub:'Officials say "no danger"',body:'A minor leak was detected at the Ohio nuclear plant 30 miles north of town. Officials claim radiation levels are within safe limits, but local residents have reported strange symptoms over the past week — headaches, nosebleeds, and vivid nightmares. The plant has declined further comment.'},
+{icon:'🚨',title:'7 Missing Persons This Month',sub:'Police have no leads',body:'Seven people have disappeared in the Ohio area this month alone. The youngest was 16, the oldest 71. No bodies, no witnesses, no trail. Police Chief Harrison stated: "We are doing everything we can." Local residents are starting to lock their doors for the first time in years.'},
+{icon:'👥',title:'Residents Report Strange Behavior',sub:'"My neighbor doesn\'t sleep anymore"',body:'Multiple reports have surfaced of neighbors acting strangely — standing motionless in yards at night, speaking in whispers, avoiding eye contact. One resident said: "He just smiles now. All the time. Even when he shouldn\'t." Health officials urge anyone seeing these signs to contact local authorities.'},
+{icon:'🏪',title:'Violence at Elm St. Convenience Store',sub:'Witnesses "mentally broken"',body:'A violent incident occurred last night at the 24-hour convenience store on Elm Street, just a few blocks from here. Three witnesses were hospitalized after what police describe as "an altercation with an unidentified individual." All three are reportedly unable to speak. The store remains closed.'},
+{icon:'📍',title:'Area Near Old State Photo Blocked',sub:'"Just 2 miles from here"',body:'Police have cordoned off an area just 2 miles from Old State Photo Studio. The reason has not been disclosed. Residents are advised to avoid the area after dark. Our studio is within the recommended caution zone. Stay safe, and keep your doors locked.'}
+];
+
+function openNewsDetail(i){
+const d=newsData[i];
+const el=document.getElementById('newsDetailBody');
+if(!el)return;
+el.innerHTML='<div style="text-align:center;font-size:3rem;margin-bottom:10px">'+d.icon+'</div><h3 style="color:#c8a85c;font-size:1rem;margin-bottom:6px">'+d.title+'</h3><p style="color:#666;font-size:0.75rem;margin-bottom:14px">'+d.sub+'</p><p style="color:#b0a080;font-size:0.8rem;line-height:1.8">'+d.body+'</p>';
+document.getElementById('pcNews').style.display='none';
+document.getElementById('pcNewsDetail').style.display='block';
+}
+
+const G={
+p:{x:400,y:500,s:20,sp:3},
+cam:{x:0,y:0},
+map:{w:800,h:600},
+joy:{on:false,dx:0,dy:0,ox:0,oy:0},
+scene:'street',
+objs:[],
+npcs:[],
+tick:0,
+st:{
+money:10,
+power:true,
+sign:false,
+open:false,
+selectedPhoto:null,
+inv:{paper:10,ink:5,bag:5,gas:0},
+hasGun:false,
+hasGas:false,
+hasBroom:false,
+hasLetter:false,
+hasCoffee:false,
+hasWrench:false,
+refresh:0,
+dia:null,
+diaIdx:0,
+inDia:false,
+diaCb:null,
+photos:[],
+currentCust:null,
+custQueue:[],
+custIdx:0,
+leonardDone:false,
+carlReady:false,
+carlMet:false,
+carlGone:false,
+officeCust:false,
+fakeFrank:false,
+fakeFrankTriggered:false,
+monsterChase:false,
+playerDead:false,
+printCount:0,
+copyCount:1,
+inChase:false,
+waitingChoice:false,
+gameStarted:false,
+blackoutDone:false,
+garbage:[],
+garbageTimer:0,
+garbageScan:0,
+blackoutActive:false,
+emtDone:false,
+coffeePowder:5,
+coffeeBrewing:false,
+coffeeReady:false,
+coffeeCups:0,
+emilySecondSpawned:false,
+victorCoffeePaid:false,
+nextCustTimer:null,
+maxDone:false,
+frankReady:false,
+frankMet:false,
+frankLeft:false,
+whiteEyeDone:false,
+whiteEyeActive:false,
+deliveryActive:false,
+deliveryParcel:false,
+lastPhotoTime:0,
+viewfinderOn:false
+}
+};
+
+const scenes={
+street:{
+name:'Ohio St.',w:1400,h:1000,
+objs:[
+{t:'sign',x:250,y:120,w:300,h:80,label:'Old State Photo'},
+{t:'door',x:350,y:250,w:100,h:120,label:'Enter',to:'shop'},
+{t:'board',x:520,y:280,w:60,h:80,label:'Sign'},
+{t:'carl',x:600,y:350,w:60,h:60,label:'Bloody Man',show:false},
+{t:'frankCar',x:900,y:500,w:180,h:110,label:'Broken Car',show:false},
+{t:'frank',x:960,y:680,w:60,h:60,label:'Frank',show:false},
+{t:'truck',x:-200,y:600,w:180,h:100,label:'Truck',show:false},
+{t:'courier',x:-100,y:680,w:50,h:50,label:'Courier',show:false},
+{t:'parcel',x:420,y:550,w:50,h:50,label:'Parcel',show:false}
+]
+},
+shop:{
+name:'Old State Studio',w:1000,h:800,
+objs:[
+{t:'counter',x:100,y:300,w:300,h:100,label:'Counter'},
+{t:'coffeeTable',x:440,y:280,w:80,h:120,label:'Coffee Machine'},
+{t:'pc',x:150,y:280,w:50,h:40,label:'PC'},
+{t:'printer',x:250,y:280,w:60,h:50,label:'Printer'},
+{t:'wall',x:50,y:80,w:400,h:160,label:'Photo Wall'},
+{t:'locked',x:800,y:120,w:80,h:120,label:'Locked Door'},
+{t:'corridor',x:900,y:350,w:70,h:100,label:'Corridor',to:'corridor'},
+{t:'storage',x:700,y:500,w:80,h:80,label:'Storage',to:'storage'},
+{t:'garage',x:80,y:650,w:80,h:80,label:'Garage',to:'garage'},
+{t:'exit',x:400,y:750,w:100,h:50,label:'Exit',to:'street'}
+]
+},
+corridor:{
+name:'Back Corridor',w:1200,h:800,
+objs:[
+{t:'fuse',x:300,y:300,w:120,h:100,label:'Fuse Box'},
+{t:'wanted',x:100,y:250,w:70,h:90,label:'Wanted Poster'},
+{t:'exit',x:1000,y:600,w:80,h:60,label:'Back',to:'shop'}
+]
+},
+storage:{
+name:'Storage',w:400,h:300,
+objs:[
+{t:'gas',x:150,y:150,w:60,h:60,label:'Gas Can'},
+{t:'exit',x:300,y:200,w:60,h:50,label:'Back',to:'shop'}
+]
+},
+garage:{
+name:'Garage',w:1200,h:900,
+objs:[
+{t:'car',x:450,y:350,w:300,h:200,label:'Under Repair Car'},
+{t:'wrenchProp',x:200,y:600,w:60,h:60,label:'Wrench'},
+{t:'oildrum',x:850,y:200,w:70,h:90,label:'Oil Drum'},
+{t:'screwdriver',x:900,y:600,w:60,h:60,label:'Screwdriver'},
+{t:'exit',x:1000,y:800,w:80,h:60,label:'Back',to:'shop'}
+]
+}
+};
+
+const dias={
+intro:[
+{who:'Narrator',what:'You inherited Old State Photo Studio in Ohio.',choices:[]},
+{who:'Narrator',what:'Old equipment, but it still works.',choices:[]},
+{who:'Narrator',what:'Father said before leaving: "Never open that door..."',choices:[{text:'"What door?"',next:'intro2'},{text:'Ignore it',next:'intro2'}]},
+{who:'System',what:'Drag joystick to move. Tap camera to take photos.',choices:[]},
+{who:'System',what:'Materials prepared. You won\'t get stuck.',choices:[]}
+],
+intro2:[{who:'Narrator',what:'The locked door in the back... something feels wrong.',choices:[]}],
+powerOut:[
+{who:'System',what:'Suddenly, lights flicker violently...',choices:[]},
+{who:'System',what:'Snap.',choices:[]},
+{who:'System',what:'Power out.',choices:[]},
+{who:'Narrator',what:'In darkness, you hear faint sound behind you...',choices:[]},
+{who:'Narrator',what:'Like... laughter?',choices:[{text:'"Who\'s there?!"',next:'intro2'},{text:'Stay silent',next:'intro2'}]},
+{who:'System',what:'Go to back corridor to fix the fuse.',choices:[]}
+],
+powerBack:[
+{who:'System',what:'Fuse fixed.',choices:[]},
+{who:'System',what:'Lights back on.',choices:[]},
+{who:'Narrator',what:'Corridor is calm, but the wanted poster... seems to watch you.',choices:[{text:'Check the poster',next:'intro2'},{text:'Go back to work',next:'intro2'}]},
+{who:'System',what:'Return to hall, keep working.',choices:[]}
+],
+emily:[
+{who:'???',what:'H-hello...',choices:[]},
+{who:'Emily',what:'I\'m Emily, from Ohio State.',choices:[]},
+{who:'Emily',what:'My friends can\'t see me in graduation photos...',choices:[]},
+{who:'Emily',what:'They say I\'m transparent...',choices:[{text:'"That\'s strange..."',next:'emily2'},{text:'"You look solid to me"',next:'emily2'}]},
+{who:'Emily',what:'Please take a "proof photo"... prove I exist...',choices:[]},
+{who:'Emily',what:'Must be freshly taken... others won\'t work...',choices:[]},
+{who:'System',what:'[Special Order] Must shoot on-site, cannot use stored photos',choices:[]}
+],
+emily2:[{who:'Emily',what:'Thank you... I hope this works.',choices:[]}],
+emilySecond:[
+{who:'Emily',what:'...',choices:[{text:'"Emily? You\'re back? What\'s wrong?"',next:'emilySecond2'}]}
+],
+emilySecond2:[
+{who:'Emily',what:'I\'ve been here countless times...',choices:[]},
+{who:'Emily',what:'I\'m not Emily.',choices:[]},
+{who:'Emily',what:'I\'m the original.',choices:[]}
+],
+jack:[
+{who:'Jack',what:'Hey, need ID photos. Two shots.',choices:[{text:'"Sure thing"',next:'jack2'},{text:'"In a hurry?"',next:'jack2'}]},
+{who:'Jack',what:'Different angles. Make it quick.',choices:[]}
+],
+jack2:[{who:'Jack',what:'I got a job interview. Need to look professional.',choices:[]}],
+margaret:[
+{who:'Margaret',what:'Young man, take some photos for me.',choices:[{text:'"Of course, ma\'am"',next:'margaret2'},{text:'"How many?"',next:'margaret2'}]},
+{who:'Margaret',what:'My grandson\'s birthday, want to send him.',choices:[]},
+{who:'Margaret',what:'Three please, pick the good ones.',choices:[]}
+],
+margaret2:[{who:'Margaret',what:'He\'s in California. Miss him so much.',choices:[]}],
+max:[
+{who:'Max',what:'Yo! Max, street singer.',choices:[{text:'"Heard your music"',next:'max2'},{text:'"Never heard of you"',next:'max2'}]},
+{who:'Max',what:'New album dropping, need three shots.',choices:[]},
+{who:'Max',what:'Different angles, make me look good.',choices:[]},
+{who:'Max',what:'Hurry, got a gig.',choices:[]}
+],
+max2:[{who:'Max',what:'It\'s called "Ohio Nights". Gonna be big.',choices:[]}],
+helena:[
+{who:'Helena',what:'Hello, anniversary photo please.',choices:[{text:'"Congratulations!"',next:'helena2'},{text:'"Where\'s your husband?"',next:'helena2'}]},
+{who:'Helena',what:'My husband and I take one every year...',choices:[]},
+{who:'Helena',what:'He\'s right behind me, see...',choices:[]},
+{who:'System',what:'...There\'s nothing behind her.',choices:[{text:'"I don\'t see anyone"',next:'helena3'},{text:'Say nothing',next:'helena3'}]},
+{who:'Helena',what:'Take it, he loves photos.',choices:[]}
+],
+helena2:[{who:'Helena',what:'Forty years together...',choices:[]}],
+helena3:[{who:'Helena',what:'He\'s shy. But he\'s always there.',choices:[]}],
+victor:[
+{who:'Victor',what:'Victor, Ohio PD.',choices:[]},
+{who:'Victor',what:'You might have heard... too many disappearances lately.',choices:[]},
+{who:'Victor',what:'People just gone. No trace. No body.',choices:[{text:'"That\'s terrible..."',next:'victor2'},{text:'"Why here?"',next:'victor2'}]},
+{who:'Victor',what:'And people have been acting... strange. Off.',choices:[]},
+{who:'Victor',what:'Be careful out there. Lock your door.',choices:[]},
+{who:'Victor',what:'...Also, I\'d like a coffee. If you don\'t mind.',choices:[]},
+{who:'System',what:'[Brew a coffee and hand it to Victor]',choices:[]}
+],
+victor2:[{who:'Victor',what:'Nobody knows. That\'s what scares me.',choices:[]}],
+victorCoffee:[
+{who:'Victor',what:'Thanks. Here, take this.',choices:[]},
+{who:'System',what:'+$15 tip',choices:[]}
+],
+derek:[
+{who:'Derek',what:'Hey! Derek. High school senior.',choices:[]},
+{who:'Derek',what:'Need two graduation photos. Cap and gown.',choices:[{text:'"Congratulations"',next:'derek2'},{text:'"Nervous?"',next:'derek2'}]},
+{who:'Derek',what:'Something weird at my school though...',choices:[]},
+{who:'Derek',what:'Lights flicker in the gym every night.',choices:[]},
+{who:'System',what:'[Take 2 photos of him, then print]',choices:[]}
+],
+derek2:[{who:'Derek',what:'Thanks. Ohio\'s been strange lately.',choices:[]}],
+nina:[
+{who:'Nina',what:'Hi, Nina. I\'m a reporter.',choices:[]},
+{who:'Nina',what:'Doing a piece on old businesses in Ohio.',choices:[{text:'"Sure, happy to help"',next:'nina2'},{text:'"What kind of piece?"',next:'nina2'}]},
+{who:'Nina',what:'Your father used to run this place, right?',choices:[]},
+{who:'Nina',what:'Where did he go?',choices:[]},
+{who:'System',what:'[Take 2 photos for her article]',choices:[]}
+],
+nina2:[{who:'Nina',what:'Thanks. I\'ll be in touch. Be careful.',choices:[]}],
+owen:[
+{who:'Owen',what:'Hey... hic... you the photographer?',choices:[]},
+{who:'Owen',what:'Need my picture taken. For... something.',choices:[{text:'"You alright?"',next:'owen2'},{text:'"Step over here"',next:'owen2'}]},
+{who:'Owen',what:'That poster outside... that\'s me.',choices:[]},
+{who:'Owen',what:'$500 reward... don\'t turn me in...',choices:[]},
+{who:'System',what:'[Take 1 photo of him, then print]',choices:[]}
+],
+owen2:[{who:'Owen',what:'Just... one shot. Please.',choices:[]}],
+sophie:[
+{who:'Sophie',what:'Excuse me, sir...',choices:[]},
+{who:'Sophie',what:'My mom said I could get a family photo.',choices:[{text:'"Where\'s your family?"',next:'sophie2'},{text:'"Sure, come in"',next:'sophie2'}]},
+{who:'System',what:'...She is alone.',choices:[]},
+{who:'Sophie',what:'They\'re right here. Can\'t you see them?',choices:[]},
+{who:'System',what:'[Take 1 photo of her]',choices:[]}
+],
+sophie2:[{who:'Sophie',what:'Thank you...',choices:[]}],
+marcus:[
+{who:'Marcus',what:'Marcus. Firefighter. Need ID photos.',choices:[]},
+{who:'Marcus',what:'Two copies. For the department.',choices:[{text:'"Rough job"',next:'marcus2'},{text:'"Sure"',next:'marcus2'}]},
+{who:'Marcus',what:'You see things on this job...',choices:[]},
+{who:'Marcus',what:'Some fires, they don\'t burn normal.',choices:[]},
+{who:'System',what:'[Take 2 photos of him, then print]',choices:[]}
+],
+marcus2:[{who:'Marcus',what:'Stay safe out here.',choices:[]}],
+tommy:[
+{who:'Tommy',what:'Delivery! Uh, also...',choices:[]},
+{who:'Tommy',what:'Can I get a quick photo? First day on the job.',choices:[{text:'"Sure, congrats"',next:'tommy2'},{text:'"In a rush?"',next:'tommy2'}]},
+{who:'Tommy',what:'Saw something on Elm Street...',choices:[]},
+{who:'Tommy',what:'A guy... no face. Just... nothing.',choices:[]},
+{who:'System',what:'[Take 1 photo of him]',choices:[]}
+],
+tommy2:[{who:'Tommy',what:'Thanks. Stay off Elm Street tonight.',choices:[]}],
+whiteEye1:[
+{who:'???',what:'...',choices:[{text:'"Are you here for a photo?"',next:'whiteEye2'}]}
+],
+whiteEye2:[
+{who:'???',what:'...th...e...y\'re...w...a...t...c...h...i...n...g...',choices:[]},
+{who:'???',what:'...y...o...u...c...a...n\'t...s...e...e...t...h...e...m...',choices:[]}
+],
+postman:[
+{who:'Postman',what:'Special delivery for the studio.',choices:[]},
+{who:'Postman',what:'Two ID photos while I\'m here, if you don\'t mind.',choices:[{text:'"Sure, step over here"',next:'postman2'},{text:'"What\'s the letter?"',next:'postman2'}]},
+{who:'Postman',what:'Just do my job. This one\'s official — EMT Bureau.',choices:[]},
+{who:'System',what:'[Take 2 photos of the postman, then print]',choices:[]}
+],
+postman2:[{who:'Postman',what:'Long route today. Ohio\'s been strange lately.',choices:[]}],
+leonard:[
+{who:'Leonard',what:'I\'m Leonard. Here for my pre-order.',choices:[{text:'"Pre-order?"',next:'leonard2'},{text:'"Name?"',next:'leonard2'}]},
+{who:'Leonard',what:'Five photos. Ordered last month.',choices:[]},
+{who:'System',what:'You find five photos with his name on them.',choices:[]},
+{who:'Leonard',what:'Perfect. Here\'s $200.',choices:[]},
+{who:'System',what:'+$200',choices:[]},
+{who:'Leonard',what:'Weird day out there. Be careful.',choices:[{text:'"What do you mean?"',next:'leonardWarn'},{text:'"Thanks"',next:'leonardWarn'}]}
+],
+leonard2:[{who:'Leonard',what:'Check your records. Leonard B.',choices:[]}],
+leonardWarn:[{who:'Leonard',what:'Saw something outside. Blood on the road.',choices:[]},{who:'System',what:'[Go outside and check]',choices:[]}],
+emtIntro:[
+{who:'???',what:'*Three figures in tactical gear enter silently*',choices:[]},
+{who:'EMT Agent',what:'Old State Photo Studio. We\'re here on official business.',choices:[{text:'"What do you want?"',next:'emtIntro2'},{text:'Say nothing',next:'emtIntro2'}]},
+{who:'EMT Agent',what:'We need a group photo. For the record.',choices:[]},
+{who:'System',what:'[Take one group photo of the three of them]',choices:[]}
+],
+emtIntro2:[{who:'EMT Agent',what:'That\'s classified. Just take the photo.',choices:[]}],
+emtDone:[
+{who:'EMT Agent',what:'...What is that.',choices:[]},
+{who:'EMT Agent',what:'There was nothing behind us.',choices:[]},
+{who:'System',what:'In the photo, a woman stands behind the three of them. She wasn\'t there.',choices:[]},
+{who:'EMT Agent',what:'We need to leave. Now.',choices:[{text:'"What\'s going on?"',next:'emtDone2'},{text:'Step back',next:'emtDone2'}]},
+{who:'EMT Agent',what:'EMT will contact you again. Lock the door tonight.',choices:[]}
+],
+emtDone2:[{who:'EMT Agent',what:'Don\'t follow us. Don\'t ask questions.',choices:[]}],
+carl:[
+{who:'???',what:'HEY! YOU THERE!',choices:[]},
+{who:'Carl',what:'Name\'s Carl. My car ran out of gas!',choices:[{text:'"Are you hurt?"',next:'carl2'},{text:'"What happened?"',next:'carl2'}]},
+{who:'Carl',what:'This place... it\'s not for humans!',choices:[]},
+{who:'Carl',what:'Monsters everywhere! Come with me!',choices:[{text:'"I can\'t leave"',next:'carl3'},{text:'"What monsters?"',next:'carl3'}]},
+{who:'Carl',what:'You got spare gas? Please!',choices:[]}
+],
+carl2:[{who:'Carl',what:'Blood... not all mine. Saw things...',choices:[]}],
+carl3:[{who:'Carl',what:'Things wearing human faces. Not human inside.',choices:[]}],
+carlGas:[
+{who:'Carl',what:'Thank you! Thank you!',choices:[]},
+{who:'Carl',what:'Don\'t stay long. Buy a weapon. Protect yourself.',choices:[{text:'"I\'ll consider it"',next:'carlGo'},{text:'"I\'m fine"',next:'carlGo'}]},
+{who:'Carl',what:'Good luck. I\'m getting out of Ohio!',choices:[]}
+],
+carlGo:[{who:'System',what:'Carl drives away, tires screeching.',choices:[]},{who:'System',what:'[A revolver appeared in the store]',choices:[]}],
+frank:[
+{who:'???',what:'Hey! Hey — is that you?',choices:[]},
+{who:'Frank',what:'Frank. Old friend of yours. Remember?',choices:[{text:'"Frank! Long time!"',next:'frank2'},{text:'"Barely recognized you"',next:'frank2'}]},
+{who:'Frank',what:'My engine died right outside. Bad timing.',choices:[]},
+{who:'System',what:'[His car is smoking. He needs a wrench.]',choices:[]}
+],
+frank2:[{who:'Frank',what:'I was just passing through town.',choices:[]}],
+frankFix:[
+{who:'Frank',what:'You got a wrench? That\'d save me.',choices:[]},
+{who:'System',what:'[Go to the garage and grab a wrench]',choices:[]}
+],
+frankTalk:[
+{who:'Frank',what:'Thanks, buddy. Appreciate it.',choices:[]},
+{who:'Frank',what:'Hey... you remember that factory guy?',choices:[]},
+{who:'Frank',what:'They fired him. Lost some material or something.',choices:[{text:'"That\'s rough"',next:'frankTalk2'},{text:'"What happened?"',next:'frankTalk2'}]},
+{who:'Frank',what:'Honestly? Might have been for the best.',choices:[]},
+{who:'Frank',what:'People were acting strange around then.',choices:[]},
+{who:'Frank',what:'You seen the news? You should check.',choices:[]},
+{who:'Frank',what:'Anyway, I should head home. Getting dark.',choices:[]},
+{who:'Frank',what:'This place gives me the creeps.',choices:[]},
+{who:'System',what:'Frank gets in his car and drives away.',choices:[]}
+],
+frankTalk2:[{who:'Frank',what:'Nobody knows the full story.',choices:[]}],
+office:[
+{who:'Office Worker',what:'Hi, sorry — quick break from work.',choices:[]},
+{who:'Office Worker',what:'Need two ID photos. Blue background if possible.',choices:[{text:'"Sure, step over here"',next:'office2'},{text:'"You look tired"',next:'office2'}]},
+{who:'Office Worker',what:'Rough week... layoffs coming.',choices:[]},
+{who:'Office Worker',what:'Just need these for HR. Thanks.',choices:[]},
+{who:'System',what:'[Take 2 ID photos of him, then print]',choices:[]}
+],
+office2:[{who:'Office Worker',what:'Appreciate it. First time here.',choices:[]}],
+fakeFrank:[
+{who:'???',what:'Hey buddy! It\'s me, Frank!',choices:[{text:'"Frank?"',next:'ff2'},{text:'"What are you doing here?"',next:'ff2'}]},
+{who:'Frank',what:'Monsters everywhere! Get in my car!',choices:[]},
+{who:'Frank',what:'The wanted guy? We don\'t know who he is!',choices:[]},
+{who:'System',what:'...Your friend would never say that.',choices:[{text:'"You\'re not Frank"',next:'ff3'},{text:'"How do you know?"',next:'ff3'}]}
+],
+ff2:[{who:'Frank',what:'Came to save you! Let\'s go!',choices:[]}],
+ff3:[{who:'Fake Frank',what:'Smart. But too late.',choices:[]}],
+ffShoot:[
+{who:'Fake Frank',what:'Still figured it out... so DIE!',choices:[]},
+{who:'System',what:'His head splits open. Tentacles burst out!',choices:[{text:'Fire!',next:'ffChase'},{text:'Run!',next:'ffChase'}]},
+{who:'Monster',what:'SCREEEEECH!',choices:[]}
+],
+ffChase:[{who:'System',what:'The monster chases you! Run back to the shop!',choices:[]},{who:'System',what:'[Get inside quickly!]',choices:[]}],
+agent:[
+{who:'???',what:'...',choices:[]},
+{who:'Agent',what:'Target located.',choices:[{text:'"Who are you?!"',next:'agent2'},{text:'"Don\'t shoot!"',next:'agent2'}]},
+{who:'Agent',what:'Cooperation complete.',choices:[]},
+{who:'Agent',what:'Just like your father...',choices:[]},
+{who:'Agent',what:'Next time, we\'ll cooperate again.',choices:[]}
+],
+agent2:[{who:'Agent',what:'No questions. Just business.',choices:[]}],
+wrongPhoto:[
+{who:'Customer',what:'This isn\'t me!',choices:[]},
+{who:'Customer',what:'I want MY photo, not some building!',choices:[{text:'"Sorry, let me retake"',next:'wrong2'},{text:'"It\'s artistic"',next:'wrong2'}]},
+{who:'System',what:'Need to take photo with customer present.',choices:[]}
+],
+wrong2:[{who:'Customer',what:'Hurry up then.',choices:[]}]
+};
+
+const custData={
+emily:{name:'Emily',av:'👤',pay:80,type:'emily',count:1},
+jack:{name:'Jack',av:'👤',pay:100,type:'jack',count:2},
+margaret:{name:'Margaret',av:'👵',pay:120,type:'margaret',count:3},
+max:{name:'Max',av:'🎤',pay:150,type:'max',count:3},
+helena:{name:'Helena',av:'👵',pay:200,type:'helena',count:1},
+victor:{name:'Victor',av:'👮',pay:100,type:'victor',count:1},
+derek:{name:'Derek',av:'🧑‍🎓',pay:100,type:'derek',count:2},
+nina:{name:'Nina',av:'📰',pay:150,type:'nina',count:2},
+owen:{name:'Owen',av:'🍺',pay:60,type:'owen',count:1},
+sophie:{name:'Sophie',av:'👧',pay:80,type:'sophie',count:1},
+marcus:{name:'Marcus',av:'🚒',pay:120,type:'marcus',count:2},
+tommy:{name:'Tommy',av:'🛵',pay:90,type:'tommy',count:1},
+postman:{name:'Postman',av:'📮',pay:100,type:'postman',count:2},
+leonard:{name:'Leonard',av:'🧑',pay:200,type:'leonard',count:0},
+carl:{name:'Carl',av:'🩸',pay:0,type:'carl',count:0},
+office:{name:'Office Worker',av:'🧑‍💼',pay:120,type:'office',count:2},
+fakeFrank:{name:'Frank',av:'👹',pay:0,type:'fakeFrank',count:0}
+};
+
+function loadScene(s){
+G.scene=s;
+const sc=scenes[s];
+G.objs=sc.objs.map(o=>({...o}));
+G.map.w=sc.w;
+G.map.h=sc.h;
+if(s==='street'){
+if(G.st.carlReady&&!G.st.carlGone){
+const carlObj=G.objs.find(o=>o.t==='carl');
+if(carlObj)carlObj.show=true;
+}
+if(G.st.frankReady&&!G.st.frankLeft){
+const fc=G.objs.find(o=>o.t==='frankCar');
+if(fc)fc.show=true;
+if(!G.st.frankMet){
+const fr=G.objs.find(o=>o.t==='frank');
+if(fr)fr.show=true;
+}
+}
+if(G.st.fakeFrankTriggered&&!G.st.monsterChase){
+const frankObj=G.objs.find(o=>o.t==='frank');
+if(frankObj&&!G.st.frankReady)frankObj.show=true;
+}
+if(G.st.deliveryActive){
+const tr=G.objs.find(o=>o.t==='truck');
+const co=G.objs.find(o=>o.t==='courier');
+const pa=G.objs.find(o=>o.t==='parcel');
+if(tr)tr.show=true;
+if(co)co.show=true;
+if(pa&&G.st.deliveryParcel)pa.show=true;
+}
+}
+}
+
+function showDia(key,cb){
+G.st.inDia=true;
+G.st.diaIdx=0;
+G.st.diaCb=cb||null;
+G.st.dia=dias[key];
+G.st.waitingChoice=false;
+nextDia();
+}
+
+function nextDia(){
+const box=document.getElementById('dialogue');
+const tap=document.getElementById('dTap');
+const choicesDiv=document.getElementById('dChoices');
+if(!box||!tap||!choicesDiv)return;
+choicesDiv.innerHTML='';
+if(!G.st.dia||G.st.diaIdx>=G.st.dia.length){
+box.classList.remove('show');
+G.st.inDia=false;
+const cb=G.st.diaCb;
+G.st.diaCb=null;
+if(cb)setTimeout(cb,100);
+return;
+}
+const d=G.st.dia[G.st.diaIdx];
+document.getElementById('dWho').textContent=d.who||'';
+document.getElementById('dWhat').textContent=d.what||'';
+if(d.choices&&d.choices.length>0&&!G.st.waitingChoice){
+G.st.waitingChoice=true;
+tap.style.display='none';
+d.choices.forEach((ch)=>{
+const btn=document.createElement('div');
+btn.className='choice';
+btn.textContent=ch.text;
+btn.onclick=(e)=>{
+e.stopPropagation();
+makeChoice(ch.next);
+};
+choicesDiv.appendChild(btn);
+});
+}else{
+tap.style.display='block';
+G.st.waitingChoice=false;
+}
+box.classList.add('show');
+}
+
+function makeChoice(nextKey){
+G.st.waitingChoice=false;
+if(nextKey){
+const diaArr=dias[nextKey];
+if(diaArr){
+G.st.dia=diaArr;
+G.st.diaIdx=0;
+nextDia();
+return;
+}
+}
+G.st.diaIdx++;
+nextDia();
+}
+
+const diaEl=document.getElementById('dialogue');
+if(diaEl){
+diaEl.addEventListener('click',()=>{
+if(G.st.inDia&&!G.st.waitingChoice){
+G.st.diaIdx++;
+nextDia();
+}
+});
+}
+
+function drawWhiteEye(n,sx,sy){
+ctx.fillStyle='rgba(5,5,5,0.95)';
+ctx.beginPath();
+ctx.arc(sx,sy,24,0,Math.PI*2);
+ctx.fill();
+ctx.strokeStyle='#111';
+ctx.lineWidth=2;
+ctx.stroke();
+ctx.fillStyle='#fff';
+ctx.beginPath();
+ctx.arc(sx-8,sy-3,5,0,Math.PI*2);
+ctx.fill();
+ctx.beginPath();
+ctx.arc(sx+8,sy-3,5,0,Math.PI*2);
+ctx.fill();
+ctx.fillStyle='#000';
+ctx.beginPath();
+ctx.arc(sx-8,sy-3,2,0,Math.PI*2);
+ctx.fill();
+ctx.beginPath();
+ctx.arc(sx+8,sy-3,2,0,Math.PI*2);
+ctx.fill();
+ctx.strokeStyle='#ddd';
+ctx.lineWidth=2;
+ctx.beginPath();
+ctx.arc(sx,sy+6,9,0.15*Math.PI,0.85*Math.PI);
+ctx.stroke();
+ctx.fillStyle='rgba(255,255,255,0.15)';
+ctx.beginPath();
+ctx.arc(sx-8,sy-3,10,0,Math.PI*2);
+ctx.fill();
+ctx.beginPath();
+ctx.arc(sx+8,sy-3,10,0,Math.PI*2);
+ctx.fill();
+}
+
+function draw(){
+const sc=scenes[G.scene];
+ctx.fillStyle='#050505';
+ctx.fillRect(0,0,c.width,c.height);
+if(G.scene==='street'){
+ctx.fillStyle='#1a1a1a';
+ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle='#2a2a2a';
+ctx.fillRect(0,c.height/2,c.width,c.height/2);
+ctx.fillStyle='#151515';
+ctx.fillRect(200-G.cam.x,80-G.cam.y,400,320);
+ctx.fillStyle='#3a3a3a';
+ctx.fillRect(350-G.cam.x,250-G.cam.y,8,30);
+ctx.fillRect(442-G.cam.x,250-G.cam.y,8,30);
+if(G.st.carlReady&&!G.st.carlGone){
+ctx.fillStyle='#8b0000';
+ctx.beginPath();
+ctx.arc(630-G.cam.x,380-G.cam.y,30,0,Math.PI*2);
+ctx.fill();
+ctx.fillStyle='#c8a85c';
+ctx.font='20px sans-serif';
+ctx.textAlign='center';
+ctx.fillText('🩸',630-G.cam.x,385-G.cam.y);
+}
+if(G.st.frankReady&&!G.st.frankLeft){
+ctx.fillStyle='#3a2a0a';
+ctx.fillRect(880-G.cam.x,460-G.cam.y,220,140);
+ctx.strokeStyle='#8b4513';
+ctx.lineWidth=2;
+ctx.strokeRect(880-G.cam.x,460-G.cam.y,220,140);
+ctx.fillStyle='#c8a85c';
+ctx.font='50px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('🚗',990-G.cam.x,530-G.cam.y);
+ctx.fillStyle='#ff6b6b';
+ctx.font='12px sans-serif';
+ctx.fillText('BROKEN',990-G.cam.x,570-G.cam.y);
+}
+if(G.st.fakeFrankTriggered&&!G.st.monsterChase&&!G.st.frankReady){
+ctx.fillStyle='#3a0a0a';
+ctx.fillRect(540-G.cam.x,290-G.cam.y,80,60);
+ctx.strokeStyle='#8b0000';
+ctx.lineWidth=2;
+ctx.strokeRect(540-G.cam.x,290-G.cam.y,80,60);
+ctx.fillStyle='#ff6b6b';
+ctx.font='20px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('🚗',580-G.cam.x,320-G.cam.y);
+}
+}else if(G.scene==='shop'){
+ctx.fillStyle='#0a0a0a';
+ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle='#14100c';
+for(let x=0;x<sc.w;x+=100)for(let y=0;y<sc.h;y+=100){
+const sx=x-G.cam.x,sy=y-G.cam.y;
+if(sx>-100&&sx<c.width+100&&sy>-100&&sy<c.height+100)ctx.fillRect(sx,sy,98,98);
+}
+ctx.fillStyle='#080808';
+ctx.fillRect(0-G.cam.x,0-G.cam.y,sc.w,70);
+if(G.st.power){
+ctx.fillStyle='rgba(200,168,92,0.08)';
+ctx.beginPath();
+ctx.arc(500-G.cam.x,100-G.cam.y,120,0,Math.PI*2);
+ctx.fill();
+}
+}else if(G.scene==='corridor'){
+ctx.fillStyle='#060606';
+ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle='#0c0c0c';
+for(let x=0;x<sc.w;x+=100)for(let y=0;y<sc.h;y+=100){
+const sx=x-G.cam.x,sy=y-G.cam.y;
+if(sx>-100&&sx<c.width+100&&sy>-100&&sy<c.height+100)ctx.fillRect(sx,sy,98,98);
+}
+if(G.st.power){
+ctx.fillStyle='rgba(200,168,92,0.06)';
+ctx.beginPath();
+ctx.arc(300-G.cam.x,200-G.cam.y,80,0,Math.PI*2);
+ctx.fill();
+}
+}else if(G.scene==='storage'){
+ctx.fillStyle='#0a0a0a';
+ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle='#151515';
+ctx.fillRect(50-G.cam.x,50-G.cam.y,300,200);
+}else if(G.scene==='garage'){
+ctx.fillStyle='#0a0a0a';
+ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle='#141414';
+for(let x=0;x<sc.w;x+=100)for(let y=0;y<sc.h;y+=100){
+const sx=x-G.cam.x,sy=y-G.cam.y;
+if(sx>-100&&sx<c.width+100&&sy>-100&&sy<c.height+100)ctx.fillRect(sx,sy,98,98);
+}
+}
+if(!G.st.power&&G.scene==='shop'&&Math.sin(G.tick*0.1)>0.7){
+ctx.fillStyle='rgba(139,0,0,0.05)';
+ctx.fillRect(0,0,c.width,c.height);
+}
+if(G.st.inChase&&G.tick%10<5){
+ctx.fillStyle='rgba(139,0,0,0.1)';
+ctx.fillRect(0,0,c.width,c.height);
+}
+G.objs.forEach(o=>{
+if(o.t==='carl'&&!o.show)return;
+if(o.t==='frank'&&!o.show)return;
+if(o.t==='frankCar'&&!o.show)return;
+if(o.t==='truck'&&!o.show)return;
+if(o.t==='courier'&&!o.show)return;
+if(o.t==='parcel'&&!o.show)return;
+const sx=o.x-G.cam.x,sy=o.y-G.cam.y;
+if(sx<-300||sx>c.width+300||sy<-300||sy>c.height+300)return;
+ctx.fillStyle='#1a1a1a';
+ctx.strokeStyle='rgba(200,184,150,0.25)';
+ctx.lineWidth=1;
+switch(o.t){
+case'sign':
+ctx.fillStyle='#111';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';
+ctx.font='bold 18px sans-serif';
+ctx.textAlign='center';
+ctx.fillText('OLD',sx+o.w/2,sy+35);
+ctx.font='bold 14px sans-serif';
+ctx.fillText('STATE',sx+o.w/2,sy+60);
+ctx.fillStyle='#555';
+ctx.font='9px sans-serif';
+ctx.fillText('EST. 1987',sx+o.w/2,sy+75);
+break;
+case'door':
+ctx.fillStyle='#2a1a0a';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';
+ctx.font='11px sans-serif';
+ctx.textAlign='center';
+ctx.fillText('ENTER',sx+o.w/2,sy+o.h/2);
+break;
+case'board':
+ctx.fillStyle=G.st.sign?'#0a2a0a':'#2a0a0a';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle=G.st.sign?'#50c878':'#8b0000';
+ctx.lineWidth=2;
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle=G.st.sign?'#50c878':'#8b0000';
+ctx.font='bold 11px sans-serif';
+ctx.fillText(G.st.sign?'OPEN':'CLOSED',sx+o.w/2,sy+o.h/2);
+break;
+case'counter':
+ctx.fillStyle='#2a1a0a';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';
+ctx.font='11px sans-serif';
+ctx.textAlign='center';
+ctx.fillText('COUNTER',sx+o.w/2,sy+o.h/2);
+break;
+case'coffeeTable':
+ctx.fillStyle='#3a1a0a';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#c8a85c';
+ctx.lineWidth=2;
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';
+ctx.font='24px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('☕',sx+o.w/2,sy+o.h/2-10);
+ctx.fillStyle='#b0a080';
+ctx.font='9px sans-serif';
+ctx.fillText('COFFEE',sx+o.w/2,sy+o.h/2+18);
+if(G.st.coffeeReady){
+ctx.fillStyle='#50c878';
+ctx.font='16px sans-serif';
+ctx.fillText('✓',sx+o.w/2,sy+o.h/2+35);
+}
+break;
+case'pc':
+ctx.fillStyle='#0a0a0a';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#c8a85c';
+ctx.lineWidth=2;
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';
+ctx.font='18px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('💻',sx+o.w/2,sy+o.h/2);
+break;
+case'printer':
+ctx.fillStyle='#1a1a1a';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';
+ctx.font='18px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('🖨',sx+o.w/2,sy+o.h/2);
+break;
+case'wall':
+ctx.fillStyle='#0a0a0a';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeRect(sx,sy,o.w,o.h);
+for(let i=0;i<6;i++){
+ctx.fillStyle='#f5f5dc';
+ctx.fillRect(sx+10+i*65,sy+15,50,60);
+ctx.strokeStyle='#8b4513';
+ctx.lineWidth=1;
+ctx.strokeRect(sx+10+i*65,sy+15,50,60);
+ctx.fillStyle='#666';
+ctx.font='16px sans-serif';
+ctx.fillText('?',sx+35+i*65,sy+50);
+}
+ctx.fillStyle='#c8a85c';
+ctx.font='9px sans-serif';
+ctx.fillText('WALL',sx+o.w/2,sy+o.h+12);
+break;
+case'locked':
+ctx.fillStyle='#0a0505';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#8b0000';
+ctx.lineWidth=3;
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#8b0000';
+ctx.font='18px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('🔒',sx+o.w/2,sy+o.h/2-10);
+ctx.font='9px sans-serif';
+ctx.fillText('LOCKED',sx+o.w/2,sy+o.h/2+18);
+ctx.fillStyle='#c8a85c';
+ctx.beginPath();
+ctx.arc(sx+o.w/2,sy+20,5,0,Math.PI*2);
+ctx.fill();
+ctx.strokeStyle='#c8a85c';
+ctx.stroke();
+break;
+case'fuse':
+ctx.fillStyle='#1a1a1a';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle=G.st.power?'#50c878':'#8b0000';
+ctx.lineWidth=3;
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle=G.st.power?'#50c878':'#8b0000';
+ctx.font='12px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText(G.st.power?'✓ OK':'✕ OUT',sx+o.w/2,sy+o.h/2);
+break;
+case'wanted':
+ctx.fillStyle='#f5f5dc';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#8b4513';
+ctx.lineWidth=2;
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#8b0000';
+ctx.font='bold 9px sans-serif';
+ctx.textAlign='center';
+ctx.fillText('WANTED',sx+o.w/2,sy+18);
+ctx.fillStyle='#333';
+ctx.font='20px serif';
+ctx.textBaseline='middle';
+ctx.fillText('🍺',sx+o.w/2,sy+55);
+break;
+case'storage':
+ctx.fillStyle='#1a1a1a';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';
+ctx.font='10px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('STORAGE',sx+o.w/2,sy+o.h/2);
+break;
+case'garage':
+ctx.fillStyle='#1a1a1a';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';
+ctx.font='20px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('🚗',sx+o.w/2,sy+o.h/2-8);
+ctx.fillStyle='#b0a080';
+ctx.font='9px sans-serif';
+ctx.fillText('GARAGE',sx+o.w/2,sy+o.h/2+20);
+break;
+case'car':
+ctx.fillStyle='#2a1a0a';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#8b4513';
+ctx.lineWidth=3;
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';
+ctx.font='60px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('🚗',sx+o.w/2,sy+o.h/2-15);
+ctx.fillStyle='#b0a080';
+ctx.font='12px sans-serif';
+ctx.fillText('UNDER REPAIR',sx+o.w/2,sy+o.h/2+40);
+break;
+case'wrenchProp':
+ctx.fillStyle='#2a2a2a';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#666';
+ctx.lineWidth=1;
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';
+ctx.font='26px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('🔧',sx+o.w/2,sy+o.h/2);
+break;
+case'oildrum':
+ctx.fillStyle='#2a2a2a';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#666';
+ctx.lineWidth=1;
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';
+ctx.font='28px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('⛽',sx+o.w/2,sy+o.h/2);
+break;
+case'screwdriver':
+ctx.fillStyle='#2a2a2a';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#666';
+ctx.lineWidth=1;
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';
+ctx.font='24px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('🔩',sx+o.w/2,sy+o.h/2);
+break;
+case'gas':
+ctx.fillStyle='#2a2a2a';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#666';
+ctx.font='20px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('⛽',sx+o.w/2,sy+o.h/2);
+break;
+case'carl':
+ctx.fillStyle='#8b0000';
+ctx.beginPath();
+ctx.arc(sx+o.w/2,sy+o.h/2,25,0,Math.PI*2);
+ctx.fill();
+ctx.strokeStyle='#ff0000';
+ctx.lineWidth=2;
+ctx.stroke();
+ctx.fillStyle='#ffd700';
+ctx.font='20px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('🩸',sx+o.w/2,sy+o.h/2);
+break;
+case'truck':
+ctx.fillStyle='#333';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#666';
+ctx.lineWidth=2;
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';
+ctx.font='50px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('🚚',sx+o.w/2,sy+o.h/2);
+break;
+case'courier':
+ctx.fillStyle='rgba(5,5,5,0.9)';
+ctx.beginPath();
+ctx.arc(sx+o.w/2,sy+o.h/2,22,0,Math.PI*2);
+ctx.fill();
+ctx.strokeStyle='#c8a85c';
+ctx.lineWidth=2;
+ctx.stroke();
+ctx.fillStyle='#c8a85c';
+ctx.font='18px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('🧑',sx+o.w/2,sy+o.h/2);
+ctx.fillStyle='#c8a85c';
+ctx.font='9px sans-serif';
+ctx.fillText('COURIER',sx+o.w/2,sy+o.h/2+32);
+break;
+case'parcel':
+ctx.fillStyle='#5a4a2a';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#c8a85c';
+ctx.lineWidth=2;
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';
+ctx.font='24px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('📦',sx+o.w/2,sy+o.h/2);
+break;
+case'exit':
+case'corridor':
+ctx.fillStyle='rgba(200,168,92,0.08)';
+ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#c8a85c';
+ctx.lineWidth=1;
+ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';
+ctx.font='9px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText(o.t==='exit'?'EXIT':'HALL',sx+o.w/2,sy+o.h/2);
+break;
+}
+});
+G.st.garbage.forEach(g=>{
+if(g.scene!==G.scene)return;
+const sx=g.x-G.cam.x,sy=g.y-G.cam.y;
+if(sx<-100||sx>c.width+100||sy<-100||sy>c.height+100)return;
+ctx.fillStyle='rgba(80,60,40,0.9)';
+ctx.beginPath();
+ctx.arc(sx,sy,12,0,Math.PI*2);
+ctx.fill();
+ctx.strokeStyle='#c8a85c';
+ctx.lineWidth=1;
+ctx.stroke();
+ctx.fillStyle='#c8a85c';
+ctx.font='14px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('🗑',sx,sy);
+});
+G.npcs.forEach(n=>{
+if(n.hide)return;
+const sx=n.x-G.cam.x,sy=n.y-G.cam.y;
+if(sx<-50||sx>c.width+50||sy<-50||sy>c.height+50)return;
+if(n.type==='whiteEye'){
+drawWhiteEye(n,sx,sy);
+ctx.fillStyle='#ddd';
+ctx.font='9px sans-serif';
+ctx.textAlign='center';
+ctx.fillText('???',sx,sy+32);
+return;
+}
+ctx.fillStyle='rgba(5,5,5,0.9)';
+ctx.beginPath();
+ctx.arc(sx,sy,22,0,Math.PI*2);
+ctx.fill();
+ctx.strokeStyle=n.type==='fakeFrank'?'#8b0000':(n.type==='emt'?'#3a6ea5':(n.type==='frank'?'#5a9a5a':'#c8a85c'));
+ctx.lineWidth=2;
+ctx.stroke();
+ctx.fillStyle='#c8a85c';
+ctx.font='18px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText(n.av,sx,sy);
+if(n.type==='emily'&&n.pale){
+ctx.fillStyle='rgba(255,255,255,0.35)';
+ctx.beginPath();
+ctx.arc(sx,sy,20,0,Math.PI*2);
+ctx.fill();
+}
+if(n.type==='victor'){
+ctx.fillStyle='#000';
+ctx.font='14px sans-serif';
+ctx.fillText('🕶',sx,sy-4);
+}
+if(n.type==='victor'||n.type==='emt'){
+ctx.fillStyle='#444';
+ctx.font='10px sans-serif';
+ctx.fillText('🔫',sx+18,sy+18);
+}
+ctx.fillStyle=n.type==='fakeFrank'?'#ff6b6b':(n.type==='emt'?'#5a8ec5':(n.type==='frank'?'#7ac87a':'#c8a85c'));
+ctx.font='9px sans-serif';
+ctx.fillText(n.name,sx,sy+32);
+});
+const px=G.p.x-G.cam.x,py=G.p.y-G.cam.y;
+ctx.fillStyle='rgba(5,5,5,0.9)';
+ctx.beginPath();
+ctx.arc(px,py,G.p.s,0,Math.PI*2);
+ctx.fill();
+ctx.strokeStyle=G.st.inChase?'#ff0000':'#c8a85c';
+ctx.lineWidth=2;
+ctx.stroke();
+ctx.fillStyle='#c8a85c';
+ctx.font='bold 9px sans-serif';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('ME',px,py);
+}
+
+function checkNear(){
+let near=null,minD=70;
+for(let o of G.objs){
+if(o.t==='carl'&&!o.show)continue;
+if(o.t==='frank'&&!o.show)continue;
+if(o.t==='frankCar'&&!o.show)continue;
+if(o.t==='truck'&&!o.show)continue;
+if(o.t==='courier'&&!o.show)continue;
+if(o.t==='parcel'&&!o.show)continue;
+const cx=o.x+o.w/2,cy=o.y+o.h/2;
+const d=Math.sqrt((G.p.x-cx)**2+(G.p.y-cy)**2);
+if(d<minD){
+near=o;
+minD=d;
+}
+}
+let nearGarbage=null,gMinD=50;
+for(let g of G.st.garbage){
+if(g.scene!==G.scene)continue;
+const d=Math.sqrt((G.p.x-g.x)**2+(G.p.y-g.y)**2);
+if(d<gMinD){
+nearGarbage=g;
+gMinD=d;
+}
+}
+let nearNPC=null,nMinD=70;
+for(let n of G.npcs){
+if(n.hide||n.leaving)continue;
+const d=Math.sqrt((G.p.x-n.x)**2+(G.p.y-n.y)**2);
+if(d<nMinD){
+nearNPC=n;
+nMinD=d;
+}
+}
+const hint=document.getElementById('hint');
+if(G.st.viewfinderOn){
+hint.classList.remove('show');
+return near;
+}
+if(nearNPC&&G.st.hasCoffee&&G.st.currentCust&&G.st.currentCust.type==='victor'&&!G.st.victorCoffeePaid){
+hint.classList.add('show');
+hint.textContent='Give Coffee ☕';
+G.nearNPC=nearNPC;
+return near;
+}
+G.nearNPC=null;
+if(nearGarbage&&G.st.hasBroom){
+hint.classList.add('show');
+hint.textContent='Sweep 🧹';
+G.nearGarbage=nearGarbage;
+return near;
+}
+G.nearGarbage=null;
+if(near){
+hint.classList.add('show');
+let act='';
+switch(near.t){
+case'door':act='Enter';break;
+case'exit':act='Exit';break;
+case'board':act=!G.st.sign?'Flip to OPEN':(G.st.open?'OPEN':'Start Business');break;
+case'pc':act='Use PC';break;
+case'printer':act='Use Printer';break;
+case'coffeeTable':act='Use Coffee Machine';break;
+case'wall':act='View Wall';break;
+case'locked':act='Peephole';break;
+case'fuse':act=!G.st.power?'Fix Fuse':'Check Fuse';break;
+case'wanted':act='View Poster';break;
+case'corridor':act='Corridor';break;
+case'storage':act='Storage';break;
+case'garage':act='Enter Garage';break;
+case'car':act='Check Car';break;
+case'wrenchProp':act=G.st.hasWrench?'Wrench (taken)':'Take Wrench 🔧';break;
+case'gas':act='Take Gas';break;
+case'carl':act='Talk to Carl';break;
+case'frank':act=G.st.frankMet?'Talk to Frank':'Approach Frank';break;
+case'parcel':act='Open Package 📦';break;
+default:act='Check';
+}
+hint.textContent=act;
+}else hint.classList.remove('show');
+return near;
+}
+
+function act(){
+if(!G.near||G.st.inDia||G.st.viewfinderOn)return;
+if(G.nearNPC&&G.st.hasCoffee&&G.st.currentCust&&G.st.currentCust.type==='victor'&&!G.st.victorCoffeePaid){
+giveCoffeeToVictor();
+return;
+}
+if(G.nearNPC&&G.nearNPC.type==='whiteEye'){
+playWhisper();
+showDia('whiteEye1',()=>{
+toast('...the whisper fades...',2000);
+});
+return;
+}
+if(G.nearGarbage&&G.st.hasBroom){
+sweepGarbage(G.nearGarbage);
+return;
+}
+const o=G.near;
+switch(o.t){
+case'door':
+if(G.scene==='street'){
+loadScene('shop');
+G.p.x=400;
+G.p.y=700;
+if(G.st.monsterChase&&G.st.inChase){
+G.st.inChase=false;
+G.st.monsterChase=false;
+document.getElementById('bloodOverlay').classList.remove('on');
+setTimeout(()=>spawnAgent(),2000);
+}
+}
+break;
+case'exit':
+if(o.to){
+loadScene(o.to);
+G.p.x=o.to==='street'?600:850;
+G.p.y=o.to==='street'?600:400;
+}
+break;
+case'corridor':
+loadScene('corridor');
+G.p.x=300;
+G.p.y=650;
+break;
+case'storage':
+loadScene('storage');
+G.p.x=200;
+G.p.y=200;
+break;
+case'garage':
+loadScene('garage');
+G.p.x=150;
+G.p.y=800;
+break;
+case'board':
+if(!G.st.sign){
+G.st.sign=true;
+showDia('powerBack',()=>{
+G.st.open=true;
+startCustQueue();
+});
+}
+break;
+case'pc':
+openPCHome();
+break;
+case'printer':
+openPrinter();
+break;
+case'coffeeTable':
+openCoffeeMachine();
+break;
+case'wall':
+break;
+case'locked':
+openM('m-cateye');
+break;
+case'fuse':
+if(!G.st.power){
+G.st.power=true;
+G.st.blackoutActive=false;
+document.getElementById('darkness').classList.remove('on');
+setTimeout(()=>{
+spawnEmilySecond();
+},800);
+}
+break;
+case'wanted':
+openM('m-wanted');
+break;
+case'gas':
+takeGas();
+break;
+case'car':
+toast('Still under repair. Almost done...',2200);
+break;
+case'wrenchProp':
+if(G.st.hasWrench){
+toast('You already have the wrench.',1800);
+}else{
+G.st.hasWrench=true;
+const slot=document.getElementById('s-wrench');
+if(slot)slot.style.display='flex';
+toast('✓ Picked up wrench 🔧',2000);
+}
+break;
+case'parcel':
+if(G.st.deliveryParcel){
+G.st.deliveryParcel=false;
+G.st.deliveryActive=false;
+G.st.inv.paper+=5;
+updateInv();
+toast('✓ Package opened! Got 5 Photo Paper.',2200);
+G.objs.forEach(ob=>{
+if(ob.t==='parcel'||ob.t==='truck'||ob.t==='courier')ob.show=false;
+});
+}
+break;
+case'carl':
+if(!G.st.carlMet){
+G.st.carlMet=true;
+showDia('carl',()=>{
+if(G.st.hasGas){
+showDia('carlGas',()=>{
+G.st.carlGone=true;
+const gunItem=document.getElementById('gunShopItem');
+if(gunItem)gunItem.style.display='flex';
+});
+}
+});
+}else if(G.st.hasGas&&!G.st.carlGone){
+showDia('carlGas',()=>{
+G.st.carlGone=true;
+const gunItem=document.getElementById('gunShopItem');
+if(gunItem)gunItem.style.display='flex';
+});
+}
+break;
+case'frank':
+if(!G.st.frankMet){
+G.st.frankMet=true;
+showDia('frank',()=>{
+showDia('frankFix',()=>{
+toast('[Get a wrench from the garage]',2500);
+});
+});
+}else if(!G.st.frankLeft){
+if(G.st.hasWrench){
+showDia('frankTalk',()=>{
+G.st.frankLeft=true;
+const fr=G.npcs.find(n=>n.type==='frank');
+if(fr){
+fr.targetX=1300;
+fr.targetY=800;
+fr.leaving=true;
+moveNPCToCounter(fr,'frank');
+}
+setTimeout(()=>{
+loadScene('street');
+},1500);
+});
+}else{
+toast('[You need a wrench first. It\'s in the garage.]',2500);
+}
+}
+break;
+}
+}
+
+function openViewfinder(){
+if(G.st.viewfinderOn)return;
+if(G.st.playerDead||!G.st.gameStarted)return;
+if(G.st.inDia)return;
+const now=Date.now();
+if(G.st.lastPhotoTime&&now-G.st.lastPhotoTime<2000){
+toast('Camera recharging...',1200);
+return;
+}
+G.st.viewfinderOn=true;
+document.getElementById('viewfinder').classList.add('show');
+document.getElementById('vfCancel').classList.add('show');
+document.getElementById('vfShutter').classList.add('show');
+document.getElementById('shutterBtn').style.display='none';
+G.joy.dx=0;
+G.joy.dy=0;
+}
+
+function cancelViewfinder(){
+if(!G.st.viewfinderOn)return;
+G.st.viewfinderOn=false;
+document.getElementById('viewfinder').classList.remove('show');
+document.getElementById('vfCancel').classList.remove('show');
+document.getElementById('vfShutter').classList.remove('show');
+document.getElementById('shutterBtn').style.display='flex';
+}
+
+function shootFromViewfinder(){
+if(!G.st.viewfinderOn)return;
+G.st.lastPhotoTime=Date.now();
+playShutter();
+const flash=document.getElementById('flashOverlay');
+if(flash){
+flash.classList.add('on');
+setTimeout(()=>flash.classList.remove('on'),120);
+}
+let avatar,label;
+let nearNPC=null;
+for(let n of G.npcs){
+if(n.hide)continue;
+const d=Math.sqrt((G.p.x-n.x)**2+(G.p.y-n.y)**2);
+if(d<80){
+nearNPC=n;
+break;
+}
+}
+let emtGroup=null;
+const emts=G.npcs.filter(n=>n.type==='emt');
+if(emts.length===3){
+const cx=emts[0].x,cy=emts[0].y;
+const d=Math.sqrt((G.p.x-cx)**2+(G.p.y-cy)**2);
+if(d<250)emtGroup=emts;
+}
+if(emtGroup){
+avatar='🕴🕴🕴';
+label='EMT group photo';
+}else if(nearNPC){
+avatar=nearNPC.av;
+label='Photo with '+nearNPC.name;
+if(nearNPC.type==='helena'){avatar='👵👻';label='Helena anniversary (something behind...)';}
+if(nearNPC.type==='victor'){label='Victor ID photo';}
+if(nearNPC.type==='office'){label='Office Worker ID photo';}
+if(nearNPC.type==='postman'){label='Postman ID photo';}
+if(nearNPC.type==='sophie'){avatar='👧👻';label='Sophie family photo (she is alone...)';}
+}else{
+avatar=G.scene==='shop'?'🏚':(G.scene==='corridor'?'🚪':(G.scene==='storage'?'📦':(G.scene==='garage'?'🚗':'🏠')));
+label=scenes[G.scene].name+' - snapshot';
+}
+const photo={
+id:Date.now(),
+avatar:avatar,
+label:label,
+scene:G.scene,
+sceneName:scenes[G.scene].name,
+x:G.p.x,
+y:G.p.y,
+fresh:true,
+hasCustomer:!!nearNPC,
+customerType:nearNPC?nearNPC.type:null,
+isEMT:!!emtGroup
+};
+G.st.photos.push(photo);
+if(navigator.vibrate)navigator.vibrate(50);
+const hint=document.createElement('div');
+hint.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);color:#c8a85c;font-size:1.2rem;z-index:200;pointer-events:none;animation:fadeOut 1s forwards';
+hint.textContent='📸 Click!';
+document.body.appendChild(hint);
+setTimeout(()=>hint.remove(),1000);
+setTimeout(()=>{
+cancelViewfinder();
+},400);
+}
+
+function spawnWhiteEye(){
+if(G.st.whiteEyeDone)return;
+G.st.whiteEyeDone=true;
+G.st.whiteEyeActive=true;
+const npc={x:400,y:750,av:'👁',name:'???',type:'whiteEye',targetX:400,targetY:500};
+G.npcs.push(npc);
+moveNPCToCounter(npc,'whiteEye');
+setTimeout(()=>{
+walkWhiteEye();
+},3000);
+}
+
+function walkWhiteEye(){
+const n=G.npcs.find(x=>x.type==='whiteEye');
+if(!n)return;
+if(G.scene==='shop'){
+n.targetX=200;
+n.targetY=700;
+moveNPCToCounter(n,'whiteEye');
+setTimeout(()=>{
+const n2=G.npcs.find(x=>x.type==='whiteEye');
+if(n2){
+n2.targetX=400;
+n2.targetY=750;
+n2.leaving=true;
+moveNPCToCounter(n2,'whiteEye');
+}
+setTimeout(()=>{
+G.st.whiteEyeActive=false;
+G.npcs=G.npcs.filter(x=>x.type!=='whiteEye');
+if(G.st.nextCustTimer===null){
+scheduleNextCust();
+}
+},3500);
+},2500);
+}else{
+n.targetX=400;
+n.targetY=750;
+n.leaving=true;
+moveNPCToCounter(n,'whiteEye');
+setTimeout(()=>{
+G.st.whiteEyeActive=false;
+G.npcs=G.npcs.filter(x=>x.type!=='whiteEye');
+if(G.st.nextCustTimer===null){
+scheduleNextCust();
+}
+},2500);
+}
+}
+
+function spawnEmilySecond(){
+if(G.st.emilySecondSpawned)return;
+G.st.emilySecondSpawned=true;
+const npc={x:250,y:750,av:'👤',name:'Emily',type:'emily',targetX:250,targetY:400,pale:true,isSecond:true};
+G.npcs.push(npc);
+moveNPCToCounter(npc,'emilySecond');
+showDia('emilySecond',()=>{
+const e=G.npcs.find(n=>n.isSecond);
+if(e){
+e.targetX=400;
+e.targetY=900;
+e.leaving=true;
+moveNPCToCounter(e,'emilySecond');
+}
+setTimeout(()=>{
+const slot=G.st.custQueue.indexOf('jack');
+if(slot>=0){
+G.st.custIdx=slot;
+scheduleNextCust();
+}
+},2000);
+});
+}
+
+function spawnFrank(){
+if(G.st.frankMet)return;
+G.st.frankReady=true;
+const fr=G.npcs.find(n=>n.type==='frank');
+if(fr)return;
+const npc={x:960,y:800,av:'🧑',name:'Frank',type:'frank',targetX:960,targetY:680};
+G.npcs.push(npc);
+moveNPCToCounter(npc,'frank');
+}
+
+function ensureDeliveryObjs(){
+let truck=G.objs.find(o=>o.t==='truck');
+let courier=G.objs.find(o=>o.t==='courier');
+let parcel=G.objs.find(o=>o.t==='parcel');
+if(!truck){
+truck={t:'truck',x:-200,y:600,w:180,h:100,label:'Truck',show:false};
+G.objs.push(truck);
+}
+if(!courier){
+courier={t:'courier',x:-100,y:680,w:50,h:50,label:'Courier',show:false};
+G.objs.push(courier);
+}
+if(!parcel){
+parcel={t:'parcel',x:420,y:550,w:50,h:50,label:'Parcel',show:false};
+G.objs.push(parcel);
+}
+return{truck,courier,parcel};
+}
+
+function startDelivery(){
+if(G.st.deliveryActive)return;
+G.st.deliveryActive=true;
+G.st.deliveryParcel=false;
+const refs=ensureDeliveryObjs();
+if(G.scene!=='street'){
+toast('You hear a truck outside...',2200);
+}
+refs.truck.x=-200;
+refs.truck.show=true;
+refs.courier.x=-100;
+refs.courier.y=680;
+refs.courier.show=true;
+refs.parcel.show=false;
+let tx=-200;
+const step=()=>{
+if(!G.st.deliveryActive)return;
+tx+=8;
+const tr=G.objs.find(o=>o.t==='truck');
+const co=G.objs.find(o=>o.t==='courier');
+if(tr)tr.x=tx;
+if(co)co.x=tx+60;
+if(tx<400){
+requestAnimationFrame(step);
+}else{
+moveCourierOut();
+}
+};
+step();
+}
+
+function moveCourierOut(){
+const courier=G.objs.find(o=>o.t==='courier');
+if(!courier)return;
+let cy=courier.y;
+const step=()=>{
+if(!G.st.deliveryActive)return;
+cy+=6;
+courier.y=cy;
+if(cy<720){
+requestAnimationFrame(step);
+}else{
+G.st.deliveryParcel=true;
+const pa=G.objs.find(o=>o.t==='parcel');
+if(pa)pa.show=true;
+toast('[Package delivered! Go to the door.]',2500);
+setTimeout(()=>{
+const courier2=G.objs.find(o=>o.t==='courier');
+if(!courier2)return;
+let backY=courier2.y;
+const back=()=>{
+if(!G.st.deliveryActive)return;
+backY-=6;
+courier2.y=backY;
+if(backY>680){
+requestAnimationFrame(back);
+}else{
+const truck=G.objs.find(o=>o.t==='truck');
+const courier3=G.objs.find(o=>o.t==='courier');
+let tx2=truck?truck.x:400;
+const drive=()=>{
+if(!G.st.deliveryActive&&!G.st.deliveryParcel)return;
+tx2-=8;
+if(truck)truck.x=tx2;
+if(courier3)courier3.x=tx2+60;
+if(tx2>-300){
+requestAnimationFrame(drive);
+}else{
+if(truck)truck.show=false;
+if(courier3)courier3.show=false;
+G.st.deliveryActive=false;
+}
+};
+drive();
+}
+};
+back();
+},500);
+}
+};
+step();
+}
+
+function openCoffeeMachine(){
+const powderEl=document.getElementById('coffeePowderView');
+const cupEl=document.getElementById('cupStatus');
+const refillBtn=document.getElementById('refillBtn');
+const msg=document.getElementById('coffeeMsg');
+if(powderEl)powderEl.textContent=G.st.coffeePowder;
+if(cupEl)cupEl.textContent=G.st.coffeeReady?'Yes ☕':'No';
+if(refillBtn)refillBtn.style.display=G.st.coffeePowder<=0?'block':'none';
+if(msg)msg.textContent='';
+if(G.st.hasCoffee&&G.st.coffeeReady){
+if(msg)msg.textContent='You have a coffee ready. Give it to Victor.';
+}
+openM('m-coffee');
+}
+
+function startBrew(){
+const msg=document.getElementById('coffeeMsg');
+if(G.st.coffeeBrewing){
+if(msg)msg.textContent='Brewing... please wait.';
+return;
+}
+if(G.st.coffeePowder<=0){
+if(msg)msg.textContent='No coffee powder. Refill first.';
+return;
+}
+if(G.st.hasCoffee&&G.st.coffeeReady){
+if(msg)msg.textContent='You already have a coffee.';
+return;
+}
+G.st.coffeeBrewing=true;
+G.st.coffeePowder--;
+const powderEl=document.getElementById('coffeePowderView');
+if(powderEl)powderEl.textContent=G.st.coffeePowder;
+if(msg)msg.textContent='Brewing... 10 seconds';
+const bar=document.getElementById('timerBar');
+const inner=document.getElementById('timerBarInner');
+if(bar){bar.classList.add('show');}
+if(inner){inner.style.width='0%';}
+let elapsed=0;
+const iv=setInterval(()=>{
+elapsed+=100;
+if(inner)inner.style.width=Math.min(100,(elapsed/10000)*100)+'%';
+if(elapsed>=10000){
+clearInterval(iv);
+if(bar)bar.classList.remove('show');
+G.st.coffeeBrewing=false;
+G.st.coffeeReady=true;
+G.st.hasCoffee=true;
+const cupEl=document.getElementById('cupStatus');
+if(cupEl)cupEl.textContent='Yes ☕';
+if(msg)msg.textContent='Coffee ready!';
+const anim=document.getElementById('coffeeAnim');
+if(anim){
+anim.classList.add('show');
+setTimeout(()=>anim.classList.remove('show'),1200);
+}
+const coffeeSlot=document.getElementById('s-coffee');
+if(coffeeSlot)coffeeSlot.style.display='flex';
+const nCoffee=document.getElementById('n-coffee');
+if(nCoffee)nCoffee.textContent='1';
+}
+},100);
+}
+
+function refillCoffee(){
+if(G.st.money<5){
+toast('Need $5',1800);
+return;
+}
+G.st.money-=5;
+updateMoney();
+G.st.coffeePowder=5;
+const powderEl=document.getElementById('coffeePowderView');
+if(powderEl)powderEl.textContent='5';
+const refillBtn=document.getElementById('refillBtn');
+if(refillBtn)refillBtn.style.display='none';
+const msg=document.getElementById('coffeeMsg');
+if(msg)msg.textContent='Coffee powder refilled.';
+}
+
+function giveCoffeeToVictor(){
+G.st.victorCoffeePaid=true;
+G.st.hasCoffee=false;
+G.st.coffeeReady=false;
+const coffeeSlot=document.getElementById('s-coffee');
+if(coffeeSlot)coffeeSlot.style.display='none';
+showDia('victorCoffee',()=>{
+G.st.money+=15;
+updateMoney();
+showPayAnim(15);
+});
+}
+
+function takeBroom(){
+if(G.st.hasBroom){toast('Already have broom',1800);return;}
+G.st.hasBroom=true;
+const slot=document.getElementById('s-broom');
+if(slot)slot.style.display='flex';
+const item=document.getElementById('broomItem');
+if(item)item.style.display='none';
+toast('✓ Picked up broom',1800);
+}
+
+function openLetter(){
+if(!G.st.hasLetter)return;
+openM('m-letter');
+}
+
+const letterSlot=document.getElementById('s-letter');
+if(letterSlot){
+letterSlot.addEventListener('click',openLetter);
+}
+
+function sweepGarbage(g){
+G.st.garbage=G.st.garbage.filter(x=>x!==g);
+G.st.garbageScan++;
+if(G.st.garbageScan>=3){
+G.st.garbageScan=0;
+G.st.money+=50;
+updateMoney();
+showPayAnim(50);
+toast('✓ Cleaned! +$50',2000);
+}else{
+toast('✓ Swept. ('+G.st.garbageScan+'/3)',1500);
+}
+}
+
+function spawnGarbage(){
+if(G.st.garbage.length>=5)return;
+const count=1+Math.floor(Math.random()*3);
+const spots=[
+{scene:'shop',x:400,y:600},
+{scene:'shop',x:800,y:400},
+{scene:'shop',x:200,y:700},
+{scene:'corridor',x:600,y:400},
+{scene:'corridor',x:900,y:600},
+{scene:'street',x:600,y:500},
+{scene:'street',x:900,y:700}
+];
+for(let i=0;i<count;i++){
+if(G.st.garbage.length>=5)break;
+const s=spots[Math.floor(Math.random()*spots.length)];
+if(G.st.garbage.some(g=>Math.abs(g.x-s.x)<40&&Math.abs(g.y-s.y)<40&&g.scene===s.scene))continue;
+G.st.garbage.push({scene:s.scene,x:s.x,y:s.y});
+}
+}
+
+function startMonsterChase(){
+G.st.monsterChase=true;
+G.st.inChase=true;
+const blood=document.getElementById('bloodOverlay');
+if(blood)blood.classList.add('on');
+toast('RUN! Get back inside!',2500);
+}
+
+function takeGas(){
+if(G.st.hasGas){
+toast('Already have gas',1800);
+return;
+}
+G.st.hasGas=true;
+G.st.inv.gas=1;
+const gasSlot=document.getElementById('s-gas');
+const gasNum=document.getElementById('n-gas');
+const gasItem=document.getElementById('gasItem');
+const gasStatus=document.getElementById('gasStatus');
+if(gasSlot)gasSlot.style.display='flex';
+if(gasNum)gasNum.textContent='1';
+if(gasItem)gasItem.style.display='none';
+if(gasStatus)gasStatus.textContent='Gas can taken';
+toast('✓ Got spare gas',1800);
+}
+
+function buildQueue(){
+const base=['emily','jack','margaret','max','helena','victor'];
+const extra=['derek','nina','owen','sophie','marcus','tommy'];
+const mixed=base.slice();
+extra.forEach(e=>{
+const pos=1+Math.floor(Math.random()*(mixed.length-1));
+mixed.splice(pos,0,e);
+});
+mixed.push('postman');
+mixed.push('leonard');
+return mixed;
+}
+
+function startCustQueue(){
+G.st.custQueue=buildQueue();
+G.st.custIdx=0;
+G.st.printCount=0;
+nextCust();
+}
+
+function scheduleNextCust(){
+if(G.st.nextCustTimer)clearTimeout(G.st.nextCustTimer);
+const delay=15000+Math.floor(Math.random()*10000);
+G.st.nextCustTimer=setTimeout(()=>{
+G.st.nextCustTimer=null;
+nextCust();
+},delay);
+}
+
+function nextCust(){
+if(G.st.blackoutActive)return;
+if(G.st.whiteEyeActive)return;
+if(G.st.custIdx>=G.st.custQueue.length){
+if(G.st.leonardDone&&!G.st.carlMet&&!G.st.emtDone){
+G.st.emtDone=true;
+spawnEMT();
+}
+return;
+}
+const type=G.st.custQueue[G.st.custIdx];
+if(type==='leonard'){
+const npc={x:400,y:750,av:'🧑',name:'Leonard',type:'leonard',targetX:500,targetY:400};
+G.npcs.push(npc);
+moveNPCToCounter(npc,'leonard');
+showDia('leonard',()=>{
+G.st.money+=200;
+updateMoney();
+showPayAnim(200);
+G.st.leonardDone=true;
+G.st.currentCust=null;
+G.st.custIdx++;
+const leo=G.npcs.find(n=>n.type==='leonard');
+if(leo){
+leo.targetX=400;
+leo.targetY=800;
+leo.leaving=true;
+moveNPCToCounter(leo,'leonard');
+}
+});
+return;
+}
+const c=custData[type];
+G.st.printCount=0;
+spawnCust(type);
+}
+
+function spawnCust(type){
+const c=custData[type];
+const npc={x:400,y:750,av:c.av,name:c.name,type:type,targetX:500,targetY:400};
+G.npcs.push(npc);
+G.st.currentCust=c;
+G.st.printCount=0;
+moveNPCToCounter(npc,type);
+}
+
+function moveNPCToCounter(npc,type){
+const dx=npc.targetX-npc.x;
+const dy=npc.targetY-npc.y;
+const dist=Math.sqrt(dx*dx+dy*dy);
+if(dist<5){
+npc.x=npc.targetX;
+npc.y=npc.targetY;
+if(npc.leaving){
+G.npcs=G.npcs.filter(n=>n!==npc);
+if(type==='emt')return;
+if(type==='emilySecond')return;
+if(type==='frank')return;
+if(type==='whiteEye')return;
+setTimeout(()=>toast('[System] Something outside. Go check.',2200),800);
+return;
+}
+if(type==='emilySecond')return;
+if(type==='frank')return;
+if(type==='whiteEye')return;
+if(type!=='leonard')showDia(type);
+return;
+}
+const speed=2;
+npc.x+=(dx/dist)*speed;
+npc.y+=(dy/dist)*speed;
+requestAnimationFrame(()=>moveNPCToCounter(npc,type));
+}
+
+function spawnEMT(){
+const positions=[
+{x:450,y:400},
+{x:520,y:400},
+{x:590,y:400}
+];
+positions.forEach((pos,i)=>{
+const npc={x:600+i*40,y:750,av:'🕴',name:'EMT',type:'emt',targetX:pos.x,targetY:pos.y,emtIndex:i};
+G.npcs.push(npc);
+moveNPCToCounter(npc,'emt');
+});
+setTimeout(()=>{
+showDia('emtIntro',()=>{
+showDia('emtDone',()=>{
+const emts=G.npcs.filter(n=>n.type==='emt');
+emts.forEach(e=>{
+e.targetX=600;
+e.targetY=850;
+e.leaving=true;
+moveNPCToCounter(e,'emt');
+});
+});
+});
+},2500);
+}
+
+function useGun(){
+if(!G.st.hasGun||!G.st.fakeFrank)return;
+if(G.st.monsterChase){
+playGunshot();
+toast('🔫 BANG! The monster shrieks and retreats!',2200);
+G.st.monsterChase=false;
+G.st.inChase=false;
+const blood=document.getElementById('bloodOverlay');
+if(blood)blood.classList.remove('on');
+setTimeout(()=>spawnAgent(),1500);
+}
+}
+
+function spawnAgent(){
+G.npcs.push({x:400,y:750,av:'🕴',name:'Agent',type:'agent',targetX:500,targetY:400});
+moveNPCToCounter(G.npcs[G.npcs.length-1],'agent');
+setTimeout(()=>{
+showDia('agent',()=>{
+playAgentShoot();
+});
+},500);
+}
+
+function playAgentShoot(){
+const agent=G.npcs.find(n=>n.type==='agent');
+const gun=document.getElementById('agentGun');
+const mf=document.getElementById('muzzleFlash');
+if(!agent||!gun)return;
+const sx=agent.x-G.cam.x;
+const sy=agent.y-G.cam.y;
+gun.style.left=(sx+10)+'px';
+gun.style.top=(sy+10)+'px';
+gun.style.transform='translateY(30px) rotate(0deg) scale(0.6)';
+gun.style.opacity='0';
+gun.classList.add('show');
+setTimeout(()=>{
+gun.style.opacity='1';
+gun.style.transform='translateY(0) rotate(-30deg) scale(1.2)';
+},50);
+setTimeout(()=>{
+playGunshot();
+if(mf){
+mf.style.left=(sx+30)+'px';
+mf.style.top=(sy-10)+'px';
+mf.classList.add('show');
+}
+const blood=document.getElementById('bloodOverlay');
+if(blood)blood.classList.add('on');
+},1000);
+setTimeout(()=>{
+gun.classList.remove('show');
+if(mf)mf.classList.remove('show');
+G.st.playerDead=true;
+const credits=document.getElementById('credits');
+if(credits)credits.classList.add('show');
+},2200);
+}
+
+function showPayAnim(amount){
+const anim=document.getElementById('payAnim');
+const payAmt=document.getElementById('payAmount');
+if(anim&&payAmt){
+payAmt.textContent=amount;
+anim.classList.add('show');
+setTimeout(()=>anim.classList.remove('show'),1500);
+}
+}
+
+function changeCopies(delta){
+G.st.copyCount=Math.max(1,Math.min(10,G.st.copyCount+delta));
+document.getElementById('copyCount').textContent=G.st.copyCount;
+updateMatStatus();
+}
+
+function updateMatStatus(){
+const need=G.st.copyCount;
+const paper=G.st.inv.paper;
+const ink=G.st.inv.ink;
+const bag=G.st.inv.bag;
+const el=document.getElementById('matStatus');
+if(!el)return;
+if(paper<need||ink<need){
+el.style.color='#ff6b6b';
+el.textContent='✕ Not enough materials (need '+need+' paper + '+need+' ink)';
+}else if(bag<1){
+el.style.color='#ffd700';
+el.textContent='⚠ OK to print, but no bags left';
+}else{
+el.style.color='#50c878';
+el.textContent='✓ Materials OK for '+need+' copy';
+}
+}
+
+function openPrinter(){
+const sel=document.getElementById('printSelect');
+const printing=document.getElementById('printing');
+const done=document.getElementById('printDone');
+const status=document.getElementById('printStatus');
+const pPaper=document.getElementById('pPaper');
+const pInk=document.getElementById('pInk');
+const pBag=document.getElementById('pBag');
+if(printing)printing.style.display='none';
+if(done)done.style.display='none';
+if(status)status.style.display='flex';
+if(pPaper)pPaper.textContent=G.st.inv.paper;
+if(pInk)pInk.textContent=G.st.inv.ink;
+if(pBag)pBag.textContent=G.st.inv.bag;
+if(G.st.currentCust&&G.st.currentCust.count>0&&G.st.printCount===0){
+G.st.copyCount=G.st.currentCust.count;
+}
+document.getElementById('copyCount').textContent=G.st.copyCount;
+updateMatStatus();
+if(sel){
+sel.innerHTML='';
+if(G.st.photos.length===0){
+sel.innerHTML='<p style="color:#666;font-size:0.7rem;grid-column:1/3">No photos yet. Take some first.</p>';
+}else{
+G.st.photos.forEach((ph)=>{
+const d=document.createElement('div');
+d.style.cssText='border:1px solid '+(G.st.selectedPhoto&&G.st.selectedPhoto.id===ph.id?'#c8a85c':'#333')+';padding:4px;cursor:pointer;font-size:1.4rem;text-align:center';
+d.textContent=ph.avatar;
+d.title=ph.label;
+d.onclick=()=>{
+G.st.selectedPhoto=ph;
+openPrinter();
+};
+sel.appendChild(d);
+});
+}
+}
+openM('m-printer');
+}
+
+function doPrint(){
+if(!G.st.selectedPhoto){toast('Select a photo first',1800);return;}
+if(G.st.currentCust&&G.st.printCount>=G.st.currentCust.count){
+toast('Already printed enough for this customer. Click Bag.',2200);
+return;
+}
+const need=G.st.copyCount;
+if(G.st.inv.paper<need){toast('Need '+need+' photo paper',1800);return;}
+if(G.st.inv.ink<need){toast('Need '+need+' ink',1800);return;}
+playPrinter();
+G.st.inv.paper-=need;
+G.st.inv.ink-=need;
+updateInv();
+const status=document.getElementById('printStatus');
+const printing=document.getElementById('printing');
+const done=document.getElementById('printDone');
+if(status)status.style.display='none';
+if(printing)printing.style.display='block';
+if(done)done.style.display='none';
+G.st.printCount+=need;
+setTimeout(()=>{
+if(printing)printing.style.display='none';
+if(done)done.style.display='block';
+},1600);
+}
+
+function bagPhoto(){
+if(G.st.inv.bag<1){toast('Need a bag',1800);return;}
+const ph=G.st.selectedPhoto;
+if(!ph){toast('No photo selected',1800);return;}
+
+if(ph.isEMT){
+const emts=G.npcs.filter(n=>n.type==='emt');
+if(emts.length===3){
+G.st.inv.bag--;
+updateInv();
+G.st.selectedPhoto=null;
+G.st.printCount=0;
+closeM('m-printer');
+emts.forEach(e=>{
+e.targetX=600;
+e.targetY=850;
+e.leaving=true;
+moveNPCToCounter(e,'emt');
+});
+toast('You hand the photo to the EMT agents...',2200);
+setTimeout(()=>{
+showDia('emtDone',()=>{
+G.st.carlReady=true;
+setTimeout(()=>toast('[System] Go outside and check.',2200),800);
+});
+},500);
+return;
+}
+}
+
+if(!G.st.currentCust){
+toast('✓ Photo bagged.',1500);
+G.st.inv.bag--;
+updateInv();
+G.st.selectedPhoto=null;
+closeM('m-printer');
+return;
+}
+
+if(!ph.hasCustomer||ph.customerType!==G.st.currentCust.type){
+closeM('m-printer');
+G.st.printCount=0;
+showDia('wrongPhoto',()=>{
+G.st.selectedPhoto=null;
+});
+return;
+}
+
+const needCount=G.st.currentCust.count||1;
+if(G.st.printCount<needCount){
+const more=needCount-G.st.printCount;
+closeM('m-printer');
+toast('Customer wants '+more+' more copy. Print more first.',2200);
+return;
+}
+
+const c=G.st.currentCust;
+G.st.inv.bag--;
+updateInv();
+G.st.money+=c.pay;
+updateMoney();
+showPayAnim(c.pay);
+toast('✓ Delivered! +$'+c.pay,2000);
+
+const wasFirst=c.type==='emily';
+const wasPostman=c.type==='postman';
+const wasMax=c.type==='max';
+const wasTommy=c.type==='tommy';
+G.npcs=[];
+G.st.currentCust=null;
+G.st.selectedPhoto=null;
+G.st.printCount=0;
+
+if(wasPostman&&!G.st.hasLetter){
+G.st.hasLetter=true;
+const letterSlot=document.getElementById('s-letter');
+if(letterSlot)letterSlot.style.display='flex';
+setTimeout(()=>toast('[System] The postman handed you a letter.',2200),800);
+}
+
+if(wasMax&&!G.st.frankReady){
+setTimeout(()=>{
+toast('[System] You hear a car sputter outside...',2500);
+G.st.frankReady=true;
+setTimeout(()=>{
+spawnFrank();
+},1200);
+},1500);
+}
+
+if(wasTommy&&!G.st.whiteEyeDone){
+G.st.custIdx++;
+closeM('m-printer');
+setTimeout(()=>{
+toast('[System] The door creaks open...',2500);
+setTimeout(()=>{
+spawnWhiteEye();
+},1500);
+},1200);
+return;
+}
+
+if(c.type==='office'){
+if(!G.st.fakeFrankTriggered){
+G.st.fakeFrankTriggered=true;
+setTimeout(()=>toast('[System] Someone is outside...',2200),1500);
+}
+}else if(wasFirst&&!G.st.blackoutDone){
+G.st.custIdx++;
+closeM('m-printer');
+setTimeout(()=>triggerBlackout(),1200);
+return;
+}else{
+G.st.custIdx++;
+closeM('m-printer');
+scheduleNextCust();
+return;
+}
+closeM('m-printer');
+}
+
+function triggerBlackout(){
+G.st.blackoutDone=true;
+G.st.blackoutActive=true;
+G.st.power=false;
+showDia('powerOut',()=>{
+const dark=document.getElementById('darkness');
+if(dark)dark.classList.add('on');
+toast('Power out. Go to back corridor and fix the fuse.',2500);
+});
+}
+
+function openPCHome(){
+const pcHome=document.getElementById('pcHome');
+const pcShop=document.getElementById('pcShop');
+const pcNews=document.getElementById('pcNews');
+const pcNewsDetail=document.getElementById('pcNewsDetail');
+const pcMoney=document.getElementById('pcMoney');
+if(pcHome)pcHome.style.display='block';
+if(pcShop)pcShop.style.display='none';
+if(pcNews)pcNews.style.display='none';
+if(pcNewsDetail)pcNewsDetail.style.display='none';
+if(pcMoney)pcMoney.textContent=G.st.money;
+openM('m-pc');
+}
+
+function showPCPage(page){
+const pcHome=document.getElementById('pcHome');
+const pcShop=document.getElementById('pcShop');
+const pcNews=document.getElementById('pcNews');
+const pcNewsDetail=document.getElementById('pcNewsDetail');
+if(pcHome)pcHome.style.display='none';
+if(pcShop)pcShop.style.display='none';
+if(pcNews)pcNews.style.display='none';
+if(pcNewsDetail)pcNewsDetail.style.display='none';
+if(page==='shop'&&pcShop)pcShop.style.display='block';
+if(page==='news'&&pcNews)pcNews.style.display='block';
+}
+
+function backToPCHome(){
+const pcHome=document.getElementById('pcHome');
+const pcShop=document.getElementById('pcShop');
+const pcNews=document.getElementById('pcNews');
+const pcNewsDetail=document.getElementById('pcNewsDetail');
+if(pcHome)pcHome.style.display='block';
+if(pcShop)pcShop.style.display='none';
+if(pcNews)pcNews.style.display='none';
+if(pcNewsDetail)pcNewsDetail.style.display='none';
+}
+
+function buy(item){
+const prices={paper:20,ink:30,bag:10,coffee:5,gun:200};
+if(G.st.money<prices[item]){
+toast('Insufficient funds!',1800);
+return;
+}
+G.st.money-=prices[item];
+updateMoney();
+switch(item){
+case'paper':
+G.st.inv.paper+=5;
+break;
+case'ink':
+G.st.inv.ink+=3;
+break;
+case'bag':
+G.st.inv.bag+=10;
+break;
+case'coffee':
+G.st.coffeePowder+=5;
+break;
+case'gun':
+G.st.hasGun=true;
+const gunBtn=document.getElementById('gunBtn');
+if(gunBtn)gunBtn.classList.add('show');
+toast('🔫 Revolver acquired!',2200);
+if(!G.st.officeCust){
+G.st.officeCust=true;
+setTimeout(()=>spawnOfficeWorker(),3000);
+}
+break;
+}
+updateInv();
+toast('Purchased! Delivery arriving...',2000);
+setTimeout(()=>{
+startDelivery();
+},5000);
+}
+
+function spawnOfficeWorker(){
+const c=custData.office;
+const npc={x:400,y:750,av:c.av,name:c.name,type:'office',targetX:500,targetY:400};
+G.npcs.push(npc);
+G.st.currentCust=c;
+G.st.printCount=0;
+moveNPCToCounter(npc,'office');
+}
+
+function refresh(){
+G.st.refresh++;
+const refreshBtn=document.getElementById('refreshBtn');
+if(refreshBtn)refreshBtn.textContent='🔄 Refresh ('+G.st.refresh+')';
+}
+
+function updateMoney(){
+const moneyEl=document.getElementById('money');
+const pcMoney=document.getElementById('pcMoney');
+if(moneyEl)moneyEl.textContent='💰 $'+G.st.money;
+if(pcMoney)pcMoney.textContent=G.st.money;
+}
+
+function updateInv(){
+const nPaper=document.getElementById('n-paper');
+const nInk=document.getElementById('n-ink');
+const nBag=document.getElementById('n-bag');
+const pPaper=document.getElementById('pPaper');
+const pInk=document.getElementById('pInk');
+const pBag=document.getElementById('pBag');
+if(nPaper)nPaper.textContent=G.st.inv.paper;
+if(nInk)nInk.textContent=G.st.inv.ink;
+if(nBag)nBag.textContent=G.st.inv.bag;
+if(pPaper)pPaper.textContent=G.st.inv.paper;
+if(pInk)pInk.textContent=G.st.inv.ink;
+if(pBag)pBag.textContent=G.st.inv.bag;
+}
+
+function sel(item){
+document.querySelectorAll('.invSlot').forEach(e=>e.classList.remove('on'));
+const slot=document.getElementById('s-'+item);
+if(slot)slot.classList.add('on');
+}
+
+function openM(id){
+const el=document.getElementById(id);
+if(el)el.classList.add('show');
+}
+function closeM(id){
+const el=document.getElementById(id);
+if(el)el.classList.remove('show');
+}
+
+function setupJoystick(){
+const jArea=document.getElementById('joystick');
+const jKnob=document.getElementById('jKnob');
+if(!jArea||!jKnob){
+console.error('Joystick elements not found');
+return;
+}
+jArea.addEventListener('touchstart',e=>{
+e.preventDefault();
+const t=e.touches[0];
+const r=jArea.getBoundingClientRect();
+G.joy.on=true;
+G.joy.ox=r.left+r.width/2;
+G.joy.oy=r.top+r.height/2;
+updateJ(t.clientX,t.clientY);
+},{passive:false});
+jArea.addEventListener('touchmove',e=>{
+e.preventDefault();
+if(!G.joy.on)return;
+updateJ(e.touches[0].clientX,e.touches[0].clientY);
+},{passive:false});
+jArea.addEventListener('touchend',e=>{
+e.preventDefault();
+G.joy.on=false;
+G.joy.dx=0;
+G.joy.dy=0;
+jKnob.style.transform='translate(0px,0px)';
+},{passive:false});
+jArea.addEventListener('mousedown',e=>{
+e.preventDefault();
+const r=jArea.getBoundingClientRect();
+G.joy.on=true;
+G.joy.ox=r.left+r.width/2;
+G.joy.oy=r.top+r.height/2;
+updateJ(e.clientX,e.clientY);
+});
+document.addEventListener('mousemove',e=>{
+if(!G.joy.on)return;
+updateJ(e.clientX,e.clientY);
+});
+document.addEventListener('mouseup',()=>{
+G.joy.on=false;
+G.joy.dx=0;
+G.joy.dy=0;
+jKnob.style.transform='translate(0px,0px)';
+});
+}
+
+function updateJ(cx,cy){
+const max=25;
+let dx=cx-G.joy.ox;
+let dy=cy-G.joy.oy;
+const d=Math.sqrt(dx*dx+dy*dy);
+if(d>max){
+dx=(dx/d)*max;
+dy=(dy/d)*max;
+}
+const jKnob=document.getElementById('jKnob');
+if(jKnob)jKnob.style.transform=`translate(${dx}px,${dy}px)`;
+G.joy.dx=dx/max;
+G.joy.dy=dy/max;
+}
+
+function updateP(){
+if(G.st.playerDead||!G.st.gameStarted)return;
+if(G.st.viewfinderOn)return;
+const p=G.p;
+if(Math.abs(G.joy.dx)>0.1||Math.abs(G.joy.dy)>0.1){
+p.x+=G.joy.dx*p.sp;
+p.y+=G.joy.dy*p.sp;
+}
+p.x=Math.max(30,Math.min(G.map.w-30,p.x));
+p.y=Math.max(30,Math.min(G.map.h-30,p.y));
+G.cam.x=p.x-c.width/2;
+G.cam.y=p.y-c.height/2;
+if(G.map.w>c.width){
+G.cam.x=Math.max(0,Math.min(G.map.w-c.width,G.cam.x));
+}else{
+G.cam.x=(G.map.w-c.width)/2;
+}
+if(G.map.h>c.height){
+G.cam.y=Math.max(0,Math.min(G.map.h-c.height,G.cam.y));
+}else{
+G.cam.y=(G.map.h-c.height)/2;
+}
+}
+
+function loop(){
+G.tick++;
+updateP();
+G.near=checkNear();
+draw();
+if(!G.st.blackoutActive&&G.st.gameStarted&&!G.st.playerDead){
+G.st.garbageTimer++;
+if(G.st.garbageTimer>=14400){
+G.st.garbageTimer=0;
+spawnGarbage();
+}
+}
+const dark=document.getElementById('darkness');
+if(dark){
+if(!G.st.power&&G.scene==='shop'){
+dark.classList.add('on');
+const f=document.getElementById('flash');
+if(f){
+const sx=G.p.x-G.cam.x;
+const sy=G.p.y-G.cam.y;
+f.style.left=(sx-70)+'px';
+f.style.top=(sy-70)+'px';
+}
+}else if(G.st.power){
+dark.classList.remove('on');
+}
+}
+requestAnimationFrame(loop);
+}
+
+const cvs=document.getElementById('c');
+if(cvs){
+cvs.addEventListener('click',()=>{
+if(G.st.viewfinderOn)return;
+if(G.near)act();
+});
+}
+
+document.addEventListener('keydown',e=>{
+if(G.st.playerDead||!G.st.gameStarted)return;
+if(G.st.viewfinderOn){
+if(e.key==='Escape'){
+cancelViewfinder();
+}
+return;
+}
+if(G.st.inDia){
+if(e.key===' '||e.key==='Enter'){
+G.st.diaIdx++;
+nextDia();
+}
+return;
+}
+const sp=G.p.sp;
+switch(e.key){
+case'w':
+case'ArrowUp':
+G.p.y-=sp;
+break;
+case's':
+case'ArrowDown':
+G.p.y+=sp;
+break;
+case'a':
+case'ArrowLeft':
+G.p.x-=sp;
+break;
+case'd':
+case'ArrowRight':
+G.p.x+=sp;
+break;
+case'e':
+case' ':
+if(G.near)act();
+break;
+}
+G.p.x=Math.max(30,Math.min(G.map.w-30,G.p.x));
+G.p.y=Math.max(30,Math.min(G.map.h-30,G.p.y));
+});
+
+function startLogo(){
+spawnLogoParticles();
+setTimeout(()=>{
+const logo=document.getElementById('logoScreen');
+if(logo){
+logo.classList.add('fade');
+setTimeout(()=>{
+logo.style.display='none';
+startGame();
+},1200);
+}
+},3500);
+}
+
+function startGame(){
+G.st.gameStarted=true;
+G.p.x=400;
+G.p.y=500;
+loadScene('street');
+showDia('intro');
+}
+
+setupJoystick();
+startLogo();
+loop();
+</script>
+</body> </html>
