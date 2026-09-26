@@ -112,15 +112,72 @@ canvas{position:fixed;top:0;left:0;z-index:1}
 #vfCancel.show{display:flex}
 #vfShutter{position:fixed;bottom:80px;right:20px;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,#c8a85c 0%,#8b7355 100%);border:3px solid #f5f5dc;z-index:160;display:none;align-items:center;justify-content:center;font-size:1.8rem;cursor:pointer;box-shadow:0 0 25px rgba(200,168,92,0.6);pointer-events:auto;animation:vfShutterPulse 1.5s infinite}
 #vfShutter.show{display:flex}
-@keyframes vfShutterPulse{0%,100%{box-shadow:0 0 25px rgba(200,168,92,0.6)}50%{box-shadow:0 0 40px rgba(200,168,92,0.9)}}</style>
-</head> <body> <div id="logoScreen"> <div class="glow"></div> <img src="https://i.postimg.cc/GmNkJqWn/retouch-2026071016200543.png" alt="流筠工作室"> <h2>流筠工作室</h2> <p>LIUYUN STUDIO</p> </div> <canvas id="c"></canvas> <div id="noise"></div> <div class="flash-overlay" id="flashOverlay"></div> <div id="bloodOverlay"></div> <div id="agentGun">🔫</div> <div id="muzzleFlash"></div> <div id="coffeeAnim">☕</div> <div id="timerBar"><div id="timerBarInner"></div></div> <div id="toast"></div> <div id="viewfinder"> <div id="vfGrid"></div> <div id="vfGridH1"></div> <div id="vfGridH2"></div> <div id="vfCornerTL"></div> <div id="vfCornerTR"></div> <div id="vfCornerBL"></div> <div id="vfCornerBR"></div> <div id="vfFocus"></div> <div id="vfTop"><span>ISO 400</span><span>F2.8</span><span>🔋</span></div> <div id="vfRec"><span id="vfRecDot"></span><span>REC</span></div> </div> <div id="vfCancel" onclick="cancelViewfinder()">✕</div> <div id="vfShutter" onclick="shootFromViewfinder()">📷</div> <div id="payAnim">💵 +$<span id="payAmount">0</span></div> <div id="ui"> <div class="panel" id="money">💰 $10</div> <div class="panel" id="invBar"> <div class="invSlot on" id="s-camera" onclick="sel('camera')">📷<span class="num">∞</span></div> <div class="invSlot" id="s-paper" onclick="sel('paper')">📄<span class="num" id="n-paper">10</span></div> <div class="invSlot" id="s-ink" onclick="sel('ink')">🖋<span class="num" id="n-ink">5</span></div> <div class="invSlot" id="s-bag" onclick="sel('bag')">🛍<span class="num" id="n-bag">5</span></div> <div class="invSlot" id="s-gas" onclick="sel('gas')" style="display:none">⛽<span class="num" id="n-gas">0</span></div> <div class="invSlot" id="s-broom" onclick="sel('broom')" style="display:none">🧹</div> <div class="invSlot" id="s-letter" onclick="sel('letter')" style="display:none">✉</div> <div class="invSlot" id="s-coffee" onclick="sel('coffee')" style="display:none">☕<span class="num" id="n-coffee">0</span></div> <div class="invSlot" id="s-wrench" onclick="sel('wrench')" style="display:none">🔧</div> </div> <div class="panel" id="hint"></div> <div class="panel" id="dialogue"> <div class="who" id="dWho"></div> <div class="what" id="dWhat"></div> <div class="choices" id="dChoices"></div> <div class="tap" id="dTap">点击继续 ▼</div> </div> </div> <div id="shutterBtn" onclick="openViewfinder()">📷</div> <div id="gunBtn" onclick="useGun()">🔫</div> <div id="joystick"> <div id="jBase"></div> <div id="jKnob"></div> </div> <div id="credits"> <p class="thanks">Thank you for playing the Demo</p> <p class="role">Credits</p> <p class="big">DeepSeek</p> <p class="divider"></p> <p class="big">流筠工作室</p> <p class="studio">Publisher / 发行商</p> <p class="divider"></p> <p class="big">流筠制作组</p> <p class="studio">Production Team</p> <p class="divider"></p> <p class="big">金边逸空工作室</p> <p class="studio">Co-Development / Technical Help</p> <p class="studio">联合开发 / 技术帮助</p> <p class="divider"></p> <p class="big">kimi</p> <p class="studio">Original Prototype / 制作雏形</p> <p style="margin-top:40px;color:#666;font-size:0.8rem">TO BE CONTINUED...</p> </div> <div id="darkness"><div id="flash"></div></div> <div class="modal" id="m-wanted"> <div class="modalBox"> <span class="modalClose" onclick="closeM('m-wanted')">✕</span> <div style="background:#f5f5dc;color:#333;padding:15px;border:3px solid #8b4513;text-align:center"> <h3 style="color:#8b0000;font-size:1.1rem;letter-spacing:4px;margin-bottom:10px">★ WANTED ★</h3> <div style="width:80px;height:100px;background:#333;margin:0 auto;border:2px solid #8b0000;display:flex;align-items:center;justify-content:center;font-size:2.5rem">🍺</div> <p style="font-size:0.75rem;margin:4px 0"><b>Name:</b> Owen</p> <p style="font-size:0.75rem;margin:4px 0"><b>Charge:</b> Public Intoxication</p> <p style="font-size:0.75rem;margin:4px 0"><b>Features:</b> Flushed face, staggering gait</p> <p style="font-size:0.75rem;margin:4px 0"><b>Reward:</b> $500</p> <p style="color:#8b0000;margin-top:8px;font-size:0.75rem">⚠ Non-violent but extremely loud</p> </div> </div> </div> <div class="modal" id="m-pc"> <div class="modalBox" style="max-width:400px"> <span class="modalClose" onclick="closeM('m-pc')">✕</span> <div id="pcHome" style="text-align:center"> <h2 style="color:#c8a85c;font-size:1rem;letter-spacing:3px;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid #333">🖥 Old State PC</h2> <div style="display:flex;flex-direction:column;gap:12px"> <div style="display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #333;cursor:pointer" onclick="showPCPage('shop')"> <div style="font-size:2rem">🛒</div> <div style="text-align:left"><div style="color:#c8a85c;font-size:0.9rem">Store</div><div style="color:#666;font-size:0.7rem;margin-top:3px">Buy supplies</div></div> </div> <div style="display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #333;cursor:pointer" onclick="showPCPage('news')"> <div style="font-size:2rem">📰</div> <div style="text-align:left"><div style="color:#c8a85c;font-size:0.9rem">News</div><div style="color:#666;font-size:0.7rem;margin-top:3px">Local headlines</div></div> </div> </div> </div> <div id="pcShop" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="backToPCHome()">← Back</span> <span style="color:#c8a85c;margin-left:10px">Store</span> </div> <div style="text-align:center;color:#666;font-size:0.7rem;margin-bottom:15px">Balance: $<span id="pcMoney" style="color:#c8a85c">10</span></div> <div class="shopItem" onclick="buy('paper')"><span class="n">📄 Photo Paper (5)</span><span class="p">$20</span></div> <div class="shopItem" onclick="buy('ink')"><span class="n">🖋 Ink (3)</span><span class="p">$30</span></div> <div class="shopItem" onclick="buy('bag')"><span class="n">🛍 Bags (10)</span><span class="p">$10</span></div> <div class="shopItem" onclick="buy('coffee')"><span class="n">☕ Coffee Powder (5)</span><span class="p">$5</span></div> <div class="shopItem" id="gunShopItem" onclick="buy('gun')" style="display:none"><span class="n">🔫 Revolver</span><span class="p">$200</span></div> <button id="refreshBtn" onclick="refresh()">🔄 Refresh</button> </div> <div id="pcNews" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="backToPCHome()">← Back</span> <span style="color:#c8a85c;margin-left:10px">News</span> </div> <div style="display:flex;flex-direction:column;gap:10px"> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(0)"> <div style="display:flex;gap:10px;align-items:center"> <div style="font-size:1.8rem">☢️</div> <div> <div style="color:#c8a85c;font-size:0.85rem">Nuclear Plant Leak Reported</div> <div style="color:#666;font-size:0.65rem;margin-top:3px">Ohio — official says "no danger"</div> </div> </div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(1)"> <div style="display:flex;gap:10px;align-items:center"> <div style="font-size:1.8rem">🚨</div> <div> <div style="color:#c8a85c;font-size:0.85rem">7 Missing Persons This Month</div> <div style="color:#666;font-size:0.65rem;margin-top:3px">Police have no leads</div> </div> </div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(2)"> <div style="display:flex;gap:10px;align-items:center"> <div style="font-size:1.8rem">👥</div> <div> <div style="color:#c8a85c;font-size:0.85rem">Residents Report Strange Behavior</div> <div style="color:#666;font-size:0.65rem;margin-top:3px">"My neighbor doesn't sleep anymore"</div> </div> </div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(3)"> <div style="display:flex;gap:10px;align-items:center"> <div style="font-size:1.8rem">🏪</div> <div> <div style="color:#c8a85c;font-size:0.85rem">Violence at Elm St. Convenience Store</div> <div style="color:#666;font-size:0.65rem;margin-top:3px">Witnesses "mentally broken"</div> </div> </div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(4)"> <div style="display:flex;gap:10px;align-items:center"> <div style="font-size:1.8rem">📍</div> <div> <div style="color:#c8a85c;font-size:0.85rem">Area Near Old State Photo Blocked</div> <div style="color:#666;font-size:0.65rem;margin-top:3px">"Just 2 miles from here"</div> </div> </div> </div> </div> </div> <div id="pcNewsDetail" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="showPCPage('news')">← Back</span> <span style="color:#c8a85c;margin-left:10px">Article</span> </div> <div id="newsDetailBody"></div> </div> </div> </div> <div class="modal" id="m-printer"> <div class="modalBox printerBox" style="text-align:center;display:flex;flex-direction:column;max-height:85vh"> <span class="modalClose" onclick="closeM('m-printer')">✕</span> <p style="color:#c8a85c;margin-bottom:10px">🖨 Printer</p> <div id="printStatus" style="display:flex;flex-direction:column;flex:1;min-height:0"> <p style="color:#666;font-size:0.75rem">Need: 1 Paper + 1 Ink per copy</p> <div style="margin:12px 0;font-size:0.8rem"><div>📄 <span id="pPaper">10</span> | 🖋 <span id="pInk">5</span> | 🛍 <span id="pBag">5</span></div></div> <p style="color:#666;font-size:0.7rem;margin-bottom:10px">Select photo:</p> <div id="printSelect" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;padding-right:4px;flex-shrink:1"></div> <div id="printFooter" style="flex-shrink:0"> <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px"> <span style="color:#b0a080;font-size:0.8rem">Copies:</span> <button onclick="changeCopies(-1)" style="background:#222;color:#c8a85c;border:1px solid #444;width:30px;height:30px;cursor:pointer">−</button> <span id="copyCount" style="color:#c8a85c;font-size:1rem;min-width:30px">1</span> <button onclick="changeCopies(1)" style="background:#222;color:#c8a85c;border:1px solid #444;width:30px;height:30px;cursor:pointer">+</button> </div> <p id="matStatus" style="color:#50c878;font-size:0.7rem;margin-bottom:10px">Materials OK</p> <button onclick="doPrint()" style="background:#c8a85c;color:#000;border:none;padding:8px 24px;cursor:pointer">Print</button> </div> </div> <div id="printing" style="display:none"> <p style="color:#c8a85c">Printing...</p> <div style="width:100%;height:8px;background:#222;margin:10px 0;overflow:hidden"><div style="width:30%;height:100%;background:#c8a85c;animation:slide 1.5s linear infinite"></div></div> </div> <div id="printDone" style="display:none"> <p style="color:#50c878">✓ Done!</p> <button onclick="bagPhoto()" style="background:#c8a85c;color:#000;border:none;padding:8px 20px;cursor:pointer;margin-top:10px">Bag for customer</button> </div> </div> </div> <div class="modal" id="m-storage"> <div class="modalBox"> <span class="modalClose" onclick="closeM('m-storage')">✕</span> <h2 style="color:#c8a85c;text-align:center;margin-bottom:15px;font-size:1rem">📦 Storage Room</h2> <p style="color:#666;font-size:0.75rem;text-align:center;margin-bottom:10px">Dark and cluttered...</p> <div id="gasItem" style="display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #222;margin:6px 0;cursor:pointer" onclick="takeGas()"> <span style="color:#b0a080;font-size:0.8rem">⛽ Spare Gas Can</span> <span style="color:#c8a85c;font-size:0.8rem">Take</span> </div> <div id="broomItem" style="display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #222;margin:6px 0;cursor:pointer" onclick="takeBroom()"> <span style="color:#b0a080;font-size:0.8rem">🧹 Broom</span> <span style="color:#c8a85c;font-size:0.8rem">Take</span> </div> <p id="gasStatus" style="color:#666;font-size:0.7rem;text-align:center">A spare gas can sits in corner</p> </div> </div> <div class="modal" id="m-cateye"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-cateye')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">🔒 Peephole</h2> <div style="background:#050505;border:1px solid #333;padding:20px;margin-bottom:12px"> <p style="color:#666;font-size:0.8rem;line-height:1.8">
-You peer through the tiny lens...<br><br> <span style="color:#8b0000">Nothing but darkness.</span><br><br> <span style="color:#555;font-size:0.7rem">...something moves?</span> </p> </div> <p style="color:#666;font-size:0.7rem">Father said: never open this door.</p> </div> </div> <div class="modal" id="m-letter"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-letter')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">✉ Letter</h2> <div style="background:#f5f5dc;color:#333;padding:20px;text-align:left;font-family:Georgia,serif"> <p style="margin-bottom:12px;font-size:0.9rem">Dear Owner of Old State Photo Studio,</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">
-This is to inform you that <b>EMT — The Bureau of Anomalous Affairs</b> will visit your establishment shortly.
-</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">
-Please remain calm and cooperate fully. Do not attempt to hide anything unusual.
-</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">
-We are aware of the situation in Ohio.
-</p> <p style="text-align:right;font-size:0.8rem;color:#8b0000">— EMT Bureau Director</p> </div> </div> </div> <div class="modal" id="m-coffee"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-coffee')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">☕ Coffee Machine</h2> <div style="background:#0a0a0a;border:1px solid #333;padding:20px;margin-bottom:12px"> <p style="color:#b0a080;font-size:0.85rem;margin-bottom:8px">Coffee powder: <span id="coffeePowderView" style="color:#c8a85c">5</span> / 5</p> <p style="color:#b0a080;font-size:0.85rem;margin-bottom:8px">Cup ready: <span id="cupStatus" style="color:#c8a85c">No</span></p> <p style="color:#666;font-size:0.75rem">Brewing time: 10s</p> </div> <button id="brewBtn" onclick="startBrew()" style="background:#c8a85c;color:#000;border:none;padding:10px 24px;cursor:pointer;margin-bottom:8px">▶ Brew</button> <button id="refillBtn" onclick="refillCoffee()" style="background:rgba(200,168,92,0.1);color:#c8a85c;border:1px solid #c8a85c;padding:10px 24px;cursor:pointer;display:none">💰 Refill Coffee Powder ($5)</button> <p id="coffeeMsg" style="color:#666;font-size:0.75rem;margin-top:10px"></p> </div> </div>
+@keyframes vfShutterPulse{0%,100%{box-shadow:0 0 25px rgba(200,168,92,0.6)}50%{box-shadow:0 0 40px rgba(200,168,92,0.9)}}
+@keyframes slide{0%{transform:translateX(-100%)}100%{transform:translateX(400%)}}
+#homeScreen{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1500;display:none;overflow:hidden;background:linear-gradient(180deg,#0a0a0f 0%,#050508 40%,#020203 100%)}
+#homeScreen.show{display:block}
+.sky{position:absolute;top:0;left:0;width:100%;height:55%;background:radial-gradient(ellipse at 50% 20%,#1a1520 0%,#0a0a0f 50%,#000 100%)}
+.stars{position:absolute;top:0;left:0;width:100%;height:55%;background-image:radial-gradient(1px 1px at 20% 30%,#888 50%,transparent),radial-gradient(1px 1px at 60% 15%,#666 50%,transparent),radial-gradient(1px 1px at 80% 40%,#777 50%,transparent),radial-gradient(1px 1px at 35% 55%,#555 50%,transparent),radial-gradient(1px 1px at 90% 20%,#999 50%,transparent),radial-gradient(1px 1px at 10% 45%,#666 50%,transparent);opacity:0.5;animation:starFlicker 4s infinite}
+@keyframes starFlicker{0%,100%{opacity:0.5}50%{opacity:0.3}}
+.rain{position:absolute;top:0;left:0;width:100%;height:100%;background-image:linear-gradient(90deg,transparent 0,transparent 49.5%,rgba(180,180,200,0.08) 49.5%,rgba(180,180,200,0.08) 50.5%,transparent 50.5%);background-size:80px 100%;animation:rainFall 0.5s linear infinite;opacity:0.6}
+@keyframes rainFall{0%{background-position:0 0}100%{background-position:0 100px}}
+.ground{position:absolute;bottom:0;left:0;width:100%;height:45%;background:linear-gradient(180deg,#080508 0%,#0d0a0d 30%,#0a080a 100%)}
+.ground::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:
+radial-gradient(ellipse at 50% 0%,rgba(200,140,60,0.15) 0%,transparent 40%),
+radial-gradient(ellipse at 30% 10%,rgba(200,140,60,0.05) 0%,transparent 30%),
+radial-gradient(ellipse at 70% 10%,rgba(200,140,60,0.05) 0%,transparent 30%)}
+.shop{position:absolute;bottom:15%;left:50%;transform:translateX(-50%);width:min(520px,88vw);height:min(420px,55vh);background:linear-gradient(180deg,#1a1410 0%,#0f0a08 100%);border:1px solid #2a2018;box-shadow:0 0 60px rgba(200,140,60,0.15),inset 0 0 80px rgba(0,0,0,0.7);border-radius:4px 4px 0 0}
+.roof{position:absolute;top:-18px;left:-8px;right:-8px;height:20px;background:linear-gradient(180deg,#2a1f18 0%,#1a1410 100%);border:1px solid #2a2018;border-radius:3px 3px 0 0}
+.roof::after{content:'';position:absolute;top:100%;left:0;width:100%;height:6px;background:repeating-linear-gradient(90deg,#2a1f18 0,#2a1f18 20px,#1a1410 20px,#1a1410 40px);opacity:0.8}
+.signboard{position:absolute;top:-58px;left:50%;transform:translateX(-50%);background:linear-gradient(180deg,#2a1a10 0%,#1a1008 100%);border:2px solid #3a2a18;padding:8px 22px;box-shadow:0 0 20px rgba(200,140,60,0.4),inset 0 0 15px rgba(0,0,0,0.8);border-radius:3px;animation:signFlicker 6s infinite}
+@keyframes signFlicker{0%,18%,20%,22%,24%,54%,56%,100%{box-shadow:0 0 20px rgba(200,140,60,0.4),inset 0 0 15px rgba(0,0,0,0.8)}19%,21%,23%,55%{box-shadow:0 0 8px rgba(200,140,60,0.2),inset 0 0 15px rgba(0,0,0,0.8)}}
+.signboard .sTitle{color:#c8a85c;font-family:Georgia,serif;font-size:clamp(14px,3.5vw,20px);letter-spacing:3px;font-weight:bold;text-shadow:0 0 12px rgba(200,168,92,0.9),0 0 3px #000}
+.signboard .sSub{color:#8b7a5a;font-size:clamp(8px,2vw,10px);letter-spacing:4px;text-align:center;margin-top:2px}
+.windows{position:absolute;top:18%;left:50%;transform:translateX(-50%);display:flex;gap:24px}
+.window{width:clamp(48px,10vw,70px);height:clamp(60px,12vh,90px);background:linear-gradient(180deg,#3a1a0a 0%,#1a0a05 100%);border:2px solid #2a2018;box-shadow:inset 0 0 20px rgba(200,120,40,0.3),0 0 15px rgba(200,120,40,0.2);position:relative;overflow:hidden}
+.window::before{content:'';position:absolute;top:50%;left:0;width:100%;height:1px;background:#2a2018}
+.window::after{content:'';position:absolute;top:0;left:50%;width:1px;height:100%;background:#2a2018}
+.window .winGlow{position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 60%,rgba(200,120,40,0.35) 0%,transparent 70%);animation:winGlowPulse 3s infinite}
+@keyframes winGlowPulse{0%,100%{opacity:0.7}50%{opacity:1}}
+.door{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:clamp(64px,14vw,90px);height:clamp(100px,20vh,140px);background:linear-gradient(180deg,#1a0f08 0%,#0a0503 100%);border:2px solid #2a2018;border-bottom:none;box-shadow:inset 0 0 30px rgba(0,0,0,0.9),inset 0 10px 20px rgba(200,120,40,0.05);position:relative}
+.door::before{content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);width:60%;height:40%;background:linear-gradient(180deg,#3a1a0a 0%,transparent 100%);opacity:0.3}
+.doorKnob{position:absolute;top:50%;right:8px;width:8px;height:8px;background:radial-gradient(circle,#c8a85c,#5a4a2a);border-radius:50%;box-shadow:0 0 8px rgba(200,168,92,0.6)}
+.doorPlate{position:absolute;top:calc(20vh - 30px);left:50%;transform:translateX(-50%);background:linear-gradient(180deg,#3a1a0a,#1a0a05);border:1px solid #c8a85c;color:#c8a85c;font-size:clamp(8px,1.8vw,11px);padding:3px 10px;letter-spacing:2px;font-family:Georgia,serif;box-shadow:0 0 10px rgba(200,168,92,0.3)}
+.lamp{position:absolute;top:-30px;left:50%;transform:translateX(-50%);width:40px;height:40px;background:radial-gradient(circle,rgba(200,140,60,0.9) 0%,rgba(200,140,60,0.4) 30%,transparent 70%);border-radius:50%;animation:lampGlow 2s infinite}
+@keyframes lampGlow{0%,100%{opacity:0.7;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.1)}}
+.puddle{position:absolute;bottom:8%;left:50%;transform:translateX(-50%);width:min(400px,70vw);height:40px;background:radial-gradient(ellipse at center,rgba(200,140,60,0.12) 0%,transparent 70%);border-radius:50%;filter:blur(6px);animation:puddleFlicker 4s infinite}
+@keyframes puddleFlicker{0%,100%{opacity:0.5}50%{opacity:0.9}}
+.fog{position:absolute;bottom:0;left:0;width:100%;height:60%;background:radial-gradient(ellipse at 50% 100%,rgba(80,60,40,0.15) 0%,transparent 70%);pointer-events:none}
+#homeScreen::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;box-shadow:inset 0 0 200px 80px rgba(0,0,0,0.95),inset 0 0 400px 150px rgba(0,0,0,0.7);pointer-events:none;z-index:5}
+.homeContent{position:absolute;bottom:6%;left:50%;transform:translateX(-50%);z-index:10;display:flex;flex-direction:column;align-items:center;width:100%}
+#homeScreen h1{font-size:clamp(1.2rem,4vw,1.8rem);letter-spacing:10px;margin-bottom:4px;color:#c8a85c;text-shadow:0 0 10px rgba(200,168,92,0.7),0 0 30px rgba(139,0,0,0.4),2px 2px 0 #000;font-weight:400;font-family:Georgia,serif;text-align:center}
+#homeScreen .subtitle{color:#8b0000;font-size:clamp(0.6rem,2vw,0.75rem);letter-spacing:8px;margin-bottom:20px;text-shadow:0 0 10px rgba(139,0,0,0.9);animation:flicker 4s infinite;text-align:center}
+@keyframes flicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:1}20%,22%,24%,55%{opacity:0.3}}
+#homeScreen .btn{background:rgba(20,10,5,0.9);border:1px solid rgba(200,168,92,0.5);color:#c8a85c;padding:11px 44px;font-size:0.85rem;letter-spacing:5px;cursor:pointer;margin:6px;transition:all 0.3s;font-family:'Microsoft YaHei',sans-serif;box-shadow:0 0 15px rgba(200,168,92,0.2),inset 0 0 10px rgba(0,0,0,0.8)}
+#homeScreen .btn:hover{background:rgba(50,25,10,0.95);box-shadow:0 0 25px rgba(200,168,92,0.5),inset 0 0 15px rgba(200,168,92,0.1);border-color:#c8a85c;text-shadow:0 0 8px rgba(200,168,92,0.8)}
+#creditsScreen{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:1600;display:none;flex-direction:column;align-items:center;justify-content:center;color:#c8a85c;overflow-y:auto;padding:40px 20px}
+#creditsScreen.show{display:flex}
+#creditsScreen h2{font-size:1.2rem;letter-spacing:6px;margin-bottom:20px;color:#c8a85c}
+#creditsScreen p{font-size:0.9rem;line-height:2;color:#b0a080;text-align:center;margin:2px 0}
+#creditsScreen .big{color:#c8a85c;font-size:1rem;margin:10px 0 4px 0;letter-spacing:2px}
+#creditsScreen .divider{width:60px;height:1px;background:rgba(200,168,92,0.3);margin:14px 0}
+#creditsScreen .closeBtn{background:rgba(200,168,92,0.1);border:1px solid rgba(200,168,92,0.5);color:#c8a85c;padding:10px 30px;font-size:0.9rem;cursor:pointer;margin-top:30px;letter-spacing:3px;font-family:'Microsoft YaHei',sans-serif}
+.missingCard{border:1px solid #8b0000;padding:10px;background:#0d0d0d;display:flex;gap:12px;align-items:flex-start;transition:all 0.2s}
+.missingCard:hover{border-color:#c8a85c;background:#111}
+.missingCard .avatar{font-size:2rem;flex-shrink:0;width:48px;height:48px;display:flex;align-items:center;justify-content:center;border:1px solid #333;background:#050505}
+.missingCard .info{flex:1}
+.missingCard .name{color:#c8a85c;font-size:0.85rem;margin-bottom:3px}
+.missingCard .name .age{color:#666;font-size:0.7rem}
+.missingCard .desc{color:#b0a080;font-size:0.7rem;line-height:1.6;margin-bottom:4px}
+.missingCard .reward{color:#8b0000;font-size:0.7rem}
+.missingCard .status{display:inline-block;font-size:0.6rem;padding:1px 6px;border-radius:2px;margin-left:6px}
+.missingCard .status.missing{background:rgba(139,0,0,0.3);color:#ff6b6b}
+.missingCard .status.found{background:rgba(80,200,120,0.2);color:#50c878}
+.missingHeader{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #8b0000}
+.missingHeader .title{color:#8b0000;font-size:0.9rem;letter-spacing:3px}
+.missingHeader .count{color:#666;font-size:0.7rem}</style>
+</head> <body> <div id="logoScreen"> <div class="glow"></div> <img src="https://i.postimg.cc/qvtjp3FR/IMG-3190.jpg" alt="流筠工作室"> <h2>流筠工作室</h2> <p>LIUYUN STUDIO</p> </div> <div id="homeScreen"> <div class="sky"></div> <div class="stars"></div> <div class="rain"></div> <div class="ground"></div> <div class="shop"> <div class="roof"></div> <div class="signboard"> <div class="sTitle">OLD STATE</div> <div class="sSub">PHOTO STUDIO</div> </div> <div class="lamp"></div> <div class="windows"> <div class="window"><div class="winGlow"></div></div> <div class="window"><div class="winGlow"></div></div> </div> <div class="door"><div class="doorKnob"></div></div> <div class="doorPlate">EST. 1987</div> </div> <div class="puddle"></div> <div class="fog"></div> <div class="homeContent"> <div class="subtitle">OHIO · 1987</div> <h1>OLD STATE PHOTO</h1> <button class="btn" onclick="startFromHome()">开始游戏</button> <button class="btn" onclick="showCreditsScreen()">制作人员名单</button> </div> </div> <div id="creditsScreen"> <h2>制作人员名单</h2> <p class="big">DeepSeek</p> <div class="divider"></div> <p class="big">流筠工作室</p> <p>发行商</p> <div class="divider"></div> <p class="big">流筠制作组</p> <p>制作团队</p> <div class="divider"></div> <p class="big">金边逸空工作室</p> <p>联合开发 / 技术帮助</p> <div class="divider"></div> <p class="big">kimi</p> <p>制作雏形</p> <button class="closeBtn" onclick="closeCreditsScreen()">返回</button> </div> <canvas id="c"></canvas> <div id="noise"></div> <div class="flash-overlay" id="flashOverlay"></div> <div id="bloodOverlay"></div> <div id="agentGun">🔫</div> <div id="muzzleFlash"></div> <div id="coffeeAnim">☕</div> <div id="timerBar"><div id="timerBarInner"></div></div> <div id="toast"></div> <div id="viewfinder"> <div id="vfGrid"></div> <div id="vfGridH1"></div> <div id="vfGridH2"></div> <div id="vfCornerTL"></div> <div id="vfCornerTR"></div> <div id="vfCornerBL"></div> <div id="vfCornerBR"></div> <div id="vfFocus"></div> <div id="vfTop"><span>ISO 400</span><span>F2.8</span><span>🔋</span></div> <div id="vfRec"><span id="vfRecDot"></span><span>REC</span></div> </div> <div id="vfCancel" onclick="cancelViewfinder()">✕</div> <div id="vfShutter" onclick="shootFromViewfinder()">📷</div> <div id="payAnim">💵 +$<span id="payAmount">0</span></div> <div id="ui"> <div class="panel" id="money">💰 $10</div> <div class="panel" id="invBar"> <div class="invSlot on" id="s-camera" onclick="sel('camera')">📷<span class="num">∞</span></div> <div class="invSlot" id="s-paper" onclick="sel('paper')">📄<span class="num" id="n-paper">10</span></div> <div class="invSlot" id="s-ink" onclick="sel('ink')">🖋<span class="num" id="n-ink">5</span></div> <div class="invSlot" id="s-bag" onclick="sel('bag')">🛍<span class="num" id="n-bag">5</span></div> <div class="invSlot" id="s-gas" onclick="sel('gas')" style="display:none">⛽<span class="num" id="n-gas">0</span></div> <div class="invSlot" id="s-broom" onclick="sel('broom')" style="display:none">🧹</div> <div class="invSlot" id="s-letter" onclick="sel('letter')" style="display:none">✉</div> <div class="invSlot" id="s-coffee" onclick="sel('coffee')" style="display:none">☕<span class="num" id="n-coffee">0</span></div> <div class="invSlot" id="s-wrench" onclick="sel('wrench')" style="display:none">🔧</div> <div class="invSlot" id="s-detector" onclick="sel('detector')" style="display:none">📡<span class="num" id="n-detector">0</span></div> </div> <div class="panel" id="hint"></div> <div class="panel" id="dialogue"> <div class="who" id="dWho"></div> <div class="what" id="dWhat"></div> <div class="choices" id="dChoices"></div> <div class="tap" id="dTap">点击继续 ▼</div> </div> </div> <div id="shutterBtn" onclick="openViewfinder()">📷</div> <div id="gunBtn" onclick="useGun()">🔫</div> <div id="joystick"> <div id="jBase"></div> <div id="jKnob"></div> </div> <div id="credits"> <p class="thanks">感谢游玩本Demo</p> <p class="role">制作人员</p> <p class="big">DeepSeek</p> <div class="divider"></div> <p class="big">流筠工作室</p> <p class="studio">发行商</p> <div class="divider"></div> <p class="big">流筠制作组</p> <p class="studio">制作团队</p> <div class="divider"></div> <p class="big">金边逸空工作室</p> <p class="studio">联合开发 / 技术帮助</p> <div class="divider"></div> <p class="big">kimi</p> <p class="studio">制作雏形</p> <p style="margin-top:40px;color:#666;font-size:0.8rem">未完待续...</p> </div> <div id="darkness"><div id="flash"></div></div> <div class="modal" id="m-wanted"> <div class="modalBox"> <span class="modalClose" onclick="closeM('m-wanted')">✕</span> <div style="background:#f5f5dc;color:#333;padding:15px;border:3px solid #8b4513;text-align:center"> <h3 style="color:#8b0000;font-size:1.1rem;letter-spacing:4px;margin-bottom:10px">★ 通缉令 ★</h3> <div style="width:80px;height:100px;background:#333;margin:0 auto;border:2px solid #8b0000;display:flex;align-items:center;justify-content:center;font-size:2.5rem">🍺</div> <p style="font-size:0.75rem;margin:4px 0"><b>姓名:</b> Owen</p> <p style="font-size:0.75rem;margin:4px 0"><b>罪名:</b> 公共场所醉酒</p> <p style="font-size:0.75rem;margin:4px 0"><b>特征:</b> 面部潮红，步态蹒跚</p> <p style="font-size:0.75rem;margin:4px 0"><b>赏金:</b> $500</p> <p style="color:#8b0000;margin-top:8px;font-size:0.75rem">⚠ 非暴力但极度吵闹</p> </div> </div> </div> <div class="modal" id="m-missing"> <div class="modalBox" style="max-width:480px"> <span class="modalClose" onclick="closeM('m-missing')">✕</span> <div class="missingHeader"> <div class="title">⚠ 失踪人员名单</div> <div class="count" id="missingCount">6 人</div> </div> <p style="color:#666;font-size:0.7rem;text-align:center;margin-bottom:15px">俄亥俄州警局 · 悬赏征集线索</p> <div id="missingList" style="display:flex;flex-direction:column;gap:10px"></div> <div style="margin-top:15px;padding-top:10px;border-top:1px solid #333;text-align:center"> <p style="color:#8b0000;font-size:0.7rem">如有线索，请立即联系警长Harrison</p> <p style="color:#666;font-size:0.65rem;margin-top:5px">部分失踪者曾是本店顾客</p> </div> </div> </div> <div class="modal" id="m-pc"> <div class="modalBox" style="max-width:400px"> <span class="modalClose" onclick="closeM('m-pc')">✕</span> <div id="pcHome" style="text-align:center"> <h2 style="color:#c8a85c;font-size:1rem;letter-spacing:3px;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid #333">🖥 Old State PC</h2> <div style="display:flex;flex-direction:column;gap:12px"> <div style="display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #333;cursor:pointer" onclick="showPCPage('shop')"> <div style="font-size:2rem">🛒</div> <div style="text-align:left"><div style="color:#c8a85c;font-size:0.9rem">商店</div><div style="color:#666;font-size:0.7rem;margin-top:3px">购买补给</div></div> </div> <div style="display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #333;cursor:pointer" onclick="showPCPage('news')"> <div style="font-size:2rem">📰</div> <div style="text-align:left"><div style="color:#c8a85c;font-size:0.9rem">新闻</div><div style="color:#666;font-size:0.7rem;margin-top:3px">本地头条</div></div> </div> <div style="display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #333;cursor:pointer" onclick="showPCPage('missing')"> <div style="font-size:2rem">🔍</div> <div style="text-align:left"><div style="color:#c8a85c;font-size:0.9rem">失踪名单</div><div style="color:#666;font-size:0.7rem;margin-top:3px">查看失踪人员</div></div> </div> </div> </div> <div id="pcShop" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="backToPCHome()">← 返回</span> <span style="color:#c8a85c;margin-left:10px">商店</span> </div> <div style="text-align:center;color:#666;font-size:0.7rem;margin-bottom:15px">余额: $<span id="pcMoney" style="color:#c8a85c">10</span></div> <div class="shopItem" onclick="buy('paper')"><span class="n">📄 相纸 (5)</span><span class="p">$20</span></div> <div class="shopItem" onclick="buy('ink')"><span class="n">🖋 墨水 (3)</span><span class="p">$30</span></div> <div class="shopItem" onclick="buy('bag')"><span class="n">🛍 袋子 (10)</span><span class="p">$10</span></div> <div class="shopItem" onclick="buy('coffee')"><span class="n">☕ 咖啡粉 (5)</span><span class="p">$5</span></div> <div class="shopItem" id="gunShopItem" onclick="buy('gun')" style="display:none"><span class="n">🔫 左轮手枪</span><span class="p">$200</span></div> <div class="shopItem" id="detectorShopItem" onclick="buy('detector')" style="display:none"><span class="n">📡 铀浓度探测仪</span><span class="p">$150</span></div> <button id="refreshBtn" onclick="refresh()">🔄 刷新</button> </div> <div id="pcNews" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="backToPCHome()">← 返回</span> <span style="color:#c8a85c;margin-left:10px">新闻</span> </div> <div style="display:flex;flex-direction:column;gap:10px"> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(0)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">☢️</div><div><div style="color:#c8a85c;font-size:0.85rem">核电站泄漏报道</div><div style="color:#666;font-size:0.65rem;margin-top:3px">俄亥俄——官员称"无危险"</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(1)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">🚨</div><div><div style="color:#c8a85c;font-size:0.85rem">本月七人失踪</div><div style="color:#666;font-size:0.65rem;margin-top:3px">警方毫无线索</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(2)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">👥</div><div><div style="color:#c8a85c;font-size:0.85rem">居民报告行为怪异</div><div style="color:#666;font-size:0.65rem;margin-top:3px">"我的邻居再也不睡觉了"</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(3)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">🏪</div><div><div style="color:#c8a85c;font-size:0.85rem">Elm街便利店暴力事件</div><div style="color:#666;font-size:0.65rem;margin-top:3px">目击者"精神崩溃"</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(4)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">📍</div><div><div style="color:#c8a85c;font-size:0.85rem">Old State Photo附近区域被封</div><div style="color:#666;font-size:0.65rem;margin-top:3px">"距此地仅2英里"</div></div></div> </div> </div> </div> <div id="pcNewsDetail" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="showPCPage('news')">← 返回</span> <span style="color:#c8a85c;margin-left:10px">文章</span> </div> <div id="newsDetailBody"></div> </div> <div id="pcMissing" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="backToPCHome()">← 返回</span> <span style="color:#c8a85c;margin-left:10px">失踪名单</span> </div> <div id="pcMissingList" style="display:flex;flex-direction:column;gap:10px"></div> </div> </div> </div> <div class="modal" id="m-printer"> <div class="modalBox printerBox" style="text-align:center;display:flex;flex-direction:column;max-height:85vh"> <span class="modalClose" onclick="closeM('m-printer')">✕</span> <p style="color:#c8a85c;margin-bottom:10px">🖨 打印机</p> <div id="printStatus" style="display:flex;flex-direction:column;flex:1;min-height:0"> <p style="color:#666;font-size:0.75rem">每份需要: 1张相纸 + 1份墨水</p> <div style="margin:12px 0;font-size:0.8rem"><div>📄 <span id="pPaper">10</span> | 🖋 <span id="pInk">5</span> | 🛍 <span id="pBag">5</span></div></div> <p style="color:#666;font-size:0.7rem;margin-bottom:10px">选择照片:</p> <div id="printSelect" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;padding-right:4px;flex-shrink:1"></div> <div id="printFooter" style="flex-shrink:0"> <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px"> <span style="color:#b0a080;font-size:0.8rem">份数:</span> <button onclick="changeCopies(-1)" style="background:#222;color:#c8a85c;border:1px solid #444;width:30px;height:30px;cursor:pointer">−</button> <span id="copyCount" style="color:#c8a85c;font-size:1rem;min-width:30px">1</span> <button onclick="changeCopies(1)" style="background:#222;color:#c8a85c;border:1px solid #444;width:30px;height:30px;cursor:pointer">+</button> </div> <p id="matStatus" style="color:#50c878;font-size:0.7rem;margin-bottom:10px">材料充足</p> <button onclick="doPrint()" style="background:#c8a85c;color:#000;border:none;padding:8px 24px;cursor:pointer">打印</button> </div> </div> <div id="printing" style="display:none"> <p style="color:#c8a85c">打印中...</p> <div style="width:100%;height:8px;background:#222;margin:10px 0;overflow:hidden"><div style="width:30%;height:100%;background:#c8a85c;animation:slide 1.5s linear infinite"></div></div> </div> <div id="printDone" style="display:none"> <p style="color:#50c878">✓ 完成!</p> <button onclick="bagPhoto()" style="background:#c8a85c;color:#000;border:none;padding:8px 20px;cursor:pointer;margin-top:10px">装袋给顾客</button> </div> </div> </div> <div class="modal" id="m-storage"> <div class="modalBox"> <span class="modalClose" onclick="closeM('m-storage')">✕</span> <h2 style="color:#c8a85c;text-align:center;margin-bottom:15px;font-size:1rem">📦 储藏室</h2> <p style="color:#666;font-size:0.75rem;text-align:center;margin-bottom:10px">黑暗而杂乱...</p> <div id="gasItem" style="display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #222;margin:6px 0;cursor:pointer" onclick="takeGas()"> <span style="color:#b0a080;font-size:0.8rem">⛽ 备用汽油桶</span> <span style="color:#c8a85c;font-size:0.8rem">拿取</span> </div> <div id="broomItem" style="display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #222;margin:6px 0;cursor:pointer" onclick="takeBroom()"> <span style="color:#b0a080;font-size:0.8rem">🧹 扫帚</span> <span style="color:#c8a85c;font-size:0.8rem">拿取</span> </div> <p id="gasStatus" style="color:#666;font-size:0.7rem;text-align:center">角落里有一个备用汽油桶</p> </div> </div> <div class="modal" id="m-cateye"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-cateye')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">🔒 猫眼</h2> <div style="background:#050505;border:1px solid #333;padding:20px;margin-bottom:12px"> <p style="color:#666;font-size:0.8rem;line-height:1.8">
+你透过小小的镜头向外看...<br><br> <span style="color:#8b0000">只有黑暗。</span><br><br> <span style="color:#555;font-size:0.7rem">...有什么东西在动?</span> </p> </div> <p style="color:#666;font-size:0.7rem">父亲说过: 永远不要打开这扇门。</p> </div> </div> <div class="modal" id="m-letter"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-letter')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">✉ 信件</h2> <div style="background:#f5f5dc;color:#333;padding:20px;text-align:left;font-family:Georgia,serif"> <p style="margin-bottom:12px;font-size:0.9rem">致Old State Photo工作室的店主，</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">特此通知，<b>EMT——异常事务局</b>将于近期造访贵店。</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">请保持冷静并全力配合。切勿试图隐藏任何异常事物。</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">我们已知晓俄亥俄州的情况。</p> <p style="text-align:right;font-size:0.8rem;color:#8b0000">— EMT局长</p> </div> </div> </div> <div class="modal" id="m-coffee"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-coffee')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">☕ 咖啡机</h2> <div style="background:#0a0a0a;border:1px solid #333;padding:20px;margin-bottom:12px"> <p style="color:#b0a080;font-size:0.85rem;margin-bottom:8px">咖啡粉: <span id="coffeePowderView" style="color:#c8a85c">5</span> / 5</p> <p style="color:#b0a080;font-size:0.85rem;margin-bottom:8px">咖啡就绪: <span id="cupStatus" style="color:#c8a85c">否</span></p> <p style="color:#666;font-size:0.75rem">冲泡时间: 10秒</p> </div> <button id="brewBtn" onclick="startBrew()" style="background:#c8a85c;color:#000;border:none;padding:10px 24px;cursor:pointer;margin-bottom:8px">▶ 冲泡</button> <button id="refillBtn" onclick="refillCoffee()" style="background:rgba(200,168,92,0.1);color:#c8a85c;border:1px solid #c8a85c;padding:10px 24px;cursor:pointer;display:none">💰 补充咖啡粉 ($5)</button> <p id="coffeeMsg" style="color:#666;font-size:0.75rem;margin-top:10px"></p> </div> </div> <div class="modal" id="m-detector"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-detector')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">📡 铀浓度探测仪</h2> <div style="background:#0a0a0a;border:1px solid #333;padding:20px;margin-bottom:12px"> <p style="color:#b0a080;font-size:0.9rem;margin-bottom:10px">当前铀浓度:</p> <p id="detectorValue" style="color:#50c878;font-size:2rem;font-weight:bold">0.00</p> <p style="color:#666;font-size:0.75rem;margin-top:8px">单位: mSv/h</p> <div style="width:100%;height:12px;background:#222;margin-top:12px;overflow:hidden;border-radius:6px"> <div id="detectorBar" style="width:0%;height:100%;background:linear-gradient(90deg,#50c878,#ffd700,#ff3030);transition:width 0.5s"></div> </div> <p id="detectorMsg" style="color:#666;font-size:0.75rem;margin-top:12px">靠近核泄漏区域时读数会升高</p> </div> </div> </div>
 <script>
 const c=document.getElementById('c'),ctx=c.getContext('2d');
 function resize(){c.width=innerWidth;c.height=innerHeight}
@@ -229,12 +286,44 @@ ls.appendChild(p);
 }
 
 const newsData=[
-{icon:'☢️',title:'Nuclear Plant Leak Reported',sub:'Officials say "no danger"',body:'A minor leak was detected at the Ohio nuclear plant 30 miles north of town. Officials claim radiation levels are within safe limits, but local residents have reported strange symptoms over the past week — headaches, nosebleeds, and vivid nightmares. The plant has declined further comment.'},
-{icon:'🚨',title:'7 Missing Persons This Month',sub:'Police have no leads',body:'Seven people have disappeared in the Ohio area this month alone. The youngest was 16, the oldest 71. No bodies, no witnesses, no trail. Police Chief Harrison stated: "We are doing everything we can." Local residents are starting to lock their doors for the first time in years.'},
-{icon:'👥',title:'Residents Report Strange Behavior',sub:'"My neighbor doesn\'t sleep anymore"',body:'Multiple reports have surfaced of neighbors acting strangely — standing motionless in yards at night, speaking in whispers, avoiding eye contact. One resident said: "He just smiles now. All the time. Even when he shouldn\'t." Health officials urge anyone seeing these signs to contact local authorities.'},
-{icon:'🏪',title:'Violence at Elm St. Convenience Store',sub:'Witnesses "mentally broken"',body:'A violent incident occurred last night at the 24-hour convenience store on Elm Street, just a few blocks from here. Three witnesses were hospitalized after what police describe as "an altercation with an unidentified individual." All three are reportedly unable to speak. The store remains closed.'},
-{icon:'📍',title:'Area Near Old State Photo Blocked',sub:'"Just 2 miles from here"',body:'Police have cordoned off an area just 2 miles from Old State Photo Studio. The reason has not been disclosed. Residents are advised to avoid the area after dark. Our studio is within the recommended caution zone. Stay safe, and keep your doors locked.'}
+{icon:'☢️',title:'核电站泄漏报道',sub:'官员称"无危险"',body:'位于城镇以北30英里的俄亥俄核电站检测到轻微泄漏。官员声称辐射水平在安全范围内，但当地居民报告过去一周出现奇怪症状——头痛、鼻血和生动的噩梦。核电站拒绝进一步评论。'},
+{icon:'🚨',title:'本月七人失踪',sub:'警方毫无线索',body:'仅本月就有七人在俄亥俄地区失踪。最年轻的16岁，最年长的71岁。没有尸体，没有目击者，没有踪迹。警察局长哈里森表示："我们正在尽一切努力。"当地居民开始多年来第一次锁门。'},
+{icon:'👥',title:'居民报告行为怪异',sub:'"我的邻居再也不睡觉了"',body:'多起报告显示邻居行为异常——夜间一动不动地站在院子里，低声细语，避免眼神接触。一位居民说："他只是微笑。一直微笑。即使在不该笑的时候。"卫生官员敦促任何看到这些迹象的人联系当地政府。'},
+{icon:'🏪',title:'Elm街便利店暴力事件',sub:'目击者"精神崩溃"',body:'昨晚在Elm街的24小时便利店发生暴力事件，距此地仅几个街区。三名目击者在警方所称的"与不明身份个体的冲突"后住院。据报道，三人均无法说话。商店仍然关闭。'},
+{icon:'📍',title:'Old State Photo附近区域被封',sub:'"距此地仅2英里"',body:'警方封锁了距Old State Photo工作室仅2英里的区域。原因尚未披露。建议居民天黑后避开该区域。我们的工作室位于建议警戒区内。注意安全，锁好门。'}
 ];
+
+const missingData=[
+{name:'艾米丽',av:'👤',age:'19岁',status:'missing',desc:'俄亥俄州立大学学生。最后一次出现在Old State Photo工作室。朋友称她在毕业照中"消失"了，照片里没有她的身影。',reward:'$2000',note:'第一位顾客'},
+{name:'Nina',av:'📰',age:'28岁',status:'missing',desc:'当地报社记者。正在调查俄亥俄州老企业异常事件。最后一次出现在Old State Photo附近，正在采访店主。',reward:'$3000',note:'女记者'},
+{name:'Helena',av:'👵',age:'67岁',status:'missing',desc:'独居老人。丈夫多年前已去世，她仍每年独自来拍结婚纪念照。最后一次出现后失联。邻居称她常说"他就在我身后"。',reward:'$2500',note:'老顾客'},
+{name:'Jack',av:'👤',age:'24岁',status:'missing',desc:'求职者。最后一次出现在Old State Photo拍摄证件照，准备面试。之后与家人失联，手机一直无法接通。',reward:'$1500',note:'顾客'},
+{name:'Margaret',av:'👵',age:'72岁',status:'missing',desc:'退休教师。常去Old State Photo寄照片给加州的孙子。最后一次出现后失去联系，家人已报警。',reward:'$1800',note:'顾客'},
+{name:'Max',av:'🎤',age:'26岁',status:'missing',desc:'街头歌手。在Old State Photo拍摄专辑封面后失踪。其歌曲《俄亥俄之夜》成为遗作，在本地电台热播。',reward:'$2200',note:'顾客'}
+];
+
+function renderMissingList(containerId){
+const id=containerId||'missingList';
+const el=document.getElementById(id);
+if(!el)return;
+el.innerHTML='';
+const countEl=document.getElementById('missingCount');
+if(countEl)countEl.textContent=missingData.length+' 人';
+missingData.forEach(m=>{
+const d=document.createElement('div');
+d.className='missingCard';
+d.innerHTML='<div class="avatar">'+m.av+'</div>'+
+'<div class="info">'+
+'<div class="name">'+m.name+' <span class="age">('+m.age+')</span>'+
+'<span class="status '+(m.status==='missing'?'missing':'found')+'">'+(m.status==='missing'?'失踪':'已找到')+'</span>'+
+(m.note?'<span style="color:#666;font-size:0.6rem;margin-left:6px">['+m.note+']</span>':'')+
+'</div>'+
+'<div class="desc">'+m.desc+'</div>'+
+'<div class="reward">悬赏: '+m.reward+'</div>'+
+'</div>';
+el.appendChild(d);
+});
+}
 
 function openNewsDetail(i){
 const d=newsData[i];
@@ -255,371 +344,381 @@ objs:[],
 npcs:[],
 tick:0,
 st:{
-money:10,
-power:true,
-sign:false,
-open:false,
-selectedPhoto:null,
+money:10,power:true,sign:false,open:false,selectedPhoto:null,
 inv:{paper:10,ink:5,bag:5,gas:0},
-hasGun:false,
-hasGas:false,
-hasBroom:false,
-hasLetter:false,
-hasCoffee:false,
-hasWrench:false,
-refresh:0,
-dia:null,
-diaIdx:0,
-inDia:false,
-diaCb:null,
-photos:[],
-currentCust:null,
-custQueue:[],
-custIdx:0,
-leonardDone:false,
-carlReady:false,
-carlMet:false,
-carlGone:false,
-officeCust:false,
-fakeFrank:false,
-fakeFrankTriggered:false,
-monsterChase:false,
-playerDead:false,
-printCount:0,
-copyCount:1,
-inChase:false,
-waitingChoice:false,
-gameStarted:false,
-blackoutDone:false,
-garbage:[],
-garbageTimer:0,
-garbageScan:0,
-blackoutActive:false,
-emtDone:false,
-coffeePowder:5,
-coffeeBrewing:false,
-coffeeReady:false,
-coffeeCups:0,
-emilySecondSpawned:false,
-victorCoffeePaid:false,
-nextCustTimer:null,
-maxDone:false,
-frankReady:false,
-frankMet:false,
-frankLeft:false,
-whiteEyeDone:false,
-whiteEyeActive:false,
-deliveryActive:false,
-deliveryParcel:false,
-lastPhotoTime:0,
-viewfinderOn:false
+hasGun:false,hasGas:false,hasBroom:false,hasLetter:false,hasCoffee:false,
+hasWrench:false,hasDetector:false,detectorOn:false,refresh:0,
+dia:null,diaIdx:0,inDia:false,diaCb:null,photos:[],
+currentCust:null,custQueue:[],custIdx:0,
+leonardDone:false,carlReady:false,carlMet:false,carlGone:false,
+officeCust:false,fakeFrank:false,fakeFrankTriggered:false,
+monsterChase:false,playerDead:false,printCount:0,copyCount:1,
+inChase:false,waitingChoice:false,gameStarted:false,blackoutDone:false,
+garbage:[],garbageTimer:0,garbageScan:0,blackoutActive:false,
+emtTriggered:false,emtCompleted:false,
+coffeePowder:5,coffeeBrewing:false,coffeeReady:false,
+emilySecondSpawned:false,victorCoffeePaid:false,nextCustTimer:null,
+frankReady:false,frankMet:false,frankLeft:false,
+whiteEyeDone:false,whiteEyeActive:false,
+deliveryActive:false,deliveryParcel:false,
+lastPhotoTime:0,viewfinderOn:false,
+imodDone:false,headlessDone:false,
+sheriffSpawned:false,detectorUnlocked:false,wantedPosted:false,
+emilyMonsterChase:false,emilyMonsterDone:false
 }
 };
 
 const scenes={
-street:{
-name:'Ohio St.',w:1400,h:1000,
-objs:[
+street:{name:'俄亥俄街',w:1400,h:1000,objs:[
 {t:'sign',x:250,y:120,w:300,h:80,label:'Old State Photo'},
-{t:'door',x:350,y:250,w:100,h:120,label:'Enter',to:'shop'},
-{t:'board',x:520,y:280,w:60,h:80,label:'Sign'},
-{t:'carl',x:600,y:350,w:60,h:60,label:'Bloody Man',show:false},
-{t:'frankCar',x:900,y:500,w:180,h:110,label:'Broken Car',show:false},
+{t:'door',x:350,y:250,w:100,h:120,label:'进入',to:'shop'},
+{t:'board',x:520,y:280,w:60,h:80,label:'招牌'},
+{t:'carl',x:600,y:350,w:60,h:60,label:'血人',show:false},
+{t:'frankCar',x:900,y:500,w:180,h:110,label:'抛锚车',show:false},
 {t:'frank',x:960,y:680,w:60,h:60,label:'Frank',show:false},
-{t:'truck',x:-200,y:600,w:180,h:100,label:'Truck',show:false},
-{t:'courier',x:-100,y:680,w:50,h:50,label:'Courier',show:false},
-{t:'parcel',x:420,y:550,w:50,h:50,label:'Parcel',show:false}
-]
-},
-shop:{
-name:'Old State Studio',w:1000,h:800,
-objs:[
-{t:'counter',x:100,y:300,w:300,h:100,label:'Counter'},
-{t:'coffeeTable',x:440,y:280,w:80,h:120,label:'Coffee Machine'},
-{t:'pc',x:150,y:280,w:50,h:40,label:'PC'},
-{t:'printer',x:250,y:280,w:60,h:50,label:'Printer'},
-{t:'wall',x:50,y:80,w:400,h:160,label:'Photo Wall'},
-{t:'locked',x:800,y:120,w:80,h:120,label:'Locked Door'},
-{t:'corridor',x:900,y:350,w:70,h:100,label:'Corridor',to:'corridor'},
-{t:'storage',x:700,y:500,w:80,h:80,label:'Storage',to:'storage'},
-{t:'garage',x:80,y:650,w:80,h:80,label:'Garage',to:'garage'},
-{t:'exit',x:400,y:750,w:100,h:50,label:'Exit',to:'street'}
-]
-},
-corridor:{
-name:'Back Corridor',w:1200,h:800,
-objs:[
-{t:'fuse',x:300,y:300,w:120,h:100,label:'Fuse Box'},
-{t:'wanted',x:100,y:250,w:70,h:90,label:'Wanted Poster'},
-{t:'exit',x:1000,y:600,w:80,h:60,label:'Back',to:'shop'}
-]
-},
-storage:{
-name:'Storage',w:400,h:300,
-objs:[
-{t:'gas',x:150,y:150,w:60,h:60,label:'Gas Can'},
-{t:'exit',x:300,y:200,w:60,h:50,label:'Back',to:'shop'}
-]
-},
-garage:{
-name:'Garage',w:1200,h:900,
-objs:[
-{t:'car',x:450,y:350,w:300,h:200,label:'Under Repair Car'},
-{t:'wrenchProp',x:200,y:600,w:60,h:60,label:'Wrench'},
-{t:'oildrum',x:850,y:200,w:70,h:90,label:'Oil Drum'},
-{t:'screwdriver',x:900,y:600,w:60,h:60,label:'Screwdriver'},
-{t:'exit',x:1000,y:800,w:80,h:60,label:'Back',to:'shop'}
-]
-}
+{t:'truck',x:-200,y:600,w:180,h:100,label:'卡车',show:false},
+{t:'courier',x:-100,y:680,w:50,h:50,label:'快递员',show:false},
+{t:'parcel',x:420,y:550,w:50,h:50,label:'包裹',show:false},
+{t:'nuclearGate',x:100,y:800,w:100,h:80,label:'禁区入口',show:false,to:'nuclear'}
+]},
+shop:{name:'Old State工作室',w:1000,h:800,objs:[
+{t:'counter',x:100,y:300,w:300,h:100,label:'柜台'},
+{t:'coffeeTable',x:440,y:280,w:80,h:120,label:'咖啡机'},
+{t:'pc',x:150,y:280,w:50,h:40,label:'电脑'},
+{t:'printer',x:250,y:280,w:60,h:50,label:'打印机'},
+{t:'wall',x:50,y:80,w:400,h:160,label:'照片墙'},
+{t:'locked',x:800,y:120,w:80,h:120,label:'锁着的门'},
+{t:'corridor',x:900,y:350,w:70,h:100,label:'走廊',to:'corridor'},
+{t:'storage',x:700,y:500,w:80,h:80,label:'储藏室',to:'storage'},
+{t:'garage',x:80,y:650,w:80,h:80,label:'车库',to:'garage'},
+{t:'exit',x:400,y:750,w:100,h:50,label:'出口',to:'street'},
+{t:'wantedBoard',x:250,y:200,w:80,h:100,label:'失踪名单板',show:false}
+]},
+corridor:{name:'后走廊',w:1200,h:800,objs:[
+{t:'fuse',x:300,y:300,w:120,h:100,label:'保险丝盒'},
+{t:'wanted',x:100,y:250,w:70,h:90,label:'通缉令'},
+{t:'exit',x:1000,y:600,w:80,h:60,label:'返回',to:'shop'}
+]},
+storage:{name:'储藏室',w:600,h:800,objs:[
+{t:'gas',x:200,y:250,w:60,h:60,label:'汽油桶'},
+{t:'exit',x:420,y:650,w:60,h:50,label:'返回',to:'shop'}
+]},
+garage:{name:'车库',w:1200,h:900,objs:[
+{t:'car',x:450,y:350,w:300,h:200,label:'维修中的车'},
+{t:'wrenchProp',x:200,y:600,w:60,h:60,label:'扳手'},
+{t:'oildrum',x:850,y:200,w:70,h:90,label:'油桶'},
+{t:'screwdriver',x:900,y:600,w:60,h:60,label:'螺丝刀'},
+{t:'exit',x:1000,y:800,w:80,h:60,label:'返回',to:'shop'}
+]},
+nuclear:{name:'废弃核区',w:1600,h:1200,objs:[
+{t:'barrel1',x:200,y:300,w:60,h:80,label:'铀桶'},
+{t:'barrel2',x:400,y:500,w:60,h:80,label:'铀桶'},
+{t:'barrel3',x:700,y:200,w:60,h:80,label:'铀桶'},
+{t:'barrel4',x:900,y:600,w:60,h:80,label:'铀桶'},
+{t:'barrel5',x:1200,y:350,w:60,h:80,label:'铀桶'},
+{t:'wreckCar1',x:500,y:800,w:180,h:100,label:'废车'},
+{t:'wreckCar2',x:1000,y:900,w:180,h:100,label:'废车'},
+{t:'exit',x:100,y:1000,w:80,h:60,label:'离开',to:'street'},
+{t:'emilyMonster',x:800,y:400,w:70,h:80,label:'艾米丽?',show:false}
+]}
 };
 
 const dias={
 intro:[
-{who:'Narrator',what:'You inherited Old State Photo Studio in Ohio.',choices:[]},
-{who:'Narrator',what:'Old equipment, but it still works.',choices:[]},
-{who:'Narrator',what:'Father said before leaving: "Never open that door..."',choices:[{text:'"What door?"',next:'intro2'},{text:'Ignore it',next:'intro2'}]},
-{who:'System',what:'Drag joystick to move. Tap camera to take photos.',choices:[]},
-{who:'System',what:'Materials prepared. You won\'t get stuck.',choices:[]}
+{who:'旁白',what:'你继承了俄亥俄州的Old State Photo工作室。',choices:[]},
+{who:'旁白',what:'设备老旧，但还能用。',choices:[]},
+{who:'旁白',what:'父亲离开前说："永远不要打开那扇门..."',choices:[{text:'"什么门？"',next:null},{text:'无视它',next:null}]},
+{who:'系统',what:'拖动摇杆移动。点击相机拍照。',choices:[]},
+{who:'系统',what:'材料已备好，不会卡关。',choices:[]}
 ],
-intro2:[{who:'Narrator',what:'The locked door in the back... something feels wrong.',choices:[]}],
 powerOut:[
-{who:'System',what:'Suddenly, lights flicker violently...',choices:[]},
-{who:'System',what:'Snap.',choices:[]},
-{who:'System',what:'Power out.',choices:[]},
-{who:'Narrator',what:'In darkness, you hear faint sound behind you...',choices:[]},
-{who:'Narrator',what:'Like... laughter?',choices:[{text:'"Who\'s there?!"',next:'intro2'},{text:'Stay silent',next:'intro2'}]},
-{who:'System',what:'Go to back corridor to fix the fuse.',choices:[]}
+{who:'系统',what:'突然，灯光剧烈闪烁...',choices:[]},
+{who:'系统',what:'啪。',choices:[]},
+{who:'系统',what:'停电了。',choices:[]},
+{who:'旁白',what:'黑暗中，你听到身后有微弱的声音...',choices:[]},
+{who:'旁白',what:'像是...笑声？',choices:[{text:'"谁在那里？！"',next:null},{text:'保持沉默',next:null}]},
+{who:'系统',what:'去后走廊修保险丝。',choices:[]}
 ],
 powerBack:[
-{who:'System',what:'Fuse fixed.',choices:[]},
-{who:'System',what:'Lights back on.',choices:[]},
-{who:'Narrator',what:'Corridor is calm, but the wanted poster... seems to watch you.',choices:[{text:'Check the poster',next:'intro2'},{text:'Go back to work',next:'intro2'}]},
-{who:'System',what:'Return to hall, keep working.',choices:[]}
+{who:'系统',what:'保险丝修好了。',choices:[]},
+{who:'系统',what:'灯亮了。',choices:[]},
+{who:'旁白',what:'走廊很安静，但那通缉令...似乎在看着你。',choices:[{text:'查看海报',next:null},{text:'回去工作',next:null}]},
+{who:'系统',what:'回到大厅，继续工作。',choices:[]}
+],
+openShop:[
+{who:'系统',what:'你把牌子翻到"营业中"。',choices:[]},
+{who:'系统',what:'生意开始了。顾客很快会来。',choices:[]}
 ],
 emily:[
-{who:'???',what:'H-hello...',choices:[]},
-{who:'Emily',what:'I\'m Emily, from Ohio State.',choices:[]},
-{who:'Emily',what:'My friends can\'t see me in graduation photos...',choices:[]},
-{who:'Emily',what:'They say I\'m transparent...',choices:[{text:'"That\'s strange..."',next:'emily2'},{text:'"You look solid to me"',next:'emily2'}]},
-{who:'Emily',what:'Please take a "proof photo"... prove I exist...',choices:[]},
-{who:'Emily',what:'Must be freshly taken... others won\'t work...',choices:[]},
-{who:'System',what:'[Special Order] Must shoot on-site, cannot use stored photos',choices:[]}
+{who:'???',what:'你...你好...',choices:[]},
+{who:'艾米丽',what:'我是艾米丽，俄亥俄州立大学的。',choices:[]},
+{who:'艾米丽',what:'我朋友在毕业照里看不到我...',choices:[]},
+{who:'艾米丽',what:'他们说我...透明的...',choices:[{text:'"这很奇怪..."',next:null},{text:'"你看起来很正常"',next:null}]},
+{who:'艾米丽',what:'请拍一张"证明照"...证明我存在...',choices:[]},
+{who:'艾米丽',what:'必须是刚拍的...其他照片不行...',choices:[]},
+{who:'系统',what:'[特殊订单] 必须现场拍摄，不能使用已有照片',choices:[]}
 ],
-emily2:[{who:'Emily',what:'Thank you... I hope this works.',choices:[]}],
 emilySecond:[
-{who:'Emily',what:'...',choices:[{text:'"Emily? You\'re back? What\'s wrong?"',next:'emilySecond2'}]}
+{who:'艾米丽',what:'...',choices:[{text:'"艾米丽？你回来了？怎么了？"',next:'emilySecond2'}]}
 ],
 emilySecond2:[
-{who:'Emily',what:'I\'ve been here countless times...',choices:[]},
-{who:'Emily',what:'I\'m not Emily.',choices:[]},
-{who:'Emily',what:'I\'m the original.',choices:[]}
+{who:'艾米丽',what:'我来过这里无数次了...',choices:[]},
+{who:'艾米丽',what:'我不是艾米丽。',choices:[]},
+{who:'艾米丽',what:'我才是原件。',choices:[]}
 ],
 jack:[
-{who:'Jack',what:'Hey, need ID photos. Two shots.',choices:[{text:'"Sure thing"',next:'jack2'},{text:'"In a hurry?"',next:'jack2'}]},
-{who:'Jack',what:'Different angles. Make it quick.',choices:[]}
+{who:'Jack',what:'嘿，需要证件照。两张。',choices:[{text:'"没问题"',next:'jack2'},{text:'"赶时间？"',next:'jack2'}]},
+{who:'Jack',what:'不同角度。快点。',choices:[]}
 ],
-jack2:[{who:'Jack',what:'I got a job interview. Need to look professional.',choices:[]}],
+jack2:[{who:'Jack',what:'我要面试。得看起来专业点。',choices:[]}],
 margaret:[
-{who:'Margaret',what:'Young man, take some photos for me.',choices:[{text:'"Of course, ma\'am"',next:'margaret2'},{text:'"How many?"',next:'margaret2'}]},
-{who:'Margaret',what:'My grandson\'s birthday, want to send him.',choices:[]},
-{who:'Margaret',what:'Three please, pick the good ones.',choices:[]}
+{who:'Margaret',what:'年轻人，给我拍几张照片。',choices:[{text:'"好的，女士"',next:'margaret2'},{text:'"拍几张？"',next:'margaret2'}]},
+{who:'Margaret',what:'我孙子的生日，想寄给他。',choices:[]},
+{who:'Margaret',what:'三张，挑好的。',choices:[]}
 ],
-margaret2:[{who:'Margaret',what:'He\'s in California. Miss him so much.',choices:[]}],
+margaret2:[{who:'Margaret',what:'他在加州。好想他。',choices:[]}],
 max:[
-{who:'Max',what:'Yo! Max, street singer.',choices:[{text:'"Heard your music"',next:'max2'},{text:'"Never heard of you"',next:'max2'}]},
-{who:'Max',what:'New album dropping, need three shots.',choices:[]},
-{who:'Max',what:'Different angles, make me look good.',choices:[]},
-{who:'Max',what:'Hurry, got a gig.',choices:[]}
+{who:'Max',what:'哟！我是Max，街头歌手。',choices:[{text:'"听过你的歌"',next:'max2'},{text:'"没听说过"',next:'max2'}]},
+{who:'Max',what:'新专辑要发了，需要三张。',choices:[]},
+{who:'Max',what:'不同角度，把我拍帅点。',choices:[]},
+{who:'Max',what:'快点，还有演出。',choices:[]}
 ],
-max2:[{who:'Max',what:'It\'s called "Ohio Nights". Gonna be big.',choices:[]}],
+max2:[{who:'Max',what:'叫"俄亥俄之夜"。会火的。',choices:[]}],
 helena:[
-{who:'Helena',what:'Hello, anniversary photo please.',choices:[{text:'"Congratulations!"',next:'helena2'},{text:'"Where\'s your husband?"',next:'helena2'}]},
-{who:'Helena',what:'My husband and I take one every year...',choices:[]},
-{who:'Helena',what:'He\'s right behind me, see...',choices:[]},
-{who:'System',what:'...There\'s nothing behind her.',choices:[{text:'"I don\'t see anyone"',next:'helena3'},{text:'Say nothing',next:'helena3'}]},
-{who:'Helena',what:'Take it, he loves photos.',choices:[]}
+{who:'Helena',what:'你好，结婚纪念照。',choices:[{text:'"恭喜！"',next:'helena2'},{text:'"你丈夫呢？"',next:'helena2'}]},
+{who:'Helena',what:'我丈夫和我每年都拍一张...',choices:[]},
+{who:'Helena',what:'他就在我身后，看...',choices:[]},
+{who:'系统',what:'...她身后什么都没有。',choices:[{text:'"我没看到人"',next:'helena3'},{text:'什么也别说',next:'helena3'}]},
+{who:'Helena',what:'拍吧，他喜欢拍照。',choices:[]}
 ],
-helena2:[{who:'Helena',what:'Forty years together...',choices:[]}],
-helena3:[{who:'Helena',what:'He\'s shy. But he\'s always there.',choices:[]}],
+helena2:[{who:'Helena',what:'四十年了...',choices:[]}],
+helena3:[{who:'Helena',what:'他害羞。但他一直都在。',choices:[]}],
 victor:[
-{who:'Victor',what:'Victor, Ohio PD.',choices:[]},
-{who:'Victor',what:'You might have heard... too many disappearances lately.',choices:[]},
-{who:'Victor',what:'People just gone. No trace. No body.',choices:[{text:'"That\'s terrible..."',next:'victor2'},{text:'"Why here?"',next:'victor2'}]},
-{who:'Victor',what:'And people have been acting... strange. Off.',choices:[]},
-{who:'Victor',what:'Be careful out there. Lock your door.',choices:[]},
-{who:'Victor',what:'...Also, I\'d like a coffee. If you don\'t mind.',choices:[]},
-{who:'System',what:'[Brew a coffee and hand it to Victor]',choices:[]}
+{who:'Victor',what:'Victor，俄亥俄州警局。',choices:[]},
+{who:'Victor',what:'你可能听说了...最近太多失踪了。',choices:[]},
+{who:'Victor',what:'人就那么没了。没有踪迹。没有尸体。',choices:[{text:'"太可怕了..."',next:'victor2'},{text:'"为什么是这里？"',next:'victor2'}]},
+{who:'Victor',what:'而且人们变得...奇怪。反常。',choices:[]},
+{who:'Victor',what:'外面小心点。锁好门。',choices:[]},
+{who:'Victor',what:'...还有，我想要杯咖啡。如果不麻烦的话。',choices:[]},
+{who:'系统',what:'[冲泡咖啡并递给Victor]',choices:[]}
 ],
-victor2:[{who:'Victor',what:'Nobody knows. That\'s what scares me.',choices:[]}],
+victor2:[{who:'Victor',what:'没人知道。这才是最可怕的。',choices:[]}],
 victorCoffee:[
-{who:'Victor',what:'Thanks. Here, take this.',choices:[]},
-{who:'System',what:'+$15 tip',choices:[]}
+{who:'Victor',what:'谢了。拿着这个。',choices:[]},
+{who:'系统',what:'+$15小费',choices:[]}
 ],
 derek:[
-{who:'Derek',what:'Hey! Derek. High school senior.',choices:[]},
-{who:'Derek',what:'Need two graduation photos. Cap and gown.',choices:[{text:'"Congratulations"',next:'derek2'},{text:'"Nervous?"',next:'derek2'}]},
-{who:'Derek',what:'Something weird at my school though...',choices:[]},
-{who:'Derek',what:'Lights flicker in the gym every night.',choices:[]},
-{who:'System',what:'[Take 2 photos of him, then print]',choices:[]}
+{who:'Derek',what:'嘿！Derek。高三。',choices:[]},
+{who:'Derek',what:'需要两张毕业照。学位服。',choices:[{text:'"恭喜"',next:'derek2'},{text:'"紧张吗？"',next:'derek2'}]},
+{who:'Derek',what:'学校有点怪事...',choices:[]},
+{who:'Derek',what:'体育馆的灯每晚都闪。',choices:[]},
+{who:'系统',what:'[拍2张照片，然后打印]',choices:[]}
 ],
-derek2:[{who:'Derek',what:'Thanks. Ohio\'s been strange lately.',choices:[]}],
+derek2:[{who:'Derek',what:'谢了。俄亥俄最近真怪。',choices:[]}],
 nina:[
-{who:'Nina',what:'Hi, Nina. I\'m a reporter.',choices:[]},
-{who:'Nina',what:'Doing a piece on old businesses in Ohio.',choices:[{text:'"Sure, happy to help"',next:'nina2'},{text:'"What kind of piece?"',next:'nina2'}]},
-{who:'Nina',what:'Your father used to run this place, right?',choices:[]},
-{who:'Nina',what:'Where did he go?',choices:[]},
-{who:'System',what:'[Take 2 photos for her article]',choices:[]}
+{who:'Nina',what:'嗨，我是Nina。记者。',choices:[]},
+{who:'Nina',what:'做一篇关于俄亥俄老店的报道。',choices:[{text:'"当然，乐意帮忙"',next:'nina2'},{text:'"什么样的报道？"',next:'nina2'}]},
+{who:'Nina',what:'你父亲以前经营这里，对吧？',choices:[]},
+{who:'Nina',what:'他去哪了？',choices:[]},
+{who:'系统',what:'[为她拍2张照片]',choices:[]}
 ],
-nina2:[{who:'Nina',what:'Thanks. I\'ll be in touch. Be careful.',choices:[]}],
+nina2:[{who:'Nina',what:'谢谢。我会联系你。小心点。',choices:[]}],
 owen:[
-{who:'Owen',what:'Hey... hic... you the photographer?',choices:[]},
-{who:'Owen',what:'Need my picture taken. For... something.',choices:[{text:'"You alright?"',next:'owen2'},{text:'"Step over here"',next:'owen2'}]},
-{who:'Owen',what:'That poster outside... that\'s me.',choices:[]},
-{who:'Owen',what:'$500 reward... don\'t turn me in...',choices:[]},
-{who:'System',what:'[Take 1 photo of him, then print]',choices:[]}
+{who:'Owen',what:'嘿...呃...你是摄影师？',choices:[]},
+{who:'Owen',what:'需要拍张照。为了...什么东西。',choices:[{text:'"你还好吗？"',next:'owen2'},{text:'"过来这里"',next:'owen2'}]},
+{who:'Owen',what:'外面那张海报...那是我。',choices:[]},
+{who:'Owen',what:'$500赏金...别告发我...',choices:[]},
+{who:'系统',what:'[拍1张，然后打印]',choices:[]}
 ],
-owen2:[{who:'Owen',what:'Just... one shot. Please.',choices:[]}],
+owen2:[{who:'Owen',what:'就...一张。求你了。',choices:[]}],
 sophie:[
-{who:'Sophie',what:'Excuse me, sir...',choices:[]},
-{who:'Sophie',what:'My mom said I could get a family photo.',choices:[{text:'"Where\'s your family?"',next:'sophie2'},{text:'"Sure, come in"',next:'sophie2'}]},
-{who:'System',what:'...She is alone.',choices:[]},
-{who:'Sophie',what:'They\'re right here. Can\'t you see them?',choices:[]},
-{who:'System',what:'[Take 1 photo of her]',choices:[]}
+{who:'Sophie',what:'打扰一下，先生...',choices:[]},
+{who:'Sophie',what:'我妈妈说我可以拍家庭照。',choices:[{text:'"你家人呢？"',next:'sophie2'},{text:'"当然，进来"',next:'sophie2'}]},
+{who:'系统',what:'...她独自一人。',choices:[]},
+{who:'Sophie',what:'他们就在这里。你看不见吗？',choices:[]},
+{who:'系统',what:'[为她拍1张照片]',choices:[]}
 ],
-sophie2:[{who:'Sophie',what:'Thank you...',choices:[]}],
+sophie2:[{who:'Sophie',what:'谢谢你...',choices:[]}],
 marcus:[
-{who:'Marcus',what:'Marcus. Firefighter. Need ID photos.',choices:[]},
-{who:'Marcus',what:'Two copies. For the department.',choices:[{text:'"Rough job"',next:'marcus2'},{text:'"Sure"',next:'marcus2'}]},
-{who:'Marcus',what:'You see things on this job...',choices:[]},
-{who:'Marcus',what:'Some fires, they don\'t burn normal.',choices:[]},
-{who:'System',what:'[Take 2 photos of him, then print]',choices:[]}
+{who:'Marcus',what:'Marcus。消防员。需要证件照。',choices:[]},
+{who:'Marcus',what:'两份。给局里。',choices:[{text:'"辛苦"',next:'marcus2'},{text:'"没问题"',next:'marcus2'}]},
+{who:'Marcus',what:'这工作会看到些东西...',choices:[]},
+{who:'Marcus',what:'有些火，烧得不正常。',choices:[]},
+{who:'系统',what:'[拍2张照片，然后打印]',choices:[]}
 ],
-marcus2:[{who:'Marcus',what:'Stay safe out here.',choices:[]}],
+marcus2:[{who:'Marcus',what:'外面小心。',choices:[]}],
 tommy:[
-{who:'Tommy',what:'Delivery! Uh, also...',choices:[]},
-{who:'Tommy',what:'Can I get a quick photo? First day on the job.',choices:[{text:'"Sure, congrats"',next:'tommy2'},{text:'"In a rush?"',next:'tommy2'}]},
-{who:'Tommy',what:'Saw something on Elm Street...',choices:[]},
-{who:'Tommy',what:'A guy... no face. Just... nothing.',choices:[]},
-{who:'System',what:'[Take 1 photo of him]',choices:[]}
+{who:'Tommy',what:'快递！呃，还有...',choices:[]},
+{who:'Tommy',what:'能拍张快照吗？第一天上班。',choices:[{text:'"当然，恭喜"',next:'tommy2'},{text:'"赶时间？"',next:'tommy2'}]},
+{who:'Tommy',what:'在Elm街看到些东西...',choices:[]},
+{who:'Tommy',what:'一个人...没有脸。就...什么都没有。',choices:[]},
+{who:'系统',what:'[拍1张照片]',choices:[]}
 ],
-tommy2:[{who:'Tommy',what:'Thanks. Stay off Elm Street tonight.',choices:[]}],
+tommy2:[{who:'Tommy',what:'谢谢。今晚别去Elm街。',choices:[]}],
 whiteEye1:[
-{who:'???',what:'...',choices:[{text:'"Are you here for a photo?"',next:'whiteEye2'}]}
+{who:'???',what:'...',choices:[{text:'"你是来拍照的吗？"',next:'whiteEye2'}]}
 ],
 whiteEye2:[
-{who:'???',what:'...th...e...y\'re...w...a...t...c...h...i...n...g...',choices:[]},
-{who:'???',what:'...y...o...u...c...a...n\'t...s...e...e...t...h...e...m...',choices:[]}
+{who:'???',what:'...他...们...在...看...着...',choices:[]},
+{who:'???',what:'...你...看...不...见...他...们...',choices:[]}
 ],
 postman:[
-{who:'Postman',what:'Special delivery for the studio.',choices:[]},
-{who:'Postman',what:'Two ID photos while I\'m here, if you don\'t mind.',choices:[{text:'"Sure, step over here"',next:'postman2'},{text:'"What\'s the letter?"',next:'postman2'}]},
-{who:'Postman',what:'Just do my job. This one\'s official — EMT Bureau.',choices:[]},
-{who:'System',what:'[Take 2 photos of the postman, then print]',choices:[]}
+{who:'邮递员',what:'工作室有特殊邮件。',choices:[]},
+{who:'邮递员',what:'顺便拍两张证件照，不介意吧。',choices:[{text:'"当然，这边请"',next:'postman2'},{text:'"信里是什么？"',next:'postman2'}]},
+{who:'邮递员',what:'只是工作。这封是公函——EMT事务局的。',choices:[]},
+{who:'系统',what:'[为邮递员拍2张照片，然后打印]',choices:[]}
 ],
-postman2:[{who:'Postman',what:'Long route today. Ohio\'s been strange lately.',choices:[]}],
+postman2:[{who:'邮递员',what:'今天路线长。俄亥俄最近真怪。',choices:[]}],
 leonard:[
-{who:'Leonard',what:'I\'m Leonard. Here for my pre-order.',choices:[{text:'"Pre-order?"',next:'leonard2'},{text:'"Name?"',next:'leonard2'}]},
-{who:'Leonard',what:'Five photos. Ordered last month.',choices:[]},
-{who:'System',what:'You find five photos with his name on them.',choices:[]},
-{who:'Leonard',what:'Perfect. Here\'s $200.',choices:[]},
-{who:'System',what:'+$200',choices:[]},
-{who:'Leonard',what:'Weird day out there. Be careful.',choices:[{text:'"What do you mean?"',next:'leonardWarn'},{text:'"Thanks"',next:'leonardWarn'}]}
+{who:'Leonard',what:'我是Leonard。来取预订的照片。',choices:[{text:'"预订？"',next:'leonard2'},{text:'"名字？"',next:'leonard2'}]},
+{who:'Leonard',what:'五张照片。上个月订的。',choices:[]},
+{who:'系统',what:'你找到五张写着他名字的照片。',choices:[]},
+{who:'Leonard',what:'完美。这是$200。',choices:[]},
+{who:'系统',what:'+$200',choices:[]},
+{who:'Leonard',what:'外面不太平。小心点。',choices:[{text:'"什么意思？"',next:'leonardWarn'},{text:'"谢谢"',next:'leonardWarn'}]}
 ],
-leonard2:[{who:'Leonard',what:'Check your records. Leonard B.',choices:[]}],
-leonardWarn:[{who:'Leonard',what:'Saw something outside. Blood on the road.',choices:[]},{who:'System',what:'[Go outside and check]',choices:[]}],
+leonard2:[{who:'Leonard',what:'查查记录。Leonard B.',choices:[]}],
+leonardWarn:[{who:'Leonard',what:'在外面看到东西。路上有血。',choices:[]},{who:'系统',what:'[出去看看]',choices:[]}],
 emtIntro:[
-{who:'???',what:'*Three figures in tactical gear enter silently*',choices:[]},
-{who:'EMT Agent',what:'Old State Photo Studio. We\'re here on official business.',choices:[{text:'"What do you want?"',next:'emtIntro2'},{text:'Say nothing',next:'emtIntro2'}]},
-{who:'EMT Agent',what:'We need a group photo. For the record.',choices:[]},
-{who:'System',what:'[Take one group photo of the three of them]',choices:[]}
+{who:'???',what:'*三个穿战术装备的人无声地走进来*',choices:[]},
+{who:'EMT探员',what:'Old State Photo工作室。我们执行公务。',choices:[{text:'"你们想干什么？"',next:'emtIntro2'},{text:'什么也别说',next:'emtIntro2'}]},
+{who:'EMT探员',what:'我们需要一张合影。存档用。',choices:[]},
+{who:'系统',what:'[为他们三人拍一张合影]',choices:[]}
 ],
-emtIntro2:[{who:'EMT Agent',what:'That\'s classified. Just take the photo.',choices:[]}],
+emtIntro2:[{who:'EMT探员',what:'那是机密。拍照就行。',choices:[]}],
 emtDone:[
-{who:'EMT Agent',what:'...What is that.',choices:[]},
-{who:'EMT Agent',what:'There was nothing behind us.',choices:[]},
-{who:'System',what:'In the photo, a woman stands behind the three of them. She wasn\'t there.',choices:[]},
-{who:'EMT Agent',what:'We need to leave. Now.',choices:[{text:'"What\'s going on?"',next:'emtDone2'},{text:'Step back',next:'emtDone2'}]},
-{who:'EMT Agent',what:'EMT will contact you again. Lock the door tonight.',choices:[]}
+{who:'EMT探员',what:'...那是什么。',choices:[]},
+{who:'EMT探员',what:'我们身后什么都没有。',choices:[]},
+{who:'系统',what:'照片里，三个人的身后站着一个女人。她本不在那里。',choices:[]},
+{who:'EMT探员',what:'我们得走了。马上。',choices:[{text:'"怎么回事？"',next:'emtDone2'},{text:'退后',next:'emtDone2'}]},
+{who:'EMT探员',what:'EMT会再联系你。今晚锁好门。',choices:[]}
 ],
-emtDone2:[{who:'EMT Agent',what:'Don\'t follow us. Don\'t ask questions.',choices:[]}],
+emtDone2:[{who:'EMT探员',what:'别跟着我们。别问问题。',choices:[]}],
 carl:[
-{who:'???',what:'HEY! YOU THERE!',choices:[]},
-{who:'Carl',what:'Name\'s Carl. My car ran out of gas!',choices:[{text:'"Are you hurt?"',next:'carl2'},{text:'"What happened?"',next:'carl2'}]},
-{who:'Carl',what:'This place... it\'s not for humans!',choices:[]},
-{who:'Carl',what:'Monsters everywhere! Come with me!',choices:[{text:'"I can\'t leave"',next:'carl3'},{text:'"What monsters?"',next:'carl3'}]},
-{who:'Carl',what:'You got spare gas? Please!',choices:[]}
+{who:'???',what:'嘿！你！',choices:[]},
+{who:'Carl',what:'我叫Carl。我的车没油了！',choices:[{text:'"你受伤了吗？"',next:'carl2'},{text:'"发生什么了？"',next:'carl2'}]},
+{who:'Carl',what:'这地方...不适合人类！',choices:[]},
+{who:'Carl',what:'到处都是怪物！跟我走！',choices:[{text:'"我不能离开"',next:'carl3'},{text:'"什么怪物？"',next:'carl3'}]},
+{who:'Carl',what:'你有备用汽油吗？求你了！',choices:[]}
 ],
-carl2:[{who:'Carl',what:'Blood... not all mine. Saw things...',choices:[]}],
-carl3:[{who:'Carl',what:'Things wearing human faces. Not human inside.',choices:[]}],
+carl2:[{who:'Carl',what:'血...不全是我的。看到些东西...',choices:[]}],
+carl3:[{who:'Carl',what:'披着人皮的东西。里面不是人。',choices:[]}],
 carlGas:[
-{who:'Carl',what:'Thank you! Thank you!',choices:[]},
-{who:'Carl',what:'Don\'t stay long. Buy a weapon. Protect yourself.',choices:[{text:'"I\'ll consider it"',next:'carlGo'},{text:'"I\'m fine"',next:'carlGo'}]},
-{who:'Carl',what:'Good luck. I\'m getting out of Ohio!',choices:[]}
+{who:'Carl',what:'谢谢！谢谢！',choices:[]},
+{who:'Carl',what:'别待太久。买把武器。保护自己。',choices:[{text:'"我会考虑的"',next:'carlGo'},{text:'"我没事"',next:'carlGo'}]},
+{who:'Carl',what:'祝你好运。我要离开俄亥俄了！',choices:[]}
 ],
-carlGo:[{who:'System',what:'Carl drives away, tires screeching.',choices:[]},{who:'System',what:'[A revolver appeared in the store]',choices:[]}],
+carlGo:[{who:'System',what:'Carl开车走了，轮胎尖叫。',choices:[]},{who:'System',what:'[商店里出现了一把左轮手枪]',choices:[]}],
 frank:[
-{who:'???',what:'Hey! Hey — is that you?',choices:[]},
-{who:'Frank',what:'Frank. Old friend of yours. Remember?',choices:[{text:'"Frank! Long time!"',next:'frank2'},{text:'"Barely recognized you"',next:'frank2'}]},
-{who:'Frank',what:'My engine died right outside. Bad timing.',choices:[]},
-{who:'System',what:'[His car is smoking. He needs a wrench.]',choices:[]}
+{who:'???',what:'嘿！嘿——是你吗？',choices:[]},
+{who:'Frank',what:'Frank。你的老朋友。记得吗？',choices:[{text:'"Frank！好久不见！"',next:'frank2'},{text:'"差点没认出你"',next:'frank2'}]},
+{who:'Frank',what:'我的引擎就在外面熄火了。真不巧。',choices:[]},
+{who:'系统',what:'[他的车在冒烟。他需要扳手。]',choices:[]}
 ],
-frank2:[{who:'Frank',what:'I was just passing through town.',choices:[]}],
+frank2:[{who:'Frank',what:'我只是路过镇上。',choices:[]}],
 frankFix:[
-{who:'Frank',what:'You got a wrench? That\'d save me.',choices:[]},
-{who:'System',what:'[Go to the garage and grab a wrench]',choices:[]}
+{who:'Frank',what:'你有扳手吗？那就帮我大忙了。',choices:[]},
+{who:'系统',what:'[去车库拿扳手]',choices:[]}
 ],
 frankTalk:[
-{who:'Frank',what:'Thanks, buddy. Appreciate it.',choices:[]},
-{who:'Frank',what:'Hey... you remember that factory guy?',choices:[]},
-{who:'Frank',what:'They fired him. Lost some material or something.',choices:[{text:'"That\'s rough"',next:'frankTalk2'},{text:'"What happened?"',next:'frankTalk2'}]},
-{who:'Frank',what:'Honestly? Might have been for the best.',choices:[]},
-{who:'Frank',what:'People were acting strange around then.',choices:[]},
-{who:'Frank',what:'You seen the news? You should check.',choices:[]},
-{who:'Frank',what:'Anyway, I should head home. Getting dark.',choices:[]},
-{who:'Frank',what:'This place gives me the creeps.',choices:[]},
-{who:'System',what:'Frank gets in his car and drives away.',choices:[]}
+{who:'Frank',what:'谢了，伙计。感激不尽。',choices:[]},
+{who:'Frank',what:'嘿...你记得工厂那个人吗？',choices:[]},
+{who:'Frank',what:'他们把他开除了。好像丢了什么材料。',choices:[{text:'"真惨"',next:'frankTalk2'},{text:'"发生了什么？"',next:'frankTalk2'}]},
+{who:'Frank',what:'说实话？也许是好事。',choices:[]},
+{who:'Frank',what:'那阵子人们行为很怪。',choices:[]},
+{who:'Frank',what:'你看新闻了吗？该看看。',choices:[]},
+{who:'Frank',what:'总之，我该回家了。天快黑了。',choices:[]},
+{who:'Frank',what:'这地方让我毛骨悚然。',choices:[]},
+{who:'系统',what:'Frank上车开走了。',choices:[]}
 ],
-frankTalk2:[{who:'Frank',what:'Nobody knows the full story.',choices:[]}],
+frankTalk2:[{who:'Frank',what:'没人知道全部真相。',choices:[]}],
 office:[
-{who:'Office Worker',what:'Hi, sorry — quick break from work.',choices:[]},
-{who:'Office Worker',what:'Need two ID photos. Blue background if possible.',choices:[{text:'"Sure, step over here"',next:'office2'},{text:'"You look tired"',next:'office2'}]},
-{who:'Office Worker',what:'Rough week... layoffs coming.',choices:[]},
-{who:'Office Worker',what:'Just need these for HR. Thanks.',choices:[]},
-{who:'System',what:'[Take 2 ID photos of him, then print]',choices:[]}
+{who:'上班族',what:'你好，抱歉——工作间隙来的。',choices:[]},
+{who:'上班族',what:'需要两张证件照。蓝底最好。',choices:[{text:'"好的，这边请"',next:'office2'},{text:'"你看起来很累"',next:'office2'}]},
+{who:'上班族',what:'这周难熬...要裁员了。',choices:[]},
+{who:'上班族',what:'就是给人事的。谢谢。',choices:[]},
+{who:'系统',what:'[拍2张证件照，然后打印]',choices:[]}
 ],
-office2:[{who:'Office Worker',what:'Appreciate it. First time here.',choices:[]}],
+office2:[{who:'上班族',what:'谢谢。第一次来这。',choices:[]}],
 fakeFrank:[
-{who:'???',what:'Hey buddy! It\'s me, Frank!',choices:[{text:'"Frank?"',next:'ff2'},{text:'"What are you doing here?"',next:'ff2'}]},
-{who:'Frank',what:'Monsters everywhere! Get in my car!',choices:[]},
-{who:'Frank',what:'The wanted guy? We don\'t know who he is!',choices:[]},
-{who:'System',what:'...Your friend would never say that.',choices:[{text:'"You\'re not Frank"',next:'ff3'},{text:'"How do you know?"',next:'ff3'}]}
+{who:'???',what:'嘿伙计！是我，Frank！',choices:[{text:'"Frank？"',next:'ff2'},{text:'"你来这干什么？"',next:'ff2'}]},
+{who:'Frank',what:'到处都是怪物！上我的车！',choices:[]},
+{who:'Frank',what:'那个通缉犯？我们不知道他是谁！',choices:[]},
+{who:'系统',what:'...你的朋友绝不会那么说。',choices:[{text:'"你不是Frank"',next:'ff3'},{text:'"你怎么知道？"',next:'ff3'}]}
 ],
-ff2:[{who:'Frank',what:'Came to save you! Let\'s go!',choices:[]}],
-ff3:[{who:'Fake Frank',what:'Smart. But too late.',choices:[]}],
+ff2:[{who:'Frank',what:'来救你！快走！',choices:[]}],
+ff3:[{who:'假Frank',what:'聪明。但太晚了。',choices:[]}],
 ffShoot:[
-{who:'Fake Frank',what:'Still figured it out... so DIE!',choices:[]},
-{who:'System',what:'His head splits open. Tentacles burst out!',choices:[{text:'Fire!',next:'ffChase'},{text:'Run!',next:'ffChase'}]},
-{who:'Monster',what:'SCREEEEECH!',choices:[]}
+{who:'假Frank',what:'还是被你发现了...那就死吧！',choices:[]},
+{who:'系统',what:'他的头裂开了。触手爆出来！',choices:[{text:'开枪！',next:'ffChase'},{text:'跑！',next:'ffChase'}]},
+{who:'怪物',what:'嘶啊啊啊啊！',choices:[]}
 ],
-ffChase:[{who:'System',what:'The monster chases you! Run back to the shop!',choices:[]},{who:'System',what:'[Get inside quickly!]',choices:[]}],
+ffChase:[{who:'系统',what:'怪物追你！跑回店里！',choices:[]},{who:'系统',what:'[快进去！]',choices:[]}],
 agent:[
 {who:'???',what:'...',choices:[]},
-{who:'Agent',what:'Target located.',choices:[{text:'"Who are you?!"',next:'agent2'},{text:'"Don\'t shoot!"',next:'agent2'}]},
-{who:'Agent',what:'Cooperation complete.',choices:[]},
-{who:'Agent',what:'Just like your father...',choices:[]},
-{who:'Agent',what:'Next time, we\'ll cooperate again.',choices:[]}
+{who:'特工',what:'目标确认。',choices:[{text:'"你是谁？！"',next:'agent2'},{text:'"别开枪！"',next:'agent2'}]},
+{who:'特工',what:'合作完成。',choices:[]},
+{who:'特工',what:'和你父亲一样...',choices:[]},
+{who:'特工',what:'下次，我们再合作。',choices:[]}
 ],
-agent2:[{who:'Agent',what:'No questions. Just business.',choices:[]}],
+agent2:[{who:'特工',what:'别问。只是公务。',choices:[]}],
 wrongPhoto:[
-{who:'Customer',what:'This isn\'t me!',choices:[]},
-{who:'Customer',what:'I want MY photo, not some building!',choices:[{text:'"Sorry, let me retake"',next:'wrong2'},{text:'"It\'s artistic"',next:'wrong2'}]},
-{who:'System',what:'Need to take photo with customer present.',choices:[]}
+{who:'顾客',what:'这不是我！',choices:[]},
+{who:'顾客',what:'我要我的照片，不是一栋楼！',choices:[{text:'"抱歉，我重拍"',next:'wrong2'},{text:'"这是艺术"',next:'wrong2'}]},
+{who:'系统',what:'需要在顾客在场时拍照。',choices:[]}
 ],
-wrong2:[{who:'Customer',what:'Hurry up then.',choices:[]}]
+wrong2:[{who:'顾客',what:'那快点。',choices:[]}],
+imod:[
+{who:'???',what:'你好。我是伊莫德，心理学家。',choices:[]},
+{who:'伊莫德',what:'你过去有心事。你父亲病逝。',choices:[]},
+{who:'伊莫德',what:'你肯定在猜测那扇门。',choices:[]},
+{who:'主角',what:'你到底是谁？',choices:[]},
+{who:'伊莫德',what:'我只是一个普通人罢了。给我拍两张照。',choices:[]},
+{who:'系统',what:'[拍2张伊莫德的照片，然后打印]',choices:[]}
+],
+imodDone:[
+{who:'伊莫德',what:'拍完了。我要向前，而不是停留。',choices:[]},
+{who:'伊莫德',what:'祝你好运。',choices:[]},
+{who:'系统',what:'伊莫德转身离开，身影消失在门外。',choices:[]}
+],
+headless:[
+{who:'无头人',what:'...',choices:[{text:'"你好？"',next:'headless2'},{text:'"你需要什么？"',next:'headless2'}]},
+{who:'无头人',what:'...',choices:[]},
+{who:'系统',what:'它没有反应。但它手里拿着一张纸条："照片"。',choices:[]},
+{who:'系统',what:'[拍1张无头人的照片，然后交给它]',choices:[]}
+],
+headless2:[{who:'无头人',what:'...',choices:[]}],
+headlessDone:[
+{who:'系统',what:'你把照片递给无头人。',choices:[]},
+{who:'系统',what:'它似乎"看"了看，然后从口袋里掏出$100。',choices:[]},
+{who:'系统',what:'+$100',choices:[]},
+{who:'系统',what:'无头人转身，安静地离开了。',choices:[]}
+],
+sheriff:[
+{who:'警长',what:'你好。我是警长Harrison。',choices:[]},
+{who:'警长',what:'最近失踪的人很多。',choices:[]},
+{who:'警长',what:'这些失踪名单，请张贴在店内。',choices:[]},
+{who:'系统',what:'[在店内张贴失踪人员海报]',choices:[]},
+{who:'警长',what:'失踪的人里，有你迎接的第一位顾客——艾米丽。',choices:[]},
+{who:'警长',what:'还有女记者Nina，她正在调查你们工作室。',choices:[]},
+{who:'警长',what:'还有Helena，那个每年独自来拍纪念照的老人...',choices:[]},
+{who:'警长',what:'以及Jack、Margaret、Max这些正常营业的顾客。',choices:[]},
+{who:'警长',what:'如果看到任何异常，立刻联系我。',choices:[]}
+],
+emilyMonster:[
+{who:'???',what:'...你来了。',choices:[]},
+{who:'主角',what:'你的家人朋友一直在找你！',choices:[]},
+{who:'艾米丽?',what:'不，我从未失踪。',choices:[]},
+{who:'主角',what:'不可能！快离开这！',choices:[]},
+{who:'艾米丽?',what:'你...不该...来的...',choices:[]},
+{who:'系统',what:'艾米丽突然变成和弗兰克一样的怪物！',choices:[]},
+{who:'怪物',what:'嘶啊啊啊！',choices:[]},
+{who:'系统',what:'跑！跑回店里！你有2秒！',choices:[]}
+]
 };
 
 const custData={
-emily:{name:'Emily',av:'👤',pay:80,type:'emily',count:1},
+emily:{name:'艾米丽',av:'👤',pay:80,type:'emily',count:1},
 jack:{name:'Jack',av:'👤',pay:100,type:'jack',count:2},
 margaret:{name:'Margaret',av:'👵',pay:120,type:'margaret',count:3},
 max:{name:'Max',av:'🎤',pay:150,type:'max',count:3},
@@ -631,11 +730,11 @@ owen:{name:'Owen',av:'🍺',pay:60,type:'owen',count:1},
 sophie:{name:'Sophie',av:'👧',pay:80,type:'sophie',count:1},
 marcus:{name:'Marcus',av:'🚒',pay:120,type:'marcus',count:2},
 tommy:{name:'Tommy',av:'🛵',pay:90,type:'tommy',count:1},
-postman:{name:'Postman',av:'📮',pay:100,type:'postman',count:2},
+postman:{name:'邮递员',av:'📮',pay:100,type:'postman',count:2},
 leonard:{name:'Leonard',av:'🧑',pay:200,type:'leonard',count:0},
-carl:{name:'Carl',av:'🩸',pay:0,type:'carl',count:0},
-office:{name:'Office Worker',av:'🧑‍💼',pay:120,type:'office',count:2},
-fakeFrank:{name:'Frank',av:'👹',pay:0,type:'fakeFrank',count:0}
+office:{name:'上班族',av:'🧑‍💼',pay:120,type:'office',count:2},
+imod:{name:'伊莫德',av:'🧑',pay:150,type:'imod',count:2},
+headless:{name:'无头人',av:'👤',pay:100,type:'headless',count:1}
 };
 
 function loadScene(s){
@@ -652,14 +751,14 @@ if(carlObj)carlObj.show=true;
 if(G.st.frankReady&&!G.st.frankLeft){
 const fc=G.objs.find(o=>o.t==='frankCar');
 if(fc)fc.show=true;
-if(!G.st.frankMet){
 const fr=G.objs.find(o=>o.t==='frank');
 if(fr)fr.show=true;
 }
+if(G.st.fakeFrankTriggered&&!G.st.monsterChase&&!G.st.fakeFrank){
+const frankNpc=G.npcs.find(n=>n.type==='fakeFrank');
+if(!frankNpc){
+G.npcs.push({x:580,y:320,av:'👹',name:'Frank',type:'fakeFrank',targetX:580,targetY:320});
 }
-if(G.st.fakeFrankTriggered&&!G.st.monsterChase){
-const frankObj=G.objs.find(o=>o.t==='frank');
-if(frankObj&&!G.st.frankReady)frankObj.show=true;
 }
 if(G.st.deliveryActive){
 const tr=G.objs.find(o=>o.t==='truck');
@@ -668,6 +767,22 @@ const pa=G.objs.find(o=>o.t==='parcel');
 if(tr)tr.show=true;
 if(co)co.show=true;
 if(pa&&G.st.deliveryParcel)pa.show=true;
+}
+if(G.st.detectorUnlocked){
+const ng=G.objs.find(o=>o.t==='nuclearGate');
+if(ng)ng.show=true;
+}
+}
+if(s==='shop'){
+if(G.st.wantedPosted){
+const wb=G.objs.find(o=>o.t==='wantedBoard');
+if(wb)wb.show=true;
+}
+}
+if(s==='nuclear'){
+if(!G.st.emilyMonsterDone){
+const em=G.objs.find(o=>o.t==='emilyMonster');
+if(em)em.show=true;
 }
 }
 }
@@ -743,7 +858,7 @@ nextDia();
 });
 }
 
-function drawWhiteEye(n,sx,sy){
+function drawWhiteEye(sx,sy){
 ctx.fillStyle='rgba(5,5,5,0.95)';
 ctx.beginPath();
 ctx.arc(sx,sy,24,0,Math.PI*2);
@@ -752,31 +867,19 @@ ctx.strokeStyle='#111';
 ctx.lineWidth=2;
 ctx.stroke();
 ctx.fillStyle='#fff';
-ctx.beginPath();
-ctx.arc(sx-8,sy-3,5,0,Math.PI*2);
-ctx.fill();
-ctx.beginPath();
-ctx.arc(sx+8,sy-3,5,0,Math.PI*2);
-ctx.fill();
+ctx.beginPath();ctx.arc(sx-8,sy-3,5,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.arc(sx+8,sy-3,5,0,Math.PI*2);ctx.fill();
 ctx.fillStyle='#000';
-ctx.beginPath();
-ctx.arc(sx-8,sy-3,2,0,Math.PI*2);
-ctx.fill();
-ctx.beginPath();
-ctx.arc(sx+8,sy-3,2,0,Math.PI*2);
-ctx.fill();
+ctx.beginPath();ctx.arc(sx-8,sy-3,2,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.arc(sx+8,sy-3,2,0,Math.PI*2);ctx.fill();
 ctx.strokeStyle='#ddd';
 ctx.lineWidth=2;
 ctx.beginPath();
 ctx.arc(sx,sy+6,9,0.15*Math.PI,0.85*Math.PI);
 ctx.stroke();
 ctx.fillStyle='rgba(255,255,255,0.15)';
-ctx.beginPath();
-ctx.arc(sx-8,sy-3,10,0,Math.PI*2);
-ctx.fill();
-ctx.beginPath();
-ctx.arc(sx+8,sy-3,10,0,Math.PI*2);
-ctx.fill();
+ctx.beginPath();ctx.arc(sx-8,sy-3,10,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.arc(sx+8,sy-3,10,0,Math.PI*2);ctx.fill();
 }
 
 function draw(){
@@ -784,71 +887,45 @@ const sc=scenes[G.scene];
 ctx.fillStyle='#050505';
 ctx.fillRect(0,0,c.width,c.height);
 if(G.scene==='street'){
-ctx.fillStyle='#1a1a1a';
-ctx.fillRect(0,0,c.width,c.height);
-ctx.fillStyle='#2a2a2a';
-ctx.fillRect(0,c.height/2,c.width,c.height/2);
-ctx.fillStyle='#151515';
-ctx.fillRect(200-G.cam.x,80-G.cam.y,400,320);
+ctx.fillStyle='#1a1a1a';ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle='#2a2a2a';ctx.fillRect(0,c.height/2,c.width,c.height/2);
+ctx.fillStyle='#151515';ctx.fillRect(200-G.cam.x,80-G.cam.y,400,320);
 ctx.fillStyle='#3a3a3a';
 ctx.fillRect(350-G.cam.x,250-G.cam.y,8,30);
 ctx.fillRect(442-G.cam.x,250-G.cam.y,8,30);
 if(G.st.carlReady&&!G.st.carlGone){
 ctx.fillStyle='#8b0000';
-ctx.beginPath();
-ctx.arc(630-G.cam.x,380-G.cam.y,30,0,Math.PI*2);
-ctx.fill();
-ctx.fillStyle='#c8a85c';
-ctx.font='20px sans-serif';
-ctx.textAlign='center';
+ctx.beginPath();ctx.arc(630-G.cam.x,380-G.cam.y,30,0,Math.PI*2);ctx.fill();
+ctx.fillStyle='#c8a85c';ctx.font='20px sans-serif';ctx.textAlign='center';
 ctx.fillText('🩸',630-G.cam.x,385-G.cam.y);
 }
 if(G.st.frankReady&&!G.st.frankLeft){
-ctx.fillStyle='#3a2a0a';
-ctx.fillRect(880-G.cam.x,460-G.cam.y,220,140);
-ctx.strokeStyle='#8b4513';
-ctx.lineWidth=2;
-ctx.strokeRect(880-G.cam.x,460-G.cam.y,220,140);
-ctx.fillStyle='#c8a85c';
-ctx.font='50px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
+ctx.fillStyle='#3a2a0a';ctx.fillRect(880-G.cam.x,460-G.cam.y,220,140);
+ctx.strokeStyle='#8b4513';ctx.lineWidth=2;ctx.strokeRect(880-G.cam.x,460-G.cam.y,220,140);
+ctx.fillStyle='#c8a85c';ctx.font='50px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('🚗',990-G.cam.x,530-G.cam.y);
-ctx.fillStyle='#ff6b6b';
-ctx.font='12px sans-serif';
-ctx.fillText('BROKEN',990-G.cam.x,570-G.cam.y);
+ctx.fillStyle='#ff6b6b';ctx.font='12px sans-serif';ctx.fillText('抛锚',990-G.cam.x,570-G.cam.y);
 }
 if(G.st.fakeFrankTriggered&&!G.st.monsterChase&&!G.st.frankReady){
-ctx.fillStyle='#3a0a0a';
-ctx.fillRect(540-G.cam.x,290-G.cam.y,80,60);
-ctx.strokeStyle='#8b0000';
-ctx.lineWidth=2;
-ctx.strokeRect(540-G.cam.x,290-G.cam.y,80,60);
-ctx.fillStyle='#ff6b6b';
-ctx.font='20px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
+ctx.fillStyle='#3a0a0a';ctx.fillRect(540-G.cam.x,290-G.cam.y,80,60);
+ctx.strokeStyle='#8b0000';ctx.lineWidth=2;ctx.strokeRect(540-G.cam.x,290-G.cam.y,80,60);
+ctx.fillStyle='#ff6b6b';ctx.font='20px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('🚗',580-G.cam.x,320-G.cam.y);
 }
 }else if(G.scene==='shop'){
-ctx.fillStyle='#0a0a0a';
-ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle='#0a0a0a';ctx.fillRect(0,0,c.width,c.height);
 ctx.fillStyle='#14100c';
 for(let x=0;x<sc.w;x+=100)for(let y=0;y<sc.h;y+=100){
 const sx=x-G.cam.x,sy=y-G.cam.y;
 if(sx>-100&&sx<c.width+100&&sy>-100&&sy<c.height+100)ctx.fillRect(sx,sy,98,98);
 }
-ctx.fillStyle='#080808';
-ctx.fillRect(0-G.cam.x,0-G.cam.y,sc.w,70);
+ctx.fillStyle='#080808';ctx.fillRect(0-G.cam.x,0-G.cam.y,sc.w,70);
 if(G.st.power){
 ctx.fillStyle='rgba(200,168,92,0.08)';
-ctx.beginPath();
-ctx.arc(500-G.cam.x,100-G.cam.y,120,0,Math.PI*2);
-ctx.fill();
+ctx.beginPath();ctx.arc(500-G.cam.x,100-G.cam.y,120,0,Math.PI*2);ctx.fill();
 }
 }else if(G.scene==='corridor'){
-ctx.fillStyle='#060606';
-ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle='#060606';ctx.fillRect(0,0,c.width,c.height);
 ctx.fillStyle='#0c0c0c';
 for(let x=0;x<sc.w;x+=100)for(let y=0;y<sc.h;y+=100){
 const sx=x-G.cam.x,sy=y-G.cam.y;
@@ -856,31 +933,41 @@ if(sx>-100&&sx<c.width+100&&sy>-100&&sy<c.height+100)ctx.fillRect(sx,sy,98,98);
 }
 if(G.st.power){
 ctx.fillStyle='rgba(200,168,92,0.06)';
-ctx.beginPath();
-ctx.arc(300-G.cam.x,200-G.cam.y,80,0,Math.PI*2);
-ctx.fill();
+ctx.beginPath();ctx.arc(300-G.cam.x,200-G.cam.y,80,0,Math.PI*2);ctx.fill();
 }
 }else if(G.scene==='storage'){
-ctx.fillStyle='#0a0a0a';
-ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle='#0a0a0a';ctx.fillRect(0,0,c.width,c.height);
 ctx.fillStyle='#151515';
-ctx.fillRect(50-G.cam.x,50-G.cam.y,300,200);
+for(let x=0;x<sc.w;x+=100)for(let y=0;y<sc.h;y+=100){
+const sx=x-G.cam.x,sy=y-G.cam.y;
+if(sx>-100&&sx<c.width+100&&sy>-100&&sy<c.height+100)ctx.fillRect(sx,sy,98,98);
+}
+ctx.strokeStyle='rgba(200,168,92,0.1)';ctx.lineWidth=2;
+ctx.strokeRect(-G.cam.x,-G.cam.y,sc.w,sc.h);
 }else if(G.scene==='garage'){
-ctx.fillStyle='#0a0a0a';
-ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle='#0a0a0a';ctx.fillRect(0,0,c.width,c.height);
 ctx.fillStyle='#141414';
 for(let x=0;x<sc.w;x+=100)for(let y=0;y<sc.h;y+=100){
 const sx=x-G.cam.x,sy=y-G.cam.y;
 if(sx>-100&&sx<c.width+100&&sy>-100&&sy<c.height+100)ctx.fillRect(sx,sy,98,98);
 }
+}else if(G.scene==='nuclear'){
+ctx.fillStyle='#0a0a0a';ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle='#0d0d0d';
+for(let x=0;x<sc.w;x+=120)for(let y=0;y<sc.h;y+=120){
+const sx=x-G.cam.x,sy=y-G.cam.y;
+if(sx>-120&&sx<c.width+120&&sy>-120&&sy<c.height+120)ctx.fillRect(sx,sy,118,118);
+}
+if(G.st.detectorOn){
+ctx.fillStyle='rgba(80,200,120,'+(0.02+Math.sin(G.tick*0.05)*0.01)+')';
+ctx.fillRect(0,0,c.width,c.height);
+}
 }
 if(!G.st.power&&G.scene==='shop'&&Math.sin(G.tick*0.1)>0.7){
-ctx.fillStyle='rgba(139,0,0,0.05)';
-ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle='rgba(139,0,0,0.05)';ctx.fillRect(0,0,c.width,c.height);
 }
 if(G.st.inChase&&G.tick%10<5){
-ctx.fillStyle='rgba(139,0,0,0.1)';
-ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle='rgba(139,0,0,0.1)';ctx.fillRect(0,0,c.width,c.height);
 }
 G.objs.forEach(o=>{
 if(o.t==='carl'&&!o.show)return;
@@ -889,6 +976,9 @@ if(o.t==='frankCar'&&!o.show)return;
 if(o.t==='truck'&&!o.show)return;
 if(o.t==='courier'&&!o.show)return;
 if(o.t==='parcel'&&!o.show)return;
+if(o.t==='wantedBoard'&&!o.show)return;
+if(o.t==='nuclearGate'&&!o.show)return;
+if(o.t==='emilyMonster'&&!o.show)return;
 const sx=o.x-G.cam.x,sy=o.y-G.cam.y;
 if(sx<-300||sx>c.width+300||sy<-300||sy>c.height+300)return;
 ctx.fillStyle='#1a1a1a';
@@ -896,305 +986,191 @@ ctx.strokeStyle='rgba(200,184,150,0.25)';
 ctx.lineWidth=1;
 switch(o.t){
 case'sign':
-ctx.fillStyle='#111';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle='#c8a85c';
-ctx.font='bold 18px sans-serif';
-ctx.textAlign='center';
+ctx.fillStyle='#111';ctx.fillRect(sx,sy,o.w,o.h);ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';ctx.font='bold 18px sans-serif';ctx.textAlign='center';
 ctx.fillText('OLD',sx+o.w/2,sy+35);
-ctx.font='bold 14px sans-serif';
-ctx.fillText('STATE',sx+o.w/2,sy+60);
-ctx.fillStyle='#555';
-ctx.font='9px sans-serif';
-ctx.fillText('EST. 1987',sx+o.w/2,sy+75);
+ctx.font='bold 14px sans-serif';ctx.fillText('STATE',sx+o.w/2,sy+60);
+ctx.fillStyle='#555';ctx.font='9px sans-serif';ctx.fillText('创立于1987',sx+o.w/2,sy+75);
 break;
 case'door':
-ctx.fillStyle='#2a1a0a';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle='#c8a85c';
-ctx.font='11px sans-serif';
-ctx.textAlign='center';
-ctx.fillText('ENTER',sx+o.w/2,sy+o.h/2);
+ctx.fillStyle='#2a1a0a';ctx.fillRect(sx,sy,o.w,o.h);ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';ctx.font='11px sans-serif';ctx.textAlign='center';
+ctx.fillText('进入',sx+o.w/2,sy+o.h/2);
 break;
 case'board':
 ctx.fillStyle=G.st.sign?'#0a2a0a':'#2a0a0a';
 ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeStyle=G.st.sign?'#50c878':'#8b0000';
-ctx.lineWidth=2;
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle=G.st.sign?'#50c878':'#8b0000';
-ctx.font='bold 11px sans-serif';
-ctx.fillText(G.st.sign?'OPEN':'CLOSED',sx+o.w/2,sy+o.h/2);
+ctx.strokeStyle=G.st.sign?'#50c878':'#8b0000';ctx.lineWidth=2;ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle=G.st.sign?'#50c878':'#8b0000';ctx.font='bold 11px sans-serif';ctx.textAlign='center';
+ctx.fillText(G.st.sign?'营业中':'已打烊',sx+o.w/2,sy+o.h/2);
 break;
 case'counter':
-ctx.fillStyle='#2a1a0a';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle='#c8a85c';
-ctx.font='11px sans-serif';
-ctx.textAlign='center';
-ctx.fillText('COUNTER',sx+o.w/2,sy+o.h/2);
+ctx.fillStyle='#2a1a0a';ctx.fillRect(sx,sy,o.w,o.h);ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';ctx.font='11px sans-serif';ctx.textAlign='center';
+ctx.fillText('柜台',sx+o.w/2,sy+o.h/2);
 break;
 case'coffeeTable':
-ctx.fillStyle='#3a1a0a';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeStyle='#c8a85c';
-ctx.lineWidth=2;
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle='#c8a85c';
-ctx.font='24px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
+ctx.fillStyle='#3a1a0a';ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#c8a85c';ctx.lineWidth=2;ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';ctx.font='24px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('☕',sx+o.w/2,sy+o.h/2-10);
-ctx.fillStyle='#b0a080';
-ctx.font='9px sans-serif';
-ctx.fillText('COFFEE',sx+o.w/2,sy+o.h/2+18);
-if(G.st.coffeeReady){
-ctx.fillStyle='#50c878';
-ctx.font='16px sans-serif';
-ctx.fillText('✓',sx+o.w/2,sy+o.h/2+35);
-}
+ctx.fillStyle='#b0a080';ctx.font='9px sans-serif';ctx.fillText('咖啡机',sx+o.w/2,sy+o.h/2+18);
+if(G.st.coffeeReady){ctx.fillStyle='#50c878';ctx.font='16px sans-serif';ctx.fillText('✓',sx+o.w/2,sy+o.h/2+35);}
 break;
 case'pc':
-ctx.fillStyle='#0a0a0a';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeStyle='#c8a85c';
-ctx.lineWidth=2;
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle='#c8a85c';
-ctx.font='18px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
+ctx.fillStyle='#0a0a0a';ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#c8a85c';ctx.lineWidth=2;ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';ctx.font='18px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('💻',sx+o.w/2,sy+o.h/2);
 break;
 case'printer':
-ctx.fillStyle='#1a1a1a';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle='#c8a85c';
-ctx.font='18px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
+ctx.fillStyle='#1a1a1a';ctx.fillRect(sx,sy,o.w,o.h);ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';ctx.font='18px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('🖨',sx+o.w/2,sy+o.h/2);
 break;
 case'wall':
-ctx.fillStyle='#0a0a0a';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#0a0a0a';ctx.fillRect(sx,sy,o.w,o.h);ctx.strokeRect(sx,sy,o.w,o.h);
 for(let i=0;i<6;i++){
-ctx.fillStyle='#f5f5dc';
-ctx.fillRect(sx+10+i*65,sy+15,50,60);
-ctx.strokeStyle='#8b4513';
-ctx.lineWidth=1;
-ctx.strokeRect(sx+10+i*65,sy+15,50,60);
-ctx.fillStyle='#666';
-ctx.font='16px sans-serif';
-ctx.fillText('?',sx+35+i*65,sy+50);
+ctx.fillStyle='#f5f5dc';ctx.fillRect(sx+10+i*65,sy+15,50,60);
+ctx.strokeStyle='#8b4513';ctx.lineWidth=1;ctx.strokeRect(sx+10+i*65,sy+15,50,60);
+ctx.fillStyle='#666';ctx.font='16px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+ctx.fillText('?',sx+35+i*65,sy+45);
 }
-ctx.fillStyle='#c8a85c';
-ctx.font='9px sans-serif';
-ctx.fillText('WALL',sx+o.w/2,sy+o.h+12);
+ctx.fillStyle='#c8a85c';ctx.font='9px sans-serif';ctx.fillText('照片墙',sx+o.w/2,sy+o.h+12);
 break;
 case'locked':
-ctx.fillStyle='#0a0505';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeStyle='#8b0000';
-ctx.lineWidth=3;
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle='#8b0000';
-ctx.font='18px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
+ctx.fillStyle='#0a0505';ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#8b0000';ctx.lineWidth=3;ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#8b0000';ctx.font='18px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('🔒',sx+o.w/2,sy+o.h/2-10);
-ctx.font='9px sans-serif';
-ctx.fillText('LOCKED',sx+o.w/2,sy+o.h/2+18);
-ctx.fillStyle='#c8a85c';
-ctx.beginPath();
-ctx.arc(sx+o.w/2,sy+20,5,0,Math.PI*2);
-ctx.fill();
-ctx.strokeStyle='#c8a85c';
-ctx.stroke();
+ctx.font='9px sans-serif';ctx.fillText('锁着',sx+o.w/2,sy+o.h/2+18);
+ctx.fillStyle='#c8a85c';ctx.beginPath();ctx.arc(sx+o.w/2,sy+20,5,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle='#c8a85c';ctx.stroke();
 break;
 case'fuse':
-ctx.fillStyle='#1a1a1a';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeStyle=G.st.power?'#50c878':'#8b0000';
-ctx.lineWidth=3;
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle=G.st.power?'#50c878':'#8b0000';
-ctx.font='12px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
-ctx.fillText(G.st.power?'✓ OK':'✕ OUT',sx+o.w/2,sy+o.h/2);
+ctx.fillStyle='#1a1a1a';ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle=G.st.power?'#50c878':'#8b0000';ctx.lineWidth=3;ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle=G.st.power?'#50c878':'#8b0000';ctx.font='12px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+ctx.fillText(G.st.power?'✓ 正常':'✕ 断开',sx+o.w/2,sy+o.h/2);
 break;
 case'wanted':
-ctx.fillStyle='#f5f5dc';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeStyle='#8b4513';
-ctx.lineWidth=2;
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle='#8b0000';
-ctx.font='bold 9px sans-serif';
-ctx.textAlign='center';
-ctx.fillText('WANTED',sx+o.w/2,sy+18);
-ctx.fillStyle='#333';
-ctx.font='20px serif';
-ctx.textBaseline='middle';
-ctx.fillText('🍺',sx+o.w/2,sy+55);
+ctx.fillStyle='#f5f5dc';ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#8b4513';ctx.lineWidth=2;ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#8b0000';ctx.font='bold 9px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+ctx.fillText('通缉',sx+o.w/2,sy+18);
+ctx.fillStyle='#333';ctx.font='20px serif';ctx.fillText('🍺',sx+o.w/2,sy+55);
+break;
+case'wantedBoard':
+ctx.fillStyle='#1a1a1a';ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#8b0000';ctx.lineWidth=2;ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#8b0000';ctx.font='bold 9px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+ctx.fillText('失踪',sx+o.w/2,sy+12);
+for(let i=0;i<4;i++){
+const px=sx+6+(i%2)*36;
+const py=sy+24+Math.floor(i/2)*28;
+ctx.fillStyle='#f5f5dc';ctx.fillRect(px,py,32,24);
+ctx.strokeStyle='#8b4513';ctx.lineWidth=1;ctx.strokeRect(px,py,32,24);
+ctx.fillStyle='#8b0000';ctx.font='bold 10px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+ctx.fillText('?',px+16,py+12);
+}
+ctx.fillStyle='#c8a85c';ctx.font='8px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+ctx.fillText('查看',sx+o.w/2,sy+o.h-6);
 break;
 case'storage':
-ctx.fillStyle='#1a1a1a';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle='#c8a85c';
-ctx.font='10px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
-ctx.fillText('STORAGE',sx+o.w/2,sy+o.h/2);
+ctx.fillStyle='#1a1a1a';ctx.fillRect(sx,sy,o.w,o.h);ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';ctx.font='10px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+ctx.fillText('储藏室',sx+o.w/2,sy+o.h/2);
 break;
 case'garage':
-ctx.fillStyle='#1a1a1a';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle='#c8a85c';
-ctx.font='20px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
+ctx.fillStyle='#1a1a1a';ctx.fillRect(sx,sy,o.w,o.h);ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';ctx.font='20px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('🚗',sx+o.w/2,sy+o.h/2-8);
-ctx.fillStyle='#b0a080';
-ctx.font='9px sans-serif';
-ctx.fillText('GARAGE',sx+o.w/2,sy+o.h/2+20);
+ctx.fillStyle='#b0a080';ctx.font='9px sans-serif';ctx.fillText('车库',sx+o.w/2,sy+o.h/2+20);
 break;
 case'car':
-ctx.fillStyle='#2a1a0a';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeStyle='#8b4513';
-ctx.lineWidth=3;
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle='#c8a85c';
-ctx.font='60px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
+ctx.fillStyle='#2a1a0a';ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#8b4513';ctx.lineWidth=3;ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';ctx.font='60px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('🚗',sx+o.w/2,sy+o.h/2-15);
-ctx.fillStyle='#b0a080';
-ctx.font='12px sans-serif';
-ctx.fillText('UNDER REPAIR',sx+o.w/2,sy+o.h/2+40);
+ctx.fillStyle='#b0a080';ctx.font='12px sans-serif';ctx.fillText('维修中',sx+o.w/2,sy+o.h/2+40);
 break;
 case'wrenchProp':
-ctx.fillStyle='#2a2a2a';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeStyle='#666';
-ctx.lineWidth=1;
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle='#c8a85c';
-ctx.font='26px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
+ctx.fillStyle='#2a2a2a';ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#666';ctx.lineWidth=1;ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';ctx.font='26px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('🔧',sx+o.w/2,sy+o.h/2);
 break;
 case'oildrum':
-ctx.fillStyle='#2a2a2a';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeStyle='#666';
-ctx.lineWidth=1;
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle='#c8a85c';
-ctx.font='28px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
+ctx.fillStyle='#2a2a2a';ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#666';ctx.lineWidth=1;ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';ctx.font='28px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('⛽',sx+o.w/2,sy+o.h/2);
 break;
 case'screwdriver':
-ctx.fillStyle='#2a2a2a';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeStyle='#666';
-ctx.lineWidth=1;
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle='#c8a85c';
-ctx.font='24px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
+ctx.fillStyle='#2a2a2a';ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#666';ctx.lineWidth=1;ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';ctx.font='24px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('🔩',sx+o.w/2,sy+o.h/2);
 break;
 case'gas':
-ctx.fillStyle='#2a2a2a';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle='#666';
-ctx.font='20px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
+ctx.fillStyle='#2a2a2a';ctx.fillRect(sx,sy,o.w,o.h);ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#666';ctx.font='20px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('⛽',sx+o.w/2,sy+o.h/2);
 break;
 case'carl':
-ctx.fillStyle='#8b0000';
-ctx.beginPath();
-ctx.arc(sx+o.w/2,sy+o.h/2,25,0,Math.PI*2);
-ctx.fill();
-ctx.strokeStyle='#ff0000';
-ctx.lineWidth=2;
-ctx.stroke();
-ctx.fillStyle='#ffd700';
-ctx.font='20px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
+ctx.fillStyle='#8b0000';ctx.beginPath();ctx.arc(sx+o.w/2,sy+o.h/2,25,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle='#ff0000';ctx.lineWidth=2;ctx.stroke();
+ctx.fillStyle='#ffd700';ctx.font='20px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('🩸',sx+o.w/2,sy+o.h/2);
 break;
 case'truck':
-ctx.fillStyle='#333';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeStyle='#666';
-ctx.lineWidth=2;
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle='#c8a85c';
-ctx.font='50px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
+ctx.fillStyle='#333';ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#666';ctx.lineWidth=2;ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';ctx.font='50px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('🚚',sx+o.w/2,sy+o.h/2);
 break;
 case'courier':
-ctx.fillStyle='rgba(5,5,5,0.9)';
-ctx.beginPath();
-ctx.arc(sx+o.w/2,sy+o.h/2,22,0,Math.PI*2);
-ctx.fill();
-ctx.strokeStyle='#c8a85c';
-ctx.lineWidth=2;
-ctx.stroke();
-ctx.fillStyle='#c8a85c';
-ctx.font='18px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
+ctx.fillStyle='rgba(5,5,5,0.9)';ctx.beginPath();ctx.arc(sx+o.w/2,sy+o.h/2,22,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle='#c8a85c';ctx.lineWidth=2;ctx.stroke();
+ctx.fillStyle='#c8a85c';ctx.font='18px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('🧑',sx+o.w/2,sy+o.h/2);
-ctx.fillStyle='#c8a85c';
-ctx.font='9px sans-serif';
-ctx.fillText('COURIER',sx+o.w/2,sy+o.h/2+32);
+ctx.fillStyle='#c8a85c';ctx.font='9px sans-serif';ctx.fillText('快递员',sx+o.w/2,sy+o.h/2+32);
 break;
 case'parcel':
-ctx.fillStyle='#5a4a2a';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeStyle='#c8a85c';
-ctx.lineWidth=2;
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle='#c8a85c';
-ctx.font='24px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
+ctx.fillStyle='#5a4a2a';ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#c8a85c';ctx.lineWidth=2;ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';ctx.font='24px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('📦',sx+o.w/2,sy+o.h/2);
 break;
-case'exit':
-case'corridor':
-ctx.fillStyle='rgba(200,168,92,0.08)';
-ctx.fillRect(sx,sy,o.w,o.h);
-ctx.strokeStyle='#c8a85c';
-ctx.lineWidth=1;
-ctx.strokeRect(sx,sy,o.w,o.h);
-ctx.fillStyle='#c8a85c';
-ctx.font='9px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
-ctx.fillText(o.t==='exit'?'EXIT':'HALL',sx+o.w/2,sy+o.h/2);
+case'nuclearGate':
+ctx.fillStyle='rgba(80,200,120,0.1)';ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#50c878';ctx.lineWidth=2;ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#50c878';ctx.font='11px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+ctx.fillText('禁区',sx+o.w/2,sy+o.h/2);
+break;
+case'barrel1':case'barrel2':case'barrel3':case'barrel4':case'barrel5':
+ctx.fillStyle='#2a3a2a';ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#50c878';ctx.lineWidth=2;ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#50c878';ctx.font='28px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+ctx.fillText('☢',sx+o.w/2,sy+o.h/2);
+break;
+case'wreckCar1':case'wreckCar2':
+ctx.fillStyle='#1a1a1a';ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#444';ctx.lineWidth=2;ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#555';ctx.font='40px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+ctx.fillText('🚗',sx+o.w/2,sy+o.h/2);
+break;
+case'emilyMonster':
+ctx.fillStyle='#8b0000';ctx.beginPath();ctx.arc(sx+o.w/2,sy+o.h/2,28,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle='#ff0000';ctx.lineWidth=3;ctx.stroke();
+ctx.fillStyle='#fff';ctx.font='22px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+ctx.fillText('👹',sx+o.w/2,sy+o.h/2);
+break;
+case'exit':case'corridor':
+ctx.fillStyle='rgba(200,168,92,0.08)';ctx.fillRect(sx,sy,o.w,o.h);
+ctx.strokeStyle='#c8a85c';ctx.lineWidth=1;ctx.strokeRect(sx,sy,o.w,o.h);
+ctx.fillStyle='#c8a85c';ctx.font='9px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+ctx.fillText(o.t==='exit'?'出口':'走廊',sx+o.w/2,sy+o.h/2);
 break;
 }
 });
@@ -1202,17 +1178,9 @@ G.st.garbage.forEach(g=>{
 if(g.scene!==G.scene)return;
 const sx=g.x-G.cam.x,sy=g.y-G.cam.y;
 if(sx<-100||sx>c.width+100||sy<-100||sy>c.height+100)return;
-ctx.fillStyle='rgba(80,60,40,0.9)';
-ctx.beginPath();
-ctx.arc(sx,sy,12,0,Math.PI*2);
-ctx.fill();
-ctx.strokeStyle='#c8a85c';
-ctx.lineWidth=1;
-ctx.stroke();
-ctx.fillStyle='#c8a85c';
-ctx.font='14px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
+ctx.fillStyle='rgba(80,60,40,0.9)';ctx.beginPath();ctx.arc(sx,sy,12,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle='#c8a85c';ctx.lineWidth=1;ctx.stroke();
+ctx.fillStyle='#c8a85c';ctx.font='14px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('🗑',sx,sy);
 });
 G.npcs.forEach(n=>{
@@ -1220,61 +1188,41 @@ if(n.hide)return;
 const sx=n.x-G.cam.x,sy=n.y-G.cam.y;
 if(sx<-50||sx>c.width+50||sy<-50||sy>c.height+50)return;
 if(n.type==='whiteEye'){
-drawWhiteEye(n,sx,sy);
-ctx.fillStyle='#ddd';
-ctx.font='9px sans-serif';
-ctx.textAlign='center';
+drawWhiteEye(sx,sy);
+ctx.fillStyle='#ddd';ctx.font='9px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('???',sx,sy+32);
 return;
 }
-ctx.fillStyle='rgba(5,5,5,0.9)';
-ctx.beginPath();
-ctx.arc(sx,sy,22,0,Math.PI*2);
-ctx.fill();
+ctx.fillStyle='rgba(5,5,5,0.9)';ctx.beginPath();ctx.arc(sx,sy,22,0,Math.PI*2);ctx.fill();
 ctx.strokeStyle=n.type==='fakeFrank'?'#8b0000':(n.type==='emt'?'#3a6ea5':(n.type==='frank'?'#5a9a5a':'#c8a85c'));
-ctx.lineWidth=2;
-ctx.stroke();
-ctx.fillStyle='#c8a85c';
-ctx.font='18px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
+ctx.lineWidth=2;ctx.stroke();
+ctx.fillStyle='#c8a85c';ctx.font='18px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText(n.av,sx,sy);
 if(n.type==='emily'&&n.pale){
-ctx.fillStyle='rgba(255,255,255,0.35)';
-ctx.beginPath();
-ctx.arc(sx,sy,20,0,Math.PI*2);
-ctx.fill();
+ctx.fillStyle='rgba(255,255,255,0.35)';ctx.beginPath();ctx.arc(sx,sy,20,0,Math.PI*2);ctx.fill();
 }
 if(n.type==='victor'){
-ctx.fillStyle='#000';
-ctx.font='14px sans-serif';
+ctx.fillStyle='#000';ctx.font='14px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('🕶',sx,sy-4);
 }
 if(n.type==='victor'||n.type==='emt'){
-ctx.fillStyle='#444';
-ctx.font='10px sans-serif';
+ctx.fillStyle='#444';ctx.font='10px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('🔫',sx+18,sy+18);
 }
 ctx.fillStyle=n.type==='fakeFrank'?'#ff6b6b':(n.type==='emt'?'#5a8ec5':(n.type==='frank'?'#7ac87a':'#c8a85c'));
-ctx.font='9px sans-serif';
+ctx.font='9px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText(n.name,sx,sy+32);
 });
 const px=G.p.x-G.cam.x,py=G.p.y-G.cam.y;
-ctx.fillStyle='rgba(5,5,5,0.9)';
-ctx.beginPath();
-ctx.arc(px,py,G.p.s,0,Math.PI*2);
-ctx.fill();
-ctx.strokeStyle=G.st.inChase?'#ff0000':'#c8a85c';
-ctx.lineWidth=2;
-ctx.stroke();
-ctx.fillStyle='#c8a85c';
-ctx.font='bold 9px sans-serif';
-ctx.textAlign='center';
-ctx.textBaseline='middle';
-ctx.fillText('ME',px,py);
+ctx.fillStyle='rgba(5,5,5,0.9)';ctx.beginPath();ctx.arc(px,py,G.p.s,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle=G.st.inChase?'#ff0000':'#c8a85c';ctx.lineWidth=2;ctx.stroke();
+ctx.fillStyle='#c8a85c';ctx.font='bold 9px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+ctx.fillText('我',px,py);
 }
 
 function checkNear(){
+G.nearNPC=null;
+G.nearGarbage=null;
 let near=null,minD=70;
 for(let o of G.objs){
 if(o.t==='carl'&&!o.show)continue;
@@ -1283,74 +1231,62 @@ if(o.t==='frankCar'&&!o.show)continue;
 if(o.t==='truck'&&!o.show)continue;
 if(o.t==='courier'&&!o.show)continue;
 if(o.t==='parcel'&&!o.show)continue;
+if(o.t==='wantedBoard'&&!o.show)continue;
+if(o.t==='nuclearGate'&&!o.show)continue;
+if(o.t==='emilyMonster'&&!o.show)continue;
 const cx=o.x+o.w/2,cy=o.y+o.h/2;
 const d=Math.sqrt((G.p.x-cx)**2+(G.p.y-cy)**2);
-if(d<minD){
-near=o;
-minD=d;
-}
+if(d<minD){near=o;minD=d;}
 }
 let nearGarbage=null,gMinD=50;
 for(let g of G.st.garbage){
 if(g.scene!==G.scene)continue;
 const d=Math.sqrt((G.p.x-g.x)**2+(G.p.y-g.y)**2);
-if(d<gMinD){
-nearGarbage=g;
-gMinD=d;
-}
+if(d<gMinD){nearGarbage=g;gMinD=d;}
 }
 let nearNPC=null,nMinD=70;
 for(let n of G.npcs){
 if(n.hide||n.leaving)continue;
 const d=Math.sqrt((G.p.x-n.x)**2+(G.p.y-n.y)**2);
-if(d<nMinD){
-nearNPC=n;
-nMinD=d;
-}
+if(d<nMinD){nearNPC=n;nMinD=d;}
 }
 const hint=document.getElementById('hint');
-if(G.st.viewfinderOn){
-hint.classList.remove('show');
-return near;
-}
+if(G.st.viewfinderOn){hint.classList.remove('show');return near;}
 if(nearNPC&&G.st.hasCoffee&&G.st.currentCust&&G.st.currentCust.type==='victor'&&!G.st.victorCoffeePaid){
-hint.classList.add('show');
-hint.textContent='Give Coffee ☕';
-G.nearNPC=nearNPC;
-return near;
+hint.classList.add('show');hint.textContent='给咖啡 ☕';
+G.nearNPC=nearNPC;return near;
 }
-G.nearNPC=null;
 if(nearGarbage&&G.st.hasBroom){
-hint.classList.add('show');
-hint.textContent='Sweep 🧹';
-G.nearGarbage=nearGarbage;
-return near;
+hint.classList.add('show');hint.textContent='打扫 🧹';
+G.nearGarbage=nearGarbage;return near;
 }
-G.nearGarbage=null;
 if(near){
 hint.classList.add('show');
 let act='';
 switch(near.t){
-case'door':act='Enter';break;
-case'exit':act='Exit';break;
-case'board':act=!G.st.sign?'Flip to OPEN':(G.st.open?'OPEN':'Start Business');break;
-case'pc':act='Use PC';break;
-case'printer':act='Use Printer';break;
-case'coffeeTable':act='Use Coffee Machine';break;
-case'wall':act='View Wall';break;
-case'locked':act='Peephole';break;
-case'fuse':act=!G.st.power?'Fix Fuse':'Check Fuse';break;
-case'wanted':act='View Poster';break;
-case'corridor':act='Corridor';break;
-case'storage':act='Storage';break;
-case'garage':act='Enter Garage';break;
-case'car':act='Check Car';break;
-case'wrenchProp':act=G.st.hasWrench?'Wrench (taken)':'Take Wrench 🔧';break;
-case'gas':act='Take Gas';break;
-case'carl':act='Talk to Carl';break;
-case'frank':act=G.st.frankMet?'Talk to Frank':'Approach Frank';break;
-case'parcel':act='Open Package 📦';break;
-default:act='Check';
+case'door':act='进入';break;
+case'exit':act='离开';break;
+case'board':act=!G.st.sign?'翻到营业中':(G.st.open?'营业中':'开始营业');break;
+case'pc':act='使用电脑';break;
+case'printer':act='使用打印机';break;
+case'coffeeTable':act='使用咖啡机';break;
+case'wall':act='查看照片墙';break;
+case'locked':act='猫眼';break;
+case'fuse':act=!G.st.power?'修保险丝':'检查保险丝';break;
+case'wanted':act='查看通缉令';break;
+case'wantedBoard':act='查看失踪名单';break;
+case'corridor':act='走廊';break;
+case'storage':act='储藏室';break;
+case'garage':act='进入车库';break;
+case'car':act='检查汽车';break;
+case'wrenchProp':act=G.st.hasWrench?'扳手 (已拿)':'拿扳手 🔧';break;
+case'gas':act='拿汽油';break;
+case'carl':act='和Carl说话';break;
+case'frank':act=G.st.frankMet?'和Frank说话':'接近Frank';break;
+case'parcel':act='打开包裹 📦';break;
+case'nuclearGate':act='进入禁区 ☢';break;
+case'emilyMonster':act='艾米丽...';break;
+default:act='检查';
 }
 hint.textContent=act;
 }else hint.classList.remove('show');
@@ -1360,119 +1296,128 @@ return near;
 function act(){
 if(!G.near||G.st.inDia||G.st.viewfinderOn)return;
 if(G.nearNPC&&G.st.hasCoffee&&G.st.currentCust&&G.st.currentCust.type==='victor'&&!G.st.victorCoffeePaid){
-giveCoffeeToVictor();
-return;
+giveCoffeeToVictor();return;
 }
 if(G.nearNPC&&G.nearNPC.type==='whiteEye'){
 playWhisper();
-showDia('whiteEye1',()=>{
-toast('...the whisper fades...',2000);
+showDia('whiteEye1',()=>{toast('...低语声渐渐消失...',2000);});
+return;
+}
+if(G.nearNPC&&G.nearNPC.type==='fakeFrank'&&!G.st.monsterChase){
+showDia('fakeFrank',()=>{
+G.st.fakeFrank=true;
+showDia('ffShoot',()=>{
+startMonsterChase();
+if(G.st.hasGun){toast('按枪按钮战斗！',2500);}
+});
 });
 return;
 }
-if(G.nearGarbage&&G.st.hasBroom){
-sweepGarbage(G.nearGarbage);
+if(G.nearNPC&&G.nearNPC.type==='imod'){
+showDia('imod',()=>{toast('伊莫德需要两张照片。',2500);});
 return;
 }
+if(G.nearNPC&&G.nearNPC.type==='headless'){
+showDia('headless',()=>{
+showDia('headless2',()=>{toast('需要给无头人拍照。',2500);});
+});
+return;
+}
+if(G.nearNPC&&G.nearNPC.type==='sheriff'){
+showDia('sheriff',()=>{
+const wb=G.objs.find(o=>o.t==='wantedBoard');
+if(wb)wb.show=true;
+G.st.wantedPosted=true;
+const sheriffNpc=G.npcs.find(n=>n.type==='sheriff');
+if(sheriffNpc){
+sheriffNpc.targetX=400;sheriffNpc.targetY=850;sheriffNpc.leaving=true;
+moveNPCToCounter(sheriffNpc,'sheriff');
+}
+if(!G.st.detectorUnlocked){
+G.st.detectorUnlocked=true;
+const dsi=document.getElementById('detectorShopItem');
+if(dsi)dsi.style.display='flex';
+const ng=G.objs.find(o=>o.t==='nuclearGate');
+if(ng)ng.show=true;
+}
+renderMissingList();
+openM('m-missing');
+toast('警长张贴了失踪人员海报。',2500);
+});
+return;
+}
+if(G.nearGarbage&&G.st.hasBroom){sweepGarbage(G.nearGarbage);return;}
 const o=G.near;
 switch(o.t){
 case'door':
 if(G.scene==='street'){
-loadScene('shop');
-G.p.x=400;
-G.p.y=700;
+loadScene('shop');G.p.x=400;G.p.y=700;
 if(G.st.monsterChase&&G.st.inChase){
-G.st.inChase=false;
-G.st.monsterChase=false;
+G.st.inChase=false;G.st.monsterChase=false;
 document.getElementById('bloodOverlay').classList.remove('on');
 setTimeout(()=>spawnAgent(),2000);
+}
+if(G.st.emilyMonsterChase&&G.st.inChase){
+G.st.inChase=false;G.st.emilyMonsterChase=false;G.st.emilyMonsterDone=true;
+document.getElementById('bloodOverlay').classList.remove('on');
+toast('你安全了...暂时。',3000);
+setTimeout(()=>spawnAgent(),3000);
 }
 }
 break;
 case'exit':
-if(o.to){
-loadScene(o.to);
-G.p.x=o.to==='street'?600:850;
-G.p.y=o.to==='street'?600:400;
+if(o.to){loadScene(o.to);G.p.x=o.to==='street'?600:850;G.p.y=o.to==='street'?600:400;}
+break;
+case'nuclearGate':
+if(o.to==='nuclear'){
+if(!G.st.hasDetector){toast('需要铀浓度探测仪才能进入。',2500);return;}
+loadScene('nuclear');G.p.x=200;G.p.y=900;G.st.detectorOn=true;
+toast('探测仪已开启。铀浓度读数上升...',2500);
 }
 break;
-case'corridor':
-loadScene('corridor');
-G.p.x=300;
-G.p.y=650;
-break;
-case'storage':
-loadScene('storage');
-G.p.x=200;
-G.p.y=200;
-break;
-case'garage':
-loadScene('garage');
-G.p.x=150;
-G.p.y=800;
-break;
+case'corridor':loadScene('corridor');G.p.x=300;G.p.y=650;break;
+case'storage':loadScene('storage');G.p.x=300;G.p.y=700;break;
+case'garage':loadScene('garage');G.p.x=150;G.p.y=800;break;
 case'board':
 if(!G.st.sign){
 G.st.sign=true;
-showDia('powerBack',()=>{
-G.st.open=true;
-startCustQueue();
-});
+showDia('openShop',()=>{G.st.open=true;startCustQueue();});
 }
 break;
-case'pc':
-openPCHome();
-break;
-case'printer':
-openPrinter();
-break;
-case'coffeeTable':
-openCoffeeMachine();
-break;
-case'wall':
-break;
-case'locked':
-openM('m-cateye');
-break;
+case'pc':openPCHome();break;
+case'printer':openPrinter();break;
+case'coffeeTable':openCoffeeMachine();break;
+case'wall':break;
+case'locked':openM('m-cateye');break;
 case'fuse':
 if(!G.st.power){
-G.st.power=true;
-G.st.blackoutActive=false;
+G.st.power=true;G.st.blackoutActive=false;
 document.getElementById('darkness').classList.remove('on');
-setTimeout(()=>{
-spawnEmilySecond();
-},800);
+spawnEmilySecondDelayed();
 }
 break;
-case'wanted':
-openM('m-wanted');
+case'wanted':openM('m-wanted');break;
+case'wantedBoard':
+if(G.st.wantedPosted){renderMissingList();openM('m-missing');}
+else{toast('还没有张贴任何海报。',1800);}
 break;
-case'gas':
-takeGas();
-break;
-case'car':
-toast('Still under repair. Almost done...',2200);
-break;
+case'gas':takeGas();break;
+case'car':toast('还在维修中。快好了...',2200);break;
 case'wrenchProp':
-if(G.st.hasWrench){
-toast('You already have the wrench.',1800);
-}else{
+if(G.st.hasWrench){toast('你已经有扳手了。',1800);}
+else{
 G.st.hasWrench=true;
 const slot=document.getElementById('s-wrench');
 if(slot)slot.style.display='flex';
-toast('✓ Picked up wrench 🔧',2000);
+toast('✓ 拿到了扳手 🔧',2000);
 }
 break;
 case'parcel':
 if(G.st.deliveryParcel){
-G.st.deliveryParcel=false;
-G.st.deliveryActive=false;
-G.st.inv.paper+=5;
-updateInv();
-toast('✓ Package opened! Got 5 Photo Paper.',2200);
-G.objs.forEach(ob=>{
-if(ob.t==='parcel'||ob.t==='truck'||ob.t==='courier')ob.show=false;
-});
+G.st.deliveryParcel=false;G.st.deliveryActive=false;
+G.st.inv.paper+=5;updateInv();
+toast('✓ 包裹打开了！获得5张相纸。',2200);
+G.objs.forEach(ob=>{if(ob.t==='parcel'||ob.t==='truck'||ob.t==='courier')ob.show=false;});
 }
 break;
 case'carl':
@@ -1499,31 +1444,53 @@ case'frank':
 if(!G.st.frankMet){
 G.st.frankMet=true;
 showDia('frank',()=>{
-showDia('frankFix',()=>{
-toast('[Get a wrench from the garage]',2500);
-});
+showDia('frankFix',()=>{toast('[去车库拿扳手]',2500);});
 });
 }else if(!G.st.frankLeft){
 if(G.st.hasWrench){
 showDia('frankTalk',()=>{
 G.st.frankLeft=true;
+const frObj=G.objs.find(o=>o.t==='frank');
+if(frObj)frObj.show=false;
 const fr=G.npcs.find(n=>n.type==='frank');
-if(fr){
-fr.targetX=1300;
-fr.targetY=800;
-fr.leaving=true;
-moveNPCToCounter(fr,'frank');
-}
-setTimeout(()=>{
-loadScene('street');
-},1500);
+if(fr){fr.targetX=1300;fr.targetY=800;fr.leaving=true;moveNPCToCounter(fr,'frank');}
+setTimeout(()=>{loadScene('street');},1500);
 });
-}else{
-toast('[You need a wrench first. It\'s in the garage.]',2500);
+}else{toast('[你需要先拿扳手。在车库里。]',2500);}
 }
+break;
+case'emilyMonster':
+if(!G.st.emilyMonsterChase&&!G.st.emilyMonsterDone){
+showDia('emilyMonster',()=>{
+G.st.emilyMonsterChase=true;G.st.inChase=true;
+const em=G.objs.find(o=>o.t==='emilyMonster');
+if(em)em.show=false;
+const blood=document.getElementById('bloodOverlay');
+if(blood)blood.classList.add('on');
+toast('跑！跑回店里！',2000);
+setTimeout(()=>{
+if(G.st.emilyMonsterChase&&G.scene==='nuclear'){
+toast('你被追上了...',2500);
+G.st.playerDead=true;
+const credits=document.getElementById('credits');
+if(credits)credits.classList.add('show');
+}
+},2000);
+});
 }
 break;
 }
+}
+
+function spawnSheriff(){
+const npc={x:400,y:750,av:'👮',name:'警长',type:'sheriff',targetX:500,targetY:400};
+G.npcs.push(npc);
+moveNPCToCounter(npc,'sheriff');
+}
+
+function spawnEmilySecondDelayed(){
+if(G.st.inDia){setTimeout(spawnEmilySecondDelayed,500);return;}
+spawnEmilySecond();
 }
 
 function openViewfinder(){
@@ -1531,17 +1498,13 @@ if(G.st.viewfinderOn)return;
 if(G.st.playerDead||!G.st.gameStarted)return;
 if(G.st.inDia)return;
 const now=Date.now();
-if(G.st.lastPhotoTime&&now-G.st.lastPhotoTime<2000){
-toast('Camera recharging...',1200);
-return;
-}
+if(G.st.lastPhotoTime&&now-G.st.lastPhotoTime<2000){toast('相机充电中...',1200);return;}
 G.st.viewfinderOn=true;
 document.getElementById('viewfinder').classList.add('show');
 document.getElementById('vfCancel').classList.add('show');
 document.getElementById('vfShutter').classList.add('show');
 document.getElementById('shutterBtn').style.display='none';
-G.joy.dx=0;
-G.joy.dy=0;
+G.joy.dx=0;G.joy.dy=0;
 }
 
 function cancelViewfinder(){
@@ -1558,65 +1521,46 @@ if(!G.st.viewfinderOn)return;
 G.st.lastPhotoTime=Date.now();
 playShutter();
 const flash=document.getElementById('flashOverlay');
-if(flash){
-flash.classList.add('on');
-setTimeout(()=>flash.classList.remove('on'),120);
-}
+if(flash){flash.classList.add('on');setTimeout(()=>flash.classList.remove('on'),120);}
 let avatar,label;
 let nearNPC=null;
 for(let n of G.npcs){
 if(n.hide)continue;
 const d=Math.sqrt((G.p.x-n.x)**2+(G.p.y-n.y)**2);
-if(d<80){
-nearNPC=n;
-break;
-}
+if(d<80){nearNPC=n;break;}
 }
 let emtGroup=null;
 const emts=G.npcs.filter(n=>n.type==='emt');
 if(emts.length===3){
 const cx=emts[0].x,cy=emts[0].y;
 const d=Math.sqrt((G.p.x-cx)**2+(G.p.y-cy)**2);
-if(d<250)emtGroup=emts;
+if(d<120)emtGroup=emts;
 }
-if(emtGroup){
-avatar='🕴🕴🕴';
-label='EMT group photo';
-}else if(nearNPC){
+if(emtGroup){avatar='🕴🕴🕴';label='EMT合影';}
+else if(nearNPC){
 avatar=nearNPC.av;
-label='Photo with '+nearNPC.name;
-if(nearNPC.type==='helena'){avatar='👵👻';label='Helena anniversary (something behind...)';}
-if(nearNPC.type==='victor'){label='Victor ID photo';}
-if(nearNPC.type==='office'){label='Office Worker ID photo';}
-if(nearNPC.type==='postman'){label='Postman ID photo';}
-if(nearNPC.type==='sophie'){avatar='👧👻';label='Sophie family photo (she is alone...)';}
+label='与'+nearNPC.name+'的合影';
+if(nearNPC.type==='helena'){avatar='👵👻';label='Helena纪念照(身后有什么...)';}
+if(nearNPC.type==='victor'){label='Victor证件照';}
+if(nearNPC.type==='office'){label='上班族证件照';}
+if(nearNPC.type==='postman'){label='邮递员证件照';}
+if(nearNPC.type==='sophie'){avatar='👧👻';label='Sophie家庭照(她独自一人...)';}
+if(nearNPC.type==='imod'){label='伊莫德照片';}
+if(nearNPC.type==='headless'){avatar='👤';label='无头人照片';}
+if(nearNPC.type==='emily'&&nearNPC.pale){avatar='👤';label='艾米丽证明照';}
 }else{
-avatar=G.scene==='shop'?'🏚':(G.scene==='corridor'?'🚪':(G.scene==='storage'?'📦':(G.scene==='garage'?'🚗':'🏠')));
-label=scenes[G.scene].name+' - snapshot';
+avatar=G.scene==='shop'?'🏚':(G.scene==='corridor'?'🚪':(G.scene==='storage'?'📦':(G.scene==='garage'?'🚗':(G.scene==='nuclear'?'☢️':'🏠'))));
+label=scenes[G.scene].name+' - 快照';
 }
-const photo={
-id:Date.now(),
-avatar:avatar,
-label:label,
-scene:G.scene,
-sceneName:scenes[G.scene].name,
-x:G.p.x,
-y:G.p.y,
-fresh:true,
-hasCustomer:!!nearNPC,
-customerType:nearNPC?nearNPC.type:null,
-isEMT:!!emtGroup
-};
+const photo={id:Date.now(),avatar:avatar,label:label,scene:G.scene,sceneName:scenes[G.scene].name,x:G.p.x,y:G.p.y,fresh:true,hasCustomer:!!nearNPC,customerType:nearNPC?nearNPC.type:null,isEMT:!!emtGroup};
 G.st.photos.push(photo);
 if(navigator.vibrate)navigator.vibrate(50);
 const hint=document.createElement('div');
 hint.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);color:#c8a85c;font-size:1.2rem;z-index:200;pointer-events:none;animation:fadeOut 1s forwards';
-hint.textContent='📸 Click!';
+hint.textContent='📸 咔嚓！';
 document.body.appendChild(hint);
 setTimeout(()=>hint.remove(),1000);
-setTimeout(()=>{
-cancelViewfinder();
-},400);
+setTimeout(()=>{cancelViewfinder();},400);
 }
 
 function spawnWhiteEye(){
@@ -1626,45 +1570,31 @@ G.st.whiteEyeActive=true;
 const npc={x:400,y:750,av:'👁',name:'???',type:'whiteEye',targetX:400,targetY:500};
 G.npcs.push(npc);
 moveNPCToCounter(npc,'whiteEye');
-setTimeout(()=>{
-walkWhiteEye();
-},3000);
+setTimeout(()=>{walkWhiteEye();},3000);
 }
 
 function walkWhiteEye(){
 const n=G.npcs.find(x=>x.type==='whiteEye');
 if(!n)return;
 if(G.scene==='shop'){
-n.targetX=200;
-n.targetY=700;
+n.targetX=200;n.targetY=700;
 moveNPCToCounter(n,'whiteEye');
 setTimeout(()=>{
 const n2=G.npcs.find(x=>x.type==='whiteEye');
-if(n2){
-n2.targetX=400;
-n2.targetY=750;
-n2.leaving=true;
-moveNPCToCounter(n2,'whiteEye');
-}
+if(n2){n2.targetX=400;n2.targetY=750;n2.leaving=true;moveNPCToCounter(n2,'whiteEye');}
 setTimeout(()=>{
 G.st.whiteEyeActive=false;
 G.npcs=G.npcs.filter(x=>x.type!=='whiteEye');
-if(G.st.nextCustTimer===null){
-scheduleNextCust();
-}
+if(G.st.nextCustTimer===null){scheduleNextCust();}
 },3500);
 },2500);
 }else{
-n.targetX=400;
-n.targetY=750;
-n.leaving=true;
+n.targetX=400;n.targetY=750;n.leaving=true;
 moveNPCToCounter(n,'whiteEye');
 setTimeout(()=>{
 G.st.whiteEyeActive=false;
 G.npcs=G.npcs.filter(x=>x.type!=='whiteEye');
-if(G.st.nextCustTimer===null){
-scheduleNextCust();
-}
+if(G.st.nextCustTimer===null){scheduleNextCust();}
 },2500);
 }
 }
@@ -1672,23 +1602,17 @@ scheduleNextCust();
 function spawnEmilySecond(){
 if(G.st.emilySecondSpawned)return;
 G.st.emilySecondSpawned=true;
-const npc={x:250,y:750,av:'👤',name:'Emily',type:'emily',targetX:250,targetY:400,pale:true,isSecond:true};
+const npc={x:250,y:750,av:'👤',name:'艾米丽',type:'emily',targetX:250,targetY:400,pale:true,isSecond:true};
 G.npcs.push(npc);
 moveNPCToCounter(npc,'emilySecond');
 showDia('emilySecond',()=>{
 const e=G.npcs.find(n=>n.isSecond);
-if(e){
-e.targetX=400;
-e.targetY=900;
-e.leaving=true;
-moveNPCToCounter(e,'emilySecond');
-}
+if(e){e.targetX=400;e.targetY=900;e.leaving=true;moveNPCToCounter(e,'emilySecond');}
 setTimeout(()=>{
 const slot=G.st.custQueue.indexOf('jack');
-if(slot>=0){
-G.st.custIdx=slot;
+if(slot>=0){G.st.custIdx=slot;}
 scheduleNextCust();
-}
+toast('剧情推进...下一位顾客即将到来。',2500);
 },2000);
 });
 }
@@ -1696,6 +1620,8 @@ scheduleNextCust();
 function spawnFrank(){
 if(G.st.frankMet)return;
 G.st.frankReady=true;
+const frObj=G.objs.find(o=>o.t==='frank');
+if(frObj)frObj.show=true;
 const fr=G.npcs.find(n=>n.type==='frank');
 if(fr)return;
 const npc={x:960,y:800,av:'🧑',name:'Frank',type:'frank',targetX:960,targetY:680};
@@ -1707,34 +1633,19 @@ function ensureDeliveryObjs(){
 let truck=G.objs.find(o=>o.t==='truck');
 let courier=G.objs.find(o=>o.t==='courier');
 let parcel=G.objs.find(o=>o.t==='parcel');
-if(!truck){
-truck={t:'truck',x:-200,y:600,w:180,h:100,label:'Truck',show:false};
-G.objs.push(truck);
-}
-if(!courier){
-courier={t:'courier',x:-100,y:680,w:50,h:50,label:'Courier',show:false};
-G.objs.push(courier);
-}
-if(!parcel){
-parcel={t:'parcel',x:420,y:550,w:50,h:50,label:'Parcel',show:false};
-G.objs.push(parcel);
-}
+if(!truck){truck={t:'truck',x:-200,y:600,w:180,h:100,label:'卡车',show:false};G.objs.push(truck);}
+if(!courier){courier={t:'courier',x:-100,y:680,w:50,h:50,label:'快递员',show:false};G.objs.push(courier);}
+if(!parcel){parcel={t:'parcel',x:420,y:550,w:50,h:50,label:'包裹',show:false};G.objs.push(parcel);}
 return{truck,courier,parcel};
 }
 
 function startDelivery(){
 if(G.st.deliveryActive)return;
-G.st.deliveryActive=true;
-G.st.deliveryParcel=false;
+G.st.deliveryActive=true;G.st.deliveryParcel=false;
 const refs=ensureDeliveryObjs();
-if(G.scene!=='street'){
-toast('You hear a truck outside...',2200);
-}
-refs.truck.x=-200;
-refs.truck.show=true;
-refs.courier.x=-100;
-refs.courier.y=680;
-refs.courier.show=true;
+if(G.scene!=='street'){toast('你听到外面有卡车声...',2200);}
+refs.truck.x=-200;refs.truck.show=true;
+refs.courier.x=-100;refs.courier.y=680;refs.courier.show=true;
 refs.parcel.show=false;
 let tx=-200;
 const step=()=>{
@@ -1744,11 +1655,7 @@ const tr=G.objs.find(o=>o.t==='truck');
 const co=G.objs.find(o=>o.t==='courier');
 if(tr)tr.x=tx;
 if(co)co.x=tx+60;
-if(tx<400){
-requestAnimationFrame(step);
-}else{
-moveCourierOut();
-}
+if(tx<400){requestAnimationFrame(step);}else{moveCourierOut();}
 };
 step();
 }
@@ -1759,26 +1666,22 @@ if(!courier)return;
 let cy=courier.y;
 const step=()=>{
 if(!G.st.deliveryActive)return;
-cy+=6;
-courier.y=cy;
-if(cy<720){
-requestAnimationFrame(step);
-}else{
+cy+=6;courier.y=cy;
+if(cy<720){requestAnimationFrame(step);}
+else{
 G.st.deliveryParcel=true;
 const pa=G.objs.find(o=>o.t==='parcel');
 if(pa)pa.show=true;
-toast('[Package delivered! Go to the door.]',2500);
+toast('[包裹已送达！去门口。]',2500);
 setTimeout(()=>{
 const courier2=G.objs.find(o=>o.t==='courier');
 if(!courier2)return;
 let backY=courier2.y;
 const back=()=>{
 if(!G.st.deliveryActive)return;
-backY-=6;
-courier2.y=backY;
-if(backY>680){
-requestAnimationFrame(back);
-}else{
+backY-=6;courier2.y=backY;
+if(backY>680){requestAnimationFrame(back);}
+else{
 const truck=G.objs.find(o=>o.t==='truck');
 const courier3=G.objs.find(o=>o.t==='courier');
 let tx2=truck?truck.x:400;
@@ -1787,9 +1690,8 @@ if(!G.st.deliveryActive&&!G.st.deliveryParcel)return;
 tx2-=8;
 if(truck)truck.x=tx2;
 if(courier3)courier3.x=tx2+60;
-if(tx2>-300){
-requestAnimationFrame(drive);
-}else{
+if(tx2>-300){requestAnimationFrame(drive);}
+else{
 if(truck)truck.show=false;
 if(courier3)courier3.show=false;
 G.st.deliveryActive=false;
@@ -1811,38 +1713,27 @@ const cupEl=document.getElementById('cupStatus');
 const refillBtn=document.getElementById('refillBtn');
 const msg=document.getElementById('coffeeMsg');
 if(powderEl)powderEl.textContent=G.st.coffeePowder;
-if(cupEl)cupEl.textContent=G.st.coffeeReady?'Yes ☕':'No';
+if(cupEl)cupEl.textContent=G.st.coffeeReady?'是 ☕':'否';
 if(refillBtn)refillBtn.style.display=G.st.coffeePowder<=0?'block':'none';
 if(msg)msg.textContent='';
-if(G.st.hasCoffee&&G.st.coffeeReady){
-if(msg)msg.textContent='You have a coffee ready. Give it to Victor.';
-}
+if(G.st.hasCoffee&&G.st.coffeeReady){if(msg)msg.textContent='你有一杯咖啡。给Victor吧。';}
 openM('m-coffee');
 }
 
 function startBrew(){
 const msg=document.getElementById('coffeeMsg');
-if(G.st.coffeeBrewing){
-if(msg)msg.textContent='Brewing... please wait.';
-return;
-}
-if(G.st.coffeePowder<=0){
-if(msg)msg.textContent='No coffee powder. Refill first.';
-return;
-}
-if(G.st.hasCoffee&&G.st.coffeeReady){
-if(msg)msg.textContent='You already have a coffee.';
-return;
-}
+if(G.st.coffeeBrewing){if(msg)msg.textContent='冲泡中...请稍候。';return;}
+if(G.st.coffeePowder<=0){if(msg)msg.textContent='没有咖啡粉了。先补充。';return;}
+if(G.st.hasCoffee&&G.st.coffeeReady){if(msg)msg.textContent='你已经有一杯咖啡了。';return;}
 G.st.coffeeBrewing=true;
 G.st.coffeePowder--;
 const powderEl=document.getElementById('coffeePowderView');
 if(powderEl)powderEl.textContent=G.st.coffeePowder;
-if(msg)msg.textContent='Brewing... 10 seconds';
+if(msg)msg.textContent='冲泡中...10秒';
 const bar=document.getElementById('timerBar');
 const inner=document.getElementById('timerBarInner');
-if(bar){bar.classList.add('show');}
-if(inner){inner.style.width='0%';}
+if(bar)bar.classList.add('show');
+if(inner)inner.style.width='0%';
 let elapsed=0;
 const iv=setInterval(()=>{
 elapsed+=100;
@@ -1850,62 +1741,60 @@ if(inner)inner.style.width=Math.min(100,(elapsed/10000)*100)+'%';
 if(elapsed>=10000){
 clearInterval(iv);
 if(bar)bar.classList.remove('show');
-G.st.coffeeBrewing=false;
-G.st.coffeeReady=true;
-G.st.hasCoffee=true;
+G.st.coffeeBrewing=false;G.st.coffeeReady=true;G.st.hasCoffee=true;
 const cupEl=document.getElementById('cupStatus');
-if(cupEl)cupEl.textContent='Yes ☕';
-if(msg)msg.textContent='Coffee ready!';
+if(cupEl)cupEl.textContent='是 ☕';
+if(msg)msg.textContent='咖啡好了！';
 const anim=document.getElementById('coffeeAnim');
-if(anim){
-anim.classList.add('show');
-setTimeout(()=>anim.classList.remove('show'),1200);
-}
+if(anim){anim.classList.add('show');setTimeout(()=>anim.classList.remove('show'),1200);}
 const coffeeSlot=document.getElementById('s-coffee');
 if(coffeeSlot)coffeeSlot.style.display='flex';
-const nCoffee=document.getElementById('n-coffee');
-if(nCoffee)nCoffee.textContent='1';
+updateInv();
 }
 },100);
 }
 
 function refillCoffee(){
-if(G.st.money<5){
-toast('Need $5',1800);
-return;
-}
-G.st.money-=5;
-updateMoney();
+if(G.st.money<5){toast('需要$5',1800);return;}
+G.st.money-=5;updateMoney();
 G.st.coffeePowder=5;
 const powderEl=document.getElementById('coffeePowderView');
 if(powderEl)powderEl.textContent='5';
 const refillBtn=document.getElementById('refillBtn');
 if(refillBtn)refillBtn.style.display='none';
 const msg=document.getElementById('coffeeMsg');
-if(msg)msg.textContent='Coffee powder refilled.';
+if(msg)msg.textContent='咖啡粉已补充。';
 }
 
 function giveCoffeeToVictor(){
 G.st.victorCoffeePaid=true;
-G.st.hasCoffee=false;
-G.st.coffeeReady=false;
+G.st.hasCoffee=false;G.st.coffeeReady=false;
 const coffeeSlot=document.getElementById('s-coffee');
 if(coffeeSlot)coffeeSlot.style.display='none';
+updateInv();
 showDia('victorCoffee',()=>{
-G.st.money+=15;
-updateMoney();
-showPayAnim(15);
+G.st.money+=15;updateMoney();showPayAnim(15);
+const c=G.st.currentCust;
+if(c&&c.type==='victor'){
+G.st.money+=c.pay;updateMoney();showPayAnim(c.pay);
+G.st.currentCust=null;G.st.selectedPhoto=null;G.st.printCount=0;
+const v=G.npcs.find(n=>n.type==='victor');
+if(v){v.targetX=400;v.targetY=850;v.leaving=true;moveNPCToCounter(v,'victor');}
+G.st.custIdx++;
+closeM('m-printer');
+scheduleNextCust();
+}
 });
 }
 
 function takeBroom(){
-if(G.st.hasBroom){toast('Already have broom',1800);return;}
+if(G.st.hasBroom){toast('已经有扫帚了',1800);return;}
 G.st.hasBroom=true;
 const slot=document.getElementById('s-broom');
 if(slot)slot.style.display='flex';
 const item=document.getElementById('broomItem');
 if(item)item.style.display='none';
-toast('✓ Picked up broom',1800);
+toast('✓ 拿到了扫帚',1800);
 }
 
 function openLetter(){
@@ -1914,35 +1803,24 @@ openM('m-letter');
 }
 
 const letterSlot=document.getElementById('s-letter');
-if(letterSlot){
-letterSlot.addEventListener('click',openLetter);
-}
+if(letterSlot)letterSlot.addEventListener('click',openLetter);
 
 function sweepGarbage(g){
 G.st.garbage=G.st.garbage.filter(x=>x!==g);
 G.st.garbageScan++;
 if(G.st.garbageScan>=3){
-G.st.garbageScan=0;
-G.st.money+=50;
-updateMoney();
-showPayAnim(50);
-toast('✓ Cleaned! +$50',2000);
-}else{
-toast('✓ Swept. ('+G.st.garbageScan+'/3)',1500);
-}
+G.st.garbageScan=0;G.st.money+=50;updateMoney();showPayAnim(50);
+toast('✓ 打扫干净！+$50',2000);
+}else{toast('✓ 打扫了。('+G.st.garbageScan+'/3)',1500);}
 }
 
 function spawnGarbage(){
 if(G.st.garbage.length>=5)return;
 const count=1+Math.floor(Math.random()*3);
 const spots=[
-{scene:'shop',x:400,y:600},
-{scene:'shop',x:800,y:400},
-{scene:'shop',x:200,y:700},
-{scene:'corridor',x:600,y:400},
-{scene:'corridor',x:900,y:600},
-{scene:'street',x:600,y:500},
-{scene:'street',x:900,y:700}
+{scene:'shop',x:400,y:600},{scene:'shop',x:800,y:400},{scene:'shop',x:200,y:700},
+{scene:'corridor',x:600,y:400},{scene:'corridor',x:900,y:600},
+{scene:'street',x:600,y:500},{scene:'street',x:900,y:700}
 ];
 for(let i=0;i<count;i++){
 if(G.st.garbage.length>=5)break;
@@ -1953,20 +1831,15 @@ G.st.garbage.push({scene:s.scene,x:s.x,y:s.y});
 }
 
 function startMonsterChase(){
-G.st.monsterChase=true;
-G.st.inChase=true;
+G.st.monsterChase=true;G.st.inChase=true;
 const blood=document.getElementById('bloodOverlay');
 if(blood)blood.classList.add('on');
-toast('RUN! Get back inside!',2500);
+toast('跑！回店里！',2500);
 }
 
 function takeGas(){
-if(G.st.hasGas){
-toast('Already have gas',1800);
-return;
-}
-G.st.hasGas=true;
-G.st.inv.gas=1;
+if(G.st.hasGas){toast('已经有汽油了',1800);return;}
+G.st.hasGas=true;G.st.inv.gas=1;
 const gasSlot=document.getElementById('s-gas');
 const gasNum=document.getElementById('n-gas');
 const gasItem=document.getElementById('gasItem');
@@ -1974,8 +1847,8 @@ const gasStatus=document.getElementById('gasStatus');
 if(gasSlot)gasSlot.style.display='flex';
 if(gasNum)gasNum.textContent='1';
 if(gasItem)gasItem.style.display='none';
-if(gasStatus)gasStatus.textContent='Gas can taken';
-toast('✓ Got spare gas',1800);
+if(gasStatus)gasStatus.textContent='汽油桶已拿走';
+toast('✓ 拿到了备用汽油',1800);
 }
 
 function buildQueue(){
@@ -1986,6 +1859,8 @@ extra.forEach(e=>{
 const pos=1+Math.floor(Math.random()*(mixed.length-1));
 mixed.splice(pos,0,e);
 });
+mixed.push('imod');
+mixed.push('headless');
 mixed.push('postman');
 mixed.push('leonard');
 return mixed;
@@ -1993,14 +1868,13 @@ return mixed;
 
 function startCustQueue(){
 G.st.custQueue=buildQueue();
-G.st.custIdx=0;
-G.st.printCount=0;
+G.st.custIdx=0;G.st.printCount=0;
 nextCust();
 }
 
 function scheduleNextCust(){
-if(G.st.nextCustTimer)clearTimeout(G.st.nextCustTimer);
-const delay=15000+Math.floor(Math.random()*10000);
+if(G.st.nextCustTimer!==null)clearTimeout(G.st.nextCustTimer);
+const delay=8000+Math.floor(Math.random()*7000);
 G.st.nextCustTimer=setTimeout(()=>{
 G.st.nextCustTimer=null;
 nextCust();
@@ -2009,10 +1883,10 @@ nextCust();
 
 function nextCust(){
 if(G.st.blackoutActive)return;
-if(G.st.whiteEyeActive)return;
+if(G.st.whiteEyeActive){scheduleNextCust();return;}
 if(G.st.custIdx>=G.st.custQueue.length){
-if(G.st.leonardDone&&!G.st.carlMet&&!G.st.emtDone){
-G.st.emtDone=true;
+if(G.st.leonardDone&&!G.st.carlMet&&!G.st.emtTriggered){
+G.st.emtTriggered=true;
 spawnEMT();
 }
 return;
@@ -2023,23 +1897,34 @@ const npc={x:400,y:750,av:'🧑',name:'Leonard',type:'leonard',targetX:500,targe
 G.npcs.push(npc);
 moveNPCToCounter(npc,'leonard');
 showDia('leonard',()=>{
-G.st.money+=200;
-updateMoney();
-showPayAnim(200);
-G.st.leonardDone=true;
-G.st.currentCust=null;
-G.st.custIdx++;
+G.st.money+=200;updateMoney();showPayAnim(200);
+G.st.leonardDone=true;G.st.currentCust=null;G.st.custIdx++;
 const leo=G.npcs.find(n=>n.type==='leonard');
-if(leo){
-leo.targetX=400;
-leo.targetY=800;
-leo.leaving=true;
-moveNPCToCounter(leo,'leonard');
-}
+if(leo){leo.targetX=400;leo.targetY=800;leo.leaving=true;moveNPCToCounter(leo,'leonard');}
+setTimeout(()=>{nextCust();},2000);
 });
 return;
 }
-const c=custData[type];
+if(type==='imod'){
+const npc={x:400,y:750,av:'🧑',name:'伊莫德',type:'imod',targetX:500,targetY:400};
+G.npcs.push(npc);
+G.st.currentCust=custData.imod;
+G.st.printCount=0;
+moveNPCToCounter(npc,'imod');
+showDia('imod',()=>{toast('伊莫德需要两张照片。',2500);});
+return;
+}
+if(type==='headless'){
+const npc={x:400,y:750,av:'👤',name:'无头人',type:'headless',targetX:500,targetY:400};
+G.npcs.push(npc);
+G.st.currentCust=custData.headless;
+G.st.printCount=0;
+moveNPCToCounter(npc,'headless');
+showDia('headless',()=>{
+showDia('headless2',()=>{toast('需要给无头人拍照。',2500);});
+});
+return;
+}
 G.st.printCount=0;
 spawnCust(type);
 }
@@ -2054,24 +1939,34 @@ moveNPCToCounter(npc,type);
 }
 
 function moveNPCToCounter(npc,type){
+if(!G.npcs.includes(npc))return;
 const dx=npc.targetX-npc.x;
 const dy=npc.targetY-npc.y;
 const dist=Math.sqrt(dx*dx+dy*dy);
 if(dist<5){
-npc.x=npc.targetX;
-npc.y=npc.targetY;
+npc.x=npc.targetX;npc.y=npc.targetY;
 if(npc.leaving){
 G.npcs=G.npcs.filter(n=>n!==npc);
 if(type==='emt')return;
 if(type==='emilySecond')return;
 if(type==='frank')return;
 if(type==='whiteEye')return;
-setTimeout(()=>toast('[System] Something outside. Go check.',2200),800);
+if(type==='fakeFrank')return;
+if(type==='agent')return;
+if(type==='sheriff')return;
+if(type==='imod')return;
+if(type==='headless')return;
+setTimeout(()=>toast('[系统] 外面有动静。去看看。',2200),800);
 return;
 }
 if(type==='emilySecond')return;
 if(type==='frank')return;
 if(type==='whiteEye')return;
+if(type==='fakeFrank')return;
+if(type==='agent')return;
+if(type==='sheriff')return;
+if(type==='imod')return;
+if(type==='headless')return;
 if(type!=='leonard')showDia(type);
 return;
 }
@@ -2082,52 +1977,46 @@ requestAnimationFrame(()=>moveNPCToCounter(npc,type));
 }
 
 function spawnEMT(){
-const positions=[
-{x:450,y:400},
-{x:520,y:400},
-{x:590,y:400}
-];
+const positions=[{x:450,y:400},{x:520,y:400},{x:590,y:400}];
 positions.forEach((pos,i)=>{
 const npc={x:600+i*40,y:750,av:'🕴',name:'EMT',type:'emt',targetX:pos.x,targetY:pos.y,emtIndex:i};
 G.npcs.push(npc);
 moveNPCToCounter(npc,'emt');
 });
-setTimeout(()=>{
-showDia('emtIntro',()=>{
-showDia('emtDone',()=>{
-const emts=G.npcs.filter(n=>n.type==='emt');
-emts.forEach(e=>{
-e.targetX=600;
-e.targetY=850;
-e.leaving=true;
-moveNPCToCounter(e,'emt');
-});
-});
-});
-},2500);
+setTimeout(()=>{showDia('emtIntro',()=>{toast('EMT需要一张合影。',2500);});},2500);
 }
 
 function useGun(){
-if(!G.st.hasGun||!G.st.fakeFrank)return;
+if(!G.st.hasGun)return;
+if(G.st.playerDead)return;
 if(G.st.monsterChase){
 playGunshot();
-toast('🔫 BANG! The monster shrieks and retreats!',2200);
-G.st.monsterChase=false;
-G.st.inChase=false;
+toast('🔫 砰！怪物尖叫着退却了！',2200);
+G.st.monsterChase=false;G.st.inChase=false;
 const blood=document.getElementById('bloodOverlay');
 if(blood)blood.classList.remove('on');
+const fake=G.npcs.find(n=>n.type==='fakeFrank');
+if(fake){fake.targetX=1300;fake.targetY=800;fake.leaving=true;moveNPCToCounter(fake,'fakeFrank');}
 setTimeout(()=>spawnAgent(),1500);
+}
+if(G.st.emilyMonsterChase){
+playGunshot();
+toast('🔫 砰！怪物尖叫着逃走了！',2200);
+G.st.emilyMonsterChase=false;G.st.inChase=false;
+const em=G.objs.find(o=>o.t==='emilyMonster');
+if(em)em.show=false;
+const blood=document.getElementById('bloodOverlay');
+if(blood)blood.classList.remove('on');
+G.st.emilyMonsterDone=true;
+toast('你安全了...暂时。',2500);
+setTimeout(()=>spawnAgent(),2000);
 }
 }
 
 function spawnAgent(){
-G.npcs.push({x:400,y:750,av:'🕴',name:'Agent',type:'agent',targetX:500,targetY:400});
+G.npcs.push({x:400,y:750,av:'🕴',name:'特工',type:'agent',targetX:500,targetY:400});
 moveNPCToCounter(G.npcs[G.npcs.length-1],'agent');
-setTimeout(()=>{
-showDia('agent',()=>{
-playAgentShoot();
-});
-},500);
+setTimeout(()=>{showDia('agent',()=>{playAgentShoot();});},500);
 }
 
 function playAgentShoot(){
@@ -2148,11 +2037,7 @@ gun.style.transform='translateY(0) rotate(-30deg) scale(1.2)';
 },50);
 setTimeout(()=>{
 playGunshot();
-if(mf){
-mf.style.left=(sx+30)+'px';
-mf.style.top=(sy-10)+'px';
-mf.classList.add('show');
-}
+if(mf){mf.style.left=(sx+30)+'px';mf.style.top=(sy-10)+'px';mf.classList.add('show');}
 const blood=document.getElementById('bloodOverlay');
 if(blood)blood.classList.add('on');
 },1000);
@@ -2188,16 +2073,9 @@ const ink=G.st.inv.ink;
 const bag=G.st.inv.bag;
 const el=document.getElementById('matStatus');
 if(!el)return;
-if(paper<need||ink<need){
-el.style.color='#ff6b6b';
-el.textContent='✕ Not enough materials (need '+need+' paper + '+need+' ink)';
-}else if(bag<1){
-el.style.color='#ffd700';
-el.textContent='⚠ OK to print, but no bags left';
-}else{
-el.style.color='#50c878';
-el.textContent='✓ Materials OK for '+need+' copy';
-}
+if(paper<need||ink<need){el.style.color='#ff6b6b';el.textContent='✕ 材料不足（需要'+need+'相纸 + '+need+'墨水）';}
+else if(bag<1){el.style.color='#ffd700';el.textContent='⚠ 可以打印，但没有袋子了';}
+else{el.style.color='#50c878';el.textContent='✓ 材料充足，可打印'+need+'份';}
 }
 
 function openPrinter(){
@@ -2214,25 +2092,19 @@ if(status)status.style.display='flex';
 if(pPaper)pPaper.textContent=G.st.inv.paper;
 if(pInk)pInk.textContent=G.st.inv.ink;
 if(pBag)pBag.textContent=G.st.inv.bag;
-if(G.st.currentCust&&G.st.currentCust.count>0&&G.st.printCount===0){
-G.st.copyCount=G.st.currentCust.count;
-}
+if(G.st.currentCust&&G.st.currentCust.count>0&&G.st.printCount===0){G.st.copyCount=G.st.currentCust.count;}
 document.getElementById('copyCount').textContent=G.st.copyCount;
 updateMatStatus();
 if(sel){
 sel.innerHTML='';
-if(G.st.photos.length===0){
-sel.innerHTML='<p style="color:#666;font-size:0.7rem;grid-column:1/3">No photos yet. Take some first.</p>';
-}else{
+if(G.st.photos.length===0){sel.innerHTML='<p style="color:#666;font-size:0.7rem;grid-column:1/3">还没有照片。先拍一些。</p>';}
+else{
 G.st.photos.forEach((ph)=>{
 const d=document.createElement('div');
 d.style.cssText='border:1px solid '+(G.st.selectedPhoto&&G.st.selectedPhoto.id===ph.id?'#c8a85c':'#333')+';padding:4px;cursor:pointer;font-size:1.4rem;text-align:center';
 d.textContent=ph.avatar;
 d.title=ph.label;
-d.onclick=()=>{
-G.st.selectedPhoto=ph;
-openPrinter();
-};
+d.onclick=()=>{G.st.selectedPhoto=ph;openPrinter();};
 sel.appendChild(d);
 });
 }
@@ -2241,14 +2113,16 @@ openM('m-printer');
 }
 
 function doPrint(){
-if(!G.st.selectedPhoto){toast('Select a photo first',1800);return;}
-if(G.st.currentCust&&G.st.printCount>=G.st.currentCust.count){
-toast('Already printed enough for this customer. Click Bag.',2200);
-return;
+if(!G.st.selectedPhoto){toast('先选择一张照片',1800);return;}
+if(G.st.currentCust&&G.st.printCount>=G.st.currentCust.count){toast('已经给这位顾客打印够了。点击装袋。',2200);return;}
+let need=G.st.copyCount;
+if(G.st.currentCust){
+const remain=G.st.currentCust.count-G.st.printCount;
+if(remain<=0){toast('已经给这位顾客打印够了。点击装袋。',2200);return;}
+if(need>remain)need=remain;
 }
-const need=G.st.copyCount;
-if(G.st.inv.paper<need){toast('Need '+need+' photo paper',1800);return;}
-if(G.st.inv.ink<need){toast('Need '+need+' ink',1800);return;}
+if(G.st.inv.paper<need){toast('需要'+need+'张相纸',1800);return;}
+if(G.st.inv.ink<need){toast('需要'+need+'份墨水',1800);return;}
 playPrinter();
 G.st.inv.paper-=need;
 G.st.inv.ink-=need;
@@ -2260,6 +2134,10 @@ if(status)status.style.display='none';
 if(printing)printing.style.display='block';
 if(done)done.style.display='none';
 G.st.printCount+=need;
+if(G.st.currentCust){
+const remain=G.st.currentCust.count-G.st.printCount;
+if(remain>0)G.st.copyCount=remain;
+}
 setTimeout(()=>{
 if(printing)printing.style.display='none';
 if(done)done.style.display='block';
@@ -2267,112 +2145,111 @@ if(done)done.style.display='block';
 }
 
 function bagPhoto(){
-if(G.st.inv.bag<1){toast('Need a bag',1800);return;}
+if(G.st.inv.bag<1){toast('需要一个袋子',1800);return;}
 const ph=G.st.selectedPhoto;
-if(!ph){toast('No photo selected',1800);return;}
-
+if(!ph){toast('没有选择照片',1800);return;}
 if(ph.isEMT){
 const emts=G.npcs.filter(n=>n.type==='emt');
 if(emts.length===3){
-G.st.inv.bag--;
-updateInv();
-G.st.selectedPhoto=null;
-G.st.printCount=0;
+G.st.inv.bag--;updateInv();
+G.st.selectedPhoto=null;G.st.printCount=0;G.st.currentCust=null;
 closeM('m-printer');
-emts.forEach(e=>{
-e.targetX=600;
-e.targetY=850;
-e.leaving=true;
-moveNPCToCounter(e,'emt');
-});
-toast('You hand the photo to the EMT agents...',2200);
+emts.forEach(e=>{e.targetX=600;e.targetY=850;e.leaving=true;moveNPCToCounter(e,'emt');});
+toast('你把照片递给EMT探员...',2200);
 setTimeout(()=>{
 showDia('emtDone',()=>{
-G.st.carlReady=true;
-setTimeout(()=>toast('[System] Go outside and check.',2200),800);
+G.st.emtCompleted=true;G.st.carlReady=true;
+setTimeout(()=>toast('[系统] 出去看看。',2200),800);
 });
 },500);
 return;
 }
 }
-
-if(!G.st.currentCust){
-toast('✓ Photo bagged.',1500);
-G.st.inv.bag--;
-updateInv();
-G.st.selectedPhoto=null;
+if(!G.st.currentCust){toast('✓ 照片已装袋。',1500);G.st.inv.bag--;updateInv();G.st.selectedPhoto=null;closeM('m-printer');return;}
+if(ph.customerType==='headless'&&G.st.currentCust&&G.st.currentCust.type==='headless'){
+G.st.inv.bag--;updateInv();
+G.st.selectedPhoto=null;G.st.printCount=0;
 closeM('m-printer');
-return;
-}
-
-if(!ph.hasCustomer||ph.customerType!==G.st.currentCust.type){
-closeM('m-printer');
-G.st.printCount=0;
-showDia('wrongPhoto',()=>{
-G.st.selectedPhoto=null;
+showDia('headlessDone',()=>{
+G.st.money+=100;updateMoney();showPayAnim(100);
+G.st.headlessDone=true;G.st.currentCust=null;G.st.custIdx++;
+scheduleNextCust();
 });
 return;
 }
-
+if(ph.customerType==='imod'&&G.st.currentCust&&G.st.currentCust.type==='imod'){
+G.st.inv.bag--;updateInv();
+G.st.selectedPhoto=null;G.st.printCount=0;
+closeM('m-printer');
+G.st.money+=G.st.currentCust.pay;updateMoney();showPayAnim(G.st.currentCust.pay);
+G.st.imodDone=true;
+const imodNpc=G.npcs.find(n=>n.type==='imod');
+if(imodNpc){imodNpc.targetX=400;imodNpc.targetY=850;imodNpc.leaving=true;moveNPCToCounter(imodNpc,'imod');}
+G.st.currentCust=null;G.st.custIdx++;
+showDia('imodDone',()=>{
+toast('伊莫德离开了。',2000);
+setTimeout(()=>{
+if(!G.st.sheriffSpawned){
+G.st.sheriffSpawned=true;
+spawnSheriff();
+}
+},3000);
+});
+return;
+}
+if(!ph.hasCustomer||ph.customerType!==G.st.currentCust.type){
+closeM('m-printer');G.st.printCount=0;
+showDia('wrongPhoto',()=>{G.st.selectedPhoto=null;});
+return;
+}
 const needCount=G.st.currentCust.count||1;
 if(G.st.printCount<needCount){
 const more=needCount-G.st.printCount;
 closeM('m-printer');
-toast('Customer wants '+more+' more copy. Print more first.',2200);
+toast('顾客还需要'+more+'张。先打印。',2200);
 return;
 }
-
 const c=G.st.currentCust;
-G.st.inv.bag--;
-updateInv();
-G.st.money+=c.pay;
-updateMoney();
-showPayAnim(c.pay);
-toast('✓ Delivered! +$'+c.pay,2000);
-
+G.st.inv.bag--;updateInv();
+G.st.money+=c.pay;updateMoney();showPayAnim(c.pay);
+toast('✓ 交付完成！+$'+c.pay,2000);
 const wasFirst=c.type==='emily';
 const wasPostman=c.type==='postman';
 const wasMax=c.type==='max';
 const wasTommy=c.type==='tommy';
-G.npcs=[];
-G.st.currentCust=null;
-G.st.selectedPhoto=null;
-G.st.printCount=0;
-
+const custNpc=G.npcs.find(n=>n.type===c.type);
+if(custNpc){custNpc.targetX=400;custNpc.targetY=850;custNpc.leaving=true;moveNPCToCounter(custNpc,c.type);}
+G.st.currentCust=null;G.st.selectedPhoto=null;G.st.printCount=0;
 if(wasPostman&&!G.st.hasLetter){
 G.st.hasLetter=true;
 const letterSlot=document.getElementById('s-letter');
 if(letterSlot)letterSlot.style.display='flex';
-setTimeout(()=>toast('[System] The postman handed you a letter.',2200),800);
+setTimeout(()=>toast('[系统] 邮递员给了你一封信。',2200),800);
 }
-
 if(wasMax&&!G.st.frankReady){
 setTimeout(()=>{
-toast('[System] You hear a car sputter outside...',2500);
+toast('[系统] 你听到外面有车熄火的声音...',2500);
 G.st.frankReady=true;
-setTimeout(()=>{
-spawnFrank();
-},1200);
+setTimeout(()=>{spawnFrank();},1200);
 },1500);
 }
-
 if(wasTommy&&!G.st.whiteEyeDone){
 G.st.custIdx++;
 closeM('m-printer');
 setTimeout(()=>{
-toast('[System] The door creaks open...',2500);
-setTimeout(()=>{
-spawnWhiteEye();
-},1500);
+toast('[系统] 门吱呀一声开了...',2500);
+setTimeout(()=>{spawnWhiteEye();},1500);
 },1200);
 return;
 }
-
 if(c.type==='office'){
 if(!G.st.fakeFrankTriggered){
 G.st.fakeFrankTriggered=true;
-setTimeout(()=>toast('[System] Someone is outside...',2200),1500);
+setTimeout(()=>toast('[系统] 外面有人...',2200),1500);
 }
+closeM('m-printer');G.st.custIdx++;
+scheduleNextCust();
+return;
 }else if(wasFirst&&!G.st.blackoutDone){
 G.st.custIdx++;
 closeM('m-printer');
@@ -2384,17 +2261,14 @@ closeM('m-printer');
 scheduleNextCust();
 return;
 }
-closeM('m-printer');
 }
 
 function triggerBlackout(){
-G.st.blackoutDone=true;
-G.st.blackoutActive=true;
-G.st.power=false;
+G.st.blackoutDone=true;G.st.blackoutActive=true;G.st.power=false;
 showDia('powerOut',()=>{
 const dark=document.getElementById('darkness');
 if(dark)dark.classList.add('on');
-toast('Power out. Go to back corridor and fix the fuse.',2500);
+toast('停电了。去后走廊修保险丝。',2500);
 });
 }
 
@@ -2403,11 +2277,13 @@ const pcHome=document.getElementById('pcHome');
 const pcShop=document.getElementById('pcShop');
 const pcNews=document.getElementById('pcNews');
 const pcNewsDetail=document.getElementById('pcNewsDetail');
+const pcMissing=document.getElementById('pcMissing');
 const pcMoney=document.getElementById('pcMoney');
 if(pcHome)pcHome.style.display='block';
 if(pcShop)pcShop.style.display='none';
 if(pcNews)pcNews.style.display='none';
 if(pcNewsDetail)pcNewsDetail.style.display='none';
+if(pcMissing)pcMissing.style.display='none';
 if(pcMoney)pcMoney.textContent=G.st.money;
 openM('m-pc');
 }
@@ -2417,12 +2293,15 @@ const pcHome=document.getElementById('pcHome');
 const pcShop=document.getElementById('pcShop');
 const pcNews=document.getElementById('pcNews');
 const pcNewsDetail=document.getElementById('pcNewsDetail');
+const pcMissing=document.getElementById('pcMissing');
 if(pcHome)pcHome.style.display='none';
 if(pcShop)pcShop.style.display='none';
 if(pcNews)pcNews.style.display='none';
 if(pcNewsDetail)pcNewsDetail.style.display='none';
+if(pcMissing)pcMissing.style.display='none';
 if(page==='shop'&&pcShop)pcShop.style.display='block';
 if(page==='news'&&pcNews)pcNews.style.display='block';
+if(page==='missing'&&pcMissing){pcMissing.style.display='block';renderMissingList('pcMissingList');}
 }
 
 function backToPCHome(){
@@ -2430,64 +2309,58 @@ const pcHome=document.getElementById('pcHome');
 const pcShop=document.getElementById('pcShop');
 const pcNews=document.getElementById('pcNews');
 const pcNewsDetail=document.getElementById('pcNewsDetail');
+const pcMissing=document.getElementById('pcMissing');
 if(pcHome)pcHome.style.display='block';
 if(pcShop)pcShop.style.display='none';
 if(pcNews)pcNews.style.display='none';
 if(pcNewsDetail)pcNewsDetail.style.display='none';
+if(pcMissing)pcMissing.style.display='none';
 }
 
 function buy(item){
-const prices={paper:20,ink:30,bag:10,coffee:5,gun:200};
-if(G.st.money<prices[item]){
-toast('Insufficient funds!',1800);
-return;
-}
-G.st.money-=prices[item];
-updateMoney();
+const prices={paper:20,ink:30,bag:10,coffee:5,gun:200,detector:150};
+if(G.st.money<prices[item]){toast('资金不足！',1800);return;}
+G.st.money-=prices[item];updateMoney();
 switch(item){
-case'paper':
-G.st.inv.paper+=5;
-break;
-case'ink':
-G.st.inv.ink+=3;
-break;
-case'bag':
-G.st.inv.bag+=10;
-break;
-case'coffee':
-G.st.coffeePowder+=5;
-break;
+case'paper':G.st.inv.paper+=5;break;
+case'ink':G.st.inv.ink+=3;break;
+case'bag':G.st.inv.bag+=10;break;
+case'coffee':G.st.coffeePowder+=5;break;
 case'gun':
 G.st.hasGun=true;
 const gunBtn=document.getElementById('gunBtn');
 if(gunBtn)gunBtn.classList.add('show');
-toast('🔫 Revolver acquired!',2200);
-if(!G.st.officeCust){
-G.st.officeCust=true;
-setTimeout(()=>spawnOfficeWorker(),3000);
-}
+toast('🔫 左轮手枪已获得！',2200);
+if(!G.st.officeCust){G.st.officeCust=true;setTimeout(()=>spawnOfficeWorker(),3000);}
+break;
+case'detector':
+G.st.hasDetector=true;
+const detSlot=document.getElementById('s-detector');
+const detNum=document.getElementById('n-detector');
+if(detSlot)detSlot.style.display='flex';
+if(detNum)detNum.textContent='1';
+toast('📡 铀浓度探测仪已获得！',2500);
+const ng=G.objs.find(o=>o.t==='nuclearGate');
+if(ng)ng.show=true;
 break;
 }
 updateInv();
-toast('Purchased! Delivery arriving...',2000);
-setTimeout(()=>{
-startDelivery();
-},5000);
+toast('购买成功！配送中...',2000);
+setTimeout(()=>{startDelivery();},5000);
 }
 
 function spawnOfficeWorker(){
 const c=custData.office;
 const npc={x:400,y:750,av:c.av,name:c.name,type:'office',targetX:500,targetY:400};
 G.npcs.push(npc);
-G.st.currentCust=c;
-G.st.printCount=0;
+G.st.currentCust=c;G.st.printCount=0;
 moveNPCToCounter(npc,'office');
 }
 
 function refresh(){
 G.st.refresh++;
 const refreshBtn=document.getElementById('refreshBtn');
-if(refreshBtn)refreshBtn.textContent='🔄 Refresh ('+G.st.refresh+')';
+if(refreshBtn)refreshBtn.textContent='🔄 刷新 ('+G.st.refresh+')';
 }
 
 function updateMoney(){
@@ -2501,12 +2374,16 @@ function updateInv(){
 const nPaper=document.getElementById('n-paper');
 const nInk=document.getElementById('n-ink');
 const nBag=document.getElementById('n-bag');
+const nCoffee=document.getElementById('n-coffee');
+const nGas=document.getElementById('n-gas');
 const pPaper=document.getElementById('pPaper');
 const pInk=document.getElementById('pInk');
 const pBag=document.getElementById('pBag');
 if(nPaper)nPaper.textContent=G.st.inv.paper;
 if(nInk)nInk.textContent=G.st.inv.ink;
 if(nBag)nBag.textContent=G.st.inv.bag;
+if(nCoffee)nCoffee.textContent=G.st.hasCoffee?1:0;
+if(nGas)nGas.textContent=G.st.inv.gas||0;
 if(pPaper)pPaper.textContent=G.st.inv.paper;
 if(pInk)pInk.textContent=G.st.inv.ink;
 if(pBag)pBag.textContent=G.st.inv.bag;
@@ -2516,31 +2393,21 @@ function sel(item){
 document.querySelectorAll('.invSlot').forEach(e=>e.classList.remove('on'));
 const slot=document.getElementById('s-'+item);
 if(slot)slot.classList.add('on');
+if(item==='detector'&&G.st.hasDetector){openM('m-detector');}
 }
 
-function openM(id){
-const el=document.getElementById(id);
-if(el)el.classList.add('show');
-}
-function closeM(id){
-const el=document.getElementById(id);
-if(el)el.classList.remove('show');
-}
+function openM(id){const el=document.getElementById(id);if(el)el.classList.add('show');}
+function closeM(id){const el=document.getElementById(id);if(el)el.classList.remove('show');}
 
 function setupJoystick(){
 const jArea=document.getElementById('joystick');
 const jKnob=document.getElementById('jKnob');
-if(!jArea||!jKnob){
-console.error('Joystick elements not found');
-return;
-}
+if(!jArea||!jKnob)return;
 jArea.addEventListener('touchstart',e=>{
 e.preventDefault();
 const t=e.touches[0];
 const r=jArea.getBoundingClientRect();
-G.joy.on=true;
-G.joy.ox=r.left+r.width/2;
-G.joy.oy=r.top+r.height/2;
+G.joy.on=true;G.joy.ox=r.left+r.width/2;G.joy.oy=r.top+r.height/2;
 updateJ(t.clientX,t.clientY);
 },{passive:false});
 jArea.addEventListener('touchmove',e=>{
@@ -2550,17 +2417,13 @@ updateJ(e.touches[0].clientX,e.touches[0].clientY);
 },{passive:false});
 jArea.addEventListener('touchend',e=>{
 e.preventDefault();
-G.joy.on=false;
-G.joy.dx=0;
-G.joy.dy=0;
+G.joy.on=false;G.joy.dx=0;G.joy.dy=0;
 jKnob.style.transform='translate(0px,0px)';
 },{passive:false});
 jArea.addEventListener('mousedown',e=>{
 e.preventDefault();
 const r=jArea.getBoundingClientRect();
-G.joy.on=true;
-G.joy.ox=r.left+r.width/2;
-G.joy.oy=r.top+r.height/2;
+G.joy.on=true;G.joy.ox=r.left+r.width/2;G.joy.oy=r.top+r.height/2;
 updateJ(e.clientX,e.clientY);
 });
 document.addEventListener('mousemove',e=>{
@@ -2568,9 +2431,7 @@ if(!G.joy.on)return;
 updateJ(e.clientX,e.clientY);
 });
 document.addEventListener('mouseup',()=>{
-G.joy.on=false;
-G.joy.dx=0;
-G.joy.dy=0;
+G.joy.on=false;G.joy.dx=0;G.joy.dy=0;
 jKnob.style.transform='translate(0px,0px)';
 });
 }
@@ -2580,10 +2441,7 @@ const max=25;
 let dx=cx-G.joy.ox;
 let dy=cy-G.joy.oy;
 const d=Math.sqrt(dx*dx+dy*dy);
-if(d>max){
-dx=(dx/d)*max;
-dy=(dy/d)*max;
-}
+if(d>max){dx=(dx/d)*max;dy=(dy/d)*max;}
 const jKnob=document.getElementById('jKnob');
 if(jKnob)jKnob.style.transform=`translate(${dx}px,${dy}px)`;
 G.joy.dx=dx/max;
@@ -2602,16 +2460,10 @@ p.x=Math.max(30,Math.min(G.map.w-30,p.x));
 p.y=Math.max(30,Math.min(G.map.h-30,p.y));
 G.cam.x=p.x-c.width/2;
 G.cam.y=p.y-c.height/2;
-if(G.map.w>c.width){
-G.cam.x=Math.max(0,Math.min(G.map.w-c.width,G.cam.x));
-}else{
-G.cam.x=(G.map.w-c.width)/2;
-}
-if(G.map.h>c.height){
-G.cam.y=Math.max(0,Math.min(G.map.h-c.height,G.cam.y));
-}else{
-G.cam.y=(G.map.h-c.height)/2;
-}
+if(G.map.w>c.width){G.cam.x=Math.max(0,Math.min(G.map.w-c.width,G.cam.x));}
+else{G.cam.x=(G.map.w-c.width)/2;}
+if(G.map.h>c.height){G.cam.y=Math.max(0,Math.min(G.map.h-c.height,G.cam.y));}
+else{G.cam.y=(G.map.h-c.height)/2;}
 }
 
 function loop(){
@@ -2619,12 +2471,17 @@ G.tick++;
 updateP();
 G.near=checkNear();
 draw();
+if(G.st.detectorOn&&G.scene==='nuclear'){
+const baseVal=G.st.emilyMonsterDone?0.5:1.5;
+const val=(baseVal+Math.sin(G.tick*0.05)*0.3).toFixed(2);
+const dv=document.getElementById('detectorValue');
+const db=document.getElementById('detectorBar');
+if(dv)dv.textContent=val;
+if(db)db.style.width=Math.min(100,val*50)+'%';
+}
 if(!G.st.blackoutActive&&G.st.gameStarted&&!G.st.playerDead){
 G.st.garbageTimer++;
-if(G.st.garbageTimer>=14400){
-G.st.garbageTimer=0;
-spawnGarbage();
-}
+if(G.st.garbageTimer>=14400){G.st.garbageTimer=0;spawnGarbage();}
 }
 const dark=document.getElementById('darkness');
 if(dark){
@@ -2637,9 +2494,7 @@ const sy=G.p.y-G.cam.y;
 f.style.left=(sx-70)+'px';
 f.style.top=(sy-70)+'px';
 }
-}else if(G.st.power){
-dark.classList.remove('on');
-}
+}else if(G.st.power){dark.classList.remove('on');}
 }
 requestAnimationFrame(loop);
 }
@@ -2655,38 +2510,20 @@ if(G.near)act();
 document.addEventListener('keydown',e=>{
 if(G.st.playerDead||!G.st.gameStarted)return;
 if(G.st.viewfinderOn){
-if(e.key==='Escape'){
-cancelViewfinder();
-}
+if(e.key==='Escape'){cancelViewfinder();}
 return;
 }
 if(G.st.inDia){
-if(e.key===' '||e.key==='Enter'){
-G.st.diaIdx++;
-nextDia();
-}
+if(e.key===' '||e.key==='Enter'){G.st.diaIdx++;nextDia();}
 return;
 }
 const sp=G.p.sp;
 switch(e.key){
-case'w':
-case'ArrowUp':
-G.p.y-=sp;
-break;
-case's':
-case'ArrowDown':
-G.p.y+=sp;
-break;
-case'a':
-case'ArrowLeft':
-G.p.x-=sp;
-break;
-case'd':
-case'ArrowRight':
-G.p.x+=sp;
-break;
-case'e':
-case' ':
+case'w':case'ArrowUp':G.p.y-=sp;break;
+case's':case'ArrowDown':G.p.y+=sp;break;
+case'a':case'ArrowLeft':G.p.x-=sp;break;
+case'd':case'ArrowRight':G.p.x+=sp;break;
+case'e':case' ':
 if(G.near)act();
 break;
 }
@@ -2702,19 +2539,83 @@ if(logo){
 logo.classList.add('fade');
 setTimeout(()=>{
 logo.style.display='none';
-startGame();
+document.getElementById('homeScreen').classList.add('show');
 },1200);
 }
 },3500);
 }
 
-function startGame(){
+function startFromHome(){
+document.getElementById('homeScreen').classList.remove('show');
+G.st.money=10;G.st.power=true;G.st.sign=false;G.st.open=false;G.st.selectedPhoto=null;
+G.st.inv={paper:10,ink:5,bag:5,gas:0};
+G.st.hasGun=false;G.st.hasGas=false;G.st.hasBroom=false;G.st.hasLetter=false;G.st.hasCoffee=false;
+G.st.hasWrench=false;G.st.hasDetector=false;G.st.detectorOn=false;
+G.st.photos=[];G.st.currentCust=null;G.st.custQueue=[];G.st.custIdx=0;
+G.st.leonardDone=false;G.st.carlReady=false;G.st.carlMet=false;G.st.carlGone=false;
+G.st.officeCust=false;G.st.fakeFrank=false;G.st.fakeFrankTriggered=false;
+G.st.monsterChase=false;G.st.playerDead=false;G.st.printCount=0;G.st.copyCount=1;
+G.st.inChase=false;G.st.waitingChoice=false;G.st.blackoutDone=false;
+G.st.garbage=[];G.st.garbageTimer=0;G.st.garbageScan=0;G.st.blackoutActive=false;
+G.st.emtTriggered=false;G.st.emtCompleted=false;
+G.st.coffeePowder=5;G.st.coffeeBrewing=false;G.st.coffeeReady=false;
+G.st.emilySecondSpawned=false;G.st.victorCoffeePaid=false;G.st.nextCustTimer=null;
+G.st.frankReady=false;G.st.frankMet=false;G.st.frankLeft=false;
+G.st.whiteEyeDone=false;G.st.whiteEyeActive=false;
+G.st.deliveryActive=false;G.st.deliveryParcel=false;
+G.st.lastPhotoTime=0;G.st.viewfinderOn=false;
+G.st.imodDone=false;G.st.headlessDone=false;
+G.st.sheriffSpawned=false;G.st.detectorUnlocked=false;G.st.wantedPosted=false;
+G.st.emilyMonsterChase=false;G.st.emilyMonsterDone=false;
+G.st.refresh=0;G.st.inDia=false;G.st.dia=null;G.st.diaIdx=0;G.st.diaCb=null;
+G.npcs=[];
+['m-wanted','m-missing','m-pc','m-printer','m-storage','m-cateye','m-letter','m-coffee','m-detector'].forEach(id=>{
+const el=document.getElementById(id);
+if(el)el.classList.remove('show');
+});
+['viewfinder','vfCancel','vfShutter'].forEach(id=>{
+const el=document.getElementById(id);
+if(el)el.classList.remove('show');
+});
+const sb=document.getElementById('shutterBtn');if(sb)sb.style.display='flex';
+const credits=document.getElementById('credits');if(credits)credits.classList.remove('show');
+const darkness=document.getElementById('darkness');if(darkness)darkness.classList.remove('on');
+const blood=document.getElementById('bloodOverlay');if(blood)blood.classList.remove('on');
+const gun=document.getElementById('agentGun');if(gun)gun.classList.remove('show');
+const mf=document.getElementById('muzzleFlash');if(mf)mf.classList.remove('show');
+const pa=document.getElementById('payAnim');if(pa)pa.classList.remove('show');
+const ca=document.getElementById('coffeeAnim');if(ca)ca.classList.remove('show');
+const tb=document.getElementById('timerBar');if(tb)tb.classList.remove('show');
+const hint=document.getElementById('hint');if(hint)hint.classList.remove('show');
+const dlg=document.getElementById('dialogue');if(dlg)dlg.classList.remove('show');
+const toastEl=document.getElementById('toast');if(toastEl)toastEl.classList.remove('show');
+['s-gas','s-broom','s-letter','s-coffee','s-wrench','s-detector'].forEach(id=>{
+const el=document.getElementById(id);
+if(el)el.style.display='none';
+});
+const rb=document.getElementById('refreshBtn');if(rb)rb.textContent='🔄 刷新';
+const gb=document.getElementById('gunBtn');if(gb)gb.classList.remove('show');
+const dsi=document.getElementById('detectorShopItem');if(dsi)dsi.style.display='none';
+const gsi=document.getElementById('gunShopItem');if(gsi)gsi.style.display='none';
+const printing=document.getElementById('printing');if(printing)printing.style.display='none';
+const printDone=document.getElementById('printDone');if(printDone)printDone.style.display='none';
+const printStatus=document.getElementById('printStatus');if(printStatus)printStatus.style.display='flex';
+updateMoney();updateInv();
+const cc=document.getElementById('copyCount');if(cc)cc.textContent='1';
+updateMatStatus();
+const gasItem=document.getElementById('gasItem');if(gasItem)gasItem.style.display='flex';
+const broomItem=document.getElementById('broomItem');if(broomItem)broomItem.style.display='flex';
+const gasStatus=document.getElementById('gasStatus');if(gasStatus)gasStatus.textContent='角落里有一个备用汽油桶';
+const dv=document.getElementById('detectorValue');if(dv)dv.textContent='0.00';
+const db=document.getElementById('detectorBar');if(db)db.style.width='0%';
 G.st.gameStarted=true;
-G.p.x=400;
-G.p.y=500;
+G.p.x=400;G.p.y=500;
 loadScene('street');
 showDia('intro');
 }
+
+function showCreditsScreen(){document.getElementById('creditsScreen').classList.add('show');}
+function closeCreditsScreen(){document.getElementById('creditsScreen').classList.remove('show');}
 
 setupJoystick();
 startLogo();
