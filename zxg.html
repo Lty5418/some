@@ -1,4 +1,5 @@
-<!DOCTYPE html> <html lang="zh-CN" style="overflow:hidden"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,viewport-fit=cover"> <meta name="apple-mobile-web-app-capable" content="yes"> <meta name="mobile-web-app-capable" content="yes"> <title>Old State Photo - Ohio</title>
+<!DOCTYPE html> <html lang="zh-CN" style="overflow:hidden"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,viewport-fit=cover"> <meta name="apple-mobile-web-app-capable" content="yes"> <meta name="mobile-web-app-capable" content="yes"> <title>Old State Photo - Ohio · 联机版</title>
+<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 <style>*{margin:0;padding:0;box-sizing:border-box;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
 html,body{overflow:hidden;position:fixed;width:100%;height:100%;margin:0;padding:0;overscroll-behavior:none}
 body{background:#050505;color:#c8b896;font-family:'Microsoft YaHei',sans-serif;touch-action:none}
@@ -177,10 +178,33 @@ radial-gradient(ellipse at 70% 10%,rgba(200,140,60,0.05) 0%,transparent 30%)}
 .missingHeader .title{color:#8b0000;font-size:0.9rem;letter-spacing:3px}
 .missingHeader .count{color:#666;font-size:0.7rem}
 .bible-chapter-link{cursor:pointer;padding:8px 12px;border-bottom:1px solid rgba(139,69,19,0.2);transition:background 0.2s;color:#333}
-.bible-chapter-link:hover{background:rgba(139,69,19,0.1);color:#8b0000}</style>
-</head> <body> <div id="logoScreen"> <div class="glow"></div> <img src="https://i.postimg.cc/qvtjp3FR/IMG-3190.jpg" alt="流筠工作室"> <h2>流筠工作室</h2> <p>LIUYUN STUDIO</p> </div> <div id="homeScreen"> <div class="sky"></div> <div class="stars"></div> <div class="rain"></div> <div class="ground"></div> <div class="shop"> <div class="roof"></div> <div class="signboard"> <div class="sTitle">OLD STATE</div> <div class="sSub">PHOTO STUDIO</div> </div> <div class="lamp"></div> <div class="windows"> <div class="window"><div class="winGlow"></div></div> <div class="window"><div class="winGlow"></div></div> </div> <div class="door"><div class="doorKnob"></div></div> <div class="doorPlate">EST. 1987</div> </div> <div class="puddle"></div> <div class="fog"></div> <div class="homeContent"> <div class="subtitle">OHIO · 1987</div> <h1>OLD STATE PHOTO</h1> <button class="btn" onclick="startFromHome()">开始游戏</button> <button class="btn" onclick="showCreditsScreen()">制作人员名单</button> </div> </div> <div id="creditsScreen"> <h2>制作人员名单</h2> <p class="big">DeepSeek</p> <div class="divider"></div> <p class="big">流筠工作室</p> <p>发行商</p> <div class="divider"></div> <p class="big">流筠制作组</p> <p>制作团队</p> <div class="divider"></div> <p class="big">金边逸空工作室</p> <p>联合开发 / 技术帮助</p> <div class="divider"></div> <p class="big">kimi</p> <p>制作雏形</p> <button class="closeBtn" onclick="closeCreditsScreen()">返回</button> </div> <canvas id="c"></canvas> <div id="noise"></div> <div class="flash-overlay" id="flashOverlay"></div> <div id="bloodOverlay"></div> <div id="agentGun">🔫</div> <div id="muzzleFlash"></div> <div id="coffeeAnim">☕</div> <div id="timerBar"><div id="timerBarInner"></div></div> <div id="toast"></div> <div id="viewfinder"> <div id="vfGrid"></div> <div id="vfGridH1"></div> <div id="vfGridH2"></div> <div id="vfCornerTL"></div> <div id="vfCornerTR"></div> <div id="vfCornerBL"></div> <div id="vfCornerBR"></div> <div id="vfFocus"></div> <div id="vfTop"><span>ISO 400</span><span>F2.8</span><span>🔋</span></div> <div id="vfRec"><span id="vfRecDot"></span><span>REC</span></div> </div> <div id="vfCancel" onclick="cancelViewfinder()">✕</div> <div id="vfShutter" onclick="shootFromViewfinder()">📷</div> <div id="payAnim">💵 +$<span id="payAmount">0</span></div> <div id="ui"> <div class="panel" id="money">💰 $10</div> <div class="panel" id="invBar"> <div class="invSlot on" id="s-camera" onclick="sel('camera')">📷<span class="num">∞</span></div> <div class="invSlot" id="s-paper" onclick="sel('paper')">📄<span class="num" id="n-paper">10</span></div> <div class="invSlot" id="s-ink" onclick="sel('ink')">🖋<span class="num" id="n-ink">5</span></div> <div class="invSlot" id="s-bag" onclick="sel('bag')">🛍<span class="num" id="n-bag">5</span></div> <div class="invSlot" id="s-gas" onclick="sel('gas')" style="display:none">⛽<span class="num" id="n-gas">0</span></div> <div class="invSlot" id="s-broom" onclick="sel('broom')" style="display:none">🧹</div> <div class="invSlot" id="s-letter" onclick="sel('letter')" style="display:none">✉</div> <div class="invSlot" id="s-coffee" onclick="sel('coffee')" style="display:none">☕<span class="num" id="n-coffee">0</span></div> <div class="invSlot" id="s-wrench" onclick="sel('wrench')" style="display:none">🔧</div> <div class="invSlot" id="s-detector" onclick="sel('detector')" style="display:none">📡<span class="num" id="n-detector">0</span></div> <div class="invSlot" id="s-bible" onclick="sel('bible')" style="display:none">📖</div> </div> <div class="panel" id="hint"></div> <div class="panel" id="dialogue"> <div class="who" id="dWho"></div> <div class="what" id="dWhat"></div> <div class="choices" id="dChoices"></div> <div class="tap" id="dTap">点击继续 ▼</div> </div> </div> <div id="shutterBtn" onclick="openViewfinder()">📷</div> <div id="gunBtn" onclick="useGun()">🔫</div> <div id="joystick"> <div id="jBase"></div> <div id="jKnob"></div> </div> <div id="credits"> <p class="thanks">感谢游玩本Demo</p> <p class="role">制作人员</p> <p class="big">DeepSeek</p> <div class="divider"></div> <p class="big">流筠工作室</p> <p class="studio">发行商</p> <div class="divider"></div> <p class="big">流筠制作组</p> <p class="studio">制作团队</p> <div class="divider"></div> <p class="big">金边逸空工作室</p> <p class="studio">联合开发 / 技术帮助</p> <div class="divider"></div> <p class="big">kimi</p> <p class="studio">制作雏形</p> <p style="margin-top:40px;color:#666;font-size:0.8rem">未完待续...</p> </div> <div id="darkness"><div id="flash"></div></div> <div class="modal" id="m-wanted"> <div class="modalBox"> <span class="modalClose" onclick="closeM('m-wanted')">✕</span> <div style="background:#f5f5dc;color:#333;padding:15px;border:3px solid #8b4513;text-align:center"> <h3 style="color:#8b0000;font-size:1.1rem;letter-spacing:4px;margin-bottom:10px">★ 通缉令 ★</h3> <div style="width:80px;height:100px;background:#333;margin:0 auto;border:2px solid #8b0000;display:flex;align-items:center;justify-content:center;font-size:2.5rem">🍺</div> <p style="font-size:0.75rem;margin:4px 0"><b>姓名:</b> Owen</p> <p style="font-size:0.75rem;margin:4px 0"><b>罪名:</b> 公共场所醉酒</p> <p style="font-size:0.75rem;margin:4px 0"><b>特征:</b> 面部潮红，步态蹒跚</p> <p style="font-size:0.75rem;margin:4px 0"><b>赏金:</b> $500</p> <p style="color:#8b0000;margin-top:8px;font-size:0.75rem">⚠ 非暴力但极度吵闹</p> </div> </div> </div> <div class="modal" id="m-missing"> <div class="modalBox" style="max-width:480px"> <span class="modalClose" onclick="closeM('m-missing')">✕</span> <div class="missingHeader"> <div class="title">⚠ 失踪人员名单</div> <div class="count" id="missingCount">6 人</div> </div> <p style="color:#666;font-size:0.7rem;text-align:center;margin-bottom:15px">俄亥俄州警局 · 如有线索请提供协助</p> <div id="missingList" style="display:flex;flex-direction:column;gap:10px"></div> <div style="margin-top:15px;padding-top:10px;border-top:1px solid #333;text-align:center"> <p style="color:#8b0000;font-size:0.7rem">如有线索，请立即联系警长Harrison</p> <p style="color:#666;font-size:0.65rem;margin-top:5px">部分失踪者曾是本店顾客</p> </div> </div> </div> <div class="modal" id="m-pc"> <div class="modalBox" style="max-width:400px"> <span class="modalClose" onclick="closeM('m-pc')">✕</span> <div id="pcHome" style="text-align:center"> <h2 style="color:#c8a85c;font-size:1rem;letter-spacing:3px;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid #333">🖥 Old State PC</h2> <div style="display:flex;flex-direction:column;gap:12px"> <div style="display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #333;cursor:pointer" onclick="showPCPage('shop')"> <div style="font-size:2rem">🛒</div> <div style="text-align:left"><div style="color:#c8a85c;font-size:0.9rem">商店</div><div style="color:#666;font-size:0.7rem;margin-top:3px">购买补给</div></div> </div> <div style="display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #333;cursor:pointer" onclick="showPCPage('news')"> <div style="font-size:2rem">📰</div> <div style="text-align:left"><div style="color:#c8a85c;font-size:0.9rem">新闻</div><div style="color:#666;font-size:0.7rem;margin-top:3px">本地头条</div></div> </div> <div style="display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #333;cursor:pointer" onclick="showPCPage('missing')"> <div style="font-size:2rem">🔍</div> <div style="text-align:left"><div style="color:#c8a85c;font-size:0.9rem">失踪名单</div><div style="color:#666;font-size:0.7rem;margin-top:3px">查看失踪人员</div></div> </div> </div> </div> <div id="pcShop" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="backToPCHome()">← 返回</span> <span style="color:#c8a85c;margin-left:10px">商店</span> </div> <div style="text-align:center;color:#666;font-size:0.7rem;margin-bottom:15px">余额: $<span id="pcMoney" style="color:#c8a85c">10</span></div> <div class="shopItem" onclick="buy('paper')"><span class="n">📄 相纸 (5)</span><span class="p">$20</span></div> <div class="shopItem" onclick="buy('ink')"><span class="n">🖋 墨水 (3)</span><span class="p">$30</span></div> <div class="shopItem" onclick="buy('bag')"><span class="n">🛍 袋子 (10)</span><span class="p">$10</span></div> <div class="shopItem" onclick="buy('coffee')"><span class="n">☕ 咖啡粉 (5)</span><span class="p">$5</span></div> <div class="shopItem" id="gunShopItem" onclick="buy('gun')" style="display:none"><span class="n">🔫 左轮手枪</span><span class="p">$200</span></div> <div class="shopItem" id="detectorShopItem" onclick="buy('detector')" style="display:none"><span class="n">📡 铀浓度探测仪</span><span class="p">$150</span></div> <button id="refreshBtn" onclick="refresh()">🔄 刷新</button> </div> <div id="pcNews" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="backToPCHome()">← 返回</span> <span style="color:#c8a85c;margin-left:10px">新闻</span> </div> <div style="display:flex;flex-direction:column;gap:10px"> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(0)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">☢️</div><div><div style="color:#c8a85c;font-size:0.85rem">核电站泄漏报道</div><div style="color:#666;font-size:0.65rem;margin-top:3px">俄亥俄——官员称"无危险"</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(1)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">🚨</div><div><div style="color:#c8a85c;font-size:0.85rem">本月七人失踪</div><div style="color:#666;font-size:0.65rem;margin-top:3px">警方毫无线索</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(2)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">👥</div><div><div style="color:#c8a85c;font-size:0.85rem">居民报告行为怪异</div><div style="color:#666;font-size:0.65rem;margin-top:3px">"我的邻居再也不睡觉了"</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(3)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">🏪</div><div><div style="color:#c8a85c;font-size:0.85rem">Elm街便利店暴力事件</div><div style="color:#666;font-size:0.65rem;margin-top:3px">目击者"精神崩溃"</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(4)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">📍</div><div><div style="color:#c8a85c;font-size:0.85rem">Old State Photo附近区域被封</div><div style="color:#666;font-size:0.65rem;margin-top:3px">"距此地仅2英里"</div></div></div> </div> </div> </div> <div id="pcNewsDetail" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="showPCPage('news')">← 返回</span> <span style="color:#c8a85c;margin-left:10px">文章</span> </div> <div id="newsDetailBody"></div> </div> <div id="pcMissing" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="backToPCHome()">← 返回</span> <span style="color:#c8a85c;margin-left:10px">失踪名单</span> </div> <div id="pcMissingList" style="display:flex;flex-direction:column;gap:10px"></div> </div> </div> </div> <div class="modal" id="m-printer"> <div class="modalBox printerBox" style="text-align:center;display:flex;flex-direction:column;max-height:85vh"> <span class="modalClose" onclick="closeM('m-printer')">✕</span> <p style="color:#c8a85c;margin-bottom:10px">🖨 打印机</p> <div id="printStatus" style="display:flex;flex-direction:column;flex:1;min-height:0"> <p style="color:#666;font-size:0.75rem">每份需要: 1张相纸 + 1份墨水</p> <div style="margin:12px 0;font-size:0.8rem"><div>📄 <span id="pPaper">10</span> | 🖋 <span id="pInk">5</span> | 🛍 <span id="pBag">5</span></div></div> <p style="color:#666;font-size:0.7rem;margin-bottom:10px">选择照片:</p> <div id="printSelect" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;padding-right:4px;flex-shrink:1"></div> <div id="printFooter" style="flex-shrink:0"> <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px"> <span style="color:#b0a080;font-size:0.8rem">份数:</span> <button onclick="changeCopies(-1)" style="background:#222;color:#c8a85c;border:1px solid #444;width:30px;height:30px;cursor:pointer">−</button> <span id="copyCount" style="color:#c8a85c;font-size:1rem;min-width:30px">1</span> <button onclick="changeCopies(1)" style="background:#222;color:#c8a85c;border:1px solid #444;width:30px;height:30px;cursor:pointer">+</button> </div> <p id="matStatus" style="color:#50c878;font-size:0.7rem;margin-bottom:10px">材料充足</p> <button onclick="doPrint()" style="background:#c8a85c;color:#000;border:none;padding:8px 24px;cursor:pointer">打印</button> </div> </div> <div id="printing" style="display:none"> <p style="color:#c8a85c">打印中...</p> <div style="width:100%;height:8px;background:#222;margin:10px 0;overflow:hidden"><div style="width:30%;height:100%;background:#c8a85c;animation:slide 1.5s linear infinite"></div></div> </div> <div id="printDone" style="display:none"> <p style="color:#50c878">✓ 完成!</p> <button onclick="bagPhoto()" style="background:#c8a85c;color:#000;border:none;padding:8px 20px;cursor:pointer;margin-top:10px">装袋给顾客</button> </div> </div> </div> <div class="modal" id="m-storage"> <div class="modalBox"> <span class="modalClose" onclick="closeM('m-storage')">✕</span> <h2 style="color:#c8a85c;text-align:center;margin-bottom:15px;font-size:1rem">📦 储藏室</h2> <p style="color:#666;font-size:0.75rem;text-align:center;margin-bottom:10px">黑暗而杂乱...</p> <div id="gasItem" style="display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #222;margin:6px 0;cursor:pointer" onclick="takeGas()"> <span style="color:#b0a080;font-size:0.8rem">⛽ 备用汽油桶</span> <span style="color:#c8a85c;font-size:0.8rem">拿取</span> </div> <div id="broomItem" style="display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #222;margin:6px 0;cursor:pointer" onclick="takeBroom()"> <span style="color:#b0a080;font-size:0.8rem">🧹 扫帚</span> <span style="color:#c8a85c;font-size:0.8rem">拿取</span> </div> <p id="gasStatus" style="color:#666;font-size:0.7rem;text-align:center">角落里有一个备用汽油桶</p> </div> </div> <div class="modal" id="m-cateye"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-cateye')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">🔒 猫眼</h2> <div style="background:#050505;border:1px solid #333;padding:20px;margin-bottom:12px"> <p style="color:#666;font-size:0.8rem;line-height:1.8">
-你透过小小的镜头向外看...<br><br> <span style="color:#8b0000">只有黑暗。</span><br><br> <span style="color:#555;font-size:0.7rem">...有什么东西在动?</span> </p> </div> <p style="color:#666;font-size:0.7rem">父亲说过: 永远不要打开这扇门。</p> </div> </div> <div class="modal" id="m-letter"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-letter')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">✉ 信件</h2> <div style="background:#f5f5dc;color:#333;padding:20px;text-align:left;font-family:Georgia,serif"> <p style="margin-bottom:12px;font-size:0.9rem">致Old State Photo工作室的店主，</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">特此通知，<b>EMT——异常事务局</b>将于近期造访贵店。</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">我们会派三名队员前来搜查。请保持冷静并全力配合。切勿试图隐藏任何异常事物，也不要恐慌。</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">我们已知晓俄亥俄州的情况，会尽快赶来。</p> <p style="text-align:right;font-size:0.8rem;color:#8b0000">— EMT局长</p> </div> </div> </div> <div class="modal" id="m-bible"> <div class="modalBox" style="max-width:520px;padding:0;overflow:hidden;position:relative"> <span class="modalClose" onclick="closeM('m-bible')" style="position:absolute;right:12px;top:8px;z-index:10;color:#8b4513">✕</span> <div style="background:#f5f5dc;color:#333;padding:24px;max-height:60vh;overflow-y:auto" id="bibleBook"> <div id="bibleContent"></div> </div> <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#0a0a0a;border-top:1px solid rgba(200,168,92,0.3)"> <button onclick="biblePrev()" style="background:rgba(200,168,92,0.1);border:1px solid #c8a85c;color:#c8a85c;padding:8px 16px;cursor:pointer;font-size:0.8rem;border-radius:2px">◀ 上一页</button> <span id="biblePageInfo" style="color:#c8a85c;font-size:0.8rem">目录</span> <button onclick="bibleNext()" style="background:rgba(200,168,92,0.1);border:1px solid #c8a85c;color:#c8a85c;padding:8px 16px;cursor:pointer;font-size:0.8rem;border-radius:2px">下一页 ▶</button> </div> </div> </div> <div class="modal" id="m-coffee"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-coffee')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">☕ 咖啡机</h2> <div style="background:#0a0a0a;border:1px solid #333;padding:20px;margin-bottom:12px"> <p style="color:#b0a080;font-size:0.85rem;margin-bottom:8px">咖啡粉: <span id="coffeePowderView" style="color:#c8a85c">5</span> / 5</p> <p style="color:#b0a080;font-size:0.85rem;margin-bottom:8px">咖啡就绪: <span id="cupStatus" style="color:#c8a85c">否</span></p> <p style="color:#666;font-size:0.75rem">冲泡时间: 10秒</p> </div> <button id="brewBtn" onclick="startBrew()" style="background:#c8a85c;color:#000;border:none;padding:10px 24px;cursor:pointer;margin-bottom:8px">▶ 冲泡</button> <button id="refillBtn" onclick="refillCoffee()" style="background:rgba(200,168,92,0.1);color:#c8a85c;border:1px solid #c8a85c;padding:10px 24px;cursor:pointer;display:none">💰 补充咖啡粉 ($5)</button> <p id="coffeeMsg" style="color:#666;font-size:0.75rem;margin-top:10px"></p> </div> </div> <div class="modal" id="m-detector"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-detector')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">📡 铀浓度探测仪</h2> <div style="background:#0a0a0a;border:1px solid #333;padding:20px;margin-bottom:12px"> <p style="color:#b0a080;font-size:0.9rem;margin-bottom:10px">当前铀浓度:</p> <p id="detectorValue" style="color:#50c878;font-size:2rem;font-weight:bold">0.00</p> <p style="color:#666;font-size:0.75rem;margin-top:8px">单位: mSv/h</p> <div style="width:100%;height:12px;background:#222;margin-top:12px;overflow:hidden;border-radius:6px"> <div id="detectorBar" style="width:0%;height:100%;background:linear-gradient(90deg,#50c878,#ffd700,#ff3030);transition:width 0.5s"></div> </div> <p id="detectorMsg" style="color:#666;font-size:0.75rem;margin-top:12px">靠近核泄漏区域时读数会升高</p> </div> </div> </div>
+.bible-chapter-link:hover{background:rgba(139,69,19,0.1);color:#8b0000}
+#onlineModal .modalBox{max-width:480px}
+.online-tabs{display:flex;gap:8px;margin-bottom:16px}
+.online-tab{flex:1;padding:10px;text-align:center;border:1px solid #333;cursor:pointer;color:#888;font-size:0.8rem;transition:all 0.2s}
+.online-tab.active{border-color:#c8a85c;color:#c8a85c;background:rgba(200,168,92,0.1)}
+.online-room-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #222;margin:6px 0;font-size:0.8rem}
+.online-room-item .ri{color:#b0a080}
+.online-room-item .rb{background:rgba(200,168,92,0.15);border:1px solid #c8a85c;color:#c8a85c;padding:4px 12px;cursor:pointer;font-size:0.7rem}
+.online-room-item .rb:hover{background:rgba(200,168,92,0.3)}
+.online-room-item .rb.waiting{background:rgba(80,200,120,0.15);border-color:#50c878;color:#50c878}
+.online-status{color:#666;font-size:0.7rem;text-align:center;margin-top:10px;min-height:20px}
+.online-status.err{color:#ff6b6b}
+.online-chat{height:120px;overflow-y:auto;border:1px solid #222;padding:8px;margin:8px 0;font-size:0.75rem;line-height:1.6}
+.online-chat .sys{color:#666;font-style:italic}
+.online-chat .nick{color:#c8a85c;font-weight:bold}
+.online-chat-input{display:flex;gap:6px}
+.online-chat-input input{flex:1;background:#0a0a0a;border:1px solid #333;color:#c8a85c;padding:8px;font-size:0.75rem;outline:none}
+.online-chat-input button{background:rgba(200,168,92,0.15);border:1px solid #c8a85c;color:#c8a85c;padding:8px 16px;font-size:0.75rem;cursor:pointer}
+.online-player-list{display:flex;flex-direction:column;gap:4px;margin:8px 0;font-size:0.75rem;color:#b0a080}
+.online-player-list .pl{display:flex;align-items:center;gap:6px;padding:4px 8px;border:1px solid #222}
+.online-player-list .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.online-player-list .dot.on{background:#50c878}
+.online-player-list .dot.off{background:#333}</style>
+</head> <body> <div id="logoScreen"> <div class="glow"></div> <img src="https://i.postimg.cc/qvtjp3FR/IMG-3190.jpg" alt="流筠工作室"> <h2>流筠工作室</h2> <p>LIUYUN STUDIO</p> </div> <div id="homeScreen"> <div class="sky"></div> <div class="stars"></div> <div class="rain"></div> <div class="ground"></div> <div class="shop"> <div class="roof"></div> <div class="signboard"> <div class="sTitle">OLD STATE</div> <div class="sSub">PHOTO STUDIO</div> </div> <div class="lamp"></div> <div class="windows"> <div class="window"><div class="winGlow"></div></div> <div class="window"><div class="winGlow"></div></div> </div> <div class="door"><div class="doorKnob"></div></div> <div class="doorPlate">EST. 1987</div> </div> <div class="puddle"></div> <div class="fog"></div> <div class="homeContent"> <div class="subtitle">OHIO · 1987</div> <h1>OLD STATE PHOTO</h1> <button class="btn" onclick="startFromHome()">开始游戏</button> <button class="btn" onclick="openOnlineModal()">🌐 联机模式</button> <button class="btn" onclick="showCreditsScreen()">制作人员名单</button> </div> </div> <div id="creditsScreen"> <h2>制作人员名单</h2> <p class="big">DeepSeek</p> <div class="divider"></div> <p class="big">流筠工作室</p> <p>发行商</p> <div class="divider"></div> <p class="big">流筠制作组</p> <p>制作团队</p> <div class="divider"></div> <p class="big">金边逸空工作室</p> <p>联合开发 / 技术帮助</p> <div class="divider"></div> <p class="big">kimi</p> <p>制作雏形</p> <button class="closeBtn" onclick="closeCreditsScreen()">返回</button> </div> <canvas id="c"></canvas> <div id="noise"></div> <div class="flash-overlay" id="flashOverlay"></div> <div id="bloodOverlay"></div> <div id="agentGun">🔫</div> <div id="muzzleFlash"></div> <div id="coffeeAnim">☕</div> <div id="timerBar"><div id="timerBarInner"></div></div> <div id="toast"></div> <div id="viewfinder"> <div id="vfGrid"></div> <div id="vfGridH1"></div> <div id="vfGridH2"></div> <div id="vfCornerTL"></div> <div id="vfCornerTR"></div> <div id="vfCornerBL"></div> <div id="vfCornerBR"></div> <div id="vfFocus"></div> <div id="vfTop"><span>ISO 400</span><span>F2.8</span><span>🔋</span></div> <div id="vfRec"><span id="vfRecDot"></span><span>REC</span></div> </div> <div id="vfCancel" onclick="cancelViewfinder()">✕</div> <div id="vfShutter" onclick="shootFromViewfinder()">📷</div> <div id="payAnim">💵 +$<span id="payAmount">0</span></div> <div id="ui"> <div class="panel" id="money">💰 $10</div> <div class="panel" id="invBar"> <div class="invSlot on" id="s-camera" onclick="sel('camera')">📷<span class="num">∞</span></div> <div class="invSlot" id="s-paper" onclick="sel('paper')">📄<span class="num" id="n-paper">10</span></div> <div class="invSlot" id="s-ink" onclick="sel('ink')">🖋<span class="num" id="n-ink">5</span></div> <div class="invSlot" id="s-bag" onclick="sel('bag')">🛍<span class="num" id="n-bag">5</span></div> <div class="invSlot" id="s-gas" onclick="sel('gas')" style="display:none">⛽<span class="num" id="n-gas">0</span></div> <div class="invSlot" id="s-broom" onclick="sel('broom')" style="display:none">🧹</div> <div class="invSlot" id="s-letter" onclick="sel('letter')" style="display:none">✉</div> <div class="invSlot" id="s-coffee" onclick="sel('coffee')" style="display:none">☕<span class="num" id="n-coffee">0</span></div> <div class="invSlot" id="s-wrench" onclick="sel('wrench')" style="display:none">🔧</div> <div class="invSlot" id="s-detector" onclick="sel('detector')" style="display:none">📡<span class="num" id="n-detector">0</span></div> <div class="invSlot" id="s-bible" onclick="sel('bible')" style="display:none">📖</div> </div> <div class="panel" id="hint"></div> <div class="panel" id="dialogue"> <div class="who" id="dWho"></div> <div class="what" id="dWhat"></div> <div class="choices" id="dChoices"></div> <div class="tap" id="dTap">点击继续 ▼</div> </div> </div> <div id="shutterBtn" onclick="openViewfinder()">📷</div> <div id="gunBtn" onclick="useGun()">🔫</div> <div id="joystick"> <div id="jBase"></div> <div id="jKnob"></div> </div> <div id="credits"> <p class="thanks">感谢游玩本Demo</p> <p class="role">制作人员</p> <p class="big">DeepSeek</p> <div class="divider"></div> <p class="big">流筠工作室</p> <p class="studio">发行商</p> <div class="divider"></div> <p class="big">流筠制作组</p> <p class="studio">制作团队</p> <div class="divider"></div> <p class="big">金边逸空工作室</p> <p class="studio">联合开发 / 技术帮助</p> <div class="divider"></div> <p class="big">kimi</p> <p class="studio">制作雏形</p> <p style="margin-top:40px;color:#666;font-size:0.8rem">未完待续...</p> </div> <div id="darkness"><div id="flash"></div></div> <div class="modal" id="m-wanted"> <div class="modalBox"> <span class="modalClose" onclick="closeM('m-wanted')">✕</span> <div style="background:#f5f5dc;color:#333;padding:15px;border:3px solid #8b4513;text-align:center"> <h3 style="color:#8b0000;font-size:1.1rem;letter-spacing:4px;margin-bottom:10px">★ 通缉令 ★</h3> <div style="width:80px;height:100px;background:#333;margin:0 auto;border:2px solid #8b0000;display:flex;align-items:center;justify-content:center;font-size:2.5rem">🍺</div> <p style="font-size:0.75rem;margin:4px 0"><b>姓名:</b> Owen</p> <p style="font-size:0.75rem;margin:4px 0"><b>罪名:</b> 公共场所醉酒</p> <p style="font-size:0.75rem;margin:4px 0"><b>特征:</b> 面部潮红，步态蹒跚</p> <p style="font-size:0.75rem;margin:4px 0"><b>赏金:</b> $500</p> <p style="color:#8b0000;margin-top:8px;font-size:0.75rem">⚠ 非暴力但极度吵闹</p> </div> </div> </div> <div class="modal" id="m-missing"> <div class="modalBox" style="max-width:480px"> <span class="modalClose" onclick="closeM('m-missing')">✕</span> <div class="missingHeader"> <div class="title">⚠ 失踪人员名单</div> <div class="count" id="missingCount">6 人</div> </div> <p style="color:#666;font-size:0.7rem;text-align:center;margin-bottom:15px">俄亥俄州警局 · 如有线索请提供协助</p> <div id="missingList" style="display:flex;flex-direction:column;gap:10px"></div> <div style="margin-top:15px;padding-top:10px;border-top:1px solid #333;text-align:center"> <p style="color:#8b0000;font-size:0.7rem">如有线索，请立即联系警长Harrison</p> <p style="color:#666;font-size:0.65rem;margin-top:5px">部分失踪者曾是本店顾客</p> </div> </div> </div> <div class="modal" id="m-pc"> <div class="modalBox" style="max-width:400px"> <span class="modalClose" onclick="closeM('m-pc')">✕</span> <div id="pcHome" style="text-align:center"> <h2 style="color:#c8a85c;font-size:1rem;letter-spacing:3px;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid #333">🖥 Old State PC</h2> <div style="display:flex;flex-direction:column;gap:12px"> <div style="display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #333;cursor:pointer" onclick="showPCPage('shop')"> <div style="font-size:2rem">🛒</div> <div style="text-align:left"><div style="color:#c8a85c;font-size:0.9rem">商店</div><div style="color:#666;font-size:0.7rem;margin-top:3px">购买补给</div></div> </div> <div style="display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #333;cursor:pointer" onclick="showPCPage('news')"> <div style="font-size:2rem">📰</div> <div style="text-align:left"><div style="color:#c8a85c;font-size:0.9rem">新闻</div><div style="color:#666;font-size:0.7rem;margin-top:3px">本地头条</div></div> </div> <div style="display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #333;cursor:pointer" onclick="showPCPage('missing')"> <div style="font-size:2rem">🔍</div> <div style="text-align:left"><div style="color:#c8a85c;font-size:0.9rem">失踪名单</div><div style="color:#666;font-size:0.7rem;margin-top:3px">查看失踪人员</div></div> </div> </div> </div> <div id="pcShop" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="backToPCHome()">← 返回</span> <span style="color:#c8a85c;margin-left:10px">商店</span> </div> <div style="text-align:center;color:#666;font-size:0.7rem;margin-bottom:15px">余额: $<span id="pcMoney" style="color:#c8a85c">10</span></div> <div class="shopItem" onclick="buy('paper')"><span class="n">📄 相纸 (5)</span><span class="p">$20</span></div> <div class="shopItem" onclick="buy('ink')"><span class="n">🖋 墨水 (3)</span><span class="p">$30</span></div> <div class="shopItem" onclick="buy('bag')"><span class="n">🛍 袋子 (10)</span><span class="p">$10</span></div> <div class="shopItem" onclick="buy('coffee')"><span class="n">☕ 咖啡粉 (5)</span><span class="p">$5</span></div> <div class="shopItem" id="gunShopItem" onclick="buy('gun')" style="display:none"><span class="n">🔫 左轮手枪</span><span class="p">$200</span></div> <div class="shopItem" id="detectorShopItem" onclick="buy('detector')" style="display:none"><span class="n">📡 铀浓度探测仪</span><span class="p">$150</span></div> <button id="refreshBtn" onclick="refresh()">🔄 刷新</button> </div> <div id="pcNews" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="backToPCHome()">← 返回</span> <span style="color:#c8a85c;margin-left:10px">新闻</span> </div> <div style="display:flex;flex-direction:column;gap:10px"> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(0)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">☢️</div><div><div style="color:#c8a85c;font-size:0.85rem">核电站泄漏报道</div><div style="color:#666;font-size:0.65rem;margin-top:3px">俄亥俄——官员称"无危险"</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(1)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">🚨</div><div><div style="color:#c8a85c;font-size:0.85rem">本月七人失踪</div><div style="color:#666;font-size:0.65rem;margin-top:3px">警方毫无线索</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(2)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">👥</div><div><div style="color:#c8a85c;font-size:0.85rem">居民报告行为怪异</div><div style="color:#666;font-size:0.65rem;margin-top:3px">"我的邻居再也不睡觉了"</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(3)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">🏪</div><div><div style="color:#c8a85c;font-size:0.85rem">Elm街便利店暴力事件</div><div style="color:#666;font-size:0.65rem;margin-top:3px">目击者"精神崩溃"</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(4)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">📍</div><div><div style="color:#c8a85c;font-size:0.85rem">Old State Photo附近区域被封</div><div style="color:#666;font-size:0.65rem;margin-top:3px">"距此地仅2英里"</div></div></div> </div> </div> </div> <div id="pcNewsDetail" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="showPCPage('news')">← 返回</span> <span style="color:#c8a85c;margin-left:10px">文章</span> </div> <div id="newsDetailBody"></div> </div> <div id="pcMissing" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="backToPCHome()">← 返回</span> <span style="color:#c8a85c;margin-left:10px">失踪名单</span> </div> <div id="pcMissingList" style="display:flex;flex-direction:column;gap:10px"></div> </div> </div> </div> <div class="modal" id="m-printer"> <div class="modalBox printerBox" style="text-align:center;display:flex;flex-direction:column;max-height:85vh"> <span class="modalClose" onclick="closeM('m-printer')">✕</span> <p style="color:#c8a85c;margin-bottom:10px">🖨 打印机</p> <div id="printStatus" style="display:flex;flex-direction:column;flex:1;min-height:0"> <p style="color:#666;font-size:0.75rem">每份需要: 1张相纸 + 1份墨水</p> <div style="margin:12px 0;font-size:0.8rem"><div>📄 <span id="pPaper">10</span> | 🖋 <span id="pInk">5</span> | 🛍 <span id="pBag">5</span></div></div> <p style="color:#666;font-size:0.7rem;margin-bottom:10px">选择照片:</p> <div id="printSelect" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;padding-right:4px;flex-shrink:1"></div> <div id="printFooter" style="flex-shrink:0"> <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px"> <span style="color:#b0a080;font-size:0.8rem">份数:</span> <button onclick="changeCopies(-1)" style="background:#222;color:#c8a85c;border:1px solid #444;width:30px;height:30px;cursor:pointer">−</button> <span id="copyCount" style="color:#c8a85c;font-size:1rem;min-width:30px">1</span> <button onclick="changeCopies(1)" style="background:#222;color:#c8a85c;border:1px solid #444;width:30px;height:30px;cursor:pointer">+</button> </div> <p id="matStatus" style="color:#50c878;font-size:0.7rem;margin-bottom:10px">材料充足</p> <button onclick="doPrint()" style="background:#c8a85c;color:#000;border:none;padding:8px 24px;cursor:pointer">打印</button> </div> </div> <div id="printing" style="display:none"> <p style="color:#c8a85c">打印中...</p> <div style="width:100%;height:8px;background:#222;margin:10px 0;overflow:hidden"><div style="width:30%;height:100%;background:#c8a85c;animation:slide 1.5s linear infinite"></div></div> </div> <div id="printDone" style="display:none"> <p style="color:#50c878">✓ 完成!</p> <button onclick="bagPhoto()" style="background:#c8a85c;color:#000;border:none;padding:8px 20px;cursor:pointer;margin-top:10px">装袋给顾客</button> </div> </div> </div> <div class="modal" id="m-storage"> <div class="modalBox"> <span class="modalClose" onclick="closeM('m-storage')">✕</span> <h2 style="color:#c8a85c;text-align:center;margin-bottom:15px;font-size:1rem">📦 储藏室</h2> <p style="color:#666;font-size:0.75rem;text-align:center;margin-bottom:10px">黑暗而杂乱...</p> <div id="gasItem" style="display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #222;margin:6px 0;cursor:pointer" onclick="takeGas()"> <span style="color:#b0a080;font-size:0.8rem">⛽ 备用汽油桶</span> <span style="color:#c8a85c;font-size:0.8rem">拿取</span> </div> <div id="broomItem" style="display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #222;margin:6px 0;cursor:pointer" onclick="takeBroom()"> <span style="color:#b0a080;font-size:0.8rem">🧹 扫帚</span> <span style="color:#c8a85c;font-size:0.8rem">拿取</span> </div> <p id="gasStatus" style="color:#666;font-size:0.7rem;text-align:center">角落里有一个备用汽油桶</p> </div> </div> <div class="modal" id="m-cateye"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-cateye')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">🔒 猫眼</h2> <div style="background:#050505;border:1px solid #333;padding:20px;margin-bottom:12px"> <p style="color:#666;font-size:0.8rem;line-height:1.8">
+你透过小小的镜头向外看...<br><br> <span style="color:#8b0000">只有黑暗。</span><br><br> <span style="color:#555;font-size:0.7rem">...有什么东西在动?</span> </p> </div> <p style="color:#666;font-size:0.7rem">父亲说过: 永远不要打开这扇门。</p> </div> </div> <div class="modal" id="m-letter"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-letter')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">✉ 信件</h2> <div style="background:#f5f5dc;color:#333;padding:20px;text-align:left;font-family:Georgia,serif"> <p style="margin-bottom:12px;font-size:0.9rem">致Old State Photo工作室的店主，</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">特此通知，<b>EMT——异常事务局</b>将于近期造访贵店。</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">我们会派三名队员前来搜查。请保持冷静并全力配合。切勿试图隐藏任何异常事物，也不要恐慌。</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">我们已知晓俄亥俄州的情况，会尽快赶来。</p> <p style="text-align:right;font-size:0.8rem;color:#8b0000">— EMT局长</p> </div> </div> </div> <div class="modal" id="m-bible"> <div class="modalBox" style="max-width:520px;padding:0;overflow:hidden;position:relative"> <span class="modalClose" onclick="closeM('m-bible')" style="position:absolute;right:12px;top:8px;z-index:10;color:#8b4513">✕</span> <div style="background:#f5f5dc;color:#333;padding:24px;max-height:60vh;overflow-y:auto" id="bibleBook"> <div id="bibleContent"></div> </div> <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#0a0a0a;border-top:1px solid rgba(200,168,92,0.3)"> <button onclick="biblePrev()" style="background:rgba(200,168,92,0.1);border:1px solid #c8a85c;color:#c8a85c;padding:8px 16px;cursor:pointer;font-size:0.8rem;border-radius:2px">◀ 上一页</button> <span id="biblePageInfo" style="color:#c8a85c;font-size:0.8rem">目录</span> <button onclick="bibleNext()" style="background:rgba(200,168,92,0.1);border:1px solid #c8a85c;color:#c8a85c;padding:8px 16px;cursor:pointer;font-size:0.8rem;border-radius:2px">下一页 ▶</button> </div> </div> </div> <div class="modal" id="m-coffee"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-coffee')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">☕ 咖啡机</h2> <div style="background:#0a0a0a;border:1px solid #333;padding:20px;margin-bottom:12px"> <p style="color:#b0a080;font-size:0.85rem;margin-bottom:8px">咖啡粉: <span id="coffeePowderView" style="color:#c8a85c">5</span> / 5</p> <p style="color:#b0a080;font-size:0.85rem;margin-bottom:8px">咖啡就绪: <span id="cupStatus" style="color:#c8a85c">否</span></p> <p style="color:#666;font-size:0.75rem">冲泡时间: 10秒</p> </div> <button id="brewBtn" onclick="startBrew()" style="background:#c8a85c;color:#000;border:none;padding:10px 24px;cursor:pointer;margin-bottom:8px">▶ 冲泡</button> <button id="refillBtn" onclick="refillCoffee()" style="background:rgba(200,168,92,0.1);color:#c8a85c;border:1px solid #c8a85c;padding:10px 24px;cursor:pointer;display:none">💰 补充咖啡粉 ($5)</button> <p id="coffeeMsg" style="color:#666;font-size:0.75rem;margin-top:10px"></p> </div> </div> <div class="modal" id="m-detector"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-detector')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">📡 铀浓度探测仪</h2> <div style="background:#0a0a0a;border:1px solid #333;padding:20px;margin-bottom:12px"> <p style="color:#b0a080;font-size:0.9rem;margin-bottom:10px">当前铀浓度:</p> <p id="detectorValue" style="color:#50c878;font-size:2rem;font-weight:bold">0.00</p> <p style="color:#666;font-size:0.75rem;margin-top:8px">单位: mSv/h</p> <div style="width:100%;height:12px;background:#222;margin-top:12px;overflow:hidden;border-radius:6px"> <div id="detectorBar" style="width:0%;height:100%;background:linear-gradient(90deg,#50c878,#ffd700,#ff3030);transition:width 0.5s"></div> </div> <p id="detectorMsg" style="color:#666;font-size:0.75rem;margin-top:12px">靠近核泄漏区域时读数会升高</p> </div> </div> </div> <div class="modal" id="onlineModal"> <div class="modalBox" style="max-width:480px"> <span class="modalClose" onclick="closeOnlineModal()">✕</span> <h2 style="color:#c8a85c;font-size:1rem;text-align:center;margin-bottom:14px;letter-spacing:3px">🌐 联机模式 · Old State</h2> <div id="onlineLoginView"> <div style="margin-bottom:12px"> <label style="color:#b0a080;font-size:0.75rem;display:block;margin-bottom:4px">你的昵称</label> <input type="text" id="onlineNick" placeholder="请输入昵称" maxlength="12" style="width:100%;background:#0a0a0a;border:1px solid #333;color:#c8a85c;padding:10px;font-size:0.85rem;outline:none"> </div> <button onclick="onlineConnect()" style="width:100%;background:rgba(200,168,92,0.15);border:1px solid #c8a85c;color:#c8a85c;padding:12px;font-size:0.85rem;cursor:pointer;letter-spacing:2px;margin-bottom:8px">🔌 连接服务器</button> <div id="onlineStatusMsg" class="online-status">准备就绪</div> </div> <div id="onlineLobbyView" style="display:none"> <div style="display:flex;gap:8px;margin-bottom:12px"> <button onclick="onlineCreateRoom()" style="flex:1;background:rgba(200,168,92,0.15);border:1px solid #c8a85c;color:#c8a85c;padding:10px;font-size:0.8rem;cursor:pointer">➕ 创建房间</button> <button onclick="onlineRefreshRooms()" style="flex:1;background:rgba(200,168,92,0.08);border:1px solid #444;color:#888;padding:10px;font-size:0.8rem;cursor:pointer">🔄 刷新</button> </div> <div style="color:#666;font-size:0.7rem;margin-bottom:6px">可加入的房间：</div> <div id="onlineRoomList" style="max-height:200px;overflow-y:auto"> <div style="color:#555;font-size:0.75rem;text-align:center;padding:20px">暂无房间，点击上方创建</div> </div> <div id="onlineLobbyStatus" class="online-status">已连接</div> </div> <div id="onlineRoomView" style="display:none"> <div style="color:#c8a85c;font-size:0.85rem;margin-bottom:6px">房间号：<span id="onlineRoomId"></span> <span id="onlineRoomRole" style="color:#888;font-size:0.7rem"></span></div> <div class="online-player-list" id="onlinePlayerList"></div> <div style="color:#666;font-size:0.7rem;margin:6px 0">房间聊天：</div> <div class="online-chat" id="onlineChatBox"></div> <div class="online-chat-input"> <input type="text" id="onlineChatInput" placeholder="输入消息..." maxlength="60" onkeydown="if(event.key==='Enter')onlineSendChat()"> <button onclick="onlineSendChat()">发送</button> </div> <div style="display:flex;gap:8px;margin-top:12px"> <button onclick="onlineLeaveRoom()" style="flex:1;background:rgba(139,0,0,0.2);border:1px solid #8b0000;color:#ff6b6b;padding:10px;font-size:0.8rem;cursor:pointer">退出房间</button> <button id="onlineStartBtn" onclick="onlineStartGame()" style="flex:1;background:rgba(80,200,120,0.15);border:1px solid #50c878;color:#50c878;padding:10px;font-size:0.8rem;cursor:pointer;display:none">▶ 房主开始游戏</button> </div> <div id="onlinePendingList" style="margin-top:10px;display:none"> <div style="color:#ffd700;font-size:0.75rem;margin-bottom:4px">待批准的加入请求：</div> <div id="onlinePendingItems"></div> </div> </div> </div> </div>
 <script>
+// ==================== 全局变量 ====================
 const c=document.getElementById('c'),ctx=c.getContext('2d');
 function resize(){c.width=innerWidth;c.height=innerHeight}
 window.addEventListener('resize',()=>{
@@ -458,6 +482,7 @@ biblePage = i;
 renderBiblePage();
 }
 
+// ==================== 游戏全局变量 (原版) ====================
 const G={
 p:{x:400,y:500,s:20,sp:3},
 cam:{x:0,y:0},
@@ -3077,6 +3102,461 @@ showDia('intro');
 function showCreditsScreen(){document.getElementById('creditsScreen').classList.add('show');}
 function closeCreditsScreen(){document.getElementById('creditsScreen').classList.remove('show');}
 
+// ==================== 联机模块 ====================
+const ONLINE = {
+  mq: null,
+  cid: '',
+  nick: '',
+  room: '',
+  isHost: false,
+  connected: false,
+  rooms: new Map(),
+  roomTimer: null,
+  currentView: 'login',
+  pendingJoins: new Map(),
+  players: new Map(),
+  chatHistory: [],
+  gameStarted: false,
+  gameState: null,
+};
+
+function genCid(){ return 'op_' + Math.random().toString(36).slice(2, 10); }
+
+function openOnlineModal(){
+  const home = document.getElementById('homeScreen');
+  if(home) home.classList.remove('show');
+  document.getElementById('onlineModal').classList.add('show');
+  showOnlineView('login');
+  const nickInput = document.getElementById('onlineNick');
+  if(nickInput && !nickInput.value) nickInput.value = '店主' + (Math.floor(Math.random()*9000)+1000);
+  ONLINE.connected = false;
+  ONLINE.room = '';
+  ONLINE.isHost = false;
+  if(ONLINE.mq){ try{ ONLINE.mq.end(); }catch(e){} ONLINE.mq = null; }
+  updateOnlineStatus('准备就绪');
+}
+
+function closeOnlineModal(){
+  document.getElementById('onlineModal').classList.remove('show');
+  if(ONLINE.mq){ try{ ONLINE.mq.end(); }catch(e){} ONLINE.mq = null; }
+  if(ONLINE.roomTimer){ clearInterval(ONLINE.roomTimer); ONLINE.roomTimer = null; }
+  ONLINE.connected = false;
+  ONLINE.room = '';
+  document.getElementById('homeScreen').classList.add('show');
+}
+
+function showOnlineView(view){
+  ONLINE.currentView = view;
+  document.getElementById('onlineLoginView').style.display = view === 'login' ? 'block' : 'none';
+  document.getElementById('onlineLobbyView').style.display = view === 'lobby' ? 'block' : 'none';
+  document.getElementById('onlineRoomView').style.display = view === 'room' ? 'block' : 'none';
+}
+
+function updateOnlineStatus(msg, isErr){
+  const el = document.getElementById('onlineStatusMsg');
+  if(el){ el.textContent = msg; el.className = 'online-status' + (isErr?' err':''); }
+  const el2 = document.getElementById('onlineLobbyStatus');
+  if(el2){ el2.textContent = msg; el2.className = 'online-status' + (isErr?' err':''); }
+}
+
+function onlineConnect(){
+  const nick = document.getElementById('onlineNick').value.trim();
+  if(!nick){ updateOnlineStatus('请输入昵称', true); return; }
+  ONLINE.nick = nick;
+  ONLINE.cid = genCid();
+  updateOnlineStatus('连接服务器中...');
+  try {
+    const client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt', {
+      clientId: ONLINE.cid,
+      clean: true,
+      connectTimeout: 10000,
+      reconnectPeriod: 0
+    });
+    ONLINE.mq = client;
+    client.on('connect', () => {
+      ONLINE.connected = true;
+      updateOnlineStatus('已连接 ✓');
+      client.subscribe('oldstate/rooms/+', {qos:0});
+      client.subscribe('oldstate/broadcast', {qos:0});
+      showOnlineView('lobby');
+      onlineRefreshRooms();
+      if(ONLINE.roomTimer) clearInterval(ONLINE.roomTimer);
+      ONLINE.roomTimer = setInterval(onlineRefreshRooms, 4000);
+    });
+    client.on('message', (topic, payload) => {
+      try {
+        const data = JSON.parse(payload.toString());
+        handleOnlineMessage(topic, data);
+      } catch(e){}
+    });
+    client.on('error', (e) => {
+      updateOnlineStatus('连接失败: '+e.message, true);
+    });
+    client.on('offline', () => {
+      updateOnlineStatus('连接断开', true);
+    });
+  } catch(e) {
+    updateOnlineStatus('连接异常', true);
+  }
+}
+
+function handleOnlineMessage(topic, data){
+  if(topic.startsWith('oldstate/rooms/')){
+    if(data.roomId && data.nick !== ONLINE.nick){
+      ONLINE.rooms.set(data.roomId, {...data, _ts: Date.now()});
+      if(ONLINE.currentView === 'lobby') renderOnlineRooms();
+    }
+    return;
+  }
+  if(topic === 'oldstate/broadcast'){
+    if(data.type === 'roomListUpdate'){
+      onlineRefreshRooms();
+    }
+    return;
+  }
+  if(topic.startsWith('oldstate/room/') && topic.endsWith('/game')){
+    const roomId = topic.split('/')[2];
+    if(roomId !== ONLINE.room) return;
+    handleRoomMessage(data);
+    return;
+  }
+  if(topic.startsWith('oldstate/room/') && topic.endsWith('/chat')){
+    const roomId = topic.split('/')[2];
+    if(roomId !== ONLINE.room) return;
+    if(data.type === 'chat' && data.nick !== ONLINE.nick){
+      addOnlineChat(data.nick, data.text, false);
+    }
+    return;
+  }
+}
+
+function handleRoomMessage(data){
+  switch(data.type){
+    case 'joinRequest':
+      if(ONLINE.isHost && data.cid !== ONLINE.cid){
+        ONLINE.pendingJoins.set(data.cid, {nick: data.nick, ts: Date.now()});
+        renderPendingJoins();
+        updateOnlineStatus('有新的加入请求: ' + data.nick);
+      }
+      break;
+    case 'joinApproved':
+      if(data.targetCid === ONLINE.cid){
+        ONLINE.room = data.roomId;
+        showOnlineView('room');
+        document.getElementById('onlineRoomId').textContent = ONLINE.room;
+        ONLINE.mq.subscribe('oldstate/room/' + ONLINE.room + '/game', {qos:0});
+        ONLINE.mq.subscribe('oldstate/room/' + ONLINE.room + '/chat', {qos:0});
+        publishRoom({type:'playerJoined', nick: ONLINE.nick, cid: ONLINE.cid});
+        addOnlineChat('系统', '你加入了房间 ' + ONLINE.room, true);
+        updateOnlineStatus('已加入房间');
+        renderOnlinePlayers();
+      }
+      break;
+    case 'joinDenied':
+      if(data.targetCid === ONLINE.cid){
+        updateOnlineStatus('房主拒绝了你的加入请求', true);
+      }
+      break;
+    case 'playerJoined':
+      ONLINE.players.set(data.cid, {nick: data.nick, isHost: false, ready: true});
+      renderOnlinePlayers();
+      addOnlineChat('系统', data.nick + ' 加入了房间', true);
+      break;
+    case 'playerLeft':
+      ONLINE.players.delete(data.cid);
+      renderOnlinePlayers();
+      addOnlineChat('系统', (data.nick||'某玩家') + ' 离开了房间', true);
+      break;
+    case 'hostInfo':
+      if(data.cid === ONLINE.cid) ONLINE.isHost = true;
+      ONLINE.players.set(data.cid, {nick: data.nick, isHost: true, ready: true});
+      if(data.isHost) ONLINE.isHost = true;
+      renderOnlinePlayers();
+      break;
+    case 'roomState':
+      if(data.players) {
+        ONLINE.players.clear();
+        data.players.forEach(p => ONLINE.players.set(p.cid, p));
+      }
+      if(data.isHost) ONLINE.isHost = true;
+      renderOnlinePlayers();
+      if(data.gameStarted) {
+        ONLINE.gameStarted = true;
+        document.getElementById('onlineStartBtn').textContent = '游戏已开始';
+        document.getElementById('onlineStartBtn').style.background = 'rgba(80,200,120,0.3)';
+      }
+      break;
+    case 'startGame':
+      if(ONLINE.isHost) return;
+      ONLINE.gameStarted = true;
+      document.getElementById('onlineStartBtn').textContent = '游戏已开始';
+      document.getElementById('onlineStartBtn').style.background = 'rgba(80,200,120,0.3)';
+      addOnlineChat('系统', '房主开始了游戏！正在进入照相馆...', true);
+      updateOnlineStatus('游戏开始！');
+      setTimeout(() => {
+        closeOnlineModal();
+        startFromHome();
+        toast('联机游戏已开始！', 2000);
+      }, 500);
+      break;
+    case 'chat':
+      addOnlineChat(data.nick, data.text, false);
+      break;
+  }
+}
+
+function publishRoom(msg){
+  if(ONLINE.mq && ONLINE.room){
+    ONLINE.mq.publish('oldstate/room/' + ONLINE.room + '/game', JSON.stringify({...msg, cid: ONLINE.cid, nick: ONLINE.nick, ts: Date.now()}), {qos:0});
+  }
+}
+
+function publishRoomList(){
+  if(ONLINE.mq && ONLINE.room){
+    ONLINE.mq.publish('oldstate/rooms/' + ONLINE.room, JSON.stringify({
+      roomId: ONLINE.room,
+      host: ONLINE.nick,
+      playerCount: ONLINE.players.size + 1,
+      maxPlayers: 4,
+      status: ONLINE.gameStarted ? 'playing' : 'waiting',
+      nick: ONLINE.nick,
+      ts: Date.now()
+    }), {qos:0});
+    ONLINE.mq.publish('oldstate/broadcast', JSON.stringify({type:'roomListUpdate', roomId: ONLINE.room}), {qos:0});
+  }
+}
+
+function onlineRefreshRooms(){
+  if(!ONLINE.mq || !ONLINE.connected) return;
+  const now = Date.now();
+  for(const [k,v] of ONLINE.rooms){
+    if(now - (v._ts || 0) > 12000) ONLINE.rooms.delete(k);
+  }
+  renderOnlineRooms();
+  if(ONLINE.room) publishRoomList();
+}
+
+function renderOnlineRooms(){
+  const container = document.getElementById('onlineRoomList');
+  if(!container) return;
+  if(ONLINE.rooms.size === 0){
+    container.innerHTML = '<div style="color:#555;font-size:0.75rem;text-align:center;padding:20px">暂无房间，点击上方创建</div>';
+    return;
+  }
+  container.innerHTML = '';
+  for(const [roomId, room] of ONLINE.rooms){
+    if(roomId === ONLINE.room) continue;
+    const div = document.createElement('div');
+    div.className = 'online-room-item';
+    const statusText = room.status === 'playing' ? '游戏中' : '等待中';
+    const statusColor = room.status === 'playing' ? '#ff9800' : '#50c878';
+    div.innerHTML = `
+      <div class="ri">
+        <div style="color:#c8a85c;font-size:0.8rem">${escapeHtml(room.host || '未知')} 的房间</div>
+        <div style="font-size:0.65rem;color:#666">${roomId} · ${room.playerCount||1}/${room.maxPlayers||4}人 · <span style="color:${statusColor}">${statusText}</span></div>
+      </div>
+      <button class="rb ${room.status==='waiting'?'waiting':''}" onclick="onlineRequestJoin('${roomId}')">请求加入</button>
+    `;
+    container.appendChild(div);
+  }
+}
+
+function onlineCreateRoom(){
+  if(!ONLINE.connected){ updateOnlineStatus('未连接服务器', true); return; }
+  const roomId = 'OS' + Math.random().toString(36).slice(2,6).toUpperCase();
+  ONLINE.room = roomId;
+  ONLINE.isHost = true;
+  ONLINE.gameStarted = false;
+  ONLINE.players.clear();
+  ONLINE.pendingJoins.clear();
+  showOnlineView('room');
+  document.getElementById('onlineRoomId').textContent = roomId;
+  document.getElementById('onlineRoomRole').textContent = '(房主)';
+  ONLINE.mq.subscribe('oldstate/room/' + roomId + '/game', {qos:0});
+  ONLINE.mq.subscribe('oldstate/room/' + roomId + '/chat', {qos:0});
+  publishRoom({type:'hostInfo', nick: ONLINE.nick, cid: ONLINE.cid, isHost: true});
+  publishRoomList();
+  document.getElementById('onlineStartBtn').style.display = 'block';
+  addOnlineChat('系统', '你创建了房间 ' + roomId + '，等待玩家加入...', true);
+  renderOnlinePlayers();
+  renderPendingJoins();
+  if(ONLINE.roomTimer) clearInterval(ONLINE.roomTimer);
+  ONLINE.roomTimer = setInterval(() => {
+    if(ONLINE.room && ONLINE.mq && ONLINE.connected){
+      publishRoomList();
+      publishRoom({type:'roomState', players: Array.from(ONLINE.players.entries()).map(([cid,p])=>({cid,nick:p.nick,isHost:p.isHost,ready:p.ready})), gameStarted: ONLINE.gameStarted});
+    }
+  }, 3000);
+}
+
+function onlineRequestJoin(roomId){
+  if(!ONLINE.connected){ updateOnlineStatus('未连接服务器', true); return; }
+  ONLINE.room = roomId;
+  ONLINE.isHost = false;
+  ONLINE.mq.subscribe('oldstate/room/' + roomId + '/game', {qos:0});
+  ONLINE.mq.subscribe('oldstate/room/' + roomId + '/chat', {qos:0});
+  ONLINE.mq.publish('oldstate/room/' + roomId + '/game', JSON.stringify({
+    type:'joinRequest', cid: ONLINE.cid, nick: ONLINE.nick, ts: Date.now()
+  }), {qos:0});
+  updateOnlineStatus('已发送加入请求，等待房主批准...');
+  document.getElementById('onlineRoomList').innerHTML = '<div style="color:#c8a85c;font-size:0.8rem;text-align:center;padding:20px">等待房主批准中...</div>';
+}
+
+function onlineApproveJoin(cid){
+  const pending = ONLINE.pendingJoins.get(cid);
+  if(!pending) return;
+  ONLINE.pendingJoins.delete(cid);
+  ONLINE.players.set(cid, {nick: pending.nick, isHost: false, ready: true});
+  if(ONLINE.mq){
+    ONLINE.mq.publish('oldstate/room/' + ONLINE.room + '/game', JSON.stringify({
+      type:'joinApproved', targetCid: cid, roomId: ONLINE.room, ts: Date.now()
+    }), {qos:0});
+  }
+  addOnlineChat('系统', '已批准 ' + pending.nick + ' 加入', true);
+  renderPendingJoins();
+  renderOnlinePlayers();
+  publishRoomList();
+}
+
+function onlineDenyJoin(cid){
+  const pending = ONLINE.pendingJoins.get(cid);
+  if(!pending) return;
+  ONLINE.pendingJoins.delete(cid);
+  if(ONLINE.mq){
+    ONLINE.mq.publish('oldstate/room/' + ONLINE.room + '/game', JSON.stringify({
+      type:'joinDenied', targetCid: cid, roomId: ONLINE.room, ts: Date.now()
+    }), {qos:0});
+  }
+  addOnlineChat('系统', '已拒绝 ' + pending.nick + ' 的加入请求', true);
+  renderPendingJoins();
+}
+
+function renderPendingJoins(){
+  const container = document.getElementById('onlinePendingItems');
+  const wrap = document.getElementById('onlinePendingList');
+  if(!container || !wrap) return;
+  if(ONLINE.pendingJoins.size === 0){
+    wrap.style.display = 'none';
+    return;
+  }
+  wrap.style.display = 'block';
+  container.innerHTML = '';
+  for(const [cid, p] of ONLINE.pendingJoins){
+    const div = document.createElement('div');
+    div.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border:1px solid #ffd700;margin:4px 0;font-size:0.75rem;background:rgba(255,215,0,0.05)';
+    div.innerHTML = `
+      <span style="color:#ffd700">${escapeHtml(p.nick)}</span>
+      <div style="display:flex;gap:4px">
+        <button onclick="onlineApproveJoin('${cid}')" style="background:rgba(80,200,120,0.2);border:1px solid #50c878;color:#50c878;padding:2px 10px;cursor:pointer;font-size:0.7rem">批准</button>
+        <button onclick="onlineDenyJoin('${cid}')" style="background:rgba(139,0,0,0.2);border:1px solid #8b0000;color:#ff6b6b;padding:2px 10px;cursor:pointer;font-size:0.7rem">拒绝</button>
+      </div>
+    `;
+    container.appendChild(div);
+  }
+}
+
+function renderOnlinePlayers(){
+  const container = document.getElementById('onlinePlayerList');
+  if(!container) return;
+  container.innerHTML = '';
+  const hostDiv = document.createElement('div');
+  hostDiv.className = 'pl';
+  hostDiv.innerHTML = `<span class="dot on"></span> <span style="color:#c8a85c">${escapeHtml(ONLINE.nick)}</span> <span style="color:#888;font-size:0.6rem">(房主)</span>`;
+  if(ONLINE.isHost) hostDiv.innerHTML += ' <span style="color:#50c878;font-size:0.6rem">你</span>';
+  container.appendChild(hostDiv);
+  for(const [cid, p] of ONLINE.players){
+    if(cid === ONLINE.cid) continue;
+    const div = document.createElement('div');
+    div.className = 'pl';
+    div.innerHTML = `<span class="dot on"></span> <span style="color:#b0a080">${escapeHtml(p.nick)}</span>`;
+    container.appendChild(div);
+  }
+  const total = 1 + ONLINE.players.size;
+  for(let i = total; i < 4; i++){
+    const div = document.createElement('div');
+    div.className = 'pl';
+    div.style.opacity = '0.3';
+    div.innerHTML = `<span class="dot off"></span> <span style="color:#555">等待加入...</span>`;
+    container.appendChild(div);
+  }
+}
+
+function addOnlineChat(nick, text, isSys){
+  ONLINE.chatHistory.push({nick, text, isSys, ts: Date.now()});
+  const box = document.getElementById('onlineChatBox');
+  if(!box) return;
+  const div = document.createElement('div');
+  div.className = isSys ? 'sys' : '';
+  if(isSys){
+    div.textContent = text;
+  } else {
+    div.innerHTML = `<span class="nick">${escapeHtml(nick)}:</span> ${escapeHtml(text)}`;
+  }
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+}
+
+function onlineSendChat(){
+  const input = document.getElementById('onlineChatInput');
+  if(!input || !ONLINE.room) return;
+  const text = input.value.trim();
+  if(!text) return;
+  if(ONLINE.mq && ONLINE.connected){
+    ONLINE.mq.publish('oldstate/room/' + ONLINE.room + '/chat', JSON.stringify({
+      type:'chat', nick: ONLINE.nick, text: text, ts: Date.now()
+    }), {qos:0});
+  }
+  addOnlineChat(ONLINE.nick, text, false);
+  input.value = '';
+}
+
+function onlineStartGame(){
+  if(!ONLINE.isHost) return;
+  ONLINE.gameStarted = true;
+  document.getElementById('onlineStartBtn').textContent = '游戏已开始';
+  document.getElementById('onlineStartBtn').style.background = 'rgba(80,200,120,0.3)';
+  publishRoom({type:'startGame', roomId: ONLINE.room});
+  addOnlineChat('系统', '房主开始了游戏！', true);
+  updateOnlineStatus('游戏开始！');
+  setTimeout(() => {
+    closeOnlineModal();
+    startFromHome();
+    toast('联机游戏已开始！', 2000);
+  }, 500);
+}
+
+function onlineLeaveRoom(){
+  if(ONLINE.room && ONLINE.mq){
+    publishRoom({type:'playerLeft', nick: ONLINE.nick, cid: ONLINE.cid});
+    if(ONLINE.isHost){
+      ONLINE.mq.publish('oldstate/room/' + ONLINE.room + '/game', JSON.stringify({
+        type:'roomClosed', roomId: ONLINE.room, ts: Date.now()
+      }), {qos:0});
+    }
+    ONLINE.mq.unsubscribe('oldstate/room/' + ONLINE.room + '/game');
+    ONLINE.mq.unsubscribe('oldstate/room/' + ONLINE.room + '/chat');
+  }
+  if(ONLINE.roomTimer){ clearInterval(ONLINE.roomTimer); ONLINE.roomTimer = null; }
+  ONLINE.room = '';
+  ONLINE.isHost = false;
+  ONLINE.gameStarted = false;
+  ONLINE.players.clear();
+  ONLINE.pendingJoins.clear();
+  ONLINE.chatHistory = [];
+  document.getElementById('onlineChatBox').innerHTML = '';
+  document.getElementById('onlineStartBtn').style.display = 'none';
+  showOnlineView('lobby');
+  onlineRefreshRooms();
+  updateOnlineStatus('已离开房间');
+}
+
+function escapeHtml(s){
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+// 启动
 setupJoystick();
 startLogo();
 loop();
