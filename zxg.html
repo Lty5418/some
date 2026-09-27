@@ -1,7 +1,8 @@
-<!DOCTYPE html> <html lang="zh-CN"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"> <title>Old State Photo - Ohio</title>
-<style>*{margin:0;padding:0;box-sizing:border-box;-webkit-user-select:none;user-select:none}
-body{background:#050505;overflow:hidden;width:100vw;height:100vh;color:#c8b896;font-family:'Microsoft YaHei',sans-serif;touch-action:none}
-canvas{position:fixed;top:0;left:0;z-index:1}
+<!DOCTYPE html> <html lang="zh-CN" style="overflow:hidden"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,viewport-fit=cover"> <meta name="apple-mobile-web-app-capable" content="yes"> <meta name="mobile-web-app-capable" content="yes"> <title>Old State Photo - Ohio</title>
+<style>*{margin:0;padding:0;box-sizing:border-box;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+html,body{overflow:hidden;position:fixed;width:100%;height:100%;margin:0;padding:0;overscroll-behavior:none}
+body{background:#050505;color:#c8b896;font-family:'Microsoft YaHei',sans-serif;touch-action:none}
+canvas{position:fixed;top:0;left:0;z-index:1;display:block}
 #ui{position:fixed;top:0;left:0;width:100%;height:100%;z-index:10;pointer-events:none}
 .panel{position:absolute;background:rgba(5,5,5,0.95);border:1px solid rgba(200,184,150,0.3);pointer-events:auto}
 #money{top:15px;right:10px;padding:6px 14px;font-size:0.8rem;color:#c8a85c}
@@ -32,7 +33,7 @@ canvas{position:fixed;top:0;left:0;z-index:1}
 .shopItem .n{color:#b0a080;font-size:0.8rem}
 .shopItem .p{color:#c8a85c;font-size:0.8rem}
 #refreshBtn{width:100%;padding:10px;margin-top:10px;background:rgba(200,168,92,0.1);border:1px solid rgba(200,168,92,0.3);color:#c8a85c;cursor:pointer}
-#shutterBtn{position:fixed;bottom:80px;right:20px;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,#c8a85c 0%,#8b7355 100%);border:3px solid #f5f5dc;z-index:20;display:flex;align-items:center;justify-content:center;font-size:1.8rem;cursor:pointer;box-shadow:0 0 20px rgba(200,168,92,0.4);transition:transform 0.1s}
+#shutterBtn{position:fixed;bottom:80px;right:20px;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,#c8a85c 0%,#8b7355 100%);border:3px solid #f5f5dc;z-index:20;display:flex;align-items:center;justify-content:center;font-size:1.8rem;cursor:pointer;box-shadow:0 0 20px rgba(200,168,92,0.4);transition:transform 0.1s;touch-action:none}
 #shutterBtn:active{transform:scale(0.9)}
 #shutterBtn::after{content:'';position:absolute;width:85px;height:85px;border-radius:50%;border:2px solid rgba(200,168,92,0.3);top:-10px;left:-10px}
 .flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:white;z-index:50;pointer-events:none;opacity:0;transition:opacity 0.1s}
@@ -67,7 +68,7 @@ canvas{position:fixed;top:0;left:0;z-index:1}
 #joystick{position:fixed;bottom:70px;left:15px;width:110px;height:110px;z-index:25;touch-action:none}
 #jBase{position:absolute;width:90px;height:90px;border:2px solid rgba(200,184,150,0.3);border-radius:50%;top:10px;left:10px;background:rgba(200,184,150,0.05)}
 #jKnob{position:absolute;width:36px;height:36px;background:#c8a85c;border-radius:50%;top:37px;left:37px;box-shadow:0 0 15px rgba(200,168,92,0.6);pointer-events:none}
-#gunBtn{position:fixed;top:20px;left:20px;width:50px;height:50px;border-radius:50%;background:#8b0000;border:2px solid #c8a85c;z-index:20;display:none;align-items:center;justify-content:center;font-size:1.5rem;cursor:pointer}
+#gunBtn{position:fixed;top:20px;left:20px;width:50px;height:50px;border-radius:50%;background:#8b0000;border:2px solid #c8a85c;z-index:20;display:none;align-items:center;justify-content:center;font-size:1.5rem;cursor:pointer;touch-action:none}
 #gunBtn.show{display:flex}
 #bloodOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle,rgba(139,0,0,0.4) 0%,transparent 70%);z-index:15;pointer-events:none;display:none;opacity:0;transition:opacity 0.5s}
 #bloodOverlay.on{display:block;opacity:1}
@@ -108,9 +109,9 @@ canvas{position:fixed;top:0;left:0;z-index:1}
 #vfGridH1,#vfGridH2{position:absolute;background:rgba(200,168,92,0.15);height:1px;width:100%;left:0}
 #vfGridH1{top:33.33%}
 #vfGridH2{top:66.66%}
-#vfCancel{position:fixed;bottom:90px;left:30px;width:60px;height:60px;border-radius:50%;background:rgba(20,20,20,0.9);border:2px solid #c8a85c;z-index:160;display:none;align-items:center;justify-content:center;font-size:1.5rem;cursor:pointer;color:#c8a85c;pointer-events:auto}
+#vfCancel{position:fixed;bottom:90px;left:30px;width:60px;height:60px;border-radius:50%;background:rgba(20,20,20,0.9);border:2px solid #c8a85c;z-index:160;display:none;align-items:center;justify-content:center;font-size:1.5rem;cursor:pointer;color:#c8a85c;pointer-events:auto;touch-action:none}
 #vfCancel.show{display:flex}
-#vfShutter{position:fixed;bottom:80px;right:20px;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,#c8a85c 0%,#8b7355 100%);border:3px solid #f5f5dc;z-index:160;display:none;align-items:center;justify-content:center;font-size:1.8rem;cursor:pointer;box-shadow:0 0 25px rgba(200,168,92,0.6);pointer-events:auto;animation:vfShutterPulse 1.5s infinite}
+#vfShutter{position:fixed;bottom:80px;right:20px;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,#c8a85c 0%,#8b7355 100%);border:3px solid #f5f5dc;z-index:160;display:none;align-items:center;justify-content:center;font-size:1.8rem;cursor:pointer;box-shadow:0 0 25px rgba(200,168,92,0.6);pointer-events:auto;animation:vfShutterPulse 1.5s infinite;touch-action:none}
 #vfShutter.show{display:flex}
 @keyframes vfShutterPulse{0%,100%{box-shadow:0 0 25px rgba(200,168,92,0.6)}50%{box-shadow:0 0 40px rgba(200,168,92,0.9)}}
 @keyframes slide{0%{transform:translateX(-100%)}100%{transform:translateX(400%)}}
@@ -121,39 +122,38 @@ canvas{position:fixed;top:0;left:0;z-index:1}
 @keyframes starFlicker{0%,100%{opacity:0.5}50%{opacity:0.3}}
 .rain{position:absolute;top:0;left:0;width:100%;height:100%;background-image:linear-gradient(90deg,transparent 0,transparent 49.5%,rgba(180,180,200,0.08) 49.5%,rgba(180,180,200,0.08) 50.5%,transparent 50.5%);background-size:80px 100%;animation:rainFall 0.5s linear infinite;opacity:0.6}
 @keyframes rainFall{0%{background-position:0 0}100%{background-position:0 100px}}
-.ground{position:absolute;bottom:0;left:0;width:100%;height:45%;background:linear-gradient(180deg,#080508 0%,#0d0a0d 30%,#0a080a 100%)}
+.ground{position:absolute;bottom:0;left:0;width:100%;height:40%;background:linear-gradient(180deg,#080508 0%,#0d0a0d 30%,#0a080a 100%)}
 .ground::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:
 radial-gradient(ellipse at 50% 0%,rgba(200,140,60,0.15) 0%,transparent 40%),
 radial-gradient(ellipse at 30% 10%,rgba(200,140,60,0.05) 0%,transparent 30%),
 radial-gradient(ellipse at 70% 10%,rgba(200,140,60,0.05) 0%,transparent 30%)}
-.shop{position:absolute;bottom:15%;left:50%;transform:translateX(-50%);width:min(520px,88vw);height:min(420px,55vh);background:linear-gradient(180deg,#1a1410 0%,#0f0a08 100%);border:1px solid #2a2018;box-shadow:0 0 60px rgba(200,140,60,0.15),inset 0 0 80px rgba(0,0,0,0.7);border-radius:4px 4px 0 0}
+.shop{position:absolute;bottom:18%;left:50%;transform:translateX(-50%);width:min(520px,88vw);height:min(340px,42vh);background:linear-gradient(180deg,#1a1410 0%,#0f0a08 100%);border:1px solid #2a2018;box-shadow:0 0 60px rgba(200,140,60,0.15),inset 0 0 80px rgba(0,0,0,0.7);border-radius:4px 4px 0 0}
 .roof{position:absolute;top:-18px;left:-8px;right:-8px;height:20px;background:linear-gradient(180deg,#2a1f18 0%,#1a1410 100%);border:1px solid #2a2018;border-radius:3px 3px 0 0}
 .roof::after{content:'';position:absolute;top:100%;left:0;width:100%;height:6px;background:repeating-linear-gradient(90deg,#2a1f18 0,#2a1f18 20px,#1a1410 20px,#1a1410 40px);opacity:0.8}
 .signboard{position:absolute;top:-58px;left:50%;transform:translateX(-50%);background:linear-gradient(180deg,#2a1a10 0%,#1a1008 100%);border:2px solid #3a2a18;padding:8px 22px;box-shadow:0 0 20px rgba(200,140,60,0.4),inset 0 0 15px rgba(0,0,0,0.8);border-radius:3px;animation:signFlicker 6s infinite}
 @keyframes signFlicker{0%,18%,20%,22%,24%,54%,56%,100%{box-shadow:0 0 20px rgba(200,140,60,0.4),inset 0 0 15px rgba(0,0,0,0.8)}19%,21%,23%,55%{box-shadow:0 0 8px rgba(200,140,60,0.2),inset 0 0 15px rgba(0,0,0,0.8)}}
 .signboard .sTitle{color:#c8a85c;font-family:Georgia,serif;font-size:clamp(14px,3.5vw,20px);letter-spacing:3px;font-weight:bold;text-shadow:0 0 12px rgba(200,168,92,0.9),0 0 3px #000}
 .signboard .sSub{color:#8b7a5a;font-size:clamp(8px,2vw,10px);letter-spacing:4px;text-align:center;margin-top:2px}
-.windows{position:absolute;top:18%;left:50%;transform:translateX(-50%);display:flex;gap:24px}
+.windows{position:absolute;top:20%;left:50%;transform:translateX(-50%);display:flex;gap:24px}
 .window{width:clamp(48px,10vw,70px);height:clamp(60px,12vh,90px);background:linear-gradient(180deg,#3a1a0a 0%,#1a0a05 100%);border:2px solid #2a2018;box-shadow:inset 0 0 20px rgba(200,120,40,0.3),0 0 15px rgba(200,120,40,0.2);position:relative;overflow:hidden}
 .window::before{content:'';position:absolute;top:50%;left:0;width:100%;height:1px;background:#2a2018}
 .window::after{content:'';position:absolute;top:0;left:50%;width:1px;height:100%;background:#2a2018}
 .window .winGlow{position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 60%,rgba(200,120,40,0.35) 0%,transparent 70%);animation:winGlowPulse 3s infinite}
 @keyframes winGlowPulse{0%,100%{opacity:0.7}50%{opacity:1}}
-.door{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:clamp(64px,14vw,90px);height:clamp(100px,20vh,140px);background:linear-gradient(180deg,#1a0f08 0%,#0a0503 100%);border:2px solid #2a2018;border-bottom:none;box-shadow:inset 0 0 30px rgba(0,0,0,0.9),inset 0 10px 20px rgba(200,120,40,0.05);position:relative}
-.door::before{content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);width:60%;height:40%;background:linear-gradient(180deg,#3a1a0a 0%,transparent 100%);opacity:0.3}
+.door{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:clamp(64px,14vw,90px);height:clamp(100px,20vh,140px);background:linear-gradient(180deg,#1a0f08 0%,#0a0503 100%);border:2px solid #2a2018;border-bottom:none;box-shadow:inset 0 0 30px rgba(0,0,0,0.9),inset 0 10px 20px rgba(200,120,40,0.05)}
 .doorKnob{position:absolute;top:50%;right:8px;width:8px;height:8px;background:radial-gradient(circle,#c8a85c,#5a4a2a);border-radius:50%;box-shadow:0 0 8px rgba(200,168,92,0.6)}
-.doorPlate{position:absolute;top:calc(20vh - 30px);left:50%;transform:translateX(-50%);background:linear-gradient(180deg,#3a1a0a,#1a0a05);border:1px solid #c8a85c;color:#c8a85c;font-size:clamp(8px,1.8vw,11px);padding:3px 10px;letter-spacing:2px;font-family:Georgia,serif;box-shadow:0 0 10px rgba(200,168,92,0.3)}
+.doorPlate{position:absolute;bottom:calc(20vh + 10px);left:50%;transform:translateX(-50%);background:linear-gradient(180deg,#3a1a0a,#1a0a05);border:1px solid #c8a85c;color:#c8a85c;font-size:clamp(8px,1.8vw,11px);padding:3px 10px;letter-spacing:2px;font-family:Georgia,serif;box-shadow:0 0 10px rgba(200,168,92,0.3);white-space:nowrap}
 .lamp{position:absolute;top:-30px;left:50%;transform:translateX(-50%);width:40px;height:40px;background:radial-gradient(circle,rgba(200,140,60,0.9) 0%,rgba(200,140,60,0.4) 30%,transparent 70%);border-radius:50%;animation:lampGlow 2s infinite}
 @keyframes lampGlow{0%,100%{opacity:0.7;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.1)}}
 .puddle{position:absolute;bottom:8%;left:50%;transform:translateX(-50%);width:min(400px,70vw);height:40px;background:radial-gradient(ellipse at center,rgba(200,140,60,0.12) 0%,transparent 70%);border-radius:50%;filter:blur(6px);animation:puddleFlicker 4s infinite}
 @keyframes puddleFlicker{0%,100%{opacity:0.5}50%{opacity:0.9}}
 .fog{position:absolute;bottom:0;left:0;width:100%;height:60%;background:radial-gradient(ellipse at 50% 100%,rgba(80,60,40,0.15) 0%,transparent 70%);pointer-events:none}
 #homeScreen::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;box-shadow:inset 0 0 200px 80px rgba(0,0,0,0.95),inset 0 0 400px 150px rgba(0,0,0,0.7);pointer-events:none;z-index:5}
-.homeContent{position:absolute;bottom:6%;left:50%;transform:translateX(-50%);z-index:10;display:flex;flex-direction:column;align-items:center;width:100%}
+.homeContent{position:absolute;bottom:4%;left:50%;transform:translateX(-50%);z-index:10;display:flex;flex-direction:column;align-items:center;width:100%}
 #homeScreen h1{font-size:clamp(1.2rem,4vw,1.8rem);letter-spacing:10px;margin-bottom:4px;color:#c8a85c;text-shadow:0 0 10px rgba(200,168,92,0.7),0 0 30px rgba(139,0,0,0.4),2px 2px 0 #000;font-weight:400;font-family:Georgia,serif;text-align:center}
-#homeScreen .subtitle{color:#8b0000;font-size:clamp(0.6rem,2vw,0.75rem);letter-spacing:8px;margin-bottom:20px;text-shadow:0 0 10px rgba(139,0,0,0.9);animation:flicker 4s infinite;text-align:center}
+#homeScreen .subtitle{color:#8b0000;font-size:clamp(0.6rem,2vw,0.75rem);letter-spacing:8px;margin-bottom:16px;text-shadow:0 0 10px rgba(139,0,0,0.9);animation:flicker 4s infinite;text-align:center}
 @keyframes flicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:1}20%,22%,24%,55%{opacity:0.3}}
-#homeScreen .btn{background:rgba(20,10,5,0.9);border:1px solid rgba(200,168,92,0.5);color:#c8a85c;padding:11px 44px;font-size:0.85rem;letter-spacing:5px;cursor:pointer;margin:6px;transition:all 0.3s;font-family:'Microsoft YaHei',sans-serif;box-shadow:0 0 15px rgba(200,168,92,0.2),inset 0 0 10px rgba(0,0,0,0.8)}
+#homeScreen .btn{background:rgba(20,10,5,0.9);border:1px solid rgba(200,168,92,0.5);color:#c8a85c;padding:11px 44px;font-size:0.85rem;letter-spacing:5px;cursor:pointer;margin:6px;transition:all 0.3s;font-family:'Microsoft YaHei',sans-serif;box-shadow:0 0 15px rgba(200,168,92,0.2),inset 0 0 10px rgba(0,0,0,0.8);touch-action:manipulation}
 #homeScreen .btn:hover{background:rgba(50,25,10,0.95);box-shadow:0 0 25px rgba(200,168,92,0.5),inset 0 0 15px rgba(200,168,92,0.1);border-color:#c8a85c;text-shadow:0 0 8px rgba(200,168,92,0.8)}
 #creditsScreen{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:1600;display:none;flex-direction:column;align-items:center;justify-content:center;color:#c8a85c;overflow-y:auto;padding:40px 20px}
 #creditsScreen.show{display:flex}
@@ -161,7 +161,7 @@ radial-gradient(ellipse at 70% 10%,rgba(200,140,60,0.05) 0%,transparent 30%)}
 #creditsScreen p{font-size:0.9rem;line-height:2;color:#b0a080;text-align:center;margin:2px 0}
 #creditsScreen .big{color:#c8a85c;font-size:1rem;margin:10px 0 4px 0;letter-spacing:2px}
 #creditsScreen .divider{width:60px;height:1px;background:rgba(200,168,92,0.3);margin:14px 0}
-#creditsScreen .closeBtn{background:rgba(200,168,92,0.1);border:1px solid rgba(200,168,92,0.5);color:#c8a85c;padding:10px 30px;font-size:0.9rem;cursor:pointer;margin-top:30px;letter-spacing:3px;font-family:'Microsoft YaHei',sans-serif}
+#creditsScreen .closeBtn{background:rgba(200,168,92,0.1);border:1px solid rgba(200,168,92,0.5);color:#c8a85c;padding:10px 30px;font-size:0.9rem;cursor:pointer;margin-top:30px;letter-spacing:3px;font-family:'Microsoft YaHei',sans-serif;touch-action:manipulation}
 .missingCard{border:1px solid #8b0000;padding:10px;background:#0d0d0d;display:flex;gap:12px;align-items:flex-start;transition:all 0.2s}
 .missingCard:hover{border-color:#c8a85c;background:#111}
 .missingCard .avatar{font-size:2rem;flex-shrink:0;width:48px;height:48px;display:flex;align-items:center;justify-content:center;border:1px solid #333;background:#050505}
@@ -175,13 +175,26 @@ radial-gradient(ellipse at 70% 10%,rgba(200,140,60,0.05) 0%,transparent 30%)}
 .missingCard .status.found{background:rgba(80,200,120,0.2);color:#50c878}
 .missingHeader{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #8b0000}
 .missingHeader .title{color:#8b0000;font-size:0.9rem;letter-spacing:3px}
-.missingHeader .count{color:#666;font-size:0.7rem}</style>
-</head> <body> <div id="logoScreen"> <div class="glow"></div> <img src="https://i.postimg.cc/qvtjp3FR/IMG-3190.jpg" alt="流筠工作室"> <h2>流筠工作室</h2> <p>LIUYUN STUDIO</p> </div> <div id="homeScreen"> <div class="sky"></div> <div class="stars"></div> <div class="rain"></div> <div class="ground"></div> <div class="shop"> <div class="roof"></div> <div class="signboard"> <div class="sTitle">OLD STATE</div> <div class="sSub">PHOTO STUDIO</div> </div> <div class="lamp"></div> <div class="windows"> <div class="window"><div class="winGlow"></div></div> <div class="window"><div class="winGlow"></div></div> </div> <div class="door"><div class="doorKnob"></div></div> <div class="doorPlate">EST. 1987</div> </div> <div class="puddle"></div> <div class="fog"></div> <div class="homeContent"> <div class="subtitle">OHIO · 1987</div> <h1>OLD STATE PHOTO</h1> <button class="btn" onclick="startFromHome()">开始游戏</button> <button class="btn" onclick="showCreditsScreen()">制作人员名单</button> </div> </div> <div id="creditsScreen"> <h2>制作人员名单</h2> <p class="big">DeepSeek</p> <div class="divider"></div> <p class="big">流筠工作室</p> <p>发行商</p> <div class="divider"></div> <p class="big">流筠制作组</p> <p>制作团队</p> <div class="divider"></div> <p class="big">金边逸空工作室</p> <p>联合开发 / 技术帮助</p> <div class="divider"></div> <p class="big">kimi</p> <p>制作雏形</p> <button class="closeBtn" onclick="closeCreditsScreen()">返回</button> </div> <canvas id="c"></canvas> <div id="noise"></div> <div class="flash-overlay" id="flashOverlay"></div> <div id="bloodOverlay"></div> <div id="agentGun">🔫</div> <div id="muzzleFlash"></div> <div id="coffeeAnim">☕</div> <div id="timerBar"><div id="timerBarInner"></div></div> <div id="toast"></div> <div id="viewfinder"> <div id="vfGrid"></div> <div id="vfGridH1"></div> <div id="vfGridH2"></div> <div id="vfCornerTL"></div> <div id="vfCornerTR"></div> <div id="vfCornerBL"></div> <div id="vfCornerBR"></div> <div id="vfFocus"></div> <div id="vfTop"><span>ISO 400</span><span>F2.8</span><span>🔋</span></div> <div id="vfRec"><span id="vfRecDot"></span><span>REC</span></div> </div> <div id="vfCancel" onclick="cancelViewfinder()">✕</div> <div id="vfShutter" onclick="shootFromViewfinder()">📷</div> <div id="payAnim">💵 +$<span id="payAmount">0</span></div> <div id="ui"> <div class="panel" id="money">💰 $10</div> <div class="panel" id="invBar"> <div class="invSlot on" id="s-camera" onclick="sel('camera')">📷<span class="num">∞</span></div> <div class="invSlot" id="s-paper" onclick="sel('paper')">📄<span class="num" id="n-paper">10</span></div> <div class="invSlot" id="s-ink" onclick="sel('ink')">🖋<span class="num" id="n-ink">5</span></div> <div class="invSlot" id="s-bag" onclick="sel('bag')">🛍<span class="num" id="n-bag">5</span></div> <div class="invSlot" id="s-gas" onclick="sel('gas')" style="display:none">⛽<span class="num" id="n-gas">0</span></div> <div class="invSlot" id="s-broom" onclick="sel('broom')" style="display:none">🧹</div> <div class="invSlot" id="s-letter" onclick="sel('letter')" style="display:none">✉</div> <div class="invSlot" id="s-coffee" onclick="sel('coffee')" style="display:none">☕<span class="num" id="n-coffee">0</span></div> <div class="invSlot" id="s-wrench" onclick="sel('wrench')" style="display:none">🔧</div> <div class="invSlot" id="s-detector" onclick="sel('detector')" style="display:none">📡<span class="num" id="n-detector">0</span></div> </div> <div class="panel" id="hint"></div> <div class="panel" id="dialogue"> <div class="who" id="dWho"></div> <div class="what" id="dWhat"></div> <div class="choices" id="dChoices"></div> <div class="tap" id="dTap">点击继续 ▼</div> </div> </div> <div id="shutterBtn" onclick="openViewfinder()">📷</div> <div id="gunBtn" onclick="useGun()">🔫</div> <div id="joystick"> <div id="jBase"></div> <div id="jKnob"></div> </div> <div id="credits"> <p class="thanks">感谢游玩本Demo</p> <p class="role">制作人员</p> <p class="big">DeepSeek</p> <div class="divider"></div> <p class="big">流筠工作室</p> <p class="studio">发行商</p> <div class="divider"></div> <p class="big">流筠制作组</p> <p class="studio">制作团队</p> <div class="divider"></div> <p class="big">金边逸空工作室</p> <p class="studio">联合开发 / 技术帮助</p> <div class="divider"></div> <p class="big">kimi</p> <p class="studio">制作雏形</p> <p style="margin-top:40px;color:#666;font-size:0.8rem">未完待续...</p> </div> <div id="darkness"><div id="flash"></div></div> <div class="modal" id="m-wanted"> <div class="modalBox"> <span class="modalClose" onclick="closeM('m-wanted')">✕</span> <div style="background:#f5f5dc;color:#333;padding:15px;border:3px solid #8b4513;text-align:center"> <h3 style="color:#8b0000;font-size:1.1rem;letter-spacing:4px;margin-bottom:10px">★ 通缉令 ★</h3> <div style="width:80px;height:100px;background:#333;margin:0 auto;border:2px solid #8b0000;display:flex;align-items:center;justify-content:center;font-size:2.5rem">🍺</div> <p style="font-size:0.75rem;margin:4px 0"><b>姓名:</b> Owen</p> <p style="font-size:0.75rem;margin:4px 0"><b>罪名:</b> 公共场所醉酒</p> <p style="font-size:0.75rem;margin:4px 0"><b>特征:</b> 面部潮红，步态蹒跚</p> <p style="font-size:0.75rem;margin:4px 0"><b>赏金:</b> $500</p> <p style="color:#8b0000;margin-top:8px;font-size:0.75rem">⚠ 非暴力但极度吵闹</p> </div> </div> </div> <div class="modal" id="m-missing"> <div class="modalBox" style="max-width:480px"> <span class="modalClose" onclick="closeM('m-missing')">✕</span> <div class="missingHeader"> <div class="title">⚠ 失踪人员名单</div> <div class="count" id="missingCount">6 人</div> </div> <p style="color:#666;font-size:0.7rem;text-align:center;margin-bottom:15px">俄亥俄州警局 · 悬赏征集线索</p> <div id="missingList" style="display:flex;flex-direction:column;gap:10px"></div> <div style="margin-top:15px;padding-top:10px;border-top:1px solid #333;text-align:center"> <p style="color:#8b0000;font-size:0.7rem">如有线索，请立即联系警长Harrison</p> <p style="color:#666;font-size:0.65rem;margin-top:5px">部分失踪者曾是本店顾客</p> </div> </div> </div> <div class="modal" id="m-pc"> <div class="modalBox" style="max-width:400px"> <span class="modalClose" onclick="closeM('m-pc')">✕</span> <div id="pcHome" style="text-align:center"> <h2 style="color:#c8a85c;font-size:1rem;letter-spacing:3px;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid #333">🖥 Old State PC</h2> <div style="display:flex;flex-direction:column;gap:12px"> <div style="display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #333;cursor:pointer" onclick="showPCPage('shop')"> <div style="font-size:2rem">🛒</div> <div style="text-align:left"><div style="color:#c8a85c;font-size:0.9rem">商店</div><div style="color:#666;font-size:0.7rem;margin-top:3px">购买补给</div></div> </div> <div style="display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #333;cursor:pointer" onclick="showPCPage('news')"> <div style="font-size:2rem">📰</div> <div style="text-align:left"><div style="color:#c8a85c;font-size:0.9rem">新闻</div><div style="color:#666;font-size:0.7rem;margin-top:3px">本地头条</div></div> </div> <div style="display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #333;cursor:pointer" onclick="showPCPage('missing')"> <div style="font-size:2rem">🔍</div> <div style="text-align:left"><div style="color:#c8a85c;font-size:0.9rem">失踪名单</div><div style="color:#666;font-size:0.7rem;margin-top:3px">查看失踪人员</div></div> </div> </div> </div> <div id="pcShop" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="backToPCHome()">← 返回</span> <span style="color:#c8a85c;margin-left:10px">商店</span> </div> <div style="text-align:center;color:#666;font-size:0.7rem;margin-bottom:15px">余额: $<span id="pcMoney" style="color:#c8a85c">10</span></div> <div class="shopItem" onclick="buy('paper')"><span class="n">📄 相纸 (5)</span><span class="p">$20</span></div> <div class="shopItem" onclick="buy('ink')"><span class="n">🖋 墨水 (3)</span><span class="p">$30</span></div> <div class="shopItem" onclick="buy('bag')"><span class="n">🛍 袋子 (10)</span><span class="p">$10</span></div> <div class="shopItem" onclick="buy('coffee')"><span class="n">☕ 咖啡粉 (5)</span><span class="p">$5</span></div> <div class="shopItem" id="gunShopItem" onclick="buy('gun')" style="display:none"><span class="n">🔫 左轮手枪</span><span class="p">$200</span></div> <div class="shopItem" id="detectorShopItem" onclick="buy('detector')" style="display:none"><span class="n">📡 铀浓度探测仪</span><span class="p">$150</span></div> <button id="refreshBtn" onclick="refresh()">🔄 刷新</button> </div> <div id="pcNews" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="backToPCHome()">← 返回</span> <span style="color:#c8a85c;margin-left:10px">新闻</span> </div> <div style="display:flex;flex-direction:column;gap:10px"> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(0)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">☢️</div><div><div style="color:#c8a85c;font-size:0.85rem">核电站泄漏报道</div><div style="color:#666;font-size:0.65rem;margin-top:3px">俄亥俄——官员称"无危险"</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(1)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">🚨</div><div><div style="color:#c8a85c;font-size:0.85rem">本月七人失踪</div><div style="color:#666;font-size:0.65rem;margin-top:3px">警方毫无线索</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(2)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">👥</div><div><div style="color:#c8a85c;font-size:0.85rem">居民报告行为怪异</div><div style="color:#666;font-size:0.65rem;margin-top:3px">"我的邻居再也不睡觉了"</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(3)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">🏪</div><div><div style="color:#c8a85c;font-size:0.85rem">Elm街便利店暴力事件</div><div style="color:#666;font-size:0.65rem;margin-top:3px">目击者"精神崩溃"</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(4)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">📍</div><div><div style="color:#c8a85c;font-size:0.85rem">Old State Photo附近区域被封</div><div style="color:#666;font-size:0.65rem;margin-top:3px">"距此地仅2英里"</div></div></div> </div> </div> </div> <div id="pcNewsDetail" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="showPCPage('news')">← 返回</span> <span style="color:#c8a85c;margin-left:10px">文章</span> </div> <div id="newsDetailBody"></div> </div> <div id="pcMissing" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="backToPCHome()">← 返回</span> <span style="color:#c8a85c;margin-left:10px">失踪名单</span> </div> <div id="pcMissingList" style="display:flex;flex-direction:column;gap:10px"></div> </div> </div> </div> <div class="modal" id="m-printer"> <div class="modalBox printerBox" style="text-align:center;display:flex;flex-direction:column;max-height:85vh"> <span class="modalClose" onclick="closeM('m-printer')">✕</span> <p style="color:#c8a85c;margin-bottom:10px">🖨 打印机</p> <div id="printStatus" style="display:flex;flex-direction:column;flex:1;min-height:0"> <p style="color:#666;font-size:0.75rem">每份需要: 1张相纸 + 1份墨水</p> <div style="margin:12px 0;font-size:0.8rem"><div>📄 <span id="pPaper">10</span> | 🖋 <span id="pInk">5</span> | 🛍 <span id="pBag">5</span></div></div> <p style="color:#666;font-size:0.7rem;margin-bottom:10px">选择照片:</p> <div id="printSelect" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;padding-right:4px;flex-shrink:1"></div> <div id="printFooter" style="flex-shrink:0"> <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px"> <span style="color:#b0a080;font-size:0.8rem">份数:</span> <button onclick="changeCopies(-1)" style="background:#222;color:#c8a85c;border:1px solid #444;width:30px;height:30px;cursor:pointer">−</button> <span id="copyCount" style="color:#c8a85c;font-size:1rem;min-width:30px">1</span> <button onclick="changeCopies(1)" style="background:#222;color:#c8a85c;border:1px solid #444;width:30px;height:30px;cursor:pointer">+</button> </div> <p id="matStatus" style="color:#50c878;font-size:0.7rem;margin-bottom:10px">材料充足</p> <button onclick="doPrint()" style="background:#c8a85c;color:#000;border:none;padding:8px 24px;cursor:pointer">打印</button> </div> </div> <div id="printing" style="display:none"> <p style="color:#c8a85c">打印中...</p> <div style="width:100%;height:8px;background:#222;margin:10px 0;overflow:hidden"><div style="width:30%;height:100%;background:#c8a85c;animation:slide 1.5s linear infinite"></div></div> </div> <div id="printDone" style="display:none"> <p style="color:#50c878">✓ 完成!</p> <button onclick="bagPhoto()" style="background:#c8a85c;color:#000;border:none;padding:8px 20px;cursor:pointer;margin-top:10px">装袋给顾客</button> </div> </div> </div> <div class="modal" id="m-storage"> <div class="modalBox"> <span class="modalClose" onclick="closeM('m-storage')">✕</span> <h2 style="color:#c8a85c;text-align:center;margin-bottom:15px;font-size:1rem">📦 储藏室</h2> <p style="color:#666;font-size:0.75rem;text-align:center;margin-bottom:10px">黑暗而杂乱...</p> <div id="gasItem" style="display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #222;margin:6px 0;cursor:pointer" onclick="takeGas()"> <span style="color:#b0a080;font-size:0.8rem">⛽ 备用汽油桶</span> <span style="color:#c8a85c;font-size:0.8rem">拿取</span> </div> <div id="broomItem" style="display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #222;margin:6px 0;cursor:pointer" onclick="takeBroom()"> <span style="color:#b0a080;font-size:0.8rem">🧹 扫帚</span> <span style="color:#c8a85c;font-size:0.8rem">拿取</span> </div> <p id="gasStatus" style="color:#666;font-size:0.7rem;text-align:center">角落里有一个备用汽油桶</p> </div> </div> <div class="modal" id="m-cateye"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-cateye')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">🔒 猫眼</h2> <div style="background:#050505;border:1px solid #333;padding:20px;margin-bottom:12px"> <p style="color:#666;font-size:0.8rem;line-height:1.8">
-你透过小小的镜头向外看...<br><br> <span style="color:#8b0000">只有黑暗。</span><br><br> <span style="color:#555;font-size:0.7rem">...有什么东西在动?</span> </p> </div> <p style="color:#666;font-size:0.7rem">父亲说过: 永远不要打开这扇门。</p> </div> </div> <div class="modal" id="m-letter"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-letter')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">✉ 信件</h2> <div style="background:#f5f5dc;color:#333;padding:20px;text-align:left;font-family:Georgia,serif"> <p style="margin-bottom:12px;font-size:0.9rem">致Old State Photo工作室的店主，</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">特此通知，<b>EMT——异常事务局</b>将于近期造访贵店。</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">请保持冷静并全力配合。切勿试图隐藏任何异常事物。</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">我们已知晓俄亥俄州的情况。</p> <p style="text-align:right;font-size:0.8rem;color:#8b0000">— EMT局长</p> </div> </div> </div> <div class="modal" id="m-coffee"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-coffee')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">☕ 咖啡机</h2> <div style="background:#0a0a0a;border:1px solid #333;padding:20px;margin-bottom:12px"> <p style="color:#b0a080;font-size:0.85rem;margin-bottom:8px">咖啡粉: <span id="coffeePowderView" style="color:#c8a85c">5</span> / 5</p> <p style="color:#b0a080;font-size:0.85rem;margin-bottom:8px">咖啡就绪: <span id="cupStatus" style="color:#c8a85c">否</span></p> <p style="color:#666;font-size:0.75rem">冲泡时间: 10秒</p> </div> <button id="brewBtn" onclick="startBrew()" style="background:#c8a85c;color:#000;border:none;padding:10px 24px;cursor:pointer;margin-bottom:8px">▶ 冲泡</button> <button id="refillBtn" onclick="refillCoffee()" style="background:rgba(200,168,92,0.1);color:#c8a85c;border:1px solid #c8a85c;padding:10px 24px;cursor:pointer;display:none">💰 补充咖啡粉 ($5)</button> <p id="coffeeMsg" style="color:#666;font-size:0.75rem;margin-top:10px"></p> </div> </div> <div class="modal" id="m-detector"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-detector')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">📡 铀浓度探测仪</h2> <div style="background:#0a0a0a;border:1px solid #333;padding:20px;margin-bottom:12px"> <p style="color:#b0a080;font-size:0.9rem;margin-bottom:10px">当前铀浓度:</p> <p id="detectorValue" style="color:#50c878;font-size:2rem;font-weight:bold">0.00</p> <p style="color:#666;font-size:0.75rem;margin-top:8px">单位: mSv/h</p> <div style="width:100%;height:12px;background:#222;margin-top:12px;overflow:hidden;border-radius:6px"> <div id="detectorBar" style="width:0%;height:100%;background:linear-gradient(90deg,#50c878,#ffd700,#ff3030);transition:width 0.5s"></div> </div> <p id="detectorMsg" style="color:#666;font-size:0.75rem;margin-top:12px">靠近核泄漏区域时读数会升高</p> </div> </div> </div>
+.missingHeader .count{color:#666;font-size:0.7rem}
+.bible-chapter-link{cursor:pointer;padding:8px 12px;border-bottom:1px solid rgba(139,69,19,0.2);transition:background 0.2s;color:#333}
+.bible-chapter-link:hover{background:rgba(139,69,19,0.1);color:#8b0000}</style>
+</head> <body> <div id="logoScreen"> <div class="glow"></div> <img src="https://i.postimg.cc/qvtjp3FR/IMG-3190.jpg" alt="流筠工作室"> <h2>流筠工作室</h2> <p>LIUYUN STUDIO</p> </div> <div id="homeScreen"> <div class="sky"></div> <div class="stars"></div> <div class="rain"></div> <div class="ground"></div> <div class="shop"> <div class="roof"></div> <div class="signboard"> <div class="sTitle">OLD STATE</div> <div class="sSub">PHOTO STUDIO</div> </div> <div class="lamp"></div> <div class="windows"> <div class="window"><div class="winGlow"></div></div> <div class="window"><div class="winGlow"></div></div> </div> <div class="door"><div class="doorKnob"></div></div> <div class="doorPlate">EST. 1987</div> </div> <div class="puddle"></div> <div class="fog"></div> <div class="homeContent"> <div class="subtitle">OHIO · 1987</div> <h1>OLD STATE PHOTO</h1> <button class="btn" onclick="startFromHome()">开始游戏</button> <button class="btn" onclick="showCreditsScreen()">制作人员名单</button> </div> </div> <div id="creditsScreen"> <h2>制作人员名单</h2> <p class="big">DeepSeek</p> <div class="divider"></div> <p class="big">流筠工作室</p> <p>发行商</p> <div class="divider"></div> <p class="big">流筠制作组</p> <p>制作团队</p> <div class="divider"></div> <p class="big">金边逸空工作室</p> <p>联合开发 / 技术帮助</p> <div class="divider"></div> <p class="big">kimi</p> <p>制作雏形</p> <button class="closeBtn" onclick="closeCreditsScreen()">返回</button> </div> <canvas id="c"></canvas> <div id="noise"></div> <div class="flash-overlay" id="flashOverlay"></div> <div id="bloodOverlay"></div> <div id="agentGun">🔫</div> <div id="muzzleFlash"></div> <div id="coffeeAnim">☕</div> <div id="timerBar"><div id="timerBarInner"></div></div> <div id="toast"></div> <div id="viewfinder"> <div id="vfGrid"></div> <div id="vfGridH1"></div> <div id="vfGridH2"></div> <div id="vfCornerTL"></div> <div id="vfCornerTR"></div> <div id="vfCornerBL"></div> <div id="vfCornerBR"></div> <div id="vfFocus"></div> <div id="vfTop"><span>ISO 400</span><span>F2.8</span><span>🔋</span></div> <div id="vfRec"><span id="vfRecDot"></span><span>REC</span></div> </div> <div id="vfCancel" onclick="cancelViewfinder()">✕</div> <div id="vfShutter" onclick="shootFromViewfinder()">📷</div> <div id="payAnim">💵 +$<span id="payAmount">0</span></div> <div id="ui"> <div class="panel" id="money">💰 $10</div> <div class="panel" id="invBar"> <div class="invSlot on" id="s-camera" onclick="sel('camera')">📷<span class="num">∞</span></div> <div class="invSlot" id="s-paper" onclick="sel('paper')">📄<span class="num" id="n-paper">10</span></div> <div class="invSlot" id="s-ink" onclick="sel('ink')">🖋<span class="num" id="n-ink">5</span></div> <div class="invSlot" id="s-bag" onclick="sel('bag')">🛍<span class="num" id="n-bag">5</span></div> <div class="invSlot" id="s-gas" onclick="sel('gas')" style="display:none">⛽<span class="num" id="n-gas">0</span></div> <div class="invSlot" id="s-broom" onclick="sel('broom')" style="display:none">🧹</div> <div class="invSlot" id="s-letter" onclick="sel('letter')" style="display:none">✉</div> <div class="invSlot" id="s-coffee" onclick="sel('coffee')" style="display:none">☕<span class="num" id="n-coffee">0</span></div> <div class="invSlot" id="s-wrench" onclick="sel('wrench')" style="display:none">🔧</div> <div class="invSlot" id="s-detector" onclick="sel('detector')" style="display:none">📡<span class="num" id="n-detector">0</span></div> <div class="invSlot" id="s-bible" onclick="sel('bible')" style="display:none">📖</div> </div> <div class="panel" id="hint"></div> <div class="panel" id="dialogue"> <div class="who" id="dWho"></div> <div class="what" id="dWhat"></div> <div class="choices" id="dChoices"></div> <div class="tap" id="dTap">点击继续 ▼</div> </div> </div> <div id="shutterBtn" onclick="openViewfinder()">📷</div> <div id="gunBtn" onclick="useGun()">🔫</div> <div id="joystick"> <div id="jBase"></div> <div id="jKnob"></div> </div> <div id="credits"> <p class="thanks">感谢游玩本Demo</p> <p class="role">制作人员</p> <p class="big">DeepSeek</p> <div class="divider"></div> <p class="big">流筠工作室</p> <p class="studio">发行商</p> <div class="divider"></div> <p class="big">流筠制作组</p> <p class="studio">制作团队</p> <div class="divider"></div> <p class="big">金边逸空工作室</p> <p class="studio">联合开发 / 技术帮助</p> <div class="divider"></div> <p class="big">kimi</p> <p class="studio">制作雏形</p> <p style="margin-top:40px;color:#666;font-size:0.8rem">未完待续...</p> </div> <div id="darkness"><div id="flash"></div></div> <div class="modal" id="m-wanted"> <div class="modalBox"> <span class="modalClose" onclick="closeM('m-wanted')">✕</span> <div style="background:#f5f5dc;color:#333;padding:15px;border:3px solid #8b4513;text-align:center"> <h3 style="color:#8b0000;font-size:1.1rem;letter-spacing:4px;margin-bottom:10px">★ 通缉令 ★</h3> <div style="width:80px;height:100px;background:#333;margin:0 auto;border:2px solid #8b0000;display:flex;align-items:center;justify-content:center;font-size:2.5rem">🍺</div> <p style="font-size:0.75rem;margin:4px 0"><b>姓名:</b> Owen</p> <p style="font-size:0.75rem;margin:4px 0"><b>罪名:</b> 公共场所醉酒</p> <p style="font-size:0.75rem;margin:4px 0"><b>特征:</b> 面部潮红，步态蹒跚</p> <p style="font-size:0.75rem;margin:4px 0"><b>赏金:</b> $500</p> <p style="color:#8b0000;margin-top:8px;font-size:0.75rem">⚠ 非暴力但极度吵闹</p> </div> </div> </div> <div class="modal" id="m-missing"> <div class="modalBox" style="max-width:480px"> <span class="modalClose" onclick="closeM('m-missing')">✕</span> <div class="missingHeader"> <div class="title">⚠ 失踪人员名单</div> <div class="count" id="missingCount">6 人</div> </div> <p style="color:#666;font-size:0.7rem;text-align:center;margin-bottom:15px">俄亥俄州警局 · 如有线索请提供协助</p> <div id="missingList" style="display:flex;flex-direction:column;gap:10px"></div> <div style="margin-top:15px;padding-top:10px;border-top:1px solid #333;text-align:center"> <p style="color:#8b0000;font-size:0.7rem">如有线索，请立即联系警长Harrison</p> <p style="color:#666;font-size:0.65rem;margin-top:5px">部分失踪者曾是本店顾客</p> </div> </div> </div> <div class="modal" id="m-pc"> <div class="modalBox" style="max-width:400px"> <span class="modalClose" onclick="closeM('m-pc')">✕</span> <div id="pcHome" style="text-align:center"> <h2 style="color:#c8a85c;font-size:1rem;letter-spacing:3px;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid #333">🖥 Old State PC</h2> <div style="display:flex;flex-direction:column;gap:12px"> <div style="display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #333;cursor:pointer" onclick="showPCPage('shop')"> <div style="font-size:2rem">🛒</div> <div style="text-align:left"><div style="color:#c8a85c;font-size:0.9rem">商店</div><div style="color:#666;font-size:0.7rem;margin-top:3px">购买补给</div></div> </div> <div style="display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #333;cursor:pointer" onclick="showPCPage('news')"> <div style="font-size:2rem">📰</div> <div style="text-align:left"><div style="color:#c8a85c;font-size:0.9rem">新闻</div><div style="color:#666;font-size:0.7rem;margin-top:3px">本地头条</div></div> </div> <div style="display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #333;cursor:pointer" onclick="showPCPage('missing')"> <div style="font-size:2rem">🔍</div> <div style="text-align:left"><div style="color:#c8a85c;font-size:0.9rem">失踪名单</div><div style="color:#666;font-size:0.7rem;margin-top:3px">查看失踪人员</div></div> </div> </div> </div> <div id="pcShop" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="backToPCHome()">← 返回</span> <span style="color:#c8a85c;margin-left:10px">商店</span> </div> <div style="text-align:center;color:#666;font-size:0.7rem;margin-bottom:15px">余额: $<span id="pcMoney" style="color:#c8a85c">10</span></div> <div class="shopItem" onclick="buy('paper')"><span class="n">📄 相纸 (5)</span><span class="p">$20</span></div> <div class="shopItem" onclick="buy('ink')"><span class="n">🖋 墨水 (3)</span><span class="p">$30</span></div> <div class="shopItem" onclick="buy('bag')"><span class="n">🛍 袋子 (10)</span><span class="p">$10</span></div> <div class="shopItem" onclick="buy('coffee')"><span class="n">☕ 咖啡粉 (5)</span><span class="p">$5</span></div> <div class="shopItem" id="gunShopItem" onclick="buy('gun')" style="display:none"><span class="n">🔫 左轮手枪</span><span class="p">$200</span></div> <div class="shopItem" id="detectorShopItem" onclick="buy('detector')" style="display:none"><span class="n">📡 铀浓度探测仪</span><span class="p">$150</span></div> <button id="refreshBtn" onclick="refresh()">🔄 刷新</button> </div> <div id="pcNews" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="backToPCHome()">← 返回</span> <span style="color:#c8a85c;margin-left:10px">新闻</span> </div> <div style="display:flex;flex-direction:column;gap:10px"> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(0)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">☢️</div><div><div style="color:#c8a85c;font-size:0.85rem">核电站泄漏报道</div><div style="color:#666;font-size:0.65rem;margin-top:3px">俄亥俄——官员称"无危险"</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(1)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">🚨</div><div><div style="color:#c8a85c;font-size:0.85rem">本月七人失踪</div><div style="color:#666;font-size:0.65rem;margin-top:3px">警方毫无线索</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(2)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">👥</div><div><div style="color:#c8a85c;font-size:0.85rem">居民报告行为怪异</div><div style="color:#666;font-size:0.65rem;margin-top:3px">"我的邻居再也不睡觉了"</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(3)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">🏪</div><div><div style="color:#c8a85c;font-size:0.85rem">Elm街便利店暴力事件</div><div style="color:#666;font-size:0.65rem;margin-top:3px">目击者"精神崩溃"</div></div></div> </div> <div style="border:1px solid #333;padding:12px;background:#0d0d0d;cursor:pointer" onclick="openNewsDetail(4)"> <div style="display:flex;gap:10px;align-items:center"><div style="font-size:1.8rem">📍</div><div><div style="color:#c8a85c;font-size:0.85rem">Old State Photo附近区域被封</div><div style="color:#666;font-size:0.65rem;margin-top:3px">"距此地仅2英里"</div></div></div> </div> </div> </div> <div id="pcNewsDetail" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="showPCPage('news')">← 返回</span> <span style="color:#c8a85c;margin-left:10px">文章</span> </div> <div id="newsDetailBody"></div> </div> <div id="pcMissing" style="display:none"> <div style="display:flex;align-items:center;margin-bottom:15px"> <span style="color:#c8a85c;cursor:pointer" onclick="backToPCHome()">← 返回</span> <span style="color:#c8a85c;margin-left:10px">失踪名单</span> </div> <div id="pcMissingList" style="display:flex;flex-direction:column;gap:10px"></div> </div> </div> </div> <div class="modal" id="m-printer"> <div class="modalBox printerBox" style="text-align:center;display:flex;flex-direction:column;max-height:85vh"> <span class="modalClose" onclick="closeM('m-printer')">✕</span> <p style="color:#c8a85c;margin-bottom:10px">🖨 打印机</p> <div id="printStatus" style="display:flex;flex-direction:column;flex:1;min-height:0"> <p style="color:#666;font-size:0.75rem">每份需要: 1张相纸 + 1份墨水</p> <div style="margin:12px 0;font-size:0.8rem"><div>📄 <span id="pPaper">10</span> | 🖋 <span id="pInk">5</span> | 🛍 <span id="pBag">5</span></div></div> <p style="color:#666;font-size:0.7rem;margin-bottom:10px">选择照片:</p> <div id="printSelect" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;padding-right:4px;flex-shrink:1"></div> <div id="printFooter" style="flex-shrink:0"> <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px"> <span style="color:#b0a080;font-size:0.8rem">份数:</span> <button onclick="changeCopies(-1)" style="background:#222;color:#c8a85c;border:1px solid #444;width:30px;height:30px;cursor:pointer">−</button> <span id="copyCount" style="color:#c8a85c;font-size:1rem;min-width:30px">1</span> <button onclick="changeCopies(1)" style="background:#222;color:#c8a85c;border:1px solid #444;width:30px;height:30px;cursor:pointer">+</button> </div> <p id="matStatus" style="color:#50c878;font-size:0.7rem;margin-bottom:10px">材料充足</p> <button onclick="doPrint()" style="background:#c8a85c;color:#000;border:none;padding:8px 24px;cursor:pointer">打印</button> </div> </div> <div id="printing" style="display:none"> <p style="color:#c8a85c">打印中...</p> <div style="width:100%;height:8px;background:#222;margin:10px 0;overflow:hidden"><div style="width:30%;height:100%;background:#c8a85c;animation:slide 1.5s linear infinite"></div></div> </div> <div id="printDone" style="display:none"> <p style="color:#50c878">✓ 完成!</p> <button onclick="bagPhoto()" style="background:#c8a85c;color:#000;border:none;padding:8px 20px;cursor:pointer;margin-top:10px">装袋给顾客</button> </div> </div> </div> <div class="modal" id="m-storage"> <div class="modalBox"> <span class="modalClose" onclick="closeM('m-storage')">✕</span> <h2 style="color:#c8a85c;text-align:center;margin-bottom:15px;font-size:1rem">📦 储藏室</h2> <p style="color:#666;font-size:0.75rem;text-align:center;margin-bottom:10px">黑暗而杂乱...</p> <div id="gasItem" style="display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #222;margin:6px 0;cursor:pointer" onclick="takeGas()"> <span style="color:#b0a080;font-size:0.8rem">⛽ 备用汽油桶</span> <span style="color:#c8a85c;font-size:0.8rem">拿取</span> </div> <div id="broomItem" style="display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #222;margin:6px 0;cursor:pointer" onclick="takeBroom()"> <span style="color:#b0a080;font-size:0.8rem">🧹 扫帚</span> <span style="color:#c8a85c;font-size:0.8rem">拿取</span> </div> <p id="gasStatus" style="color:#666;font-size:0.7rem;text-align:center">角落里有一个备用汽油桶</p> </div> </div> <div class="modal" id="m-cateye"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-cateye')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">🔒 猫眼</h2> <div style="background:#050505;border:1px solid #333;padding:20px;margin-bottom:12px"> <p style="color:#666;font-size:0.8rem;line-height:1.8">
+你透过小小的镜头向外看...<br><br> <span style="color:#8b0000">只有黑暗。</span><br><br> <span style="color:#555;font-size:0.7rem">...有什么东西在动?</span> </p> </div> <p style="color:#666;font-size:0.7rem">父亲说过: 永远不要打开这扇门。</p> </div> </div> <div class="modal" id="m-letter"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-letter')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">✉ 信件</h2> <div style="background:#f5f5dc;color:#333;padding:20px;text-align:left;font-family:Georgia,serif"> <p style="margin-bottom:12px;font-size:0.9rem">致Old State Photo工作室的店主，</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">特此通知，<b>EMT——异常事务局</b>将于近期造访贵店。</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">我们会派三名队员前来搜查。请保持冷静并全力配合。切勿试图隐藏任何异常事物，也不要恐慌。</p> <p style="margin-bottom:12px;font-size:0.85rem;line-height:1.7">我们已知晓俄亥俄州的情况，会尽快赶来。</p> <p style="text-align:right;font-size:0.8rem;color:#8b0000">— EMT局长</p> </div> </div> </div> <div class="modal" id="m-bible"> <div class="modalBox" style="max-width:520px;padding:0;overflow:hidden;position:relative"> <span class="modalClose" onclick="closeM('m-bible')" style="position:absolute;right:12px;top:8px;z-index:10;color:#8b4513">✕</span> <div style="background:#f5f5dc;color:#333;padding:24px;max-height:60vh;overflow-y:auto" id="bibleBook"> <div id="bibleContent"></div> </div> <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#0a0a0a;border-top:1px solid rgba(200,168,92,0.3)"> <button onclick="biblePrev()" style="background:rgba(200,168,92,0.1);border:1px solid #c8a85c;color:#c8a85c;padding:8px 16px;cursor:pointer;font-size:0.8rem;border-radius:2px">◀ 上一页</button> <span id="biblePageInfo" style="color:#c8a85c;font-size:0.8rem">目录</span> <button onclick="bibleNext()" style="background:rgba(200,168,92,0.1);border:1px solid #c8a85c;color:#c8a85c;padding:8px 16px;cursor:pointer;font-size:0.8rem;border-radius:2px">下一页 ▶</button> </div> </div> </div> <div class="modal" id="m-coffee"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-coffee')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">☕ 咖啡机</h2> <div style="background:#0a0a0a;border:1px solid #333;padding:20px;margin-bottom:12px"> <p style="color:#b0a080;font-size:0.85rem;margin-bottom:8px">咖啡粉: <span id="coffeePowderView" style="color:#c8a85c">5</span> / 5</p> <p style="color:#b0a080;font-size:0.85rem;margin-bottom:8px">咖啡就绪: <span id="cupStatus" style="color:#c8a85c">否</span></p> <p style="color:#666;font-size:0.75rem">冲泡时间: 10秒</p> </div> <button id="brewBtn" onclick="startBrew()" style="background:#c8a85c;color:#000;border:none;padding:10px 24px;cursor:pointer;margin-bottom:8px">▶ 冲泡</button> <button id="refillBtn" onclick="refillCoffee()" style="background:rgba(200,168,92,0.1);color:#c8a85c;border:1px solid #c8a85c;padding:10px 24px;cursor:pointer;display:none">💰 补充咖啡粉 ($5)</button> <p id="coffeeMsg" style="color:#666;font-size:0.75rem;margin-top:10px"></p> </div> </div> <div class="modal" id="m-detector"> <div class="modalBox" style="text-align:center"> <span class="modalClose" onclick="closeM('m-detector')">✕</span> <h2 style="color:#c8a85c;font-size:1rem;margin-bottom:15px">📡 铀浓度探测仪</h2> <div style="background:#0a0a0a;border:1px solid #333;padding:20px;margin-bottom:12px"> <p style="color:#b0a080;font-size:0.9rem;margin-bottom:10px">当前铀浓度:</p> <p id="detectorValue" style="color:#50c878;font-size:2rem;font-weight:bold">0.00</p> <p style="color:#666;font-size:0.75rem;margin-top:8px">单位: mSv/h</p> <div style="width:100%;height:12px;background:#222;margin-top:12px;overflow:hidden;border-radius:6px"> <div id="detectorBar" style="width:0%;height:100%;background:linear-gradient(90deg,#50c878,#ffd700,#ff3030);transition:width 0.5s"></div> </div> <p id="detectorMsg" style="color:#666;font-size:0.75rem;margin-top:12px">靠近核泄漏区域时读数会升高</p> </div> </div> </div>
 <script>
 const c=document.getElementById('c'),ctx=c.getContext('2d');
 function resize(){c.width=innerWidth;c.height=innerHeight}
-window.addEventListener('resize',resize);resize();
+window.addEventListener('resize',()=>{
+resize();
+if(G.st.gameStarted){
+const currentScene=G.scene;
+const currentX=G.p.x;
+const currentY=G.p.y;
+loadScene(currentScene);
+G.p.x=Math.min(currentX,G.map.w-50);
+G.p.y=Math.min(currentY,G.map.h-50);
+}
+});
+resize();
 
 let audioCtx=null;
 function initAudio(){
@@ -319,7 +332,7 @@ d.innerHTML='<div class="avatar">'+m.av+'</div>'+
 (m.note?'<span style="color:#666;font-size:0.6rem;margin-left:6px">['+m.note+']</span>':'')+
 '</div>'+
 '<div class="desc">'+m.desc+'</div>'+
-'<div class="reward">悬赏: '+m.reward+'</div>'+
+'<div class="reward">提供线索可获谢金: '+m.reward+'</div>'+
 '</div>';
 el.appendChild(d);
 });
@@ -334,6 +347,117 @@ document.getElementById('pcNews').style.display='none';
 document.getElementById('pcNewsDetail').style.display='block';
 }
 
+// ===== 圣典数据 =====
+const biblePages = [
+{
+title: '目 录',
+content: '<div style="text-align:center;color:#8b0000;font-size:1.1rem;letter-spacing:4px;margin-bottom:20px"><b>✦ 圣 典 ✦</b></div>'+
+'<div style="text-align:center;color:#666;font-size:0.75rem;margin-bottom:24px">牧师安德 赠</div>'+
+'<div style="display:flex;flex-direction:column;font-size:0.9rem;line-height:1.8">'+
+'<div class="bible-chapter-link" onclick="bibleGoTo(1)"><b>第一章</b> · 创世与光</div>'+
+'<div class="bible-chapter-link" onclick="bibleGoTo(2)"><b>第二章</b> · 不要害怕</div>'+
+'<div class="bible-chapter-link" onclick="bibleGoTo(3)"><b>第三章</b> · 光照在黑暗里</div>'+
+'<div class="bible-chapter-link" onclick="bibleGoTo(4)"><b>第四章</b> · 兆头与信仰</div>'+
+'<div class="bible-chapter-link" onclick="bibleGoTo(5)"><b>第五章</b> · 守望者</div>'+
+'<div class="bible-chapter-link" onclick="bibleGoTo(6)"><b>结语</b> · 致俄亥俄的信徒</div>'+
+'</div>'
+},
+{
+title: '第一章 · 创世与光',
+content: '<div style="text-align:center;color:#8b0000;font-size:1rem;letter-spacing:3px;margin-bottom:20px"><b>第一章 · 创世与光</b></div>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">起初，神创造天地。地是空虚混沌，渊面黑暗；神的灵运行在水面上。</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">神说："要有光"，就有了光。神看光是好的，就把光暗分开了。</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">这是亘古不变的真理：<b>光与暗，从来都是并存的</b>。你若只看见光，就看不见暗；你若只看见暗，就永远找不到光。</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">俄亥俄的土地上，暗正在蔓延。但你要记住——<b>光，从未离开</b>。</p>'+
+'<p style="font-size:0.8rem;line-height:1.8;color:#666;text-align:right;font-style:italic">"— 牧师安德 手抄"</p>'
+},
+{
+title: '第二章 · 不要害怕',
+content: '<div style="text-align:center;color:#8b0000;font-size:1rem;letter-spacing:3px;margin-bottom:20px"><b>第二章 · 不要害怕</b></div>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">"你不要害怕，因为我与你同在；不要惊惶，因为我是你的神。我必坚固你，我必帮助你，我必用我公义的右手扶持你。"</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">当你深夜独处，听到门外有低语——不要开门。</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">当你看见镜中的自己，微微地笑了——不要回应。</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">当你发现照片里的人，多了一个——不要细看。</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">恐惧是暗的食粮。你越怕，它越强。<b>你要做的，是安静，是相信，是等待天亮。</b></p>'+
+'<p style="font-size:0.8rem;line-height:1.8;color:#666;text-align:right;font-style:italic">"— 牧师安德 手抄"</p>'
+},
+{
+title: '第三章 · 光照在黑暗里',
+content: '<div style="text-align:center;color:#8b0000;font-size:1rem;letter-spacing:3px;margin-bottom:20px"><b>第三章 · 光照在黑暗里</b></div>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">"光照在黑暗里，黑暗却不接受光。"</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">我在俄亥俄的这些年，见过太多不可思议的事：</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">农场里的孩子，会在午夜走到田中央，对着空气说话；杂货店的老板娘，某天开始把所有镜子都用布蒙上；Old State Photo 的老店主，在关店那晚烧掉了所有底片，然后失踪了。</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">但你要知道——<b>不是黑暗战胜了光，而是光暂时被遮蔽了。</b>太阳还在，只是云太厚。</p>'+
+'<p style="font-size:0.8rem;line-height:1.8;color:#666;text-align:right;font-style:italic">"— 牧师安德 手抄"</p>'
+},
+{
+title: '第四章 · 兆头与信仰',
+content: '<div style="text-align:center;color:#8b0000;font-size:1rem;letter-spacing:3px;margin-bottom:20px"><b>第四章 · 兆头与信仰</b></div>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">兆头不是预言，兆头是提醒。</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">当你看不清前方的路，不要凭着血气往前冲。停下来，祈祷，然后等。神会在对的时刻，把对的路显给你看。</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">这阵子兆头不好。俄亥俄的夜晚太安静了，安静得能听见自己的心跳。越是这样的时候，越要守住内心的光。</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px"><b>每天早上醒来，第一件事，不是看手机，不是看窗外——而是确认自己还在。</b></p>'+
+'<p style="font-size:0.8rem;line-height:1.8;color:#666;text-align:right;font-style:italic">"— 牧师安德 手抄"</p>'
+},
+{
+title: '第五章 · 守望者',
+content: '<div style="text-align:center;color:#8b0000;font-size:1rem;letter-spacing:3px;margin-bottom:20px"><b>第五章 · 守望者</b></div>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">每个小镇都需要守望者。</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">Old State Photo 的店主，你要记住：你不只是个拍照的人。<b>你在记录。</b>你记录下每一张脸，每一束光，每一次快门落下的瞬间。而这些记录，就是光留在人间的证据。</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">当黑暗来临时，人们会来你这里。他们想要一张照片，证明自己存在过。你要给他们。</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px"><b>因为照片是不灭的。</b>哪怕人消失了，照片还在。哪怕世界暗了，照片上的光还在。</p>'+
+'<p style="font-size:0.8rem;line-height:1.8;color:#666;text-align:right;font-style:italic">"— 牧师安德 手抄"</p>'
+},
+{
+title: '结语 · 致俄亥俄的信徒',
+content: '<div style="text-align:center;color:#8b0000;font-size:1rem;letter-spacing:3px;margin-bottom:20px"><b>结语 · 致俄亥俄的信徒</b></div>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">亲爱的弟兄姊妹：</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">我不确定这封信能不能送到你手上。若你能读到，说明神还在看顾。</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">俄亥俄的暗，比你我想象的更久。但请记住——<b>最深的夜，离黎明最近。</b></p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">守住你的相机，守住你的店，守住你心中的光。</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:16px">我们终将再见。</p>'+
+'<p style="font-size:0.9rem;line-height:2;margin-bottom:8px;text-align:right">愿主与你同在，</p>'+
+'<p style="font-size:0.9rem;line-height:2;text-align:right;color:#8b0000"><b>牧师 安德</b></p>'+
+'<p style="font-size:0.75rem;line-height:1.8;color:#666;text-align:right">1987年 · 俄亥俄</p>'
+}
+];
+
+let biblePage = 0;
+
+function openBible(){
+if(!G.st.hasBible){
+toast('你还没有圣典。',1800);
+return;
+}
+biblePage = 0;
+renderBiblePage();
+openM('m-bible');
+}
+
+function renderBiblePage(){
+const content = document.getElementById('bibleContent');
+const info = document.getElementById('biblePageInfo');
+if(!content) return;
+const page = biblePages[biblePage];
+content.innerHTML = page.content;
+if(info) info.textContent = page.title + ' (' + (biblePage+1) + '/' + biblePages.length + ')';
+}
+
+function biblePrev(){
+if(biblePage > 0){ biblePage--; renderBiblePage(); }
+else { toast('已经是第一页了。',1200); }
+}
+
+function bibleNext(){
+if(biblePage < biblePages.length - 1){ biblePage++; renderBiblePage(); }
+else { toast('已经是最后一页了。',1200); }
+}
+
+function bibleGoTo(i){
+biblePage = i;
+renderBiblePage();
+}
+
 const G={
 p:{x:400,y:500,s:20,sp:3},
 cam:{x:0,y:0},
@@ -342,6 +466,7 @@ joy:{on:false,dx:0,dy:0,ox:0,oy:0},
 scene:'street',
 objs:[],
 npcs:[],
+nearNPC:null,
 tick:0,
 st:{
 money:10,power:true,sign:false,open:false,selectedPhoto:null,
@@ -364,7 +489,14 @@ deliveryActive:false,deliveryParcel:false,
 lastPhotoTime:0,viewfinderOn:false,
 imodDone:false,headlessDone:false,
 sheriffSpawned:false,detectorUnlocked:false,wantedPosted:false,
-emilyMonsterChase:false,emilyMonsterDone:false
+emilyMonsterChase:false,emilyMonsterDone:false,
+emilyChaserSpawned:false,
+postmanDone:false,rudekasSpawned:false,
+emtAfterPostman:false,
+hasBible:false,
+andrewDone:false,
+carlSpawnTimer:0,
+fakeFrankSpawned:false,
 }
 };
 
@@ -394,14 +526,14 @@ shop:{name:'Old State工作室',w:1000,h:800,objs:[
 {t:'exit',x:400,y:750,w:100,h:50,label:'出口',to:'street'},
 {t:'wantedBoard',x:250,y:200,w:80,h:100,label:'失踪名单板',show:false}
 ]},
-corridor:{name:'后走廊',w:1200,h:800,objs:[
-{t:'fuse',x:300,y:300,w:120,h:100,label:'保险丝盒'},
-{t:'wanted',x:100,y:250,w:70,h:90,label:'通缉令'},
-{t:'exit',x:1000,y:600,w:80,h:60,label:'返回',to:'shop'}
+corridor:{name:'后走廊',w:1200,h:900,objs:[
+{t:'fuse',x:250,y:280,w:120,h:100,label:'保险丝盒'},
+{t:'wanted',x:120,y:220,w:70,h:90,label:'通缉令'},
+{t:'exit',x:1000,y:700,w:80,h:60,label:'返回',to:'shop'}
 ]},
-storage:{name:'储藏室',w:600,h:800,objs:[
-{t:'gas',x:200,y:250,w:60,h:60,label:'汽油桶'},
-{t:'exit',x:420,y:650,w:60,h:50,label:'返回',to:'shop'}
+storage:{name:'储藏室',w:900,h:900,objs:[
+{t:'gas',x:250,y:300,w:60,h:60,label:'汽油桶'},
+{t:'exit',x:700,y:700,w:60,h:50,label:'返回',to:'shop'}
 ]},
 garage:{name:'车库',w:1200,h:900,objs:[
 {t:'car',x:450,y:350,w:300,h:200,label:'维修中的车'},
@@ -527,7 +659,7 @@ owen:[
 {who:'Owen',what:'嘿...呃...你是摄影师？',choices:[]},
 {who:'Owen',what:'需要拍张照。为了...什么东西。',choices:[{text:'"你还好吗？"',next:'owen2'},{text:'"过来这里"',next:'owen2'}]},
 {who:'Owen',what:'外面那张海报...那是我。',choices:[]},
-{who:'Owen',what:'$500赏金...别告发我...',choices:[]},
+{who:'Owen',what:'$500谢金...别告发我...',choices:[]},
 {who:'系统',what:'[拍1张，然后打印]',choices:[]}
 ],
 owen2:[{who:'Owen',what:'就...一张。求你了。',choices:[]}],
@@ -569,6 +701,21 @@ postman:[
 {who:'系统',what:'[为邮递员拍2张照片，然后打印]',choices:[]}
 ],
 postman2:[{who:'邮递员',what:'今天路线长。俄亥俄最近真怪。',choices:[]}],
+postmanReward:[
+{who:'邮递员',what:'拍得不错，这是给你的小费。',choices:[]},
+{who:'系统',what:'+$50',choices:[]},
+{who:'邮递员',what:'差点忘了，还有这封信。',choices:[]},
+{who:'系统',what:'[邮递员递给你一封EMT的官方信件]',choices:[]}
+],
+rudekas:[
+{who:'鲁德卡斯',what:'你好，年轻人。我叫鲁德卡斯。',choices:[]},
+{who:'鲁德卡斯',what:'拍两张照片，人老了总想留点纪念。',choices:[{text:'"好的，这边请"',next:'rudekas2'},{text:'"您看起来精神很好"',next:'rudekas2'}]},
+{who:'鲁德卡斯',what:'听说最近一个工厂泄露了核辐射...',choices:[]},
+{who:'鲁德卡斯',what:'年轻人，这阵子的头不好哦。',choices:[{text:'"确实，很多人失踪了"',next:'rudekas3'},{text:'"我会小心的"',next:'rudekas3'}]},
+{who:'系统',what:'[拍2张鲁德卡斯的照片，然后打印]',choices:[]}
+],
+rudekas2:[{who:'鲁德卡斯',what:'老了，不中用了。',choices:[]}],
+rudekas3:[{who:'鲁德卡斯',what:'那家工厂以前就出过事...小心点。',choices:[]}],
 leonard:[
 {who:'Leonard',what:'我是Leonard。来取预订的照片。',choices:[{text:'"预订？"',next:'leonard2'},{text:'"名字？"',next:'leonard2'}]},
 {who:'Leonard',what:'五张照片。上个月订的。',choices:[]},
@@ -589,11 +736,36 @@ emtIntro2:[{who:'EMT探员',what:'那是机密。拍照就行。',choices:[]}],
 emtDone:[
 {who:'EMT探员',what:'...那是什么。',choices:[]},
 {who:'EMT探员',what:'我们身后什么都没有。',choices:[]},
-{who:'系统',what:'照片里，三个人的身后站着一个女人。她本不在那里。',choices:[]},
+{who:'系统',what:'照片里，三个人的身后站着一个诡异微笑的小丑。他本不在那里。',choices:[]},
 {who:'EMT探员',what:'我们得走了。马上。',choices:[{text:'"怎么回事？"',next:'emtDone2'},{text:'退后',next:'emtDone2'}]},
-{who:'EMT探员',what:'EMT会再联系你。今晚锁好门。',choices:[]}
+{who:'EMT队长',what:'快走，今晚的兆头不好。',choices:[]}
 ],
 emtDone2:[{who:'EMT探员',what:'别跟着我们。别问问题。',choices:[]}],
+andrew:[
+{who:'???',what:'愿主与你同在，我的孩子。',choices:[]},
+{who:'牧师安德',what:'我是安德，小镇的牧师。',choices:[]},
+{who:'牧师安德',what:'能给我拍一张照片吗？我想留个纪念。',choices:[{text:'"当然，牧师。"',next:'andrew2'},{text:'"拍照收费的。"',next:'andrew2'}]},
+{who:'牧师安德',what:'感谢你。',choices:[]},
+{who:'系统',what:'[为牧师安德拍1张照片，然后打印]',choices:[]}
+],
+andrew2:[{who:'牧师安德',what:'这年头，信仰比什么都重要。',choices:[]}],
+andrewOffer:[
+{who:'牧师安德',what:'孩子，我看你面相，这阵子兆头不太好。',choices:[]},
+{who:'牧师安德',what:'你需要支付50美元，但是我可以给你一本圣典以保佑你。你要吗？',choices:[
+{text:'"好，我支付50美元。"',next:'andrewYes'},
+{text:'"滚，我才不相信什么狗屁圣典！老子自己就是王！"',next:'andrewNo'}
+]}
+],
+andrewYes:[
+{who:'牧师安德',what:'太好了，上帝一定会保佑你的。',choices:[]},
+{who:'系统',what:'[你支付了$50，获得了一本圣典]',choices:[]},
+{who:'系统',what:'[圣典已放入物品栏，点击📖可查看]',choices:[]}
+],
+andrewNo:[
+{who:'牧师安德',what:'你怎么敢对上帝这么无礼！',choices:[]},
+{who:'牧师安德',what:'...愿主宽恕你的无知。',choices:[]},
+{who:'系统',what:'牧师安德摇着头，转身离开了。',choices:[]}
+],
 carl:[
 {who:'???',what:'嘿！你！',choices:[]},
 {who:'Carl',what:'我叫Carl。我的车没油了！',choices:[{text:'"你受伤了吗？"',next:'carl2'},{text:'"发生什么了？"',next:'carl2'}]},
@@ -695,15 +867,25 @@ headlessDone:[
 {who:'系统',what:'无头人转身，安静地离开了。',choices:[]}
 ],
 sheriff:[
-{who:'警长',what:'你好。我是警长Harrison。',choices:[]},
+{who:'警长',what:'你好，店主。我是警长Harrison。',choices:[]},
 {who:'警长',what:'最近失踪的人很多。',choices:[]},
-{who:'警长',what:'这些失踪名单，请张贴在店内。',choices:[]},
-{who:'系统',what:'[在店内张贴失踪人员海报]',choices:[]},
+{who:'警长',what:'我能把这些失踪名单张贴在你店里吗？',choices:[{text:'"当然可以"',next:'sheriffYes'},{text:'"为什么要贴我店里？"',next:'sheriffWhy'}]}
+],
+sheriffYes:[
+{who:'警长',what:'多谢。这就贴上。',choices:[]},
+{who:'系统',what:'[警长把失踪名单贴在了墙上]',choices:[]},
 {who:'警长',what:'失踪的人里，有你迎接的第一位顾客——艾米丽。',choices:[]},
 {who:'警长',what:'还有女记者Nina，她正在调查你们工作室。',choices:[]},
 {who:'警长',what:'还有Helena，那个每年独自来拍纪念照的老人...',choices:[]},
 {who:'警长',what:'以及Jack、Margaret、Max这些正常营业的顾客。',choices:[]},
-{who:'警长',what:'如果看到任何异常，立刻联系我。',choices:[]}
+{who:'警长',what:'如果有人来提供线索，请立刻联系我。',choices:[]},
+{who:'警长',what:'对了，我们局里推荐了一款铀浓度探测仪，建议你买一台。',choices:[]},
+{who:'系统',what:'[电脑商店解锁了"铀浓度探测仪"]',choices:[]}
+],
+sheriffWhy:[
+{who:'警长',what:'你的店在镇上人来人往，最容易让居民看到。',choices:[]},
+{who:'警长',what:'如果能提供线索，可以领一笔谢金。',choices:[]},
+{who:'警长',what:'就当是帮街坊邻居一个忙。',choices:[{text:'"好吧，贴吧"',next:'sheriffYes'}]}
 ],
 emilyMonster:[
 {who:'???',what:'...你来了。',choices:[]},
@@ -713,7 +895,7 @@ emilyMonster:[
 {who:'艾米丽?',what:'你...不该...来的...',choices:[]},
 {who:'系统',what:'艾米丽突然变成和弗兰克一样的怪物！',choices:[]},
 {who:'怪物',what:'嘶啊啊啊！',choices:[]},
-{who:'系统',what:'跑！跑回店里！你有2秒！',choices:[]}
+{who:'系统',what:'跑！跑回店里！',choices:[]}
 ]
 };
 
@@ -734,15 +916,26 @@ postman:{name:'邮递员',av:'📮',pay:100,type:'postman',count:2},
 leonard:{name:'Leonard',av:'🧑',pay:200,type:'leonard',count:0},
 office:{name:'上班族',av:'🧑‍💼',pay:120,type:'office',count:2},
 imod:{name:'伊莫德',av:'🧑',pay:150,type:'imod',count:2},
-headless:{name:'无头人',av:'👤',pay:100,type:'headless',count:1}
+headless:{name:'无头人',av:'👤',pay:100,type:'headless',count:1},
+rudekas:{name:'鲁德卡斯',av:'👴',pay:180,type:'rudekas',count:2},
+andrew:{name:'牧师安德',av:'⛪',pay:0,type:'andrew',count:1}
 };
 
 function loadScene(s){
 G.scene=s;
 const sc=scenes[s];
-G.objs=sc.objs.map(o=>({...o}));
-G.map.w=sc.w;
-G.map.h=sc.h;
+const minW=c.width+200;
+const minH=c.height+200;
+const finalW=Math.max(sc.w,minW);
+const finalH=Math.max(sc.h,minH);
+const scaleX=finalW/sc.w;
+const scaleY=finalH/sc.h;
+G.objs=sc.objs.map(o=>({...o,x:o.x*scaleX,y:o.y*scaleY}));
+G.map.w=finalW;
+G.map.h=finalH;
+G.joy.on=false;G.joy.dx=0;G.joy.dy=0;
+const jKnobEl=document.getElementById('jKnob');
+if(jKnobEl)jKnobEl.style.transform='translate(0px,0px)';
 if(s==='street'){
 if(G.st.carlReady&&!G.st.carlGone){
 const carlObj=G.objs.find(o=>o.t==='carl');
@@ -757,7 +950,7 @@ if(fr)fr.show=true;
 if(G.st.fakeFrankTriggered&&!G.st.monsterChase&&!G.st.fakeFrank){
 const frankNpc=G.npcs.find(n=>n.type==='fakeFrank');
 if(!frankNpc){
-G.npcs.push({x:580,y:320,av:'👹',name:'Frank',type:'fakeFrank',targetX:580,targetY:320});
+G.npcs.push({x:580*scaleX,y:320*scaleY,av:'👹',name:'Frank',type:'fakeFrank',targetX:580*scaleX,targetY:320*scaleY});
 }
 }
 if(G.st.deliveryActive){
@@ -820,10 +1013,7 @@ d.choices.forEach((ch)=>{
 const btn=document.createElement('div');
 btn.className='choice';
 btn.textContent=ch.text;
-btn.onclick=(e)=>{
-e.stopPropagation();
-makeChoice(ch.next);
-};
+btn.onclick=(e)=>{e.stopPropagation();makeChoice(ch.next);};
 choicesDiv.appendChild(btn);
 });
 }else{
@@ -835,6 +1025,29 @@ box.classList.add('show');
 
 function makeChoice(nextKey){
 G.st.waitingChoice=false;
+if(nextKey==='andrewYes'){
+if(G.st.money>=50){
+G.st.money-=50;updateMoney();
+G.st.hasBible=true;
+const bibleSlot=document.getElementById('s-bible');
+if(bibleSlot)bibleSlot.style.display='flex';
+G.st.dia=dias['andrewYes'];
+G.st.diaIdx=0;
+nextDia();
+}else{
+toast('你的钱不够（需要$50）。',2000);
+G.st.dia=dias['andrewNo'];
+G.st.diaIdx=0;
+nextDia();
+}
+return;
+}
+if(nextKey==='andrewNo'){
+G.st.dia=dias['andrewNo'];
+G.st.diaIdx=0;
+nextDia();
+return;
+}
 if(nextKey){
 const diaArr=dias[nextKey];
 if(diaArr){
@@ -860,23 +1073,16 @@ nextDia();
 
 function drawWhiteEye(sx,sy){
 ctx.fillStyle='rgba(5,5,5,0.95)';
-ctx.beginPath();
-ctx.arc(sx,sy,24,0,Math.PI*2);
-ctx.fill();
-ctx.strokeStyle='#111';
-ctx.lineWidth=2;
-ctx.stroke();
+ctx.beginPath();ctx.arc(sx,sy,24,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle='#111';ctx.lineWidth=2;ctx.stroke();
 ctx.fillStyle='#fff';
 ctx.beginPath();ctx.arc(sx-8,sy-3,5,0,Math.PI*2);ctx.fill();
 ctx.beginPath();ctx.arc(sx+8,sy-3,5,0,Math.PI*2);ctx.fill();
 ctx.fillStyle='#000';
 ctx.beginPath();ctx.arc(sx-8,sy-3,2,0,Math.PI*2);ctx.fill();
 ctx.beginPath();ctx.arc(sx+8,sy-3,2,0,Math.PI*2);ctx.fill();
-ctx.strokeStyle='#ddd';
-ctx.lineWidth=2;
-ctx.beginPath();
-ctx.arc(sx,sy+6,9,0.15*Math.PI,0.85*Math.PI);
-ctx.stroke();
+ctx.strokeStyle='#ddd';ctx.lineWidth=2;
+ctx.beginPath();ctx.arc(sx,sy+6,9,0.15*Math.PI,0.85*Math.PI);ctx.stroke();
 ctx.fillStyle='rgba(255,255,255,0.15)';
 ctx.beginPath();ctx.arc(sx-8,sy-3,10,0,Math.PI*2);ctx.fill();
 ctx.beginPath();ctx.arc(sx+8,sy-3,10,0,Math.PI*2);ctx.fill();
@@ -915,11 +1121,11 @@ ctx.fillText('🚗',580-G.cam.x,320-G.cam.y);
 }else if(G.scene==='shop'){
 ctx.fillStyle='#0a0a0a';ctx.fillRect(0,0,c.width,c.height);
 ctx.fillStyle='#14100c';
-for(let x=0;x<sc.w;x+=100)for(let y=0;y<sc.h;y+=100){
+for(let x=0;x<G.map.w;x+=100)for(let y=0;y<G.map.h;y+=100){
 const sx=x-G.cam.x,sy=y-G.cam.y;
 if(sx>-100&&sx<c.width+100&&sy>-100&&sy<c.height+100)ctx.fillRect(sx,sy,98,98);
 }
-ctx.fillStyle='#080808';ctx.fillRect(0-G.cam.x,0-G.cam.y,sc.w,70);
+ctx.fillStyle='#080808';ctx.fillRect(0-G.cam.x,0-G.cam.y,G.map.w,70);
 if(G.st.power){
 ctx.fillStyle='rgba(200,168,92,0.08)';
 ctx.beginPath();ctx.arc(500-G.cam.x,100-G.cam.y,120,0,Math.PI*2);ctx.fill();
@@ -927,7 +1133,7 @@ ctx.beginPath();ctx.arc(500-G.cam.x,100-G.cam.y,120,0,Math.PI*2);ctx.fill();
 }else if(G.scene==='corridor'){
 ctx.fillStyle='#060606';ctx.fillRect(0,0,c.width,c.height);
 ctx.fillStyle='#0c0c0c';
-for(let x=0;x<sc.w;x+=100)for(let y=0;y<sc.h;y+=100){
+for(let x=0;x<G.map.w;x+=100)for(let y=0;y<G.map.h;y+=100){
 const sx=x-G.cam.x,sy=y-G.cam.y;
 if(sx>-100&&sx<c.width+100&&sy>-100&&sy<c.height+100)ctx.fillRect(sx,sy,98,98);
 }
@@ -938,23 +1144,23 @@ ctx.beginPath();ctx.arc(300-G.cam.x,200-G.cam.y,80,0,Math.PI*2);ctx.fill();
 }else if(G.scene==='storage'){
 ctx.fillStyle='#0a0a0a';ctx.fillRect(0,0,c.width,c.height);
 ctx.fillStyle='#151515';
-for(let x=0;x<sc.w;x+=100)for(let y=0;y<sc.h;y+=100){
+for(let x=0;x<G.map.w;x+=100)for(let y=0;y<G.map.h;y+=100){
 const sx=x-G.cam.x,sy=y-G.cam.y;
 if(sx>-100&&sx<c.width+100&&sy>-100&&sy<c.height+100)ctx.fillRect(sx,sy,98,98);
 }
 ctx.strokeStyle='rgba(200,168,92,0.1)';ctx.lineWidth=2;
-ctx.strokeRect(-G.cam.x,-G.cam.y,sc.w,sc.h);
+ctx.strokeRect(-G.cam.x,-G.cam.y,G.map.w,G.map.h);
 }else if(G.scene==='garage'){
 ctx.fillStyle='#0a0a0a';ctx.fillRect(0,0,c.width,c.height);
 ctx.fillStyle='#141414';
-for(let x=0;x<sc.w;x+=100)for(let y=0;y<sc.h;y+=100){
+for(let x=0;x<G.map.w;x+=100)for(let y=0;y<G.map.h;y+=100){
 const sx=x-G.cam.x,sy=y-G.cam.y;
 if(sx>-100&&sx<c.width+100&&sy>-100&&sy<c.height+100)ctx.fillRect(sx,sy,98,98);
 }
 }else if(G.scene==='nuclear'){
 ctx.fillStyle='#0a0a0a';ctx.fillRect(0,0,c.width,c.height);
 ctx.fillStyle='#0d0d0d';
-for(let x=0;x<sc.w;x+=120)for(let y=0;y<sc.h;y+=120){
+for(let x=0;x<G.map.w;x+=120)for(let y=0;y<G.map.h;y+=120){
 const sx=x-G.cam.x,sy=y-G.cam.y;
 if(sx>-120&&sx<c.width+120&&sy>-120&&sy<c.height+120)ctx.fillRect(sx,sy,118,118);
 }
@@ -1161,10 +1367,21 @@ ctx.fillStyle='#555';ctx.font='40px sans-serif';ctx.textAlign='center';ctx.textB
 ctx.fillText('🚗',sx+o.w/2,sy+o.h/2);
 break;
 case'emilyMonster':
-ctx.fillStyle='#8b0000';ctx.beginPath();ctx.arc(sx+o.w/2,sy+o.h/2,28,0,Math.PI*2);ctx.fill();
+if(G.st.emilyMonsterChase){
+ctx.fillStyle='#8b0000';
+ctx.beginPath();ctx.arc(sx+o.w/2,sy+o.h/2,28,0,Math.PI*2);ctx.fill();
 ctx.strokeStyle='#ff0000';ctx.lineWidth=3;ctx.stroke();
 ctx.fillStyle='#fff';ctx.font='22px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('👹',sx+o.w/2,sy+o.h/2);
+}else{
+ctx.fillStyle='rgba(5,5,5,0.95)';
+ctx.beginPath();ctx.arc(sx+o.w/2,sy+o.h/2,32,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle='#c8a85c';ctx.lineWidth=2;ctx.stroke();
+ctx.fillStyle='#c8a85c';ctx.font='28px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+ctx.fillText('👤',sx+o.w/2,sy+o.h/2);
+ctx.fillStyle='#c8a85c';ctx.font='10px sans-serif';
+ctx.fillText('艾米丽?',sx+o.w/2,sy+o.h/2+45);
+}
 break;
 case'exit':case'corridor':
 ctx.fillStyle='rgba(200,168,92,0.08)';ctx.fillRect(sx,sy,o.w,o.h);
@@ -1187,6 +1404,16 @@ G.npcs.forEach(n=>{
 if(n.hide)return;
 const sx=n.x-G.cam.x,sy=n.y-G.cam.y;
 if(sx<-50||sx>c.width+50||sy<-50||sy>c.height+50)return;
+if(n.type==='emilyChaser'){
+ctx.fillStyle='rgba(255,0,0,'+(0.15+Math.sin(G.tick*0.3)*0.1)+')';
+ctx.beginPath();ctx.arc(sx,sy,50,0,Math.PI*2);ctx.fill();
+ctx.fillStyle='#8b0000';
+ctx.beginPath();ctx.arc(sx,sy,32,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle='#ff0000';ctx.lineWidth=3;ctx.stroke();
+ctx.fillStyle='#fff';ctx.font='30px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+ctx.fillText('👹',sx,sy);
+return;
+}
 if(n.type==='whiteEye'){
 drawWhiteEye(sx,sy);
 ctx.fillStyle='#ddd';ctx.font='9px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
@@ -1194,7 +1421,7 @@ ctx.fillText('???',sx,sy+32);
 return;
 }
 ctx.fillStyle='rgba(5,5,5,0.9)';ctx.beginPath();ctx.arc(sx,sy,22,0,Math.PI*2);ctx.fill();
-ctx.strokeStyle=n.type==='fakeFrank'?'#8b0000':(n.type==='emt'?'#3a6ea5':(n.type==='frank'?'#5a9a5a':'#c8a85c'));
+ctx.strokeStyle=n.type==='fakeFrank'?'#8b0000':(n.type==='emt'?'#3a6ea5':(n.type==='frank'?'#5a9a5a':(n.type==='andrew'?'#d4af37':'#c8a85c')));
 ctx.lineWidth=2;ctx.stroke();
 ctx.fillStyle='#c8a85c';ctx.font='18px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText(n.av,sx,sy);
@@ -1209,7 +1436,7 @@ if(n.type==='victor'||n.type==='emt'){
 ctx.fillStyle='#444';ctx.font='10px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText('🔫',sx+18,sy+18);
 }
-ctx.fillStyle=n.type==='fakeFrank'?'#ff6b6b':(n.type==='emt'?'#5a8ec5':(n.type==='frank'?'#7ac87a':'#c8a85c'));
+ctx.fillStyle=n.type==='fakeFrank'?'#ff6b6b':(n.type==='emt'?'#5a8ec5':(n.type==='frank'?'#7ac87a':(n.type==='andrew'?'#ffd700':'#c8a85c')));
 ctx.font='9px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.fillText(n.name,sx,sy+32);
 });
@@ -1247,11 +1474,32 @@ if(d<gMinD){nearGarbage=g;gMinD=d;}
 let nearNPC=null,nMinD=70;
 for(let n of G.npcs){
 if(n.hide||n.leaving)continue;
+if(n.type==='emilyChaser')continue;
 const d=Math.sqrt((G.p.x-n.x)**2+(G.p.y-n.y)**2);
 if(d<nMinD){nearNPC=n;nMinD=d;}
 }
 const hint=document.getElementById('hint');
 if(G.st.viewfinderOn){hint.classList.remove('show');return near;}
+if(nearNPC){
+const labelMap={
+sheriff:'和警长对话',
+imod:'和伊莫德对话',
+headless:'和无头人对话',
+whiteEye:'???',
+fakeFrank:'和Frank说话',
+agent:'和特工对话',
+rudekas:'和鲁德卡斯对话',
+postman:'和邮递员说话',
+andrew:'和牧师安德对话'
+};
+const lbl=labelMap[nearNPC.type];
+if(lbl){
+hint.classList.add('show');
+hint.textContent=lbl;
+G.nearNPC=nearNPC;
+return near;
+}
+}
 if(nearNPC&&G.st.hasCoffee&&G.st.currentCust&&G.st.currentCust.type==='victor'&&!G.st.victorCoffeePaid){
 hint.classList.add('show');hint.textContent='给咖啡 ☕';
 G.nearNPC=nearNPC;return near;
@@ -1294,13 +1542,21 @@ return near;
 }
 
 function act(){
-if(!G.near||G.st.inDia||G.st.viewfinderOn)return;
+if((!G.near&&!G.nearNPC)||G.st.inDia||G.st.viewfinderOn)return;
 if(G.nearNPC&&G.st.hasCoffee&&G.st.currentCust&&G.st.currentCust.type==='victor'&&!G.st.victorCoffeePaid){
 giveCoffeeToVictor();return;
 }
 if(G.nearNPC&&G.nearNPC.type==='whiteEye'){
 playWhisper();
 showDia('whiteEye1',()=>{toast('...低语声渐渐消失...',2000);});
+return;
+}
+if(G.nearNPC&&G.nearNPC.type==='andrew'){
+showDia('andrew',()=>{
+setTimeout(()=>{
+showDia('andrewOffer');
+},500);
+});
 return;
 }
 if(G.nearNPC&&G.nearNPC.type==='fakeFrank'&&!G.st.monsterChase){
@@ -1321,6 +1577,14 @@ if(G.nearNPC&&G.nearNPC.type==='headless'){
 showDia('headless',()=>{
 showDia('headless2',()=>{toast('需要给无头人拍照。',2500);});
 });
+return;
+}
+if(G.nearNPC&&G.nearNPC.type==='rudekas'){
+showDia('rudekas',()=>{toast('鲁德卡斯需要两张照片。',2500);});
+return;
+}
+if(G.nearNPC&&G.nearNPC.type==='postman'){
+showDia('postman',()=>{toast('邮递员需要两张证件照。',2500);});
 return;
 }
 if(G.nearNPC&&G.nearNPC.type==='sheriff'){
@@ -1348,36 +1612,52 @@ return;
 }
 if(G.nearGarbage&&G.st.hasBroom){sweepGarbage(G.nearGarbage);return;}
 const o=G.near;
+if(!o)return;
 switch(o.t){
 case'door':
 if(G.scene==='street'){
-loadScene('shop');G.p.x=400;G.p.y=700;
+loadScene('shop');G.p.x=G.map.w/2;G.p.y=G.map.h-150;
 if(G.st.monsterChase&&G.st.inChase){
 G.st.inChase=false;G.st.monsterChase=false;
 document.getElementById('bloodOverlay').classList.remove('on');
 setTimeout(()=>spawnAgent(),2000);
 }
-if(G.st.emilyMonsterChase&&G.st.inChase){
-G.st.inChase=false;G.st.emilyMonsterChase=false;G.st.emilyMonsterDone=true;
+if(G.st.emilyMonsterChase){
+G.st.emilyMonsterChase=false;
+G.st.inChase=false;
+G.st.emilyMonsterDone=true;
 document.getElementById('bloodOverlay').classList.remove('on');
+G.npcs=G.npcs.filter(n=>n.type!=='emilyChaser');
 toast('你安全了...暂时。',3000);
 setTimeout(()=>spawnAgent(),3000);
 }
 }
 break;
 case'exit':
-if(o.to){loadScene(o.to);G.p.x=o.to==='street'?600:850;G.p.y=o.to==='street'?600:400;}
+if(o.to){
+loadScene(o.to);G.p.x=G.map.w/2;G.p.y=G.map.h/2;
+if(G.st.emilyMonsterChase){
+G.st.emilyMonsterChase=false;
+G.st.inChase=false;
+G.st.emilyMonsterDone=true;
+const blood=document.getElementById('bloodOverlay');
+if(blood)blood.classList.remove('on');
+G.npcs=G.npcs.filter(n=>n.type!=='emilyChaser');
+toast('你安全了...暂时。',3000);
+setTimeout(()=>spawnAgent(),3000);
+}
+}
 break;
 case'nuclearGate':
 if(o.to==='nuclear'){
 if(!G.st.hasDetector){toast('需要铀浓度探测仪才能进入。',2500);return;}
-loadScene('nuclear');G.p.x=200;G.p.y=900;G.st.detectorOn=true;
+loadScene('nuclear');G.p.x=G.map.w/2;G.p.y=G.map.h-100;G.st.detectorOn=true;
 toast('探测仪已开启。铀浓度读数上升...',2500);
 }
 break;
-case'corridor':loadScene('corridor');G.p.x=300;G.p.y=650;break;
-case'storage':loadScene('storage');G.p.x=300;G.p.y=700;break;
-case'garage':loadScene('garage');G.p.x=150;G.p.y=800;break;
+case'corridor':loadScene('corridor');G.p.x=G.map.w/2;G.p.y=G.map.h/2;break;
+case'storage':loadScene('storage');G.p.x=G.map.w/2;G.p.y=G.map.h/2;break;
+case'garage':loadScene('garage');G.p.x=G.map.w/2;G.p.y=G.map.h/2;break;
 case'board':
 if(!G.st.sign){
 G.st.sign=true;
@@ -1467,15 +1747,20 @@ const em=G.objs.find(o=>o.t==='emilyMonster');
 if(em)em.show=false;
 const blood=document.getElementById('bloodOverlay');
 if(blood)blood.classList.add('on');
-toast('跑！跑回店里！',2000);
-setTimeout(()=>{
-if(G.st.emilyMonsterChase&&G.scene==='nuclear'){
-toast('你被追上了...',2500);
-G.st.playerDead=true;
-const credits=document.getElementById('credits');
-if(credits)credits.classList.add('show');
+if(!G.st.emilyChaserSpawned){
+G.st.emilyChaserSpawned=true;
+G.npcs.push({
+x:G.p.x+180,
+y:G.p.y+180,
+av:'👹',
+name:'艾米丽',
+type:'emilyChaser',
+targetX:G.p.x,
+targetY:G.p.y,
+isChaser:true
+});
 }
-},2000);
+toast('跑！跑回店里！',2500);
 });
 }
 break;
@@ -1526,6 +1811,7 @@ let avatar,label;
 let nearNPC=null;
 for(let n of G.npcs){
 if(n.hide)continue;
+if(n.type==='emilyChaser')continue;
 const d=Math.sqrt((G.p.x-n.x)**2+(G.p.y-n.y)**2);
 if(d<80){nearNPC=n;break;}
 }
@@ -1547,12 +1833,18 @@ if(nearNPC.type==='postman'){label='邮递员证件照';}
 if(nearNPC.type==='sophie'){avatar='👧👻';label='Sophie家庭照(她独自一人...)';}
 if(nearNPC.type==='imod'){label='伊莫德照片';}
 if(nearNPC.type==='headless'){avatar='👤';label='无头人照片';}
+if(nearNPC.type==='rudekas'){label='鲁德卡斯照片';}
+if(nearNPC.type==='andrew'){avatar='⛪';label='牧师安德照片';}
 if(nearNPC.type==='emily'&&nearNPC.pale){avatar='👤';label='艾米丽证明照';}
 }else{
 avatar=G.scene==='shop'?'🏚':(G.scene==='corridor'?'🚪':(G.scene==='storage'?'📦':(G.scene==='garage'?'🚗':(G.scene==='nuclear'?'☢️':'🏠'))));
 label=scenes[G.scene].name+' - 快照';
 }
 const photo={id:Date.now(),avatar:avatar,label:label,scene:G.scene,sceneName:scenes[G.scene].name,x:G.p.x,y:G.p.y,fresh:true,hasCustomer:!!nearNPC,customerType:nearNPC?nearNPC.type:null,isEMT:!!emtGroup};
+if(emtGroup){
+photo.emtWithClown=true;
+photo.label='EMT合影 (小丑?)';
+}
 G.st.photos.push(photo);
 if(navigator.vibrate)navigator.vibrate(50);
 const hint=document.createElement('div');
@@ -1852,18 +2144,13 @@ toast('✓ 拿到了备用汽油',1800);
 }
 
 function buildQueue(){
-const base=['emily','jack','margaret','max','helena','victor'];
-const extra=['derek','nina','owen','sophie','marcus','tommy'];
-const mixed=base.slice();
-extra.forEach(e=>{
-const pos=1+Math.floor(Math.random()*(mixed.length-1));
-mixed.splice(pos,0,e);
-});
-mixed.push('imod');
-mixed.push('headless');
-mixed.push('postman');
-mixed.push('leonard');
-return mixed;
+const queue=[
+'emily','jack','andrew','marcus','max','helena',
+'margaret','victor','postman','derek','nina','owen',
+'sophie','tommy','rudekas','imod','sheriff'
+];
+console.log('顾客队列:',queue);
+return queue;
 }
 
 function startCustQueue(){
@@ -1877,6 +2164,12 @@ if(G.st.nextCustTimer!==null)clearTimeout(G.st.nextCustTimer);
 const delay=8000+Math.floor(Math.random()*7000);
 G.st.nextCustTimer=setTimeout(()=>{
 G.st.nextCustTimer=null;
+if(G.st.emtAfterPostman&&!G.st.emtTriggered){
+G.st.emtTriggered=true;
+G.st.emtAfterPostman=false;
+spawnEMT();
+return;
+}
 nextCust();
 },delay);
 }
@@ -1885,14 +2178,73 @@ function nextCust(){
 if(G.st.blackoutActive)return;
 if(G.st.whiteEyeActive){scheduleNextCust();return;}
 if(G.st.custIdx>=G.st.custQueue.length){
-if(G.st.leonardDone&&!G.st.carlMet&&!G.st.emtTriggered){
+if(!G.st.leonardDone){
+G.st.leonardDone=true;
+const npc={x:400,y:750,av:'🧑',name:'Leonard',type:'leonard',targetX:500,targetY:400};
+G.npcs.push(npc);
+G.st.currentCust=null;
+moveNPCToCounter(npc,'leonard');
+showDia('leonard',()=>{
+G.st.money+=200;updateMoney();showPayAnim(200);
+G.st.currentCust=null;
+const leo=G.npcs.find(n=>n.type==='leonard');
+if(leo){leo.targetX=400;leo.targetY=800;leo.leaving=true;moveNPCToCounter(leo,'leonard');}
+setTimeout(()=>{
+if(!G.st.emtTriggered&&!G.st.carlMet){
 G.st.emtTriggered=true;
 spawnEMT();
+}
+},4000);
+});
+return;
 }
 return;
 }
 const type=G.st.custQueue[G.st.custIdx];
+
+if(type==='sheriff'){
+if(G.st.sheriffSpawned){G.st.custIdx++;nextCust();return;}
+G.st.sheriffSpawned=true;
+spawnSheriff();
+return;
+}
+
+if(type==='postman'&&!G.st.postmanDone){
+const npc={x:400,y:750,av:'📮',name:'邮递员',type:'postman',targetX:500,targetY:400};
+G.npcs.push(npc);
+G.st.currentCust=custData.postman;
+G.st.printCount=0;
+moveNPCToCounter(npc,'postman');
+showDia('postman',()=>{toast('邮递员需要两张证件照。',2500);});
+return;
+}
+
+if(type==='andrew'&&!G.st.andrewDone){
+const npc={x:400,y:750,av:'⛪',name:'牧师安德',type:'andrew',targetX:500,targetY:400};
+G.npcs.push(npc);
+G.st.currentCust=custData.andrew;
+G.st.printCount=0;
+moveNPCToCounter(npc,'andrew');
+showDia('andrew',()=>{
+setTimeout(()=>{
+showDia('andrewOffer');
+},500);
+});
+return;
+}
+
+if(type==='rudekas'){
+const npc={x:400,y:750,av:'👴',name:'鲁德卡斯',type:'rudekas',targetX:500,targetY:400};
+G.npcs.push(npc);
+G.st.currentCust=custData.rudekas;
+G.st.printCount=0;
+moveNPCToCounter(npc,'rudekas');
+showDia('rudekas',()=>{toast('鲁德卡斯需要两张照片。',2500);});
+return;
+}
+
 if(type==='leonard'){
+if(G.st.leonardDone){G.st.custIdx++;nextCust();return;}
 const npc={x:400,y:750,av:'🧑',name:'Leonard',type:'leonard',targetX:500,targetY:400};
 G.npcs.push(npc);
 moveNPCToCounter(npc,'leonard');
@@ -1940,6 +2292,30 @@ moveNPCToCounter(npc,type);
 
 function moveNPCToCounter(npc,type){
 if(!G.npcs.includes(npc))return;
+if(type==='emilyChaser'){
+if(!G.st.emilyMonsterChase){
+G.npcs=G.npcs.filter(n=>n!==npc);
+return;
+}
+const dx=G.p.x-npc.x;
+const dy=G.p.y-npc.y;
+const dist=Math.sqrt(dx*dx+dy*dy);
+if(dist<40){
+G.st.playerDead=true;
+G.st.emilyMonsterChase=false;
+G.st.inChase=false;
+const blood=document.getElementById('bloodOverlay');
+if(blood)blood.classList.remove('on');
+const credits=document.getElementById('credits');
+if(credits)credits.classList.add('show');
+return;
+}
+const speed=1.5;
+npc.x+=(dx/dist)*speed;
+npc.y+=(dy/dist)*speed;
+requestAnimationFrame(()=>moveNPCToCounter(npc,'emilyChaser'));
+return;
+}
 const dx=npc.targetX-npc.x;
 const dy=npc.targetY-npc.y;
 const dist=Math.sqrt(dx*dx+dy*dy);
@@ -1956,6 +2332,9 @@ if(type==='agent')return;
 if(type==='sheriff')return;
 if(type==='imod')return;
 if(type==='headless')return;
+if(type==='rudekas')return;
+if(type==='postman')return;
+if(type==='andrew')return;
 setTimeout(()=>toast('[系统] 外面有动静。去看看。',2200),800);
 return;
 }
@@ -1967,6 +2346,9 @@ if(type==='agent')return;
 if(type==='sheriff')return;
 if(type==='imod')return;
 if(type==='headless')return;
+if(type==='rudekas')return;
+if(type==='postman')return;
+if(type==='andrew')return;
 if(type!=='leonard')showDia(type);
 return;
 }
@@ -1977,6 +2359,7 @@ requestAnimationFrame(()=>moveNPCToCounter(npc,type));
 }
 
 function spawnEMT(){
+if(G.npcs.some(n=>n.type==='emt'))return;
 const positions=[{x:450,y:400},{x:520,y:400},{x:590,y:400}];
 positions.forEach((pos,i)=>{
 const npc={x:600+i*40,y:750,av:'🕴',name:'EMT',type:'emt',targetX:pos.x,targetY:pos.y,emtIndex:i};
@@ -2008,6 +2391,7 @@ if(em)em.show=false;
 const blood=document.getElementById('bloodOverlay');
 if(blood)blood.classList.remove('on');
 G.st.emilyMonsterDone=true;
+G.npcs=G.npcs.filter(n=>n.type!=='emilyChaser');
 toast('你安全了...暂时。',2500);
 setTimeout(()=>spawnAgent(),2000);
 }
@@ -2159,11 +2543,64 @@ toast('你把照片递给EMT探员...',2200);
 setTimeout(()=>{
 showDia('emtDone',()=>{
 G.st.emtCompleted=true;G.st.carlReady=true;
-setTimeout(()=>toast('[系统] 出去看看。',2200),800);
+G.st.custIdx++;
+setTimeout(()=>{
+scheduleNextCust();
+toast('[系统] EMT离开后，下一位顾客即将到来。',2200);
+},1500);
 });
 },500);
 return;
 }
+}
+if(ph.customerType==='postman'&&G.st.currentCust&&G.st.currentCust.type==='postman'&&!G.st.postmanDone){
+G.st.inv.bag--;updateInv();
+G.st.selectedPhoto=null;G.st.printCount=0;
+closeM('m-printer');
+G.st.postmanDone=true;
+G.st.money+=50;updateMoney();showPayAnim(50);
+G.st.hasLetter=true;
+const letterSlot=document.getElementById('s-letter');
+if(letterSlot)letterSlot.style.display='flex';
+const postNpc=G.npcs.find(n=>n.type==='postman');
+if(postNpc){postNpc.targetX=400;postNpc.targetY=850;postNpc.leaving=true;moveNPCToCounter(postNpc,'postman');}
+G.st.currentCust=null;G.st.custIdx++;
+showDia('postmanReward',()=>{
+toast('邮递员给了你一封信和$50。',2200);
+setTimeout(()=>{
+G.st.emtAfterPostman=true;
+scheduleNextCust();
+},2000);
+});
+return;
+}
+if(ph.customerType==='andrew'&&G.st.currentCust&&G.st.currentCust.type==='andrew'&&!G.st.andrewDone){
+G.st.inv.bag--;updateInv();
+G.st.selectedPhoto=null;G.st.printCount=0;
+closeM('m-printer');
+G.st.andrewDone=true;
+const andrewNpc=G.npcs.find(n=>n.type==='andrew');
+if(andrewNpc){andrewNpc.targetX=400;andrewNpc.targetY=850;andrewNpc.leaving=true;moveNPCToCounter(andrewNpc,'andrew');}
+G.st.currentCust=null;G.st.custIdx++;
+setTimeout(()=>{
+showDia('andrewOffer',()=>{
+toast('牧师安德离开了。',2000);
+scheduleNextCust();
+});
+},300);
+return;
+}
+if(ph.customerType==='rudekas'&&G.st.currentCust&&G.st.currentCust.type==='rudekas'){
+G.st.inv.bag--;updateInv();
+G.st.selectedPhoto=null;G.st.printCount=0;
+closeM('m-printer');
+G.st.money+=G.st.currentCust.pay;updateMoney();showPayAnim(G.st.currentCust.pay);
+const rn=G.npcs.find(n=>n.type==='rudekas');
+if(rn){rn.targetX=400;rn.targetY=850;rn.leaving=true;moveNPCToCounter(rn,'rudekas');}
+G.st.currentCust=null;G.st.custIdx++;
+toast('鲁德卡斯付了钱，缓缓离开。',2200);
+scheduleNextCust();
+return;
 }
 if(!G.st.currentCust){toast('✓ 照片已装袋。',1500);G.st.inv.bag--;updateInv();G.st.selectedPhoto=null;closeM('m-printer');return;}
 if(ph.customerType==='headless'&&G.st.currentCust&&G.st.currentCust.type==='headless'){
@@ -2331,7 +2768,6 @@ G.st.hasGun=true;
 const gunBtn=document.getElementById('gunBtn');
 if(gunBtn)gunBtn.classList.add('show');
 toast('🔫 左轮手枪已获得！',2200);
-if(!G.st.officeCust){G.st.officeCust=true;setTimeout(()=>spawnOfficeWorker(),3000);}
 break;
 case'detector':
 G.st.hasDetector=true;
@@ -2347,14 +2783,6 @@ break;
 updateInv();
 toast('购买成功！配送中...',2000);
 setTimeout(()=>{startDelivery();},5000);
-}
-
-function spawnOfficeWorker(){
-const c=custData.office;
-const npc={x:400,y:750,av:c.av,name:c.name,type:'office',targetX:500,targetY:400};
-G.npcs.push(npc);
-G.st.currentCust=c;G.st.printCount=0;
-moveNPCToCounter(npc,'office');
 }
 
 function refresh(){
@@ -2394,6 +2822,8 @@ document.querySelectorAll('.invSlot').forEach(e=>e.classList.remove('on'));
 const slot=document.getElementById('s-'+item);
 if(slot)slot.classList.add('on');
 if(item==='detector'&&G.st.hasDetector){openM('m-detector');}
+if(item==='letter'&&G.st.hasLetter){openLetter();}
+if(item==='bible'&&G.st.hasBible){openBible();}
 }
 
 function openM(id){const el=document.getElementById(id);if(el)el.classList.add('show');}
@@ -2420,6 +2850,10 @@ e.preventDefault();
 G.joy.on=false;G.joy.dx=0;G.joy.dy=0;
 jKnob.style.transform='translate(0px,0px)';
 },{passive:false});
+jArea.addEventListener('touchcancel',e=>{
+G.joy.on=false;G.joy.dx=0;G.joy.dy=0;
+jKnob.style.transform='translate(0px,0px)';
+});
 jArea.addEventListener('mousedown',e=>{
 e.preventDefault();
 const r=jArea.getBoundingClientRect();
@@ -2461,9 +2895,9 @@ p.y=Math.max(30,Math.min(G.map.h-30,p.y));
 G.cam.x=p.x-c.width/2;
 G.cam.y=p.y-c.height/2;
 if(G.map.w>c.width){G.cam.x=Math.max(0,Math.min(G.map.w-c.width,G.cam.x));}
-else{G.cam.x=(G.map.w-c.width)/2;}
+else{G.cam.x=(G.map.w-c.width)/2;if(G.cam.x>0)G.cam.x=0;}
 if(G.map.h>c.height){G.cam.y=Math.max(0,Math.min(G.map.h-c.height,G.cam.y));}
-else{G.cam.y=(G.map.h-c.height)/2;}
+else{G.cam.y=(G.map.h-c.height)/2;if(G.cam.y>0)G.cam.y=0;}
 }
 
 function loop(){
@@ -2482,6 +2916,16 @@ if(db)db.style.width=Math.min(100,val*50)+'%';
 if(!G.st.blackoutActive&&G.st.gameStarted&&!G.st.playerDead){
 G.st.garbageTimer++;
 if(G.st.garbageTimer>=14400){G.st.garbageTimer=0;spawnGarbage();}
+}
+if(G.st.gameStarted&&!G.st.carlMet&&!G.st.carlGone&&G.st.open&&!G.st.carlSpawnTimer){
+G.st.carlSpawnTimer=setTimeout(()=>{
+if(!G.st.carlMet&&!G.st.carlGone){
+G.st.carlReady=true;
+const carlObj=G.objs.find(o=>o.t==='carl');
+if(carlObj)carlObj.show=true;
+if(G.scene==='street'){toast('[系统] 街上出现了一个浑身是血的人...',2500);}
+}
+},60000);
 }
 const dark=document.getElementById('darkness');
 if(dark){
@@ -2503,8 +2947,17 @@ const cvs=document.getElementById('c');
 if(cvs){
 cvs.addEventListener('click',()=>{
 if(G.st.viewfinderOn)return;
-if(G.near)act();
+if(G.near||G.nearNPC)act();
 });
+cvs.addEventListener('touchstart',e=>{
+if(G.st.viewfinderOn)return;
+const touch=e.touches[0];
+const r=cvs.getBoundingClientRect();
+if(touch.clientX>r.width-110&&touch.clientY>r.height-160)return;
+if(touch.clientX<130&&touch.clientY>r.height-190)return;
+e.preventDefault();
+if(G.near||G.nearNPC)act();
+},{passive:false});
 }
 
 document.addEventListener('keydown',e=>{
@@ -2524,7 +2977,7 @@ case's':case'ArrowDown':G.p.y+=sp;break;
 case'a':case'ArrowLeft':G.p.x-=sp;break;
 case'd':case'ArrowRight':G.p.x+=sp;break;
 case'e':case' ':
-if(G.near)act();
+if(G.near||G.nearNPC)act();
 break;
 }
 G.p.x=Math.max(30,Math.min(G.map.w-30,G.p.x));
@@ -2567,9 +3020,16 @@ G.st.lastPhotoTime=0;G.st.viewfinderOn=false;
 G.st.imodDone=false;G.st.headlessDone=false;
 G.st.sheriffSpawned=false;G.st.detectorUnlocked=false;G.st.wantedPosted=false;
 G.st.emilyMonsterChase=false;G.st.emilyMonsterDone=false;
+G.st.emilyChaserSpawned=false;
+G.st.postmanDone=false;G.st.rudekasSpawned=false;
+G.st.emtAfterPostman=false;
+G.st.hasBible=false;
+G.st.andrewDone=false;
+G.st.carlSpawnTimer=0;
+G.st.fakeFrankSpawned=false;
 G.st.refresh=0;G.st.inDia=false;G.st.dia=null;G.st.diaIdx=0;G.st.diaCb=null;
 G.npcs=[];
-['m-wanted','m-missing','m-pc','m-printer','m-storage','m-cateye','m-letter','m-coffee','m-detector'].forEach(id=>{
+['m-wanted','m-missing','m-pc','m-printer','m-storage','m-cateye','m-letter','m-bible','m-coffee','m-detector'].forEach(id=>{
 const el=document.getElementById(id);
 if(el)el.classList.remove('show');
 });
@@ -2589,7 +3049,7 @@ const tb=document.getElementById('timerBar');if(tb)tb.classList.remove('show');
 const hint=document.getElementById('hint');if(hint)hint.classList.remove('show');
 const dlg=document.getElementById('dialogue');if(dlg)dlg.classList.remove('show');
 const toastEl=document.getElementById('toast');if(toastEl)toastEl.classList.remove('show');
-['s-gas','s-broom','s-letter','s-coffee','s-wrench','s-detector'].forEach(id=>{
+['s-gas','s-broom','s-letter','s-coffee','s-wrench','s-detector','s-bible'].forEach(id=>{
 const el=document.getElementById(id);
 if(el)el.style.display='none';
 });
