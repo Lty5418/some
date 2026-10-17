@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Kimi 小圆球</title>
+<style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0;height:100%;overflow:hidden;background:var(--bg)}
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Segoe UI",system-ui,sans-serif;
+    touch-action:none;user-select:none;color:var(--fg)}
+  :root{
+    --bg:#ffffff; --fg:#33415c; --muted:rgba(20,40,70,.30);
+    --card:#ffffff; --cardBorder:rgba(74,144,226,.18); --cardShadow:rgba(30,60,110,.16);
+    --chip:#f2f5fa; --chipOn:#4a86d8; --chipOnFg:#ffffff;
+  }
+  html[data-theme="dark"]{
+    --bg:#131822; --fg:#e8edf7; --muted:rgba(232,237,247,.34);
+    --card:#1d2431; --cardBorder:rgba(255,255,255,.10); --cardShadow:rgba(0,0,0,.42);
+    --chip:#262f3e; --chipOn:#5a95e0; --chipOnFg:#ffffff;
+  }
+  #stage{display:block;position:fixed;inset:0}
+  .hint{position:fixed;bottom:24px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.04em;
+    color:var(--muted);pointer-events:none;padding:0 20px;line-height:1.6;z-index:2}
+
+  /* 右上角齿轮 */
+  #gear{position:fixed;top:14px;right:14px;width:44px;height:44px;border:0;border-radius:50%;
+    background:var(--card);color:var(--fg);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 12px var(--cardShadow);cursor:pointer;z-index:5;
+    transition:transform .45s cubic-bezier(.22,1,.36,1), background .25s}
+  #gear:active{transform:scale(.92) rotate(-25deg)}
+  #gear svg{width:22px;height:22px}
+
+  /* 设置界面 */
+  #panel{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;
+    background:var(--bg);opacity:0;pointer-events:none;
+    transition:opacity .32s cubic-bezier(.22,1,.36,1)}
+  #panel.open{opacity:1;pointer-events:auto}
+  #panel .sheet{width:min(560px,92vw);max-height:86vh;overflow-y:auto;
+    transform:translateY(20px) scale(.97);opacity:0;
+    transition:transform .38s cubic-bezier(.22,1,.36,1), opacity .28s ease}
+  #panel.open .sheet{transform:none;opacity:1}
+
+  .sheet h2{margin:0 0 4px;font-size:21px;font-weight:600}
+  .sheet .sub{margin:0 0 26px;font-size:12.5px;color:var(--muted)}
+  .sec{margin-bottom:26px}
+  .sec h3{margin:0 0 12px;font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--muted)}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .sw{width:42px;height:42px;border-radius:50%;border:2px solid transparent;cursor:pointer;
+    padding:0;position:relative;transition:transform .2s cubic-bezier(.22,1,.36,1)}
+  .sw:active{transform:scale(.9)}
+  .sw.on{border-color:var(--fg)}
+  .sw i{position:absolute;inset:4px;border-radius:50%;display:block}
+  .seg{display:inline-flex;background:var(--chip);border-radius:12px;padding:4px;gap:4px}
+  .seg button{border:0;background:transparent;color:var(--fg);font:inherit;font-size:13.5px;
+    padding:9px 20px;border-radius:9px;cursor:pointer;transition:background .22s,color .22s}
+  .seg button.on{background:var(--chipOn);color:var(--chipOnFg)}
+  .crow{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .clab{width:60px;font-size:13px;color:var(--muted);flex:none}
+  .cval{width:44px;text-align:right;font-size:12.5px;font-variant-numeric:tabular-nums;color:var(--muted)}
+  .crow input[type=range]{flex:1;-webkit-appearance:none;height:26px;background:transparent}
+  .crow input[type=range]::-webkit-slider-runnable-track{height:5px;border-radius:3px;background:var(--chip)}
+  .crow input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;height:19px;
+    border-radius:50%;background:var(--chipOn);margin-top:-7px;border:2px solid var(--card)}
+  .crow input[type=color]{width:44px;height:30px;border:0;border-radius:8px;padding:0;background:none;cursor:pointer}
+  .mini{border:0;background:var(--chip);color:var(--fg);font:inherit;font-size:12.5px;
+    padding:7px 14px;border-radius:9px;cursor:pointer}
+  input[type=range].hue::-webkit-slider-runnable-track{
+    background:linear-gradient(90deg,#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00)}
+  input[type=range].sat::-webkit-slider-runnable-track{background:var(--satTrack,#ddd)}
+  input[type=range].lit::-webkit-slider-runnable-track{background:var(--litTrack,#ddd)}
+  .pv{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .pv.hsl{margin-right:auto}
+  .foot{margin-top:8px}
+  .back{border:0;background:var(--chip);color:var(--fg);font:inherit;font-size:14px;
+    padding:12px 26px;border-radius:12px;cursor:pointer;transition:transform .18s}
+  .back:active{transform:scale(.96)}
+</style>
+</head>
+<body>
+<canvas id="stage"></canvas>
+<div class="hint">按住任意处它会看你 · 狂点试试</div>
+
+<button id="gear" aria-label="设置">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+       stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="3"/>
+    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+  </svg>
+</button>
+
+<div id="panel">
+  <div class="sheet">
+    <h2>设置</h2>
+    <p class="sub">调整 Kimi 的颜色与外观</p>
+    <div class="sec">
+      <h3>样式</h3>
+      <div class="seg" id="styleSeg">
+        <button data-style="ball">原版</button>
+        <button data-style="crab">龙虾</button>
+      </div>
+    </div>
+    <div class="sec">
+      <h3>KIMI 颜色</h3>
+      <div class="row" id="swatches"></div>
+    </div>
+    <div class="sec">
+      <h3>自定义颜色</h3>
+      <div class="crow">
+        <span class="clab">色相</span>
+        <input type="range" id="hueR" class="hue" min="0" max="360" step="1">
+        <span class="cval" id="hueV">215</span>
+      </div>
+      <div class="crow">
+        <span class="clab">饱和度</span>
+        <input type="range" id="satR" class="sat" min="0" max="100" step="1">
+        <span class="cval" id="satV">65</span>
+      </div>
+      <div class="crow">
+        <span class="clab">明度</span>
+        <input type="range" id="litR" class="lit" min="22" max="86" step="1">
+        <span class="cval" id="litV">57</span>
+      </div>
+      <div class="crow">
+        <span class="pv" id="pickHex">#4a86d8</span>
+        <button class="mini" id="resetC">恢复默认</button>
+      </div>
+    </div>
+    <div class="sec">
+      <h3>外观</h3>
+      <div class="seg" id="themeSeg">
+        <button data-theme="light">浅色</button>
+        <button data-theme="dark">深色</button>
+      </div>
+    </div>
+    <div class="foot"><button class="back" id="backBtn">返回</button></div>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+const cv=document.getElementById('stage'), ctx=cv.getContext('2d');
+const rand=(a,b)=>a+Math.random()*(b-a);
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+
+let W=0,H=0,DPR=1,S=6;
+function resize(){
+  DPR=Math.max(1,Math.min(Math.round(window.devicePixelRatio||1),3));
+  W=window.innerWidth;H=window.innerHeight;
+  cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);
+  cv.style.width=W+'px';cv.style.height=H+'px';
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  S=clamp(Math.round(Math.min(W,H)*0.44/24),3,26);
+}
+window.addEventListener('resize',resize);resize();
+
+/* 平滑矢量绘制：坐标即屏幕像素，无像素网格量化 */
+const sx=x=>cx0+x*S, sy=y=>cy0+y*S;
+/* 眼睛专用缩放：眼随球一起缩（点击内缩时眼睛同步变小） */
+let ES=S;
+const ex_=x=>cx0+x*ES, ey_=y=>cy0+y*ES;
+let cx0=0, cy0=0;
+
+/* ---------------- 外观 ---------------- */
+const SKIN={                      // 中心深、边缘浅：外面一层浅的，里面裹着一个深的
+  core:'#4a86d8', in1:'#5a95e0', in2:'#6ca4e8', edge:'#8cb9f0', rim:'#a9cdf6'
+};
+
+/* ---------------- 龙虾配色 ----------------
+   默认（色相 215）就是图片里的 红身 + 蓝面罩。
+   调色时按「相对默认色相的偏移」整体平移，红蓝关系保持不变。 */
+function crabPal(){
+  // 原图就是大色块平涂：红身三档、蓝罩两档，全部硬边纯色、无渐变。
+  // 色值由原图 K-means 取色换算成 HSL；拖色相滑块时整体平移，红/蓝关系不变。
+  /* 色值 = 原图每一档出现次数最多的那个颜色（众数，不是平均色）换算成的 HSL：
+     红暗 rgb(193,32,40) →H357 S72 L44 ／ 红中 rgb(227,70,61) →H3 S75 L56
+     红亮 rgb(253,102,93)→H3  S98 L68 ／ 蓝暗 rgb(44,142,231)→H209 S80 L54
+     蓝亮 rgb(81,160,255)→H213 S100 L66
+     拖色相滑块时整体平移，红蓝相对关系保持不变。 */
+  const off=(((hueH-215)%360)+360)%360;
+  const bh=(3+off+360)%360;
+  const k=(clamp(hueL,45,66)-57)/57;
+  return {
+    b1 : hsl(bh, 98, clamp(68+k*9,34,90)),   // 红亮 37%  rgb(253,102,93)
+    b2 : hsl(bh, 75, clamp(56+k*9,26,84)),   // 红中（底）rgb(227,70,61)
+    b3 : hsl((357+off+360)%360, 72, clamp(44+k*9,20,70)), // 红暗 8% rgb(193,32,40)
+    eyeHi : '#ffffff',
+    m1 : hsl((213+off+360)%360, 100, clamp(66+k*9,36,86)), // 蓝亮 65% rgb(81,160,255)
+    m2 : hsl((209+off+360)%360, 80, clamp(54+k*9,26,80)),  // 蓝暗 35% rgb(44,142,231)
+    eye: '#141821'
+  };
+}
+
+/* ---------------- 可选颜色 / 深浅色主题 ---------------- */
+const HUES=[                      // 预设色相 → 由深到浅生成 5 层
+  // 第一个就是原版配色，直接用写死的色值，不经过 HSL 换算，保证一模一样
+  {id:'blue',   h:215, name:'淡蓝', fx:{
+    core:'#4a86d8', in1:'#5a95e0', in2:'#6ca4e8', edge:'#8cb9f0', rim:'#a9cdf6'
+  }},
+  {id:'azure',  h:201, name:'天蓝'},
+  {id:'indigo', h:230, name:'靛蓝'},
+  {id:'violet', h:266, name:'紫'},
+  {id:'teal',   h:186, name:'青'},
+  {id:'green',  h:146, name:'绿'},
+  {id:'pink',   h:337, name:'粉'},
+  {id:'amber',  h:36,  name:'橙'}
+];
+const THEMES={
+  light:{ bg:'#ffffff', fg:'#33415c', card:'#ffffff',
+          cardBorder:'rgba(74,144,226,.18)', cardShadow:'rgba(30,60,110,.16)' },
+  dark: { bg:'#131822', fg:'#e8edf7', card:'#1d2431',
+          cardBorder:'rgba(255,255,255,.10)', cardShadow:'rgba(0,0,0,.42)' }
+};
+let hueId='blue', theme='light';
+let styleMode='ball';               // 'ball' 原版小球 | 'crab' 龙虾
+let crabPopT0=-99999;              // 龙虾：被点一下的时刻（弹簧缩小→放大）
+let crabBreath=0;                  // 龙虾：呼吸缩放量
+const TH=()=>THEMES[theme];
+
+function hsl(h,s,l){ return 'hsl('+h+','+s+'%,'+l+'%)'; }
+let hueS=65, hueL=57, hueH=215;
+let fixedSkin=null;               // 非 null → 用写死的原版色值（用户一动取色器就清空）
+const cl=(v,a,b)=>Math.min(b,Math.max(a,v));
+function skinFromHue(h,sat,lit){
+  const s=(sat==null?hueS:sat), l=(lit==null?hueL:lit);
+  // 传入的 l 就是球体主色（core）的明度，其余层往外逐层变浅
+  SKIN.core=hsl(h,s,   cl(l,    12,88));
+  SKIN.in1 =hsl(h,s+2, cl(l+7,  18,92));
+  SKIN.in2 =hsl(h,s+4, cl(l+14, 26,94));
+  SKIN.edge=hsl(h,s+6, cl(l+22, 34,96));
+  SKIN.rim =hsl(h,s+8, cl(l+29, 44,97));
+}
+function hsl2hex(h,s,l){
+  s/=100; l/=100;
+  const k=n=>(n+h/30)%12, a=s*Math.min(l,1-l);
+  const f=n=>Math.round(255*(l-a*Math.max(-1,Math.min(k(n)-3,Math.min(9-k(n),1)))));
+  return '#'+[f(0),f(8),f(4)].map(v=>v.toString(16).padStart(2,'0')).join('');
+}
+/* hex → hsl（保留备用） */
+function hexToHsl(hex){
+  hex=hex.replace('#',''); if(hex.length===3)hex=hex.split('').map(c=>c+c).join('');
+  const n=parseInt(hex,16), r=(n>>16&255)/255, g=(n>>8&255)/255, b=(n&255)/255;
+  const mx=Math.max(r,g,b), mn=Math.min(r,g,b), d=mx-mn;
+  let h=0;
+  if(d){
+    if(mx===r) h=((g-b)/d+(g<b?6:0));
+    else if(mx===g) h=(b-r)/d+2;
+    else h=(r-g)/d+4;
+    h*=60;
+  }
+  const l=(mx+mn)/2;
+  const s=d===0?0:d/(1-Math.abs(2*l-1));
+  return {h:Math.round(h), s:Math.round(s*100), l:Math.round(l*100)};
+}
+const CFG={
+  bodySize:24,                    // bs:24  球体直径
+  style:'ball',                   // 样式：ball 原版 / crab 龙虾
+  crabLidSlant:0.011,             // 蟹眼生气斜切量：蟹眼短，斜切只占眼高约 15%（原版占 37%）
+  crabScale:1.0,                  // 龙虾整体缩放
+  crabBreathe:0.020,              // 呼吸幅度（整体 ±2% 缩放）
+  crabBreatheMs:3600,             // 一次完整呼吸的时长(ms)
+  crabShrink:.10, crabGrow:.07,   // 点一下：先弹簧缩小 10%，再弹簧放大 7%
+  crabShrinkMs:120, crabGrowMs:210,
+  crabPopStiff:130,               // 点击弹簧刚度（软一点 → 过冲看得出来）
+  posX:2/3, posY:2/3,             // 球心：三分法右下角焦点
+  bubbleX:1/3, bubbleY:1/3,       // 对话框中心：三分法左上角焦点
+  bubble:12,                      // 点满这么多次 → 弹出对话框
+  closeTaps:2,                    // 弹着时点几下关闭
+  typeMs:95,                      // 打字机：每字间隔(ms)
+  flingHoldMs:420,                // 长按多久算「蓄力弹飞」
+  tapHitK:0.62,                   // 飞行中单击击飞的力度（相对长按弹飞）
+  flingPower:8200,                // 弹飞初速度
+  flingFric:0.9945,               // 空气阻力（越接近 1 衰减越慢）
+  flingMaxMs:6500,                // 最长飞行时间，到点就回家
+  haloDarkBoost:2.1,              // 深色模式下彩圈对比度倍率
+  haloLightBoost:1.5,             // 浅色模式下彩圈对比度倍率（白底上要更深才看得见）
+  trailMs:300, trailMinSpd:520,   // 残影：存活时长 / 出现的最低速度
+  flingBounce:0.88,               // 撞墙反弹系数
+  flingHomeMs:900,                // 减速后回位时长
+  baseW:5,                        // bw:5   眼宽基准
+  scale:.53,                      // sc:53
+  eyeAspect:2.24,                 // as:224 高宽比（细长胶囊）
+  eyeGap:2.1,                     // 两眼间距
+  eyeY:-3,                        // 眼睛高度位置
+  eyeRound:1,                     // 眼形圆角（1=圆润胶囊；调小则变钝、接近圆角矩形）
+  eyeMove:3.4, eyeMoveY:.62,      // em:34 / my:62
+  range:.60,                      // ra:60
+  speed:.45,                      // sp:45
+  blink:.87,                      // bl:87
+  pressPop:.11, pressHold:.03,    // 点击先等比例胀大 11%，按住时略缩 3%
+  popGrowMs:230, popHoldMs:250,    // 变大阶段 / 悬停阶段（合计=胀大总窗口）
+  popGrowStiff:100,               // 变大过程的弹簧刚度（越小变大越慢）
+  jellyK:.05, jellyMax:.085,      // 形变 = 缩放速度 × jellyK（上限）
+  stretchX:1.0, stretchY:2.6,     // 果冻横向 / 竖向形变倍率（竖向更大 → 竖向拉伸更明显）
+  halo:true, haloR:1.0,           // 球底下三层淡彩圆（蓝/粉/黄）的大小系数
+  haloSway:1.0,                   // 晃动幅度（0 = 完全不动）
+  haloAlpha:1.0,                  // 整体浓度
+  angryLid:.43, lidSlant:1.1,     // an:43 / ls:11
+  jitter:.72,                     // ji:72
+  turnK:1.8,                      // 转动角系数（越大转得越远）
+  roll:1.6                        // 倾斜放大（保证看得出来，两眼始终同角度）
+};
+const eyeW=()=>CFG.baseW*CFG.scale;   // 5 × 0.53 = 2.65 逻辑像素宽
+const eyeH=()=>eyeW()*CFG.eyeAspect;  // × 2.24 = 5.94 高
+
+/* ---------------- 球面投影 ----------------
+   眼睛贴在球面上：往四周看 = 沿球面滑动，位置由球面角度投影得到。
+   两只眼永远「平行」：倾角只由注视方向决定，两眼共用同一个角度，
+   所以不会一只内八一只外八；尺寸恒定，不做近大远小。 */
+let sharedRot=0;
+function updateSharedRot(gx,gy){
+  // 用「脸的中心」算倾角：两眼共用，保证永远平行
+  const R=CFG.bodySize/2;
+  const MA=CFG.eyeMove*CFG.range/R*CFG.turnK;
+  const Ax=gx*MA;                        // 中心点：基础 ax = 0
+  const Ay=CFG.eyeY/R + gy*MA*CFG.eyeMoveY;
+  // up 向量投影：往右看 (Ax>0) 且眼睛在球心上方 (Ay<0) → up 偏向左上 → 逆时针
+  sharedRot=CFG.roll*Math.atan2(Math.sin(Ay)*Math.sin(Ax), Math.cos(Ay));
+}
+function eyePose(bx,by,gx,gy){
+  const R=CFG.bodySize/2;                       // 球半径（逻辑像素）
+  const MA=CFG.eyeMove*CFG.range/R*CFG.turnK;   // 最大转动角（弧度）
+  const ax=bx/R + gx*MA;                        // 基础角 + 转动角
+  const ay=by/R + gy*MA*CFG.eyeMoveY;
+  const ca=Math.cos(ay), sa=Math.sin(ay);
+  const cA=Math.cos(ax), sA=Math.sin(ax);
+  return {
+    x : sA*ca*R,          // 正交投影：位置（自带球面压缩）
+    y : sa*R,             // 屏幕 y 向下为正
+    rot: sharedRot        // 两眼共用倾角 → 始终平行
+  };
+}
+
+/* ---------------- 运动 ---------------- */
+/* 两只眼共用同一个注视向量 —— 它们永远同步，不会各晃各的 */
+const gaze={x:0,y:0,vx:0,vy:0,tx:0,ty:0,next:0,seed:rand(0,99)};
+const eyes={l:{lid:0}, r:{lid:0}, nextGaze:0};
+let blink={t0:-99999,dur:170,next:1400};
+let press=0, pressV=0;                          // 整体缩放：负=放大，正=缩小
+let sq=0, sqV=0;                                // 果冻形变：正=横向摊开压扁
+let holding=false, holdT0=-99999, popUntil=-99999, onBall=false, onBallFling=false;
+let combo=0, lastTap=-99999, rageUntil=-99999, rage=0;
+const RAGE_TAPS=5, RAGE_WINDOW=900, RAGE_COOL=2800;
+/* 弹飞物理：长按蓄力 → 松手把它甩出去，撞墙反弹，慢慢减速后自己回家 */
+const FL={x:0,y:0,vx:0,vy:0,flying:false,holdT0:-99999,charging:false,homeT:-99999,t0:-99999,lx:undefined,ly:undefined};
+const TRAIL=[];                 // 飞行残影
+const RINGS=[];                 // 撞墙冲击波
+
+let totalTaps=0;                 // 对话框关闭后重新累计，再点满就再弹一次
+let bubbleIdx=-1;                // 当前显示第几段
+let bubbleShown=false;           // 是否正在显示对话框
+let bubbleT0=-99999;             // 开始显示的时间（打字机计时用）
+let closeTaps=0;                 // 显示期间点了几次 → 点两下就关
+// 文案按样式区分：圆球是原版三句，龙虾是另一套
+const LINES_BALL=[
+  '压力一个小圆球？',
+  '对不起 和 Kimi 聊天的人太多了 等会再试试吧',
+  '你好呀 我是月之暗面旗下的助手'
+];
+const LINES_CRAB=[
+  '压力一只小龙虾？',
+  'LLM request failed.',
+  '哎哎哎，我要会员才能用'
+];
+function curLines(){ return styleMode==='crab' ? LINES_CRAB : LINES_BALL; }
+let autoMood=null;
+const MOOD=()=>autoMood||'normal';
+
+
+/* ---------------- 指针 ----------------
+   按住任何地方（不一定要在球上）→ 它盯着你的手/鼠标看；松手就恢复自己看。
+   只有按在球上才算「点它」，触发果冻与生气计数。 */
+const ptr={x:0,y:0};
+window.addEventListener('pointermove',e=>{ptr.x=e.clientX;ptr.y=e.clientY;},{passive:true});
+
+function onDown(e){
+  if(panel.classList.contains('open')) return;   // 设置界面开着 → 不操作画布
+  ptr.x=e.clientX; ptr.y=e.clientY;
+  holding=true;                                 // 按住 → 开始盯着看（不限位置）
+  onBall = Math.hypot(e.clientX-cx0, e.clientY-cy0)<=bodyR()*S*1.25;
+  onBallFling = onBall;
+  if(onBall) FL.holdT0=performance.now();
+  FL.charging=onBall;
+  if(onBall) onTap(e);                          // 按在球上 → 点它
+}
+function onRelease(e){
+  if(!holding) return;
+  holding=false; onBall=false;
+  eyes.nextGaze=performance.now()+300;
+  const now=performance.now();
+
+  // 有对话框时：长按它 → 对话框消失（不弹飞）
+  if(bubbleShown){
+    if(now-FL.holdT0>=CFG.flingHoldMs){
+      bubbleShown=false; closeTaps=0; totalTaps=0;
+    }
+    return;
+  }
+
+  // 已经在飞 → 轻轻一点就能把它打飞（不用长按），像拍球一样
+  if(styleMode!=='crab' && onBallFling && FL.flying){
+    let dx=(e&&e.clientX!=null?e.clientX:ptr.x)-cx0;
+    let dy=(e&&e.clientY!=null?e.clientY:ptr.y)-cy0;
+    let d=Math.hypot(dx,dy);
+    if(d < bodyR()*S*0.35){            // 手指几乎在球心 → 随机给个方向
+      const a=rand(0,Math.PI*2); dx=Math.cos(a); dy=Math.sin(a); d=1;
+    }
+    // 从手指往球心推：指哪打哪的反方向，保留部分原有速度
+    const sp=CFG.flingPower*CFG.tapHitK;
+    FL.vx=-dx/d*sp + FL.vx*0.35 + rand(-200,200);
+    FL.vy=-dy/d*sp + FL.vy*0.35 + rand(-200,200);
+    FL.homeT=-99999; FL.t0=performance.now();
+    sqV += 6;                          // 被拍一下，挤一下
+    onBallFling=false;
+    return;
+  }
+
+  // 长按球 → 蓄力弹飞（龙虾不弹飞）
+  if(styleMode!=='crab' && onBallFling && now-FL.holdT0>=CFG.flingHoldMs){
+    let dx=(e&&e.clientX!=null?e.clientX:ptr.x)-cx0;
+    let dy=(e&&e.clientY!=null?e.clientY:ptr.y)-cy0;
+    let d=Math.hypot(dx,dy);
+    if(d < bodyR()*S*0.35){            // 手指几乎在球心 → 随机给个方向
+      const a=rand(0,Math.PI*2); dx=Math.cos(a); dy=Math.sin(a); d=1;
+    }
+    // 往「手指所在方向的反方向」甩出去
+    const sp=CFG.flingPower*(0.6+0.4*Math.min(1,(now-FL.holdT0)/1200));
+    FL.vx=-dx/d*sp + rand(-260,260);
+    FL.vy=-dy/d*sp + rand(-260,260);
+    FL.flying=true; FL.homeT=-99999; FL.t0=performance.now();
+  }
+  onBallFling=false;
+}
+window.addEventListener('pointerdown',onDown,{passive:true});
+window.addEventListener('pointerup',onRelease,{passive:true});
+window.addEventListener('pointercancel',onRelease,{passive:true});
+window.addEventListener('blur',onRelease);
+
+/* 点球：果冻 + 生气计数 */
+function onTap(e){
+  const now=performance.now();
+  holdT0=now;
+  // 不再直接把 press 跳到峰值：由弹簧平滑长过去，这样「变大」才看得出动画
+  // 龙虾：点一下不再甩爪（爪子与尾巴保持静止）；点击仍照常记生气 / 对话框次数
+  if(styleMode!=='crab'){
+    popUntil=now+CFG.popGrowMs+CFG.popHoldMs;  // 生长阶段 + 悬停阶段
+  }else{
+    crabPopT0=now;                             // 龙虾：先缩小再弹回放大
+  }
+  if(bubbleShown){
+    // 对话框开着时：点两下就关掉，并重置计数（下次再点满会再弹）
+    closeTaps++;
+    if(closeTaps>=CFG.closeTaps){
+      bubbleShown=false; closeTaps=0; totalTaps=0;
+    }
+  }else if(!FL.flying){
+    // 只有不在飞的时候才累计对话框次数
+    totalTaps++;
+    if(totalTaps>=CFG.bubble){
+      bubbleIdx=(bubbleIdx+1)%curLines().length;  // 每次弹出换下一段
+      bubbleShown=true; bubbleT0=now; closeTaps=0;
+    }
+  }
+  if(now<rageUntil) return;                     // 正在生气：只缩，不续气
+  combo = (now-lastTap<RAGE_WINDOW)? combo+1 : 1;
+  lastTap=now;
+  if(combo>=RAGE_TAPS){
+    const extra=Math.min(combo-RAGE_TAPS,10)*380;
+    rageUntil=Math.max(rageUntil, now+RAGE_COOL+extra);
+  }
+}
+
+function doBlink(){
+  const now=performance.now();
+  // 正在生气就不眨，免得怒目被打断；把下次眨眼推到气消之后
+  if(now<rageUntil){ blink.next=rageUntil+rand(300,700); return; }
+  if(now-blink.t0>blink.dur){blink.t0=now;blink.dur=rand(150,230);}
+  blink.next=now+1000/(0.05+CFG.blink*0.6)*rand(.55,1.6);
+}
+blink.next=performance.now()+900;
+
+function step(now,dt){
+  const ds=Math.min(dt,40)/1000;
+  // 缩放目标：生长+悬停期内趋向「胀大」，之后回落（按在球上则略缩）
+  const popping = now<popUntil && styleMode!=='crab';
+  // 龙虾被按不放大，只甩爪子
+  let pT;
+  if(styleMode==='crab'){
+    const dt0=now-crabPopT0;
+    if(dt0 < CFG.crabShrinkMs)                 pT =  CFG.crabShrink;   // 先缩
+    else if(dt0 < CFG.crabShrinkMs+CFG.crabGrowMs) pT = -CFG.crabGrow; // 再胀
+    else                                        pT = 0;                // 回位
+  }else{
+    pT = popping ? -CFG.pressPop : ((holding&&onBall) ? CFG.pressHold : 0);
+  }
+  // 生长阶段用更软的弹簧 → 变大是一个看得见的过程；回落阶段稍硬 → 果冻回弹
+  const st1 = (styleMode==='crab') ? CFG.crabPopStiff : (popping ? CFG.popGrowStiff : 150), z1=.42, d1=2*Math.sqrt(st1)*z1;
+  const steps=Math.max(1,Math.ceil(ds/(1/240))), h=ds/steps;
+  for(let i=0;i<steps;i++){
+    pressV+=((pT-press)*st1 - pressV*d1)*h; press+=pressV*h;
+  }
+  // 形变由「缩放速度」派生：动的时候被挤压，停下来就恢复正圆
+  // （不再是独立弹簧，所以不会自己来回晃个不停）
+  sq = clamp(pressV*CFG.jellyK, -CFG.jellyMax, CFG.jellyMax);
+  // 怒气：起得快，消得更快（目标为 0 时几乎瞬间回落）
+  const target = now<rageUntil ? 1 : 0;
+  const tau = target?0.10:0.05;
+  rage += (target-rage)*(1-Math.exp(-ds/tau));
+  if(now<lastTap-RAGE_WINDOW) combo=0;
+  autoMood = rage>0.30 ? 'angry' : null;
+
+  if(holding){
+    // 按着的时候盯着手指/鼠标看：指针离球心越远，看得越"使劲"
+    const dx=ptr.x-cx0, dy=ptr.y-cy0, d=Math.hypot(dx,dy)||1;
+    const sat=Math.max(1, bodyR()*S*0.8);
+    const n=d/(d+sat);                        // 0~1，越远越接近 1
+    gaze.tx=dx/d*n; gaze.ty=dy/d*n;
+    eyes.nextGaze=now+1e9;                    // 按住期间不自动换方向
+  }else if(now>eyes.nextGaze){
+    // 没人按：自己向四周看（换方向的间隔拉长，不再频繁乱瞟）
+    gaze.tx=rand(-1,1)*.85; gaze.ty=rand(-1,1)*.7;
+    eyes.nextGaze=now+rand(1400,3400);
+  }
+  // 单一弹簧：微颤只叠一次，两眼共用 → 不会各自抖
+  const st=30+CFG.speed*340, dp=2*Math.sqrt(st)*.62, t=now/1000;
+  const j=CFG.jitter;
+  const mx=(Math.sin(t*1.7+gaze.seed)*.6+Math.sin(t*4.3+gaze.seed*2.7)*.3)*.08*j;
+  const my=(Math.cos(t*2.3+gaze.seed*1.3)*.6+Math.cos(t*5.1+gaze.seed*3.1)*.3)*.06*j;
+  gaze.vx+=((gaze.tx+mx-gaze.x)*st - gaze.vx*dp)*ds;
+  gaze.vy+=((gaze.ty+my-gaze.y)*st - gaze.vy*dp)*ds;
+  gaze.x+=gaze.vx*ds; gaze.y+=gaze.vy*ds;
+  // 龙虾：只保留呼吸（螯不再甩动，整只就是一张静态还原图）
+  if(styleMode==='crab'){
+    crabBreath = Math.sin(now/CFG.crabBreatheMs*Math.PI*2) * CFG.crabBreathe;
+  }else{
+    crabBreath=0;
+  }
+
+  stepFling(now,ds);
+
+  eyes.l.lid=eyeLid(now); eyes.r.lid=eyeLid(now);
+  if(now>blink.next)doBlink();
+}
+
+/* 眼皮：0 = 全睁，1 = 闭合 */
+function eyeLid(now){
+  const bp=(now-blink.t0)/blink.dur;
+  if(bp<0||bp>=1)return 0;
+  if(bp<0.36){const u=bp/0.36;return u*u*(3-2*u);}
+  const u=(bp-0.36)/0.64, e=u*u*(3-2*u);
+  return clamp(1-e-Math.sin(u*Math.PI)*0.09*(1-u),0,1);
+}
+
+function bodyR(){ return CFG.bodySize/2*(1-press); }
+
+
+/* ---------------- 弹飞物理 ---------------- */
+function stepFling(now,ds){
+  // 过期清理：不管飞不飞都要跑，否则停下后残影会卡住不消失
+  for(let i=TRAIL.length-1;i>=0;i--) if(now-TRAIL[i].t0>CFG.trailMs) TRAIL.splice(i,1);
+  for(let i=RINGS.length-1;i>=0;i--) if(now-RINGS[i].t0>620) RINGS.splice(i,1);
+  if(!FL.flying){
+    // 不在飞：缓慢回位（用于弹完停下后归位已完成，这里只做保险衰减）
+    if(FL.x||FL.y){
+      const k=1-Math.exp(-ds/0.28);
+      FL.x+=(0-FL.x)*k; FL.y+=(0-FL.y)*k;
+      if(Math.abs(FL.x)<0.2&&Math.abs(FL.y)<0.2){FL.x=0;FL.y=0;}
+    }
+    return;
+  }
+  const f=Math.pow(CFG.flingFric, ds*60);
+  FL.vx*=f; FL.vy*=f;
+  FL.x+=FL.vx*ds; FL.y+=FL.vy*ds;
+
+  // 残影：飞得越快留得越多
+  const spd0=Math.hypot(FL.vx,FL.vy);
+  if(spd0>CFG.trailMinSpd){
+    const px=W*CFG.posX+FL.x, py=H*CFG.posY+FL.y;
+    const st=clamp(spd0/5200,0.25,1);
+    // 速度太快时一帧能跨上百像素，中间补几个点，残影才不会断成虚线
+    if(FL.lx!==undefined){
+      const dx=px-FL.lx, dy=py-FL.ly, dist=Math.hypot(dx,dy);
+      const n=Math.min(8, Math.floor(dist/34));
+      for(let k=1;k<=n;k++){
+        TRAIL.push({x:FL.lx+dx*k/(n+1), y:FL.ly+dy*k/(n+1), t0:now, s:st*0.8});
+      }
+    }
+    FL.lx=px; FL.ly=py;
+    TRAIL.push({x:px, y:py, t0:now, s:st});
+    while(TRAIL.length>34) TRAIL.shift();
+  }else{ FL.lx=undefined; FL.ly=undefined; }
+  for(let i=TRAIL.length-1;i>=0;i--) if(now-TRAIL[i].t0>CFG.trailMs) TRAIL.splice(i,1);
+  for(let i=RINGS.length-1;i>=0;i--) if(now-RINGS[i].t0>620) RINGS.splice(i,1);
+
+  // 边界：撞到画布边缘就反弹
+  const R=CFG.bodySize/2*S, W2=W/2, H2=H/2;
+  const bx0=W*CFG.posX, by0=H*CFG.posY;
+  const lim=(v,lo,hi)=>{ if(v<lo) return lo; if(v>hi) return hi; return v; };
+  let hit=false;
+  const nx=bx0+FL.x, ny=by0+FL.y;
+  const minX=R*0.9, maxX=W-R*0.9, minY=R*0.9, maxY=H-R*0.9;
+  if(nx<minX){ FL.x=minX-bx0; FL.vx=Math.abs(FL.vx)*CFG.flingBounce; hit=true; }
+  if(nx>maxX){ FL.x=maxX-bx0; FL.vx=-Math.abs(FL.vx)*CFG.flingBounce; hit=true; }
+  if(ny<minY){ FL.y=minY-by0; FL.vy=Math.abs(FL.vy)*CFG.flingBounce; hit=true; }
+  if(ny>maxY){ FL.y=maxY-by0; FL.vy=-Math.abs(FL.vy)*CFG.flingBounce; hit=true; }
+  if(hit){
+    const spd=Math.hypot(FL.vx,FL.vy);
+    // 撞得越狠，挤得越扁、冲击波越大
+    sqV += (FL.vx+FL.vy)*0.0022;
+    if(spd>420){
+      RINGS.push({x:nx,y:ny,t0:now,str:clamp(spd/2600,0.25,1)});
+      if(RINGS.length>8) RINGS.shift();
+    }
+  }
+
+  // 速度足够小 → 结束飞行，自己"飞回"原位（下面的回位衰减接管）
+  if(Math.hypot(FL.vx,FL.vy)<40 && FL.homeT<0){
+    FL.homeT=now;
+  }
+  if(FL.homeT>0 && now-FL.homeT>CFG.flingHomeMs*0.35){
+    FL.flying=false; FL.vx=0; FL.vy=0;
+  }
+  // 兜底：飞太久直接回家
+  if(FL.flying && FL.t0>0 && now-FL.t0>CFG.flingMaxMs){ FL.flying=false; FL.vx=0; FL.vy=0; }
+}
+
+/* ---------------- 绘制 ---------------- */
+function draw(now){
+  const bs=CFG.bodySize, R=bodyR()*S;
+  // 锚点用「未缩放」的半径来算，否则球变大时 cx0/cy0 会跟着往左上跑，
+  // 看起来就像朝左上角缩放。现在球始终绕自己的中心缩放。
+  const R0=CFG.bodySize/2*S;
+  cx0=W*CFG.posX+FL.x; cy0=H*CFG.posY+FL.y;
+  ES = S*(1-press);                   // 眼睛随球一起缩
+
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle=TH().bg;ctx.fillRect(0,0,W,H);
+
+  // 果冻形变：横向膨胀 / 纵向压扁（sq>0 → 扁，<0 → 长）
+  // 果冻：竖向拉伸更明显（上下拉长的幅度大于横向变窄），像被拎起来又落下
+  const RX=R*(1+sq*0.5*CFG.stretchX), RY=R*(1-sq*0.5*CFG.stretchY);
+  const BASE=Math.max(RX,RY);
+
+  // 球底下有三个特别淡的圆：蓝、粉、黄。
+  // 大小都跟球差不多，一直在轻微晃动；中心被球盖住，只在边缘透出一圈淡彩。
+  if(CFG.halo && styleMode!=='crab'){   // 龙虾是还原图，不要三色光晕
+    const t=now/1000;
+    const sw=CFG.haloSway;
+    const discs=[
+      // 三个圆都跟球一样大（rs 全部 1.0），而且特别特别淡。
+      // 它们各自绕圈，转到哪边就从球边缘透出一点那边的颜色。
+      // w = 绕圈角速度（各不一样），ph = 起始相位，r = 绕圈半径
+      // 浅色底要用「偏深」的色才看得见，深底则要用「偏亮」的色
+      {cL:'rgba(238,182,42,',  cD:'rgba(255,222,130,', a:.055, rs:1.055, w:0.52, ph:0.0, r:12.0},
+      {cL:'rgba(248,128,172,', cD:'rgba(255,178,212,', a:.075, rs:1.03,  w:0.79, ph:2.1, r:11.0},
+      {cL:'rgba(58,138,235,',  cD:'rgba(120,178,255,', a:.075, rs:1.01,  w:0.31, ph:4.3, r:10.0}
+    ];
+    ctx.save();
+    ctx.translate(cx0,cy0);
+    ctx.scale(RX/BASE, RY/BASE);
+    ctx.translate(-cx0,-cy0);
+    for(const d of discs){
+      // 绕圈式：匀速圆周运动，三个圆角速度各不相同
+      const a=t*d.w+d.ph;
+      const ox=Math.cos(a)*d.r*sw;
+      const oy=Math.sin(a)*d.r*sw;
+      const rr=BASE*d.rs*CFG.haloR;
+      // 整块都是极淡的实心圆，只在最外沿 3% 淡出（保证透出的边能看见）
+      const dark=theme==='dark';
+      const col=dark?d.cD:d.cL;
+      const A=d.a*CFG.haloAlpha*(dark?CFG.haloDarkBoost:CFG.haloLightBoost);
+      const gr=ctx.createRadialGradient(cx0+ox,cy0+oy,rr*0.30, cx0+ox,cy0+oy,rr);
+      gr.addColorStop(0,   col+A.toFixed(3)+')');
+      gr.addColorStop(.97, col+A.toFixed(3)+')');
+      gr.addColorStop(1,   col+'0)');
+      ctx.fillStyle=gr;
+      ctx.beginPath();ctx.arc(cx0+ox,cy0+oy,rr,0,Math.PI*2);ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  // 飞行残影：越旧越淡越小
+  for(const tr of TRAIL){
+    const age=(now-tr.t0)/CFG.trailMs;
+    const a=(1-age)*0.30*tr.s;
+    if(a<=0.004) continue;
+    const rr=BASE*(1-age*0.30);
+    ctx.globalAlpha=a;
+    ctx.fillStyle=SKIN.in2;
+    ctx.beginPath();ctx.arc(tr.x,tr.y,rr,0,Math.PI*2);ctx.fill();
+  }
+  ctx.globalAlpha=1;
+
+  // 撞击冲击波：从撞点扩散出去的环
+  for(const rg of RINGS){
+    const age=(now-rg.t0)/620;
+    if(age>=1) continue;
+    const e=1-Math.pow(1-age,3);
+    const rr=BASE*(0.7+e*1.5*rg.str);
+    ctx.globalAlpha=(1-age)*0.42*rg.str;
+    ctx.strokeStyle=SKIN.edge;
+    ctx.lineWidth=Math.max(1.5, BASE*0.10*(1-age)*rg.str);
+    ctx.beginPath();ctx.arc(rg.x,rg.y,rr,0,Math.PI*2);ctx.stroke();
+  }
+  ctx.globalAlpha=1;
+
+  if(styleMode==='crab'){
+    drawCrab(now);
+    drawBubble(now);
+    return;
+  }
+
+  // 球体：里面是深的，往边缘逐渐变浅（外面那层浅的裹着它）
+  const g=ctx.createRadialGradient(cx0-RX*0.14,cy0-RY*0.18,RX*0.05, cx0,cy0,Math.max(RX,RY)*1.02);
+  g.addColorStop(0,   SKIN.core);
+  g.addColorStop(.40, SKIN.in1);
+  g.addColorStop(.72, SKIN.in2);
+  g.addColorStop(.92, SKIN.edge);
+  g.addColorStop(1,   SKIN.rim);
+  ctx.fillStyle=g;
+  ctx.beginPath();ctx.ellipse(cx0,cy0,RX,RY,0,0,Math.PI*2);ctx.fill();
+
+  // 两眼：竖向白色胶囊（矩形 + 两端半圆），贴在球面上
+  const ew=eyeW();
+  const bx=CFG.eyeGap+ew/2;                 // 眼睛中心到球心的距离
+  updateSharedRot(gaze.x, gaze.y);
+  drawEye(-bx, CFG.eyeY, 'l', eyes.l.lid);
+  drawEye( bx, CFG.eyeY, 'r', eyes.r.lid);
+
+  drawBubble(now);
+}
+
+/* bx/by = 眼睛在球面上的基础位置（逻辑像素，相对球心）
+   实际位置、倾角、透视缩放都由 eyePose 算出 */
+function drawEye(bx,by,side,lid){
+  const ew=eyeW(), eh=eyeH();
+  const rx=ew/2, ry=eh/2;
+  const E=eyes[side];
+  const P=eyePose(bx,by,gaze.x,gaze.y);
+
+  // 眼皮：从上方往下压，压掉的部分露出球体本身（局部坐标）
+  const [ya,yb]=lidCut(ry,eh,lid,side,CFG.lidSlant);
+
+  // 两眼作为一组绕球心刚体旋转 sharedRot：
+  // 于是「两眼连线」也跟着倾斜，而两只眼自身转同样角度 → 始终平行
+  const cs=Math.cos(P.rot), sn=Math.sin(P.rot);
+  const px=P.x*cs - P.y*sn;
+  const py=P.x*sn + P.y*cs;
+
+  drawKimiEye(px,py,P.rot,1, rx,ry,side,lid,ya,yb);
+}
+
+/* 共用：Kimi 的眼睛本体（竖向白色胶囊 + 眼皮斜切）。
+   原版小球与龙虾里的 Kimi 都走这一套 —— 形状、眨眼、生气完全同款 */
+function drawKimiEye(px,py,rot,sc, rx,ry,side,lid,ya,yb){
+  ctx.save();
+  ctx.translate(ex_(px), ey_(py));
+  ctx.rotate(rot);
+  ctx.scale(ES*sc, ES*sc);
+  kimiEyeShape(rx,ry,ya,yb);
+  ctx.restore();
+}
+/* 眼睛本体：假定变换已经移到眼心。斜切的上边缘 ya/yb 决定眨眼与生气 */
+function kimiEyeShape(rx,ry,ya,yb){
+  ctx.beginPath();
+  ctx.moveTo(-rx-1, ya);
+  ctx.lineTo( rx+1, yb);
+  ctx.lineTo( rx+1, ry+1);
+  ctx.lineTo(-rx-1, ry+1);
+  ctx.closePath();ctx.clip();
+  capsule(rx,ry);
+}
+/* 眼皮斜切量：与眨眼同款。生气时外高内低斜切（与 Kimi 一致） */
+function lidCut(ry,eh,lid,side,slant){
+  const angry = MOOD()==='angry' && rage>0.01;
+  const al = angry ? CFG.angryLid*rage : 0;
+  const cut = -ry + eh*Math.max(lid, al);
+  const sl = angry ? (slant==null?CFG.lidSlant:slant)*(1-al*0.35) : 0;
+  const yOut=cut-sl, yIn=cut+sl;
+  return side==='l' ? [yOut,yIn] : [yIn,yOut];
+}
+
+/* 把点数组写进 Path2D（首点即起点） */
+/* 龙虾的坐标是「以自身中心为原点、单位为 1」的归一化坐标，
+   画之前已经 translate 到中心并 scale(R)，所以这里直接用原始值，不能加 cx0/cy0。 */
+function addPoly(path, pts){
+  path.moveTo(pts[0][0], pts[0][1]);
+  for(let i=1;i<pts.length;i++) path.lineTo(pts[i][0], pts[i][1]);
+  path.closePath();
+}
+
+/* ---------------- 龙虾样式 ----------------
+   坐标全部由参考图逐像素提取（OpenCV 取轮廓 + RDP 简化），不是手绘近似。
+   单位：1 = 半宽（原图 143px）；原点 = 图形外接框中心；y 负 = 上。 */
+/* 不再单独画螯：整只龙虾是一张静态图，螯和尾巴都包含在这个轮廓里，
+   色块也是按整只提取的，所以不存在「有的动有的不动」的问题。 */
+const CRAB_SIL=[[0.997,0.483],[0.927,0.309],[0.809,0.191],[0.635,0.184],[0.635,0.108],[0.552,-0.101],[0.420,-0.260],[0.115,-0.483],[0.115,-0.608],[0.052,-0.781],[0.017,-0.774],[0.087,-0.594],[0.080,-0.524],[-0.045,-0.587],[-0.073,-0.524],[-0.163,-0.559],[-0.226,-0.503],[-0.274,-0.580],[-0.406,-0.649],[-0.406,-0.622],[-0.288,-0.552],[-0.240,-0.434],[-0.434,-0.212],[-0.594,-0.156],[-0.635,-0.274],[-0.719,-0.295],[-0.795,-0.226],[-0.802,-0.177],[-0.920,-0.142],[-0.934,-0.052],[-0.885,-0.010],[-0.733,0.017],[-0.684,0.198],[-0.823,0.219],[-0.941,0.372],[-0.962,0.580],[-0.844,0.733],[-0.635,0.837],[-0.503,0.837],[-0.503,0.767],[-0.469,0.760],[-0.448,0.795],[-0.385,0.656],[0.101,0.726],[0.358,0.649],[0.420,0.663],[0.490,0.802],[0.552,0.774],[0.559,0.837],[0.663,0.837],[0.878,0.705]];  // 整只龙虾轮廓 300 点
+const CRAB_MASK=[[0.358,0.010],[0.295,-0.031],[0.101,-0.108],[-0.142,-0.080],[-0.316,0.038],[-0.351,0.101],[-0.392,0.219],[-0.385,0.316],[-0.351,0.427],[-0.330,0.441],[-0.260,0.545],[-0.038,0.594],[0.066,0.608],[0.295,0.538],[0.330,0.510],[0.434,0.330],[0.434,0.170],[0.420,0.122]];  // 蓝色面罩
+const CRAB_MBRK=[
+    [[0.344,0.010],[0.122,-0.073],[-0.135,-0.052],[-0.156,-0.031],[-0.240,0.163],[-0.233,0.219],[-0.219,0.240],[-0.163,0.441],[-0.128,0.448],[-0.087,0.476],[0.003,0.510],[0.052,0.510],[0.226,0.476],[0.281,0.476],[0.323,0.434],[0.372,0.406],[0.392,0.378],[0.406,0.378],[0.434,0.330],[0.434,0.170],[0.413,0.108],[0.372,0.052],[0.330,0.045]]
+  ];  // 面罩亮块（原图外圈暗、内部亮）
+const CRAB_LIT=[
+    [[0.559,0.601],[0.545,0.601],[0.538,0.608],[0.531,0.608],[0.524,0.615],[0.517,0.615],[0.510,0.622],[0.503,0.622],[0.497,0.628],[0.490,0.628],[0.483,0.635],[0.476,0.635],[0.469,0.642],[0.462,0.642],[0.448,0.656],[0.441,0.656],[0.434,0.663],[0.434,0.698],[0.441,0.705],[0.441,0.712],[0.455,0.712],[0.462,0.719],[0.455,0.726],[0.455,0.740],[0.462,0.747],[0.462,0.760],[0.476,0.774],[0.476,0.781],[0.483,0.788],[0.483,0.795],[0.490,0.802],[0.503,0.802],[0.510,0.795],[0.510,0.788],[0.524,0.774],[0.524,0.753],[0.531,0.747],[0.531,0.740],[0.538,0.733],[0.538,0.726],[0.545,0.719],[0.545,0.712],[0.552,0.705],[0.552,0.691],[0.566,0.677],[0.566,0.670],[0.573,0.663],[0.580,0.663],[0.594,0.649],[0.601,0.649],[0.601,0.628],[0.594,0.622],[0.587,0.622],[0.573,0.608],[0.566,0.608]],
+    [[-0.767,0.358],[-0.712,0.601],[-0.691,0.642],[-0.663,0.663],[-0.608,0.740],[-0.580,0.760],[-0.566,0.788],[-0.531,0.823],[-0.503,0.823],[-0.503,0.781],[-0.552,0.712],[-0.580,0.698],[-0.566,0.684],[-0.559,0.656],[-0.545,0.656],[-0.510,0.691],[-0.497,0.719],[-0.469,0.733],[-0.476,0.753],[-0.455,0.788],[-0.441,0.788],[-0.420,0.760],[-0.399,0.698],[-0.399,0.670],[-0.434,0.628],[-0.503,0.601],[-0.531,0.601],[-0.552,0.635],[-0.566,0.642],[-0.580,0.622],[-0.587,0.538],[-0.753,0.358]],
+    [[0.788,0.191],[0.788,0.198],[0.774,0.205],[0.774,0.212],[0.705,0.281],[0.705,0.288],[0.691,0.295],[0.691,0.309],[0.684,0.316],[0.684,0.351],[0.677,0.358],[0.677,0.385],[0.670,0.392],[0.670,0.420],[0.663,0.427],[0.663,0.469],[0.677,0.483],[0.691,0.531],[0.705,0.545],[0.705,0.559],[0.719,0.573],[0.726,0.608],[0.795,0.608],[0.802,0.601],[0.865,0.601],[0.872,0.594],[0.941,0.594],[0.955,0.580],[0.955,0.566],[0.976,0.538],[0.983,0.483],[0.962,0.434],[0.962,0.413],[0.948,0.385],[0.948,0.365],[0.941,0.358],[0.934,0.323],[0.927,0.309],[0.878,0.260],[0.865,0.260],[0.858,0.267],[0.851,0.253],[0.837,0.247],[0.844,0.240],[0.844,0.226],[0.837,0.226],[0.809,0.191]],
+    [[-0.747,-0.288],[-0.747,-0.274],[-0.733,-0.253],[-0.733,-0.240],[-0.726,-0.233],[-0.726,-0.226],[-0.719,-0.219],[-0.719,-0.205],[-0.712,-0.198],[-0.712,-0.177],[-0.705,-0.170],[-0.705,-0.156],[-0.698,-0.156],[-0.691,-0.149],[-0.670,-0.149],[-0.663,-0.142],[-0.649,-0.142],[-0.642,-0.135],[-0.642,-0.087],[-0.649,-0.080],[-0.649,-0.031],[-0.642,-0.024],[-0.628,-0.024],[-0.622,-0.017],[-0.601,-0.017],[-0.594,-0.024],[-0.594,-0.031],[-0.587,-0.038],[-0.587,-0.052],[-0.580,-0.059],[-0.580,-0.066],[-0.573,-0.073],[-0.573,-0.080],[-0.566,-0.087],[-0.566,-0.094],[-0.559,-0.101],[-0.559,-0.108],[-0.538,-0.142],[-0.538,-0.156],[-0.594,-0.156],[-0.608,-0.170],[-0.608,-0.177],[-0.615,-0.184],[-0.615,-0.212],[-0.622,-0.219],[-0.622,-0.233],[-0.628,-0.240],[-0.628,-0.260],[-0.642,-0.281],[-0.677,-0.281],[-0.684,-0.288]],
+    [[-0.399,-0.649],[-0.399,-0.635],[-0.392,-0.635],[-0.385,-0.628],[-0.385,-0.615],[-0.365,-0.594],[-0.358,-0.594],[-0.344,-0.580],[-0.337,-0.580],[-0.323,-0.566],[-0.302,-0.566],[-0.288,-0.552],[-0.288,-0.538],[-0.274,-0.524],[-0.274,-0.517],[-0.267,-0.510],[-0.267,-0.503],[-0.260,-0.497],[-0.260,-0.490],[-0.240,-0.469],[-0.240,-0.455],[-0.226,-0.455],[-0.226,-0.462],[-0.212,-0.476],[-0.212,-0.490],[-0.219,-0.490],[-0.233,-0.503],[-0.233,-0.510],[-0.240,-0.517],[-0.240,-0.524],[-0.253,-0.538],[-0.253,-0.545],[-0.260,-0.552],[-0.260,-0.559],[-0.267,-0.566],[-0.267,-0.573],[-0.274,-0.580],[-0.281,-0.580],[-0.288,-0.587],[-0.295,-0.587],[-0.309,-0.601],[-0.316,-0.601],[-0.330,-0.615],[-0.337,-0.615],[-0.344,-0.622],[-0.351,-0.622],[-0.378,-0.649]],
+    [[0.031,-0.781],[0.087,-0.524],[0.059,-0.517],[-0.031,-0.587],[-0.087,-0.510],[-0.128,-0.559],[-0.156,-0.559],[-0.267,-0.247],[-0.260,-0.031],[-0.135,-0.101],[0.115,-0.122],[0.288,-0.045],[0.316,-0.059],[0.434,0.115],[0.448,0.337],[0.323,0.538],[0.170,0.601],[0.462,0.573],[0.608,0.420],[0.615,0.163],[0.635,0.156],[0.635,0.108],[0.615,0.101],[0.622,0.066],[0.587,0.031],[0.594,-0.003],[0.552,-0.101],[0.420,-0.260],[0.191,-0.427],[0.170,-0.420],[0.115,-0.483],[0.115,-0.608],[0.094,-0.622],[0.059,-0.767]]
+  ];  // 红身亮块 50%
+const CRAB_DRK=[
+    [[0.760,0.191],[0.684,0.191],[0.677,0.198],[0.635,0.198],[0.635,0.212],[0.628,0.219],[0.622,0.413],[0.552,0.490],[0.552,0.497],[0.538,0.503],[0.538,0.510],[0.483,0.566],[0.483,0.573],[0.434,0.615],[0.420,0.635],[0.420,0.656],[0.434,0.656],[0.441,0.642],[0.559,0.587],[0.573,0.601],[0.601,0.608],[0.601,0.531],[0.656,0.462],[0.656,0.420],[0.663,0.413],[0.663,0.372],[0.670,0.365],[0.677,0.295],[0.698,0.281],[0.698,0.274],[0.760,0.212]],
+    [[-0.503,-0.170],[-0.538,-0.128],[-0.580,-0.024],[-0.601,-0.003],[-0.656,0.122],[-0.656,0.205],[-0.816,0.226],[-0.878,0.295],[-0.885,0.323],[-0.774,0.323],[-0.580,0.531],[-0.566,0.615],[-0.552,0.615],[-0.531,0.587],[-0.503,0.587],[-0.392,0.649],[-0.392,0.628],[-0.545,0.490],[-0.615,0.226],[-0.615,0.198],[-0.594,0.156],[-0.524,-0.101],[-0.503,-0.149],[-0.490,-0.156],[-0.490,-0.170]]
+  ];  // 红身暗块 10%
+
+/* 龙虾自己的黑眼（触角顶端，带右上角白色矩形高光）+ Kimi 的白眼（面罩上）
+   两对眼睛的坐标、尺寸全部由原图逐像素量取：
+     黑眼 左(-0.128,-0.281) r0.045/0.087 ／ 右(0.083,-0.292) r0.042/0.083
+     白眼 左(-0.038,0.174)  r0.052/0.090 ／ 右(0.222,0.156) r0.049/0.087
+   白眼两眼取同尺寸、同一水平线（y=0.165）。 */
+const CRAB_EYES=[[-0.128,-0.281,0.045,0.087],[0.083,-0.292,0.042,0.083]];
+const CRAB_KIMI=[[-0.038,0.165,0.0505,0.0885],[0.222,0.165,0.0505,0.0885]];
+
+/* 龙虾不再画自己那对黑眼 —— 眼睛由 Kimi 的白色胶囊眼叠上去，避免两层眼睛打架 */
+
+
+
+/* 竖向胶囊（矩形 + 两端圆），跟 Kimi 原版同形状；两端用多边形近似圆弧 → 边有棱角 */
+function capsulePath(rx,ry,seg){
+  const w=rx, h=ry, r=Math.min(w,h);
+  const pts=[];
+  const corner=(cx,cy,a0,a1)=>{
+    for(let i=0;i<=seg;i++){
+      const t=a0+(a1-a0)*(i/seg);
+      pts.push([cx+r*Math.cos(t), cy+r*Math.sin(t)]);
+    }
+  };
+  corner(-w+r,-h+r, Math.PI,        Math.PI*1.5);   // 左上
+  corner( w-r,-h+r, Math.PI*1.5,    Math.PI*2  );   // 右上
+  corner( w-r, h-r, 0,              Math.PI*0.5);   // 右下
+  corner(-w+r, h-r, Math.PI*0.5,    Math.PI    );   // 左下
+  const q=new Path2D();
+  q.moveTo(pts[0][0],pts[0][1]);
+  for(let i=1;i<pts.length;i++) q.lineTo(pts[i][0],pts[i][1]);
+  q.closePath();
+  return q;
+}
+
+function drawCrab(now){
+  updateSharedRot(gaze.x, gaze.y);   // 两眼共用倾角，与原版一致
+  // 整体缩放 = 呼吸 × 点击弹簧（press 负=放大、正=缩小）
+  const sc=(1+crabBreath)*(1-press);
+  const R=CFG.bodySize/2*S*CFG.crabScale*sc;
+  const P=crabPal();
+  const r=(now<rageUntil&&rage>0.01)?rage:0;
+  const shake=r?Math.sin(now/58)*r*0.018:0;
+  const lid=eyes.l.lid;
+
+  ctx.save();
+  ctx.translate(cx0+shake, cy0);
+  ctx.scale(R,R);
+
+  /* 1. 龙虾本体：纯矢量多边形大色块，按面积从大到小铺，每层都完整覆盖自己的区域。
+        层与层不会留缝，因为底层就是整只轮廓的实色，上面几层只是叠色块。
+        全部硬边纯色、无渐变、无阴影 —— 和原图的扁平平涂一致。 */
+  const bp0=new Path2D(); addPoly(bp0, CRAB_SIL);
+  ctx.lineJoin='round';
+  ctx.fillStyle=P.b2; ctx.fill(bp0);                       // 红中档：铺满整只（底）
+  ctx.strokeStyle=P.b2; ctx.lineWidth=0.004; ctx.stroke(bp0);
+  ctx.save(); ctx.clip(bp0);
+  ctx.fillStyle=P.b3; ctx.strokeStyle=P.b3; ctx.lineWidth=0.004;
+  for(const poly of CRAB_DRK){ const q=new Path2D(); addPoly(q,poly); ctx.fill(q); ctx.stroke(q); }
+  ctx.fillStyle=P.b1; ctx.strokeStyle=P.b1; ctx.lineWidth=0.004;
+  for(const poly of CRAB_LIT){ const q=new Path2D(); addPoly(q,poly); ctx.fill(q); ctx.stroke(q); }
+  ctx.restore();
+
+  /* 2. 蓝色面罩：暗档打底 → 亮块叠上（原图蓝面罩 暗35% / 亮65%） */
+  const mp=new Path2D(); addPoly(mp, CRAB_MASK);
+  ctx.fillStyle=P.m2; ctx.fill(mp);
+  ctx.strokeStyle=P.m2; ctx.lineWidth=0.004; ctx.stroke(mp);
+  ctx.save(); ctx.clip(mp);
+  ctx.fillStyle=P.m1; ctx.strokeStyle=P.m1; ctx.lineWidth=0.004;
+  for(const poly of CRAB_MBRK){ const q=new Path2D(); addPoly(q,poly); ctx.fill(q); ctx.stroke(q); }
+  ctx.restore();
+
+  /* 3. 龙虾自己的黑眼：触角顶端的竖向胶囊，右上角一小块白色矩形高光，
+        被眼形裁掉后看着像「露出的一角」。静态，不眨眼。 */
+  for(const [ex,ey,erx,ery] of CRAB_EYES){
+    ctx.save(); ctx.translate(ex,ey);
+    const ep=capsulePath(erx, ery, 5);
+    ctx.fillStyle=P.eye; ctx.fill(ep);
+    ctx.save(); ctx.clip(ep);
+    ctx.fillStyle=P.eyeHi;
+    ctx.fillRect(erx*0.55-erx*0.45, -ery*0.60-ery*0.365, erx*0.90, ery*0.73);
+    ctx.restore(); ctx.restore();
+  }
+
+  /* 4. Kimi 的眼睛：面罩上的两个白色竖向胶囊
+        形状、眨眼、生气斜切 —— 走和原版小球同一个 kimiEyeShape() */
+  const gx=gaze.x*0.042, gy=gaze.y*0.026;
+  ctx.save();
+  ctx.clip(mp);
+  for(let i=0;i<CRAB_KIMI.length;i++){
+    const [ex,ey,erx,ery]=CRAB_KIMI[i];
+    const sd=i?'r':'l';
+    const [ya,yb]=lidCut(ery,ery*2,lid,sd,CFG.crabLidSlant);  // 蟹眼短 → 斜切放轻
+    ctx.save();
+    ctx.translate(ex+gx, ey+gy);   // 龙虾：只跟着视角平移，不歪斜
+    kimiEyeShape(erx, ery, ya, yb);
+    ctx.restore();
+  }
+  ctx.restore();
+
+  ctx.restore();
+}
+
+/* 圆角长方形对话框：居中显示，文字打字机效果逐字出现 */
+function roundRect(x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
+  ctx.closePath();
+}
+
+function bubbleBox(now){
+  const fs=Math.max(16, Math.round(Math.min(W,H)*0.042));
+  const txt=curLines()[bubbleIdx]||'';
+  ctx.font='500 '+fs+'px -apple-system,BlinkMacSystemFont,"PingFang SC",system-ui,sans-serif';
+  const tw=ctx.measureText(txt).width;
+  const w=clamp(tw+fs*2.2, Math.min(W*0.46, W-28), W*0.90), h=fs*3.1;
+  const r=Math.min(h*0.42, fs*1.0);
+  return {x:clamp(W*CFG.bubbleX-w/2, 12, W-w-12),
+          y:clamp(H*CFG.bubbleY-h/2, 12, H-h-12), w, h, r, fs, txt};
+}
+
+function drawBubble(now){
+  if(!bubbleShown || bubbleIdx<0) return;
+  const B=bubbleBox(now);
+  const age=now-bubbleT0;
+  // 淡入
+  const a=clamp(age/240, 0, 1);
+
+  ctx.save();
+  ctx.globalAlpha=a;
+  ctx.shadowColor=TH().cardShadow;
+  ctx.shadowOffsetY=Math.max(2,B.h*0.10);
+  ctx.shadowBlur=B.h*0.55;
+  ctx.fillStyle=TH().card;
+  roundRect(B.x,B.y,B.w,B.h,B.r); ctx.fill();
+  ctx.shadowBlur=0; ctx.shadowOffsetY=0;
+  ctx.strokeStyle=TH().cardBorder;
+  ctx.lineWidth=1;
+  roundRect(B.x,B.y,B.w,B.h,B.r); ctx.stroke();
+
+  // 打字机：按字数逐字吐出
+  ctx.font='500 '+B.fs+'px -apple-system,BlinkMacSystemFont,"PingFang SC",system-ui,sans-serif';
+  ctx.textAlign='left'; ctx.textBaseline='middle';
+  ctx.fillStyle='#33415c';
+  const shown=clamp(Math.floor(age/CFG.typeMs), 0, B.txt.length);
+  const part=B.txt.slice(0,shown);
+  const pw=ctx.measureText(part).width;
+  ctx.fillText(part, B.x+(B.w-pw)/2, B.y+B.h/2);   // 已出现的部分保持居中
+
+  // 光标：打完前闪烁
+  if(shown<B.txt.length && Math.floor(age/380)%2===0){
+    ctx.fillStyle=TH().fg;
+    ctx.fillRect(B.x+(B.w-pw)/2+pw+1, B.y+B.h/2-B.fs*0.42, Math.max(1,B.fs*0.08), B.fs*0.84);
+  }
+  ctx.restore();
+}
+
+/* 竖向胶囊：中间矩形 + 两端半圆，以 (0,0) 为中心、逻辑单位
+   白色不是贴在球面上的，而是被外面那层深蓝包裹着、从里面透出来的光。
+   所以：本体是中心纯白、边缘转蓝白的渐变，外圈再散一圈蓝白辉光。 */
+function capsule(rx,ry){
+  const r=Math.min(rx,ry)*CFG.eyeRound;   // 圆角：越小越接近圆角矩形（更钝）
+  const flat=Math.max(0, ry-r);           // 直边半长
+  ctx.beginPath();
+  ctx.arc(0, -flat, r, Math.PI, 0);       // 上端半圆
+  ctx.lineTo(rx, flat);                   // 右侧直边
+  ctx.arc(0, flat, r, 0, Math.PI);        // 下端半圆
+  ctx.closePath();
+
+  ctx.fillStyle='#ffffff';   // 纯白，不掺蓝
+  ctx.fill();
+}
+
+
+/* ---------------- 设置界面 ---------------- */
+const gear=document.getElementById('gear'), panel=document.getElementById('panel');
+const swWrap=document.getElementById('swatches'), themeSeg=document.getElementById('themeSeg');
+const backBtn=document.getElementById('backBtn');
+
+const LS={
+  get(k,d){ try{ const v=localStorage.getItem('kimi_'+k); return v===null?d:v; }catch(e){ return d; } },
+  set(k,v){ try{ localStorage.setItem('kimi_'+k,v); }catch(e){} }
+};
+
+HUES.forEach(o=>{
+  const b=document.createElement('button');
+  b.className='sw'; b.dataset.hue=o.id; b.title=o.name; b.setAttribute('aria-label',o.name);
+  const i=document.createElement('i');
+  i.style.background='linear-gradient(135deg,'+hsl(o.h,66,68)+','+hsl(o.h,62,52)+')';
+  b.appendChild(i);
+  b.addEventListener('click',()=>setHue(o.id));
+  swWrap.appendChild(b);
+});
+function setHue(id,fromSlider){
+  hueId=id; LS.set('hue',id);
+  const o=HUES.find(x=>x.id===id)||HUES[0];
+  fixedSkin=o.fx||null;                // 第一个预设 → 原版色值；其余由 HSL 生成
+  LS.set('fix', fixedSkin?'1':'0');    // 记住「用的是原版色」，刷新后才不会被 HSL 覆盖
+  skinFromHue(o.h);
+  [...swWrap.children].forEach(b=>b.classList.toggle('on', b.dataset.hue===id));
+  if(!fromSlider){
+    // 点预设：只换色相，保留自己调的饱和度/明度
+    PK.h=o.h; applyPicker(true);
+    [...swWrap.children].forEach(b=>b.classList.toggle('on', b.dataset.hue===id));
+  }
+}
+function setTheme(t){
+  theme=t; LS.set('theme',t);
+  document.documentElement.setAttribute('data-theme',t);
+  [...themeSeg.children].forEach(b=>b.classList.toggle('on', b.dataset.theme===t));
+}
+[...themeSeg.children].forEach(b=>b.addEventListener('click',()=>setTheme(b.dataset.theme)));
+
+function openPanel(){
+  panel.classList.add('open'); gear.style.transform='rotate(90deg)';
+}
+function closePanel(){ panel.classList.remove('open'); gear.style.transform=''; }
+gear.addEventListener('pointerdown',e=>e.stopPropagation());
+gear.addEventListener('click',openPanel);
+backBtn.addEventListener('click',closePanel);
+panel.addEventListener('click',e=>{ if(e.target===panel) closePanel(); });
+window.addEventListener('keydown',e=>{ if(e.key==='Escape') closePanel(); });
+
+/* ---------------- 自定义颜色：三条滑块（色相 / 饱和度 / 明度） ---------------- */
+const hueR=document.getElementById('hueR'),  hueV=document.getElementById('hueV');
+const satR=document.getElementById('satR'),  satV=document.getElementById('satV');
+const litR=document.getElementById('litR'),  litV=document.getElementById('litV');
+const pickHex=document.getElementById('pickHex');
+const resetC=document.getElementById('resetC');
+
+const PK={h:215,s:65,l:57};
+
+function syncSliders(){
+  hueR.value=PK.h; satR.value=PK.s; litR.value=PK.l;
+  hueV.textContent=PK.h; satV.textContent=PK.s; litV.textContent=PK.l;
+  // 饱和度条：当前色相下 低饱和 → 高饱和
+  satR.style.setProperty('--satTrack',
+    'linear-gradient(90deg,'+hsl(PK.h,0,PK.l)+','+hsl(PK.h,100,PK.l)+')');
+  // 明度条：当前色相饱和度下 暗 → 亮
+  litR.style.setProperty('--litTrack',
+    'linear-gradient(90deg,'+hsl(PK.h,PK.s,22)+','+hsl(PK.h,PK.s,86)+')');
+}
+
+function applyPicker(keepFixed){
+  hueH=PK.h; hueS=PK.s; hueL=PK.l;
+  if(!keepFixed){ fixedSkin=null; LS.set('fix','0'); }   // 手动调 → 交回 HSL
+  skinFromHue(PK.h,PK.s,PK.l);
+  if(fixedSkin) Object.assign(SKIN, fixedSkin);
+  pickHex.textContent=fixedSkin?fixedSkin.core:hsl2hex(PK.h,PK.s,PK.l);
+  LS.set('hsl', PK.h+','+PK.s+','+PK.l);
+  if(!fixedSkin) [...swWrap.children].forEach(b=>b.classList.remove('on'));
+  syncSliders();
+}
+
+/* 样式切换：原版 / 龙虾 */
+const styleSeg=document.getElementById('styleSeg');
+function setStyle(t){
+  styleMode=t; LS.set('style',t);
+  [...styleSeg.children].forEach(b=>b.classList.toggle('on', b.dataset.style===t));
+  // 清掉飞行/放大/甩爪的残留状态，切换后干净起步
+  FL.flying=false; FL.x=0; FL.y=0; FL.vx=0; FL.vy=0; FL.homeT=-99999; FL.t0=-99999;
+  TRAIL.length=0; RINGS.length=0;
+  press=0; pressV=0; popUntil=-99999; sq=0; sqV=0;
+}
+[...styleSeg.children].forEach(b=>b.addEventListener('click',()=>setStyle(b.dataset.style)));
+
+const onRange=(el,fn)=>{ el.addEventListener('input',()=>fn(+el.value)); };
+onRange(hueR,v=>{ PK.h=v; applyPicker(false); });
+onRange(satR,v=>{ PK.s=v; applyPicker(false); });
+onRange(litR,v=>{ PK.l=v; applyPicker(false); });
+
+resetC.addEventListener('click',()=>{
+  setHue('blue');                    // 走预设 → 拿到写死的原版色值
+  PK.h=215; PK.s=65; PK.l=57;
+  applyPicker(true);
+});
+
+const savedHSL=(LS.get('hsl','')||'').split(',');
+
+// fix 标记要在 setHue() 之前读：setHue 自己也会写它，会覆盖掉上次的记录
+const isFixed = LS.get('fix','1')==='1';
+setStyle(LS.get('style','ball')==='crab'?'crab':'ball');
+setHue(HUES.some(x=>x.id===LS.get('hue','blue')) ? LS.get('hue','blue') : 'blue');
+setTheme(LS.get('theme','light')==='dark'?'dark':'light');
+// 恢复自定义值：若上次停在「原版默认色」，就不要用 HSL 覆盖它
+if(!isFixed && savedHSL.length===3 && !isNaN(+savedHSL[0])){
+  PK.h=+savedHSL[0]; PK.s=+savedHSL[1]; PK.l=+savedHSL[2];
+  applyPicker(false);
+}else{
+  applyPicker(true);                   // 保持原版色 / 同步滑块显示
+}
+
+/* ---------------- 主循环 ---------------- */
+let prev=0;
+function frame(now){
+  const dt=prev?now-prev:16;
+  prev=now;
+  step(now,dt);
+  draw(now);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
