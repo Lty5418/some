@@ -1,0 +1,2995 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNC 加工知识 · 融合大文 + 十七版原始回答 + 评判标准与文献</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1e3a5f;--blue:#2b5a8a;--ink:#1a2b3c;--txt:#33465a;--grey:#7a8ca0;
+  --line:#e3e9f0;--bg:#f4f6fa;
+  --dou:#d97706;--doubg:#fff5e6;--doubd:#f2d9a8;
+  --kimi:#2563eb;--kimibg:#eaf1fd;--kimibd:#c2d7f5;
+  --ds:#0d9488;--dsbg:#e6f7f5;--dsbd:#b3e2da;
+  --k3:#4f46e5;--k3bg:#eeecfd;--k3bd:#c9c3f3;
+  --mi:#ea580c;--mibg:#fff1e7;--mibd:#fbd0b5;
+  --qw:#db2777;--qwbg:#fdeef5;--qwbd:#f8c9dd;
+  --glm:#4d7c0f;--glmbg:#f0f8e6;--glmbd:#d3e8b0;
+  --mm:#0ea5e9;--mmbg:#e6f6fe;--mmbd:#b3e3f7;
+  --yb:#7c3aed;--ybbg:#f3edfd;--ybdbd:#d8c8f7;
+  --wx:#0891b2;--wxbg:#e3f6fa;--wxbd:#aee0ee;
+  --ry:#c2410c;--rybg:#fff0e8;--rybd:#f7c9ae;
+  --cop:#475569;--copbg:#eef1f5;--copbd:#cbd5e1;
+  --hy:#15803d;--hybg:#eaf6ee;--hybd:#b6e0c4;
+  --stp:#b91c1c;--stpbg:#fdecec;--stpbd:#f5c2c2;
+  --mm31:#0369a1;--mm31bg:#e3f2fb;--mm31bd:#a8d5ee;
+  --z360:#be185d;--z360bg:#fdeaf2;--z360bd:#f6bfd5;
+  --stp5:#0f766e;--stp5bg:#e0f2f1;--stp5bd:#a3d9d3;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
+background:var(--bg);color:var(--ink);line-height:1.72;padding:22px 13px 70px}
+.wrap{max-width:1040px;margin:0 auto}
+.hero{background:linear-gradient(120deg,#1e3a5f 0%,#2b5a8a 60%,#3a7bbf 100%);color:#fff;
+border-radius:18px;padding:28px 24px;margin-bottom:18px;position:relative;overflow:hidden}
+.hero:after{content:"CNC";position:absolute;right:-8px;bottom:-32px;font-size:118px;font-weight:800;
+opacity:.08;letter-spacing:-5px}
+.hero h1{font-size:25px;font-weight:700;letter-spacing:.5px;position:relative;z-index:2}
+.hero p{margin-top:7px;font-size:13.5px;opacity:.88;position:relative;z-index:2}
+.qbox{position:relative;z-index:2;margin-top:14px;background:rgba(255,255,255,.12);
+border:1px solid rgba(255,255,255,.24);border-radius:12px;padding:12px 14px}
+.qbox .lb{font-size:11.5px;opacity:.8;margin-bottom:5px;letter-spacing:.5px}
+.qbox pre{font-family:inherit;font-size:12.6px;line-height:1.85;white-space:pre-wrap;margin:0}
+.legend{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px;position:relative;z-index:2}
+.legend span{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.13);
+border:1px solid rgba(255,255,255,.24);border-radius:999px;padding:3px 10px;font-size:11.5px}
+.legend i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.i-dou{background:#f6b352}.i-kimi{background:#7aa7f0}.i-k3{background:#9187ee}.i-ds{background:#5fd0c4}
+.i-mm{background:#66c6ee}.i-qw{background:#f28cb8}.i-glm{background:#8cc63f}.i-mi{background:#fb923c}
+.i-yb{background:#b79bf0}.i-wx{background:#5cc4dc}.i-ry{background:#f28a5e}
+.i-cop{background:#94a3b8}
+.i-hy{background:#4ade80}
+.i-stp{background:#f87171}
+.i-mm31{background:#5bb8e8}
+.i-z360{background:#f472b6}
+.i-stp5{background:#2dd4bf}
+
+.nav{background:#fff;border:1px solid var(--line);border-radius:14px;padding:9px;margin-bottom:18px;
+display:flex;flex-wrap:wrap;gap:7px;position:sticky;top:8px;z-index:30;box-shadow:0 2px 10px rgba(30,58,95,.06)}
+.nav a{flex:1 1 150px;text-align:center;text-decoration:none;font-size:12.6px;font-weight:600;color:var(--blue);
+background:#f0f6fd;border:1px solid #d6e6f7;border-radius:10px;padding:8px 5px}
+.nav a:hover{background:var(--blue);color:#fff}
+
+section{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 20px 14px;
+margin-bottom:18px;scroll-margin-top:66px}
+.sec-head{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.sec-num{width:32px;height:32px;border-radius:9px;background:var(--blue);color:#fff;font-weight:700;
+font-size:16px;display:flex;align-items:center;justify-content:center;flex:none}
+.sec-head h2{font-size:18.5px;font-weight:700}
+.sec-head .sub{font-size:12px;color:var(--grey);margin-top:1px}
+
+h3.blk{font-size:15px;color:var(--blue);margin:20px 0 9px;padding-left:9px;border-left:3px solid var(--blue)}
+h4.sub2{font-size:13.4px;color:#1e4d7d;margin:14px 0 5px}
+p.body{font-size:13px;color:var(--txt);margin-bottom:8px}
+.srcs{margin:0 0 10px 0;line-height:2.4}
+.tbox{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+.tbox table{width:100%;border-collapse:collapse;font-size:12.3px;min-width:560px}
+.tbox th{background:var(--blue);color:#fff;font-weight:600;padding:7px 9px;text-align:left;font-size:11.8px;white-space:nowrap}
+.tbox td{border-bottom:1px solid #e6edf4;padding:6px 9px;color:var(--txt);vertical-align:top}
+.tbox tr:nth-child(even) td{background:#f8fbfe}
+.tbox td.k{font-weight:600;color:#1e4d7d;white-space:nowrap}
+.grid2{display:flex;flex-wrap:wrap;gap:11px}
+.grid2>*{flex:1 1 320px;min-width:0}
+.card{background:#f8fbfe;border:1px solid #dbe8f4;border-radius:12px;padding:13px 15px}
+.card .t{display:block;font-size:13.2px;color:#1e4d7d;font-weight:700;margin-bottom:3px}
+.card p{font-size:12.8px;color:var(--txt)}
+.cons{background:#eef7f1;border:1px solid #cfe8da;border-radius:12px;padding:12px 15px;margin-bottom:14px}
+.cons b{font-size:13px;color:#1e5c38;display:block;margin-bottom:5px}
+.cons p{font-size:12.8px;color:#2c5c44}
+.warn{background:#fff8ec;border:1px solid #f3ddb5;border-radius:12px;padding:12px 15px;margin:10px 0;font-size:12.8px;color:#7a5a1f}
+.warn b{color:#8a5a10}
+.diff{background:#fff8ec;border:1px solid #f3ddb5;border-radius:11px;padding:11px 14px;margin-top:14px}
+.diff b{font-size:12.8px;color:#8a5a10;display:block;margin-bottom:5px}
+.diff ul{margin-left:17px;font-size:12.7px;color:#7a5a1f}
+.diff li{margin-bottom:3px}
+
+.st{font-style:normal;font-size:10.5px;font-weight:600;border-radius:999px;padding:2px 8px;
+display:inline-block;margin:0 3px 2px 0;white-space:nowrap;vertical-align:middle;line-height:1.6}
+.st-dou{background:var(--doubg);color:var(--dou);border:1px solid var(--doubd)}
+.st-kimi{background:var(--kimibg);color:var(--kimi);border:1px solid var(--kimibd)}
+.st-k3{background:var(--k3bg);color:var(--k3);border:1px solid var(--k3bd)}
+.st-ds{background:var(--dsbg);color:var(--ds);border:1px solid var(--dsbd)}
+.st-yb{background:var(--ybbg);color:var(--yb);border:1px solid var(--ybdbd)}
+.st-mi{background:var(--mibg);color:var(--mi);border:1px solid var(--mibd)}
+.st-qw{background:var(--qwbg);color:var(--qw);border:1px solid var(--qwbd)}
+.st-glm{background:var(--glmbg);color:var(--glm);border:1px solid var(--glmbd)}
+.st-mm{background:var(--mmbg);color:#0369a1;border:1px solid var(--mmbd)}
+.st-wx{background:var(--wxbg);color:var(--wx);border:1px solid var(--wxbd)}
+.st-ry{background:var(--rybg);color:var(--ry);border:1px solid var(--rybd)}
+.st-cop{background:var(--copbg);color:var(--cop);border:1px solid var(--copbd)}
+.st-hy{background:var(--hybg);color:var(--hy);border:1px solid var(--hybd)}
+.st-stp{background:var(--stpbg);color:var(--stp);border:1px solid var(--stpbd)}
+.st-mm31{background:var(--mm31bg);color:var(--mm31);border:1px solid var(--mm31bd)}
+.st-z360{background:var(--z360bg);color:var(--z360);border:1px solid var(--z360bd)}
+.st-stp5{background:var(--stp5bg);color:var(--stp5);border:1px solid var(--stp5bd)}
+.st-p{background:#eef2f7;color:#4a6customs}
+.st-p{background:#eef2f7;color:#41627f;border:1px solid #d3dfeb}
+.srcnote{font-size:11.2px;color:var(--grey);margin-top:4px}
+
+.src{border-radius:12px;padding:14px 15px;border:1px solid}
+.src.dou{background:var(--doubg);border-color:var(--doubd)}
+.src.kimi{background:var(--kimibg);border-color:var(--kimibd)}
+.src.k3{background:var(--k3bg);border-color:var(--k3bd)}
+.src.ds{background:var(--dsbg);border-color:var(--dsbd)}
+.src.yb{background:var(--ybbg);border-color:var(--ybdbd)}
+.src.mi{background:var(--mibg);border-color:var(--mibd)}
+.src.qw{background:var(--qwbg);border-color:var(--qwbd)}
+.src.glm{background:var(--glmbg);border-color:var(--glmbd)}
+.src.mm{background:var(--mmbg);border-color:var(--mmbd)}
+.src.wx{background:var(--wxbg);border-color:var(--wxbd)}
+.src.ry{background:var(--rybg);border-color:var(--rybd)}
+.src.cop{background:var(--copbg);border-color:var(--copbd)}
+.src.hy{background:var(--hybg);border-color:var(--hybd)}
+.src.stp{background:var(--stpbg);border-color:var(--stpbd)}
+.src.mm31{background:var(--mm31bg);border-color:var(--mm31bd)}
+.src.z360{background:var(--z360bg);border-color:var(--z360bd)}
+.src.stp5{background:var(--stp5bg);border-color:var(--stp5bd)}
+.src .who{font-size:12.2px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.src.dou .who{color:var(--dou)}.src.kimi .who{color:var(--kimi)}.src.k3 .who{color:var(--k3)}
+.src.ds .who{color:var(--ds)}.src.yb .who{color:var(--yb)}.src.mi .who{color:var(--mi)}
+.src.qw .who{color:var(--qw)}.src.glm .who{color:var(--glm)}.src.mm .who{color:#0369a1}
+.src.wx .who{color:var(--wx)}.src.ry .who{color:var(--ry)}
+.src.cop .who{color:var(--cop)}
+.src.hy .who{color:var(--hy)}
+.src.stp .who{color:var(--stp)}
+.src.mm31 .who{color:var(--mm31)}
+.src.z360 .who{color:var(--z360)}
+.src.stp5 .who{color:var(--stp5)}
+.src .who em{font-style:normal;font-weight:500;opacity:.7;font-size:11px}
+.src .who .v{font-size:10.5px;font-weight:500;padding:1px 7px;border-radius:999px;
+background:rgba(255,255,255,.75);border:1px solid rgba(0,0,0,.08)}
+.src ul{margin:0 0 0 17px;font-size:12.9px;color:var(--txt)}
+.src li{margin-bottom:4px}
+.src h4{font-size:12.8px;margin:9px 0 4px;color:#1e4d7d}
+.src p{font-size:12.9px;color:var(--txt);margin-bottom:5px}
+.mini{width:100%;border-collapse:collapse;font-size:12.2px;margin:7px 0;background:rgba(255,255,255,.6);
+border-radius:8px;overflow:hidden}
+.mini th{background:rgba(30,58,95,.82);color:#fff;font-weight:600;padding:6px 8px;text-align:left;font-size:11.8px}
+.mini td{border-bottom:1px solid rgba(0,0,0,.06);padding:6px 8px;vertical-align:top}
+.mini tr:last-child td{border-bottom:none}
+.mini td.k{font-weight:600;color:#1e4d7d;white-space:nowrap}
+.tagline{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tagline i{font-style:normal;font-size:11.5px;background:rgba(255,255,255,.7);border-radius:999px;
+padding:3px 10px;color:var(--txt)}
+.fix{font-size:11.5px;margin-top:8px;padding:6px 9px;background:rgba(255,255,255,.6);
+border-radius:7px;color:#8a6a20}
+.qh{background:#f0f6fd;border-left:3px solid var(--blue);border-radius:0 8px 8px 0;
+padding:7px 12px;font-size:12.9px;color:#1e4d7d;font-weight:600;margin:14px 0 8px}
+.aiblock{border:1px solid var(--line);border-radius:13px;padding:14px 15px;margin-bottom:14px;background:#fcfdfe}
+.aiblock>.hd{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.aiblock>.hd .nm{font-size:15.5px;font-weight:700}
+.aiblock>.hd .vv{font-size:11.5px;background:#eef2f7;color:#41627f;border-radius:999px;padding:2px 9px}
+.aiblock>.hd .sc{font-size:12.4px;font-weight:700;margin-left:auto}
+.aiblock>.ds2{font-size:12.2px;color:var(--grey);margin-bottom:6px}
+.foot{font-size:11.5px;color:var(--grey);text-align:center;margin-top:12px;line-height:1.9}
+@media (max-width:560px){
+  body{padding:13px 8px 44px}
+  .hero{padding:22px 16px}.hero h1{font-size:20px}.hero:after{font-size:80px;bottom:-24px}
+  section{padding:16px 13px 10px}
+  .nav{position:static}
+  .sec-head h2{font-size:16.5px}
+}
+
+/* ===== 体验优化 v2 ===== */
+html{scroll-behavior:smooth}
+section[id],.sec-head{scroll-margin-top:64px}
+
+/* 阅读进度条 */
+#prog{position:fixed;left:0;top:0;height:3px;width:0;z-index:200;
+background:linear-gradient(90deg,#2b5a8a,#3a7bbf,#38e1c4);transition:width .1s linear}
+
+/* 吸顶导航增强 */
+.nav{top:6px;backdrop-filter:saturate(1.4) blur(8px);background:rgba(255,255,255,.94)}
+.nav a{transition:background .15s,color .15s,box-shadow .15s}
+.nav a.on{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 2px 8px rgba(43,90,138,.28)}
+
+/* 回到顶部 */
+#top{position:fixed;right:14px;bottom:18px;z-index:150;width:42px;height:42px;border-radius:50%;
+border:1px solid var(--line);background:#fff;color:var(--blue);font-size:17px;cursor:pointer;
+box-shadow:0 4px 16px rgba(30,58,95,.18);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;
+display:flex;align-items:center;justify-content:center}
+#top.show{opacity:1;pointer-events:auto}
+#top:active{transform:scale(.92)}
+
+/* 模型工具栏 */
+.mtools{position:sticky;top:52px;z-index:25;background:var(--bg);
+padding:8px 0 10px;margin:0 0 12px;display:flex;flex-wrap:wrap;gap:7px;align-items:center;
+border-bottom:1px dashed var(--line)}
+.mtools input{flex:1 1 130px;min-width:110px;border:1px solid var(--line);border-radius:9px;
+padding:6px 11px;font-size:12.5px;background:#fff;color:var(--ink);outline:none}
+.mtools input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(43,90,138,.12)}
+.mtools button{border:1px solid var(--line);background:#fff;color:var(--txt);border-radius:9px;
+padding:6px 13px;font-size:12.5px;cursor:pointer;white-space:nowrap}
+.mtools button:hover{background:#eef3f9;border-color:#c3d3e4}
+.mtools button.act{background:var(--blue);color:#fff;border-color:var(--blue)}
+.mtools .cnt{font-size:11.6px;color:var(--grey);margin-left:auto}
+
+/* 可折叠模型块 */
+.aiblock>.hd{cursor:pointer;user-select:none;transition:opacity .15s}
+.aiblock>.hd:hover{opacity:.78}
+.aiblock>.hd .tw{display:inline-block;width:14px;font-size:10px;color:var(--grey);
+transition:transform .2s;flex:none}
+.aiblock.open>.hd .tw{transform:rotate(90deg)}
+.aiblock:not(.open)>.ai-body{display:none}
+.aiblock:not(.open){padding-bottom:10px}
+.aiblock.open{box-shadow:0 3px 14px rgba(30,58,95,.09)}
+.aiblock.hide{display:none}
+
+/* 纯净阅读：隐藏来源角标 */
+body.nost .st{display:none}
+body.nost .srcs{display:none}
+
+/* ---------- 暗色模式：逐类精确配色（不用 brightness 粗暴压暗） ---------- */
+[data-theme="dark"]{
+  --ink:#dde5f0; --txt:#bccbdd; --grey:#8497ae;
+  --line:#2a3648; --hair:rgba(255,255,255,.10);
+  --bg:#0e141d; --soft:#161f2b; --soft2:#1d2836;
+  --navy:#16202e; --blue:#4a83c4;
+}
+[data-theme="dark"] body{background:var(--bg);color:var(--ink)}
+[data-theme="dark"] .hero{
+  background:linear-gradient(120deg,#16202e 0%,#1d2f45 60%,#25517d 100%)!important;
+  box-shadow:0 12px 38px rgba(0,0,0,.45)}
+[data-theme="dark"] .hero h1,[data-theme="dark"] .qbox{color:#eaf1fa}
+[data-theme="dark"] .qbox{background:rgba(255,255,255,.07)!important;border-color:rgba(255,255,255,.14)!important}
+[data-theme="dark"] .qbox pre{background:#131c28!important;color:var(--txt);border-color:var(--hair)!important}
+
+[data-theme="dark"] .nav{background:rgba(22,31,43,.94)!important;border-color:var(--line)!important}
+[data-theme="dark"] .nav a{color:var(--txt);border-color:transparent}
+[data-theme="dark"] .nav a:hover{background:var(--soft2);color:#dce8f5}
+[data-theme="dark"] .nav a.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+[data-theme="dark"] .mtools{background:rgba(20,28,39,.94)!important;border-color:var(--line)!important}
+[data-theme="dark"] .mtools input,[data-theme="dark"] .mtools button{
+  background:var(--soft)!important;color:var(--txt)!important;border-color:var(--line)!important}
+[data-theme="dark"] .mtools button:hover{background:var(--soft2)!important}
+[data-theme="dark"] .mtools .cnt{background:var(--soft2);color:var(--grey)}
+[data-theme="dark"] .mtools input::placeholder{color:var(--grey)}
+
+[data-theme="dark"] .aiblock{background:#141d29!important;border-color:var(--line)!important;
+  box-shadow:0 1px 3px rgba(0,0,0,.3)}
+[data-theme="dark"] .aiblock:hover{border-color:rgba(74,131,196,.4)!important;box-shadow:0 3px 14px rgba(0,0,0,.35)}
+[data-theme="dark"] .aiblock.open{border-color:rgba(74,131,196,.5)!important;box-shadow:0 6px 22px rgba(0,0,0,.4)}
+[data-theme="dark"] .aiblock>.hd .vv{background:var(--soft2);color:var(--txt)}
+[data-theme="dark"] .aiblock>.hd .sc{background:linear-gradient(135deg,#4a83c4,#6aa3e0);color:#fff}
+[data-theme="dark"] .aiblock .ds2{color:var(--grey)}
+
+[data-theme="dark"] .src{background:#131c27!important;border-color:var(--line)!important}
+[data-theme="dark"] .src h4{color:#cfdcec}
+[data-theme="dark"] .src table{background:#131c27;border-color:var(--line)}
+[data-theme="dark"] .src .who em{color:var(--grey)}
+[data-theme="dark"] .qh{background:var(--soft)!important;color:#a9c6e6;border-color:var(--line)!important;
+  border-left-color:var(--blue)!important}
+
+[data-theme="dark"] .card{background:#141d29;border-color:var(--line)}
+[data-theme="dark"] .cons{background:#132019!important;border-color:#234034!important}
+[data-theme="dark"] .cons b{color:#7fd4a4}
+[data-theme="dark"] .cons p{color:#a8c6b4}
+[data-theme="dark"] .diff{background:#211c11!important;border-color:#3d3420!important}
+[data-theme="dark"] .diff b{color:#e0b968}
+[data-theme="dark"] .diff ul,[data-theme="dark"] .diff li{color:#c3b48c}
+
+[data-theme="dark"] .tbox{background:#141d29;border-color:var(--line)}
+[data-theme="dark"] .tbox th{background:var(--navy);color:#cfe0f2}
+[data-theme="dark"] .tbox td{color:var(--txt);border-color:var(--line)}
+[data-theme="dark"] .tbox tr:nth-child(even) td{background:rgba(255,255,255,.022)}
+[data-theme="dark"] table.cmp th,[data-theme="dark"] table.mini th{background:var(--navy)!important}
+[data-theme="dark"] table.cmp td,[data-theme="dark"] table.mini td{color:var(--txt);border-color:var(--line)}
+
+[data-theme="dark"] .blk{color:#cfdcec}
+[data-theme="dark"] .sub2{color:#a9c6e6}
+[data-theme="dark"] .srcs,[data-theme="dark"] .srcnote{color:var(--grey)}
+[data-theme="dark"] .foot{color:var(--grey)}
+[data-theme="dark"] .legend span{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.16)}
+[data-theme="dark"] .sec-num{background:var(--blue)}
+[data-theme="dark"] .st{filter:saturate(.82) brightness(.86)}
+[data-theme="dark"] #top,[data-theme="dark"] #tt{background:#1a2432;color:var(--txt);border-color:var(--line)}
+[data-theme="dark"] ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-color:var(--bg)}
+[data-theme="dark"] ::selection{background:rgba(74,131,196,.32)}
+
+/* 主题开关 */
+#tt{position:fixed;right:14px;bottom:68px;z-index:150;width:42px;height:42px;border-radius:50%;
+border:1px solid var(--line);background:#fff;cursor:pointer;font-size:16px;
+box-shadow:0 4px 16px rgba(30,58,95,.18);display:flex;align-items:center;justify-content:center}
+
+@media (max-width:560px){
+  #tt{width:38px;height:38px;bottom:62px;right:10px}
+  #top{width:38px;height:38px;right:10px}
+  .nav{max-height:none;overflow-x:auto;flex-wrap:nowrap}
+  .nav a{flex:0 0 auto}
+  .mtools{top:48px}
+  .mtools .cnt{width:100%;margin-left:0}
+}
+@media print{
+  #prog,#top,#tt,.mtools{display:none}
+  .aiblock:not(.open)>.ai-body{display:block}
+}
+
+
+/* ============================================================
+   视觉重构 v3 —— 统一设计 token / 圆角体系 / 层级 / 间距
+   ============================================================ */
+:root{
+  /* 圆角：5 档，全局只用这 5 个值 */
+  --r-xl:22px;   /* 大容器：hero / section */
+  --r-lg:16px;   /* 卡片：aiblock / 表格容器 */
+  --r-md:12px;   /* 内部块：cons / diff / src / qh */
+  --r-sm:9px;    /* 小元件：按钮 / 输入框 / 标签 */
+  --r-xs:6px;    /* 极小的：td 内嵌 / 角标 */
+
+  /* 阴影：4 档 */
+  --sh-1:0 1px 2px rgba(16,32,52,.05);
+  --sh-2:0 2px 10px rgba(16,32,52,.07);
+  --sh-3:0 6px 22px rgba(16,32,52,.10);
+  --sh-4:0 12px 38px rgba(16,32,52,.14);
+
+  /* 描边 & 底色 */
+  --hair:rgba(16,32,52,.09);
+  --soft:#f7f9fc;
+  --soft2:#eef2f8;
+
+  /* 间距节奏 */
+  --sp:14px;
+}
+
+/* ---------- 全局圆角兜底：任何带边框/底色的块都不再是直角 ---------- */
+.hero,.wrap>section,.foot{border-radius:var(--r-xl)}
+.aiblock{border-radius:var(--r-lg)!important}
+.card,.cons,.diff,.qh,.src,.srcs,.srcnote,.tbox,.qbox,
+.mtools,.nav,.legend,.gs,.blk,.mini,pre,table,th,td,
+.st,.chip,.tag,.aiblock .ds2,.sec-num{border-radius:var(--r-md)}
+
+/* 表格：外框圆角 + 首末格圆角，消除"表格是唯一直角物"的割裂 */
+table{border-collapse:separate!important;border-spacing:0;overflow:hidden}
+th{border-radius:0}
+table tr:first-child th:first-child{border-top-left-radius:var(--r-md)}
+table tr:first-child th:last-child{border-top-right-radius:var(--r-md)}
+table tr:last-child td:first-child{border-bottom-left-radius:var(--r-md)}
+table tr:last-child td:last-child{border-bottom-right-radius:var(--r-md)}
+
+/* ---------- 层级：彻底解决 sticky 重合 ---------- */
+#prog{z-index:300}
+.nav{z-index:120;top:8px;
+  background:rgba(255,255,255,.92);backdrop-filter:saturate(1.6) blur(12px);
+  border:1px solid var(--hair);box-shadow:var(--sh-2);
+  border-radius:var(--r-lg);padding:9px 10px;gap:8px}
+.nav a{border-radius:var(--r-sm);border:1px solid transparent;
+  padding:6px 12px;font-size:12.6px;transition:all .18s cubic-bezier(.4,0,.2,1)}
+.nav a:hover{background:var(--soft2);color:var(--blue)}
+.nav a.on{background:var(--blue);color:#fff;box-shadow:var(--sh-2)}
+
+/* 工具条：top 由 JS 按 nav 实际高度动态设置，杜绝叠加 */
+.mtools{z-index:110;
+  background:rgba(244,246,250,.93);backdrop-filter:blur(10px);
+  border:1px solid var(--hair);border-radius:var(--r-lg);
+  padding:9px 11px;gap:8px;margin:10px 0 14px;
+  box-shadow:var(--sh-1)}
+.mtools input,.mtools button{border-radius:var(--r-sm);
+  border:1px solid var(--hair);transition:all .16s}
+.mtools input{padding:7px 12px}
+.mtools button{padding:7px 14px}
+.mtools button:hover{background:var(--soft2);transform:translateY(-1px);box-shadow:var(--sh-1)}
+.mtools button.act{background:var(--blue);color:#fff;border-color:var(--blue)}
+.mtools .cnt{font-size:11.6px;color:var(--grey);margin-left:auto;
+  background:var(--soft2);border-radius:999px;padding:3px 11px}
+
+/* ---------- 模型块：弱化"块中块"割裂感 ---------- */
+.aiblock{border:1px solid var(--hair);background:#fff;
+  box-shadow:var(--sh-1);transition:box-shadow .22s,border-color .22s,transform .22s;
+  padding:16px 17px;margin-bottom:13px}
+.aiblock:hover{border-color:rgba(43,90,138,.22);box-shadow:var(--sh-2)}
+.aiblock.open{box-shadow:var(--sh-3);border-color:rgba(43,90,138,.26)}
+.aiblock>.hd{padding:2px 0 8px;gap:9px;align-items:center}
+.aiblock>.hd .nm{font-size:16px;letter-spacing:.2px}
+.aiblock>.hd .vv{background:var(--soft2);border-radius:999px;padding:3px 11px;font-size:11.4px}
+.aiblock>.hd .sc{font-weight:700;
+  background:linear-gradient(135deg,#2b5a8a,#3a7bbf);color:#fff;
+  border-radius:999px;padding:3px 12px;font-size:12px;box-shadow:var(--sh-1)}
+.aiblock>.hd .tw{width:16px;font-size:11px;color:var(--blue);
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:transform .24s cubic-bezier(.4,0,.2,1)}
+.aiblock.open>.hd{border-bottom:1px dashed var(--hair);margin-bottom:12px;padding-bottom:11px}
+.aiblock .ds2{color:var(--grey);font-size:12.3px;line-height:1.75}
+
+/* 内部内容块：统一成"浅底 + 左色条"，不再各自为政 */
+.src{border:1px solid var(--hair)!important;
+  border-radius:var(--r-md)!important;padding:14px 16px;margin:9px 0;
+  box-shadow:none!important;background:#fcfdff!important}
+.src h4{font-size:13.2px;margin:12px 0 6px;font-weight:700}
+.src ul{margin:6px 0;padding-left:19px}
+.src p{font-size:13px;line-height:1.78}
+.src table{background:#fff;border:1px solid var(--hair)}
+
+/* 提问框 */
+.qbox{background:var(--soft)!important;border:1px solid var(--hair)!important;
+  border-radius:var(--r-md)!important;padding:11px 14px}
+.qbox pre{background:#fff;border:1px solid var(--hair);border-radius:var(--r-sm);
+  padding:9px 12px;font-size:12.2px;color:var(--txt);box-shadow:none;
+  white-space:pre-wrap;word-break:break-word}
+
+/* 小问标题 */
+.qh{background:var(--soft)!important;border:1px solid var(--hair);
+  border-left:3px solid var(--blue)!important;border-radius:var(--r-sm)!important;
+  padding:8px 13px;font-size:12.9px}
+
+/* 通用卡片 */
+.card{background:#fff;border:1px solid var(--hair);box-shadow:var(--sh-1);padding:13px 16px}
+.cons{background:#f2f9f5;border:1px solid #d6ebe0;box-shadow:var(--sh-1);padding:13px 16px}
+.diff{background:#fdf8ee;border:1px solid #f0e2c4;box-shadow:var(--sh-1);padding:13px 16px}
+
+/* 角标：更圆润、更轻 */
+.st{border-radius:999px!important;padding:2.5px 10px!important;
+  font-size:10.8px!important;line-height:1.7;box-shadow:none!important;
+  border:1px solid rgba(0,0,0,.06)}
+
+/* 章节头 */
+.sec-head{gap:13px;padding:2px 0}
+.sec-num{border-radius:var(--r-md);width:34px;height:34px;
+  box-shadow:var(--sh-2);font-size:16px}
+.wrap>section{margin-bottom:26px}
+
+/* hero */
+.hero{box-shadow:var(--sh-4);padding:30px 26px}
+.hero h1{letter-spacing:.4px}
+.legend{gap:7px;margin-top:14px}
+.legend span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);
+  border-radius:999px;padding:3px 11px;font-size:11.4px;transition:background .18s}
+.legend span:hover{background:rgba(255,255,255,.26)}
+
+/* 表格容器 */
+.tbox{border:1px solid var(--hair);border-radius:var(--r-md);
+  background:#fff;box-shadow:var(--sh-1);padding:2px}
+.tbox table{min-width:520px;border:none}
+.tbox th{background:var(--blue)}
+.tbox td{border-bottom:1px solid var(--hair);border-right:1px solid var(--hair)}
+.tbox td:last-child{border-right:none}
+.tbox tr:last-child td{border-bottom:none}
+
+/* 悬浮按钮：垂直排布不再打架 */
+#top{width:44px;height:44px;border-radius:50%;
+  background:#fff;border:1px solid var(--hair);box-shadow:var(--sh-3);
+  bottom:20px;right:16px;font-size:18px;transition:opacity .25s,transform .25s}
+#tt{width:44px;height:44px;border-radius:50%;
+  background:#fff;border:1px solid var(--hair);box-shadow:var(--sh-3);
+  bottom:72px;right:16px;font-size:17px;transition:transform .2s}
+#top:hover,#tt:hover{transform:translateY(-2px);box-shadow:var(--sh-4)}
+#tt:active{transform:scale(.92)}
+
+/* 滚动条：细一点更高级 */
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(16,32,52,.16);border-radius:999px;
+  border:2px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:rgba(16,32,52,.3)}
+
+/* 选中态 */
+::selection{background:rgba(43,90,138,.16)}
+
+/* 打印 */
+@media print{
+  .aiblock,.tbox,.card,.cons,.diff{box-shadow:none!important}
+  #top,#tt,#prog,.mtools{display:none!important}
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+  <h1>CNC 加工知识 · 全景汇编</h1>
+  <p>17 个 AI 模型 + 56 篇论文 → 融合大文（带来源角标）· 十七版原始回答 · 评判标准与引用文献</p>
+  <div class="qbox">
+    <div class="lb">📌 向所有 AI 提出的原始问题（十七家完全相同）</div>
+    <pre>整理一个关于 1. CNC是什么？加工原理？
+2. CNC常用材料有哪些？6061和7075怎么选？
+3. 普通CNC加工精度大概多少？
+4. 设计CNC零件要注意什么？
+类似思维导图的文档</pre>
+  </div>
+  <div class="legend">
+    <span><i class="i-dou"></i>豆包 2.1</span><span><i class="i-kimi"></i>Kimi K2.6</span>
+    <span><i class="i-k3"></i>Kimi K3</span><span><i class="i-ds"></i>DeepSeek V4.1F</span>
+    <span><i class="i-yb"></i>元宝 HY4p</span><span><i class="i-mi"></i>小米 V2.6</span>
+    <span><i class="i-qw"></i>千问 3.8</span><span><i class="i-glm"></i>GLM 5.3f</span>
+    <span><i class="i-mm"></i>MiniMax M3</span><span><i class="i-wx"></i>文心一言</span>
+    <span><i class="i-ry"></i>荣耀悠悠</span>
+    <span><i class="i-cop"></i>GitHub Copilot</span>
+    <span><i class="i-hy"></i>混元 Hy3</span>
+    <span><i class="i-stp"></i>Step 3.7 flash</span>
+    <span><i class="i-mm31"></i>MiniMax 3.1</span>
+    <span><i class="i-z360"></i>360 智脑</span>
+    <span><i class="i-stp5"></i>Step 5</span>
+  </div>
+</div>
+
+
+<nav class="nav">
+  <a href="#s1">① 融合大文（带来源）</a>
+  <a href="#s2">② 十七家原始回答</a>
+  <a href="#s3">③ 对比速查表</a>
+  <a href="#s4">④ 评判标准与得分</a>
+  <a href="#s5">⑤ 引用文献</a>
+</nav>
+
+<section id="s1">
+<div class="sec-head"><div class="sec-num">1</div><div><h2>融合大文 · CNC 加工知识全景</h2><div class="sub">以 17 个 AI 的回答为主体，论文与权威资料校核数值；每段末尾标注来源</div></div></div>
+<div class="cons"><b>✅ 这一节怎么读</b>
+<p>正文由十七个模型的回答融合而成，<b>每个段落后面跟着来源角标</b> —— 彩色是 AI，灰色是论文 / 手册 / 标准 / 厂商数据表。
+数值以基准库为准（ASM Handbook Vol.2、ASTM B209、ISO 2768-1、GB/T 1804-2000），
+凡与基准库冲突的（如"7075 贵 23 倍""三菱 4000 m/min"）已在融合时修正并单独说明。</p></div>
+<h3 class="blk">一、CNC 是什么？加工原理？</h3>
+<h4 class="sub2">1.1 定义</h4>
+<p class="body">CNC = <b>Computer Numerical Control</b>（计算机数字控制），用数字化程序控制机床运动与加工过程，自动切除毛坯上的多余材料，属于<b>减材制造</b> —— 对立面是 3D 打印（增材）与注塑（成型）。它由早期 NC（硬编码数控）发展而来。<i class="st st-dou">豆包 2.1</i><i class="st st-kimi">Kimi K2.6</i><i class="st st-k3">Kimi K3</i><i class="st st-ds">DeepSeek</i><i class="st st-yb">元宝</i><i class="st st-mi">小米 V2.6</i><i class="st st-qw">千问 3.8</i><i class="st st-glm">GLM 5.3</i><i class="st st-mm">MiniMax M3</i><i class="st st-wx">文心一言</i><i class="st st-ry">荣耀悠悠</i><i class="st st-wx">文心一言</i><i class="st st-cop">Copilot</i><i class="st st-hy">混元 Hy3</i><i class="st st-stp">Step 3.7</i><i class="st st-mm31">MiniMax 3.1</i><i class="st st-z360">360 智脑</i><i class="st st-stp5">Step 5</i></p>
+<div class="srcs"></div>
+<p class="srcnote">注：荣耀悠悠写作 Computerized Numerical Control，与其余十家的 Computer 用词不同。<i class="st st-ry">荣耀悠悠</i></p>
+<h4 class="sub2">1.2 加工原理（四层）</h4>
+<div class="tbox"><table>
+<tr><th>层</th><th>内容</th><th>说明</th></tr>
+<tr><td class="k">主运动</td><td>主轴带动刀具（铣）或工件（车）高速旋转</td><td>提供切削速度 vc</td></tr>
+<tr><td class="k">进给运动</td><td>刀具/工作台沿 X、Y、Z（+A、B、C 旋转轴）移动</td><td>提供进给量 f 与切深 ap</td></tr>
+<tr><td class="k">插补</td><td>数控系统按 G 代码做直线/圆弧插补，把曲线拆成几百段小直线逼近</td><td>精度本质 = 每段直线离理想曲线多近</td></tr>
+<tr><td class="k">切削三要素</td><td>切削速度 vc、进给量 f、切削深度 ap</td><td>决定效率、刀具寿命与表面质量</td></tr>
+</table></div>
+<div class="srcs">插补层：<i class="st st-mm">MiniMax M3</i><i class="st st-k3">Kimi K3</i>　三要素：<i class="st st-k3">Kimi K3</i>　<b>开环／半闭环／闭环三种控制方式及适用场合</b>：<i class="st st-stp">Step 3.7</i>（唯一，且指明半闭环为工业主流）　主运动/进给：<i class="st st-dou">豆包 2.1</i><i class="st st-kimi">Kimi K2.6</i><i class="st st-k3">Kimi K3</i><i class="st st-ds">DeepSeek</i><i class="st st-yb">元宝</i><i class="st st-mi">小米 V2.6</i><i class="st st-qw">千问 3.8</i><i class="st st-glm">GLM 5.3</i><i class="st st-mm">MiniMax M3</i><i class="st st-wx">文心一言</i><i class="st st-ry">荣耀悠悠</i><i class="st st-cop">Copilot</i><i class="st st-mm31">MiniMax 3.1</i><i class="st st-z360">360 智脑</i><i class="st st-stp5">Step 5</i></div>
+<h4 class="sub2">1.3 代码体系（G / M）</h4>
+<div class="grid2">
+<div class="card"><b class="t">G 代码 — 运动轨迹</b><p>G00 快速定位 · G01 直线插补 · G02 / G03 圆弧插补</p></div>
+<div class="card"><b class="t">M 代码 — 辅助功能</b><p>M06 换刀 · M03 / M05 主轴启停 · M08 冷却液</p></div>
+</div>
+<div class="srcs"><i class="st st-wx">文心一言</i><i class="st st-qw">千问 3.8</i></div>
+<h4 class="sub2">1.4 完整流程</h4>
+<div class="card"><p>CAD 三维建模 → CAM 编程（选刀、设参数、算刀路）→ 后处理生成 G 代码 →
+装夹与对刀 → 试切首件 → 粗加工去余量 → 精加工保尺寸 → 检测（卡尺 / 三坐标）→ 去毛刺 → 表面处理</p></div>
+<div class="srcs">八步完整版：<i class="st st-wx">文心一言</i><i class="st st-mi">小米 V2.6</i>　五步精简版：<i class="st st-qw">千问 3.8</i>　"试切首件"：<i class="st st-mi">小米 V2.6</i></div>
+<h4 class="sub2">1.5 机床类型</h4>
+<div class="tbox"><table>
+<tr><th>类型</th><th>刀具 / 工件状态</th><th>典型用途</th></tr>
+<tr><td class="k">加工中心 / 数控铣</td><td>刀转、工件动</td><td>平面、型腔、曲面、钻孔攻丝</td></tr>
+<tr><td class="k">数控车床 / 车削中心</td><td>工件转、刀具移动</td><td>轴类、套类、盘类回转体</td></tr>
+<tr><td class="k">钻攻中心</td><td>高速小切削量</td><td>3C 小零件批量加工</td></tr>
+<tr><td class="k">数控磨床</td><td>砂轮精加工</td><td>精密轴、平面、Ra &lt; 0.4 μm</td></tr>
+<tr><td class="k">线切割 / 电火花 EDM</td><td>非接触加工</td><td>硬材料、尖内角、特殊型腔</td></tr>
+<tr><td class="k">车铣复合 / 走心机</td><td>一次装夹完成车 + 铣</td><td>走心式适合 &lt;42 mm 细长精密件</td></tr>
+</table></div>
+<div class="srcs">表格：<i class="st st-wx">文心一言</i><i class="st st-k3">Kimi K3</i><i class="st st-mi">小米 V2.6</i>　走心机 &lt;42 mm：<i class="st st-glm">GLM 5.3</i>　五种方式对比：<i class="st st-k3">Kimi K3</i><br><b>机床物理组成清单</b>（控制器／伺服步进电机／主轴／刀库换刀／工作台夹具／冷却润滑／测量探针）：<i class="st st-cop">Copilot</i>（唯一列全）<br><b>关键参数含「刀具半径／长度补偿」</b>：<i class="st st-cop">Copilot</i>（唯一）<br><b>设备三分类（铣削／车削／特种加工）+ 大板面 CNC 路由机</b>：<i class="st st-stp">Step 3.7</i>（唯一提路由机）</div>
+<h4 class="sub2">1.6 轴数怎么选</h4>
+<div class="tbox"><table>
+<tr><th>轴数</th><th>构成</th><th>适用</th><th>成本</th></tr>
+<tr><td class="k">3 轴</td><td>X / Y / Z 三直线轴</td><td>常规棱柱形零件，约 90%% 场景</td><td>最低</td></tr>
+<tr><td class="k">4 轴</td><td>加一个旋转轴</td><td>斜孔、侧面特征、沿圆柱分布的特征</td><td>中</td></tr>
+<tr><td class="k">5 轴</td><td>三直线 + 两旋转轴联动</td><td>复杂曲面、倒扣、叶轮、航空件</td><td>高（行程小、编程难）</td></tr>
+</table></div>
+<div class="warn"><b>选型口诀：</b>先想 3 轴能不能干，3 轴干不了才上 5 轴。5 轴机贵、行程小、编程难 —— <i class="st st-mm">MiniMax M3</i><i class="st st-mi">小米 V2.6</i><i class="st st-glm">GLM 5.3</i> 都明确给出了这个判断。</div>
+<h3 class="blk">二、常用材料 & 6061 vs 7075 怎么选</h3>
+<h4 class="sub2">2.1 材料谱系</h4>
+<div class="tbox"><table>
+<tr><th>类别</th><th>常用牌号</th><th>核心特性</th></tr>
+<tr><td class="k">铝合金</td><td>6061、7075、5052、6063、2024、5083、2A12、7050、MIC-6</td><td>轻、易加工、导热好，性价比之王</td></tr>
+<tr><td class="k">不锈钢</td><td>303（易切削）、304、316L、17-4PH、S136、440C</td><td>耐蚀、强度高，加工硬化明显</td></tr>
+<tr><td class="k">碳钢 / 合金钢</td><td>45#、Q235、40Cr、Cr12MoV、P20、SKD11、DC53</td><td>强度高、便宜，需防锈</td></tr>
+<tr><td class="k">铜合金</td><td>T2 紫铜、H62 / C3604 黄铜、铍铜</td><td>导电导热优，紫铜易粘刀</td></tr>
+<tr><td class="k">钛合金</td><td>TC4（Ti-6Al-4V）、纯钛 Gr2</td><td>比强度极高、生物相容，难加工且贵</td></tr>
+<tr><td class="k">镁合金</td><td>AZ91D</td><td>最轻，切屑易燃需注意处理</td></tr>
+<tr><td class="k">工程塑料</td><td>POM、ABS、PC、PMMA、PA66、PTFE、PEEK、电木</td><td>绝缘、轻、耐磨；PEEK 高温高性能但贵</td></tr>
+<tr><td class="k">其他</td><td>锌合金、Inconel 718、石墨</td><td>特殊场景</td></tr>
+</table></div>
+<div class="srcs">谱系主体：<i class="st st-dou">豆包 2.1</i><i class="st st-kimi">Kimi K2.6</i><i class="st st-k3">Kimi K3</i><i class="st st-ds">DeepSeek</i><i class="st st-yb">元宝</i><i class="st st-mi">小米 V2.6</i><i class="st st-qw">千问 3.8</i><i class="st st-glm">GLM 5.3</i><i class="st st-mm">MiniMax M3</i><i class="st st-wx">文心一言</i><i class="st st-ry">荣耀悠悠</i><i class="st st-cop">Copilot</i><i class="st st-hy">混元 Hy3</i><i class="st st-stp">Step 3.7</i><i class="st st-mm31">MiniMax 3.1</i><i class="st st-z360">360 智脑</i><i class="st st-stp5">Step 5</i><br>独有补充 —— 镁合金 AZ91D / Inconel 718 / 石墨 / 电木：<i class="st st-wx">文心一言</i>　镁合金"轻但易燃"：<i class="st st-mm">MiniMax M3</i>　塑料吸水变形、热胀冷缩大：<i class="st st-mm">MiniMax M3</i>　选材三问判断流程：<i class="st st-mm">MiniMax M3</i>　全流程覆盖：<i class="st st-cop">Copilot</i><i class="st st-hy">混元 Hy3</i><i class="st st-stp">Step 3.7</i><br><b>材料谱系扩到木材（胡桃木／橡木）与复合材料（碳纤／玻纤）</b>：<i class="st st-stp">Step 3.7</i>（唯一）</div>
+<h4 class="sub2">2.2 6061-T6 vs 7075-T6（数值以基准库为准）</h4>
+<div class="tbox"><table>
+<tr><th>对比项</th><th>6061-T6</th><th>7075-T6</th><th>结论</th></tr>
+<tr><td class="k">合金系</td><td>Al-Mg-Si（6 系）</td><td>Al-Zn-Mg-Cu（7 系）</td><td>—</td></tr>
+<tr><td class="k">抗拉强度</td><td>310 MPa</td><td>572 MPa</td><td>7075 高约 85%%</td></tr>
+<tr><td class="k">屈服强度</td><td>276 MPa</td><td>503 MPa</td><td>7075 高约 83%%</td></tr>
+<tr><td class="k">疲劳强度</td><td>95–97 MPa</td><td>159–160 MPa</td><td>循环载荷选 7075（旋转弯曲 R=−1，5×10⁸，抛光）</td></tr>
+<tr><td class="k">硬度</td><td>95 HB</td><td>150 HB</td><td>7075 更耐磨</td></tr>
+<tr><td class="k">密度</td><td>2.70 g/cm³</td><td>2.81 g/cm³</td><td>7075 仅重 4%%</td></tr>
+<tr><td class="k">弹性模量</td><td>68.9 GPa</td><td>71.0 GPa</td><td><b>同截面刚度几乎一样</b></td></tr>
+<tr><td class="k">延伸率</td><td>12–17%%</td><td>5–11%</td><td>6061 延展性更好</td></tr>
+<tr><td class="k">切削加工性</td><td>优秀（9/10），排屑顺、刀耗低</td><td>良好（7/10），偏硬偏脆，磨损快 30–50%%</td><td>6061 更省更快</td></tr>
+<tr><td class="k">焊接性</td><td>好，可 MIG/TIG，焊缝约母材 80%% 强度</td><td>差，基本不可焊（易热裂）</td><td>要焊只能 6061</td></tr>
+<tr><td class="k">耐腐蚀</td><td>良好</td><td>中等，T6 有应力腐蚀开裂倾向</td><td>精密件可选 T651（预拉伸消应力）</td></tr>
+<tr><td class="k">阳极氧化</td><td>膜均匀致密，深色染色一致</td><td>含锌 5–6%%，易发花、色差、偏暗</td><td>外观件选 6061</td></tr>
+<tr><td class="k">价格</td><td>约 25–50 元/kg</td><td>约 38–60 元/kg</td><td>7075 贵 1.5–2.5 倍</td></tr>
+</table></div>
+<div class="srcs">力学与密度：<i class="st st-mi">小米 V2.6</i><i class="st st-glm">GLM 5.3</i><i class="st st-k3">Kimi K3</i><i class="st st-mm">MiniMax M3</i><i class="st st-wx">文心一言</i><br>疲劳强度：<i class="st st-mi">小米 V2.6</i>（唯一）<br>弹性模量 68.9 / 71.0 与"刚度几乎相同"结论：<i class="st st-mi">小米 V2.6</i><i class="st st-glm">GLM 5.3</i><br>延伸率 12–17%% / 5–11%%：<i class="st st-k3">Kimi K3</i><br>切削性评分 9/10 vs 7/10：<i class="st st-glm">GLM 5.3</i><br>基准库定值：<i class="st st-p">ASM Handbook Vol.2</i><i class="st st-p">ASTM B209</i><i class="st st-p">Alcoa datasheet</i></div>
+<h4 class="sub2">2.3 选型决策</h4>
+<div class="grid2">
+<div class="card"><b class="t">选 6061</b><p>一般结构件 / 外壳 / 面板 / 夹具 / 散热器<br>
+需要阳极氧化上色 · 有焊接工序 · 潮湿或腐蚀环境<br>
+成本与交期敏感 · 原型与小批量<br><b>精密薄壁件</b>（7075 残余应力大易变形）</p></div>
+<div class="card"><b class="t">选 7075</b><p>高静载 / 疲劳载荷件 · 航空结构、无人机机臂、赛车件<br>
+模具、军工件 · 需减薄壁又要强度<br>无焊接、无腐蚀的内部结构件 · 图纸明确指定</p></div>
+</div>
+<div class="srcs"><i class="st st-dou">豆包 2.1</i><i class="st st-kimi">Kimi K2.6</i><i class="st st-k3">Kimi K3</i><i class="st st-ds">DeepSeek</i><i class="st st-yb">元宝</i><i class="st st-mi">小米 V2.6</i><i class="st st-qw">千问 3.8</i><i class="st st-glm">GLM 5.3</i><i class="st st-mm">MiniMax M3</i><i class="st st-wx">文心一言</i><i class="st st-ry">荣耀悠悠</i><i class="st st-cop">Copilot</i><i class="st st-mm31">MiniMax 3.1</i><i class="st st-z360">360 智脑</i><i class="st st-stp5">Step 5</i></div>
+<div class="diff"><b>❌ 三个最常见的误区（三家独立得出同一结论）</b><ul><li><b>"强度不够就换 7075"</b> —— 弹性模量只差 3%，同截面刚度几乎一样。加厚壁厚、加筋通常比换料便宜得多。<i class="st st-mi">小米 V2.6</i><i class="st st-glm">GLM 5.3</i><i class="st st-yb">元宝</i></li><li><b>"7075 更高级所以更好"</b> —— 非承力件用 7075 只会得到：更贵的料、更快的刀具磨损、更容易变形的零件、更差的氧化外观。<i class="st st-mi">小米 V2.6</i><i class="st st-mm">MiniMax M3</i></li><li><b>拿不准时</b>：选 6061。真正需要 7075 的场景，你会很清楚。<i class="st st-mm">MiniMax M3</i><i class="st st-mi">小米 V2.6</i><i class="st st-qw">千问 3.8</i></li></ul></div>
+<h4 class="sub2">2.4 切削参数（刀具厂商实测）</h4>
+<div class="tbox"><table>
+<tr><th>场景</th><th>推荐切削速度</th><th>进给</th><th>来源</th></tr>
+<tr><td class="k">铣削（硬质合金）</td><td>400 m/min（200–600）</td><td>0.15 mm/t（0.05–0.25）</td><td>三菱 HT110</td></tr>
+<tr><td class="k">铣削（PCD 金刚石）</td><td>800 m/min（200–1500）</td><td>0.15 mm/t</td><td>三菱 MD220</td></tr>
+<tr><td class="k">钻削（硬质合金）</td><td>165 m/min（132–198）</td><td>—</td><td>京瓷 301M 系列</td></tr>
+<tr><td class="k">6061 推荐窗口</td><td>200–300 m/min</td><td>0.05–0.15 mm/齿</td><td>铭泰（中，二手转述）</td></tr>
+<tr><td class="k">7075 推荐窗口</td><td>150–220 m/min</td><td>0.03–0.10 mm/齿</td><td>铭泰（中，二手转述）</td></tr>
+</table></div>
+<p class="srcnote"><i class="st st-p">三菱刀具表</i> <i class="st st-p">京瓷刀具表</i>　⚠️ 有一份清单曾出现"三菱 4000 m/min"，经核实为误取 rpm 或 mm/min，正确值 400 m/min。</p>
+<h3 class="blk">三、普通 CNC 加工精度大概多少</h3>
+<h4 class="sub2">3.1 三个精度概念别混</h4>
+<div class="tbox"><table>
+<tr><th>概念</th><th>含义</th><th>典型数值</th></tr>
+<tr><td class="k">机床精度</td><td>机床本身能力（定位 / 重复定位）</td><td>定位 ±0.01~0.02；重复 ±0.002~0.005</td></tr>
+<tr><td class="k">加工精度</td><td>成品实际达到的尺寸 + 形位 + 表面质量</td><td>受机床+刀具+夹具+工艺+材料综合影响</td></tr>
+<tr><td class="k">经济加工精度</td><td>正常条件下稳定达到，非极限值</td><td>IT 等级表（IT9~IT13 常规）</td></tr>
+</table></div>
+<div class="srcs">机床 vs 加工精度区分：<i class="st st-glm">GLM 5.3</i><i class="st st-k3">Kimi K3</i><i class="st st-mi">小米 V2.6</i>　定位/重复定位分列：<i class="st st-mi">小米 V2.6</i>　机床 P / M / G 三级：<i class="st st-mi">小米 V2.6</i><br><b>把「重复定位精度」单独列为一档并给出 0.005–0.01 mm</b>：<i class="st st-cop">Copilot</i>（区分于加工精度，其余十一家都没单列）</div>
+<h4 class="sub2">3.2 三档数值</h4>
+<div class="tbox"><table>
+<tr><th>档位</th><th>尺寸公差</th><th>IT 等级</th><th>Ra</th><th>成本</th></tr>
+<tr><td class="k">常规生产</td><td>±0.05 ~ ±0.1 mm</td><td>IT9~IT13</td><td>1.6~3.2 μm</td><td>基准 1.0×</td></tr>
+<tr><td class="k">精密</td><td>±0.01 ~ ±0.025 mm</td><td>IT6~IT8</td><td>0.8~1.6 μm</td><td>1.5~3×</td></tr>
+<tr><td class="k">超精密</td><td>±0.002 ~ ±0.005 mm</td><td>IT5~IT6</td><td>0.2~0.4 μm</td><td>5× 以上（需恒温）</td></tr>
+</table></div>
+<div class="srcs">分档主体：<i class="st st-dou">豆包 2.1</i><i class="st st-kimi">Kimi K2.6</i><i class="st st-k3">Kimi K3</i><i class="st st-ds">DeepSeek</i><i class="st st-yb">元宝</i><i class="st st-mi">小米 V2.6</i><i class="st st-qw">千问 3.8</i><i class="st st-glm">GLM 5.3</i><i class="st st-mm">MiniMax M3</i><i class="st st-wx">文心一言</i><i class="st st-ry">荣耀悠悠</i><i class="st st-cop">Copilot</i><i class="st st-hy">混元 Hy3</i><i class="st st-stp">Step 3.7</i><i class="st st-mm31">MiniMax 3.1</i><i class="st st-z360">360 智脑</i><i class="st st-stp5">Step 5</i><br>IT 成本倍数曲线（IT10=1.0×，IT7=2.1×，IT6=3.2×，IT5=4.5×）：<i class="st st-glm">GLM 5.3</i>（唯一）<br>超精密 ±0.001~0.002：<i class="st st-k3">Kimi K3</i>　三档分级（粗 ±0.05–0.2／精 ±0.01–0.05／高精 ±0.005–0.01）：<i class="st st-cop">Copilot</i><br><b>按加工方式分档（三轴铣／数控车／五轴／线切割各一组）+ 车间口语「丝」单位</b>：<i class="st st-stp">Step 3.7</i>（唯一）</div>
+<p class="srcnote">口径提醒：Kimi K3 把"普通 CNC"写成 ±0.015~0.03 mm，比另十家的 ±0.05~0.1 紧一档；荣耀悠悠写 ±0.01 mm，同属偏乐观。融合时采用多数口径。</p>
+<h4 class="sub2">3.3 未注公差（图纸不标时）</h4>
+<div class="tbox"><table>
+<tr><th>尺寸分段</th><th>f（精密）</th><th>m（中等）</th><th>c（粗糙）</th></tr>
+<tr><td class="k">0.5–3 mm</td><td>±0.05</td><td>±0.1</td><td>±0.2</td></tr>
+<tr><td class="k">&gt;3–6 mm</td><td>±0.05</td><td>±0.1</td><td>±0.3</td></tr>
+<tr><td class="k">&gt;6–30 mm</td><td>±0.1</td><td>±0.2</td><td>±0.5</td></tr>
+<tr><td class="k">&gt;30–120 mm</td><td>±0.15</td><td>±0.3</td><td>±0.8</td></tr>
+</table></div>
+<div class="srcs"><i class="st st-p">ISO 2768-1</i> <i class="st st-p">GB/T 1804</i>（两标准数值逐格一致）</div>
+<h4 class="sub2">3.4 影响因素</h4>
+<div class="card"><p>机床刚性与精度 · 刀具磨损与让刀 · <b>热变形（占总加工误差 40%~70%）</b> ·
+装夹变形 / 薄壁振动 · 材料硬度不均与残余应力释放 · 切削参数 · 环境温度 · 测量误差</p></div>
+<div class="srcs">因素清单：<i class="st st-dou">豆包 2.1</i><i class="st st-kimi">Kimi K2.6</i><i class="st st-k3">Kimi K3</i><i class="st st-ds">DeepSeek</i><i class="st st-yb">元宝</i><i class="st st-mi">小米 V2.6</i><i class="st st-qw">千问 3.8</i><i class="st st-glm">GLM 5.3</i><i class="st st-mm">MiniMax M3</i><i class="st st-wx">文心一言</i><i class="st st-ry">荣耀悠悠</i><i class="st st-cop">Copilot</i><i class="st st-hy">混元 Hy3</i><i class="st st-stp">Step 3.7</i><i class="st st-mm31">MiniMax 3.1</i><i class="st st-z360">360 智脑</i><i class="st st-stp5">Step 5</i>　热误差占比 40%~70%：<i class="st st-p">论文 41 热误差</i><br><b>下单前与加工方确认可达成公差与检测手段（CMM／三坐标／千分尺）</b>：<i class="st st-cop">Copilot</i>（唯一提车间沟通）<br><b>二次装夹每翻一次面引入 0.02–0.05 mm 偏差（5 轴的价值所在）</b>：<i class="st st-hy">混元 Hy3</i>（唯一量化）<br><b>温度波动 2℃ 足以让精密铝件尺寸漂移</b>：<i class="st st-hy">混元 Hy3</i>（唯一给温度阈值）</div>
+<p class="srcnote">热误差占比一项，原 56 篇中的论文 41 未核到原文，已改用可追溯的中文综述（袁景丽，2025，知网可查）作为来源。</p>
+<h4 class="sub2">3.5 省钱心法</h4>
+<div class="card"><p>非关键尺寸按通用公差；只在真正有功能需求的配合面标紧公差。
+参考配比：<b>80%% 标 ±0.1、15%% 标 ±0.05、5%% 标 ±0.01</b>。
+全图标 ±0.01 会让成本翻 2~5 倍。配合优先用标准公差带（H7/g6）而非写死数值。</p></div>
+<div class="srcs">80/15/5 配比：<i class="st st-mm">MiniMax M3</i>（唯一）　ISO 2768-m 默认：<i class="st st-mi">小米 V2.6</i><i class="st st-glm">GLM 5.3</i>　H7/g6：<i class="st st-k3">Kimi K3</i> <i class="st st-glm">GLM 5.3</i></div>
+<h3 class="blk">四、设计 CNC 零件要注意什么（DFM）</h3>
+<h4 class="sub2">4.1 内角必须有圆角 —— 最容易踩的坑</h4>
+<div class="card"><p>铣刀是圆柱体，<b>物理上做不出尖锐内角</b>，每个内角都会留下刀半径的圆角。
+规则：内角 R ≥ 刀具半径，推荐 <b>R ≥ 1/3 腔深</b>；实操可取 R ≈ 1.3 × 刀半径，
+或用经验式 <b>R = 腔深/10 + 0.5 mm</b>（30 mm 深腔 → 最小 R3.5）。
+圆角比刀半径大 30%% 可显著延长刀具寿命、提高切削速度。
+真要清角 → 电火花 / 线切割 / 燕尾或 T 型骨底切 / 设计清角沉槽。
+同一零件<b>统一内角半径</b>，全程用一把刀，省时省钱。</p></div>
+<div class="srcs">R ≥ 1/3 腔深：<i class="st st-mi">小米 V2.6</i><i class="st st-glm">GLM 5.3</i><i class="st st-k3">Kimi K3</i><i class="st st-mm">MiniMax M3</i><i class="st st-ds">DeepSeek</i>　R = 深度/10 + 0.5：<i class="st st-glm">GLM 5.3</i>（唯一公式）<br>R ≈ 1.3 × 刀半径：<i class="st st-mi">小米 V2.6</i> <i class="st st-qw">千问 3.8</i> <i class="st st-glm">GLM 5.3</i>　燕尾 / T 型骨底切：<i class="st st-k3">Kimi K3</i>　清角沉槽（relieving cut）：<i class="st st-wx">文心一言</i><br>"外观锐利"解法 —— 外边倒角做锐、里面 R 不能省：<i class="st st-mm">MiniMax M3</i></div>
+<h4 class="sub2">4.2 三条数值底线</h4>
+<div class="tbox"><table>
+<tr><th>特征</th><th>推荐值</th><th>极限值</th></tr>
+<tr><td class="k">最小壁厚（铝）</td><td>0.8 mm（实用 1.0~1.5）</td><td>0.5 mm</td></tr>
+<tr><td class="k">最小壁厚（钢）</td><td>1.5 mm</td><td>—</td></tr>
+<tr><td class="k">最小壁厚（不锈钢 / 钛）</td><td>2.0 mm</td><td>—</td></tr>
+<tr><td class="k">最小壁厚（塑料）</td><td>1.5 mm（推荐 2.5）</td><td>1.0 mm</td></tr>
+<tr><td class="k">型腔深度</td><td>≤ 3~4 × 腔宽</td><td>≤ 10 × 刀具直径（&gt;6× 即算深腔）</td></tr>
+<tr><td class="k">孔深径比</td><td>≤ 4 × 孔径</td><td>10×（专用钻头可 40×）</td></tr>
+<tr><td class="k">最小孔径</td><td>标准钻头尺寸</td><td>≥ 1 mm</td></tr>
+<tr><td class="k">螺纹长度</td><td>1.5~2 × 孔径</td><td>盲孔底部留 0.5×D 未攻丝段</td></tr>
+<tr><td class="k">筋厚</td><td>≈ 相邻壁厚的 60%%</td><td>防变形</td></tr>
+</table></div>
+<div class="srcs">分材料双表（最小 / 推荐）：<i class="st st-mi">小米 V2.6</i> <i class="st st-k3">Kimi K3</i> <i class="st st-mm">MiniMax M3</i><br>刀具 D = 腔深/5：<i class="st st-glm">GLM 5.3</i>　筋厚 60%：<i class="st st-mi">小米 V2.6</i>　塑料 ≥1.5 mm：<i class="st st-mi">小米 V2.6</i><i class="st st-glm">GLM 5.3</i><i class="st st-k3">Kimi K3</i><i class="st st-mm">MiniMax M3</i><br>厂商规则：<i class="st st-p">Fictiv DFM</i> <i class="st st-p">RivCut Checklist</i><br><b>槽宽 ≥ 刀具直径 1.2 倍</b>：<i class="st st-stp">Step 3.7</i>（唯一）　<b>壁厚分「绝对极限／舒适区」双值</b>：<i class="st st-hy">混元 Hy3</i>（铝 0.5 / 0.8–1.0）</div>
+<h4 class="sub2">4.3 孔与螺纹</h4>
+<div class="card"><p>优先标准钻径（Ø3 / 4 / 5 / 6 / 8 / 10），非标孔需铣削、更贵。
+<b>盲孔底部是 118°/135° 锥尖，不是平底</b> —— 要平底须改铣削并注明。
+<b>通孔比盲孔便宜约 30%%</b>（排屑好、不用慢钻）。
+螺纹 ≥ M3（&lt;M2 丝锥易断），底孔深度 &gt; 螺纹深度，留 3~5 倍螺距余量。
+铝 / 塑料可考虑镶嵌铜螺母，比裸螺纹耐用。高精度孔 → 铰 / 镗，可到 H7。</p></div>
+<div class="srcs">标准钻径系列：<i class="st st-yb">元宝</i><i class="st st-qw">千问 3.8</i><i class="st st-mi">小米 V2.6</i><i class="st st-glm">GLM 5.3</i><i class="st st-wx">文心一言</i><br>通孔便宜 30%+：<i class="st st-mm">MiniMax M3</i>（唯一量化）　盲孔 118°/135° 锥尖：<i class="st st-mm">MiniMax M3</i> <i class="st st-wx">文心一言</i><br>留 3~5 倍螺距：<i class="st st-wx">文心一言</i>　镶嵌铜螺母：<i class="st st-mi">小米 V2.6</i><br><b>高精度螺纹用螺套（Helicoil）</b>：<i class="st st-cop">Copilot</i>（唯一）<br><b>开粗公差设为余量的 1/5</b>：<i class="st st-stp">Step 3.7</i>（唯一）　<b>打样分档规则（边厚／底厚／间隙／特征高度，深度 ≤5mm 取 R0.5、&gt;5mm 取 R0.75）</b>：<i class="st st-stp">Step 3.7</i>（唯一）</div>
+<h4 class="sub2">4.4 装夹与可达性</h4>
+<div class="card"><p><b>设计基准 = 工艺基准 = 检测基准</b>（三基准统一）。
+预留夹持面 / 工艺凸台 / 定位孔。特征尽量同轴、同面 → 一次装夹完成。
+避免倒扣（3 轴够不到，要 5 轴或 EDM）。薄壁区远离夹持点与强切削区。零件尺寸落在机床行程内。</p></div>
+<div class="srcs">三基准统一：<i class="st st-wx">文心一言</i><i class="st st-yb">元宝</i><i class="st st-k3">Kimi K3</i>　六点定位原则：<i class="st st-p">Fictiv DFM</i>　倒扣量化（深 &lt;2 mm、宽 &gt;4 mm 或 T 型槽刀）：<i class="st st-glm">GLM 5.3</i><br>装夹次数目标 1–2 次：<i class="st st-p">Fictiv DFM</i></div>
+<h4 class="sub2">4.5 变形控制（高阶，最容易被忽略）</h4>
+<div class="card"><p>大去除量件：<b>粗加工 → 时效 / 去应力 → 精加工</b>。
+粗精加工分开、中途释放应力。对称加工、合理切削参数。
+7075 精密件选 <b>T651 态</b>（预拉伸消应力）。避免薄底、悬臂、细长柱。
+薄壁件可用预应力辅助加工控振。</p></div>
+<div class="srcs">粗精分开 + 去应力 + 对称加工：<i class="st st-ds">DeepSeek</i> <i class="st st-mi">小米 V2.6</i> <i class="st st-wx">文心一言</i>　T651 预拉伸：<i class="st st-mi">小米 V2.6</i> <i class="st st-glm">GLM 5.3</i><br>粗加工→时效→精加工：<i class="st st-wx">文心一言</i>　预应力辅助加工：<i class="st st-p">论文 35 预应力</i></div>
+<p class="srcnote">这一项只有 4/11 家给出具体工艺措施，其余七家只描述"会变形"而未说怎么防 —— 是评分中区分度最大的一项。</p>
+<h4 class="sub2">4.6 公差、表面与后处理</h4>
+<div class="card"><p>只给关键配合面标紧公差，其余按 ISO 2768-m。
+优先用 GD&T 说清平行度 / 位置度 / 跳动。装配留间隙（Ø5 轴配 Ø5.1 孔）。全图标注"锐边倒钝"。
+<b>表面处理会改变尺寸</b>：阳极氧化 Type II 每面 +5~12 μm、硬质阳极 Type III +25~75 μm —— 精密配合面要预留或遮蔽。
+<b>表面处理在设计阶段就要定</b>，不是最后一道工序。</p></div>
+<div class="srcs">GD&T：<i class="st st-mi">小米 V2.6</i> <i class="st st-glm">GLM 5.3</i>　装配留间隙 Ø5→Ø5.1：<i class="st st-mi">小米 V2.6</i> <i class="st st-glm">GLM 5.3</i><br>表面处理尺寸增量表：<i class="st st-glm">GLM 5.3</i>（唯一给数值）　"设计阶段就要定"：<i class="st st-mi">小米 V2.6</i><br><b>阳极氧化后需封孔处理</b>（不只说尺寸增量）：<i class="st st-cop">Copilot</i>（唯一）<br><b>装配公差链分析 stack-up</b>：<i class="st st-cop">Copilot</i>（唯一）</div>
+<h4 class="sub2">4.7 成本与批量</h4>
+<div class="card"><p>降本杠杆：<b>减少装夹次数 &gt; 减少换刀 &gt; 避免深腔小 R 角 &gt; 避免薄壁 &gt; 用标准刀具尺寸</b>。
+统一内角半径、外形优先 45° 倒角而非圆角、避免机加工刻字（改激光打标 / 丝印）。
+批量参考：几件~几百件直接 CNC；上万件考虑压铸 / 锻造毛坯 + CNC 精加工。</p></div>
+<div class="srcs">刻字改激光打标 / 丝印：<i class="st st-qw">千问 3.8</i>（唯一）　45° 倒角优于圆角：<i class="st st-glm">GLM 5.3</i><br>上万件改压铸 / 锻造：<i class="st st-wx">文心一言</i>　DFM 效益（工时 −30%、废料 −20%）：<i class="st st-p">Fictiv DFM</i></div>
+<h4 class="sub2">4.8 交图前自检清单</h4>
+<div class="card"><p style="line-height:2.1">
+□ 所有内角都有圆角？R ≥ 刀具半径、≥1/3 腔深<br>
+□ 壁厚 ≥ 材料最小值？壁厚是否均匀？<br>
+□ 腔深 ≤ 3~4 倍宽度？孔深 ≤ 4 倍孔径？<br>
+□ 有无倒扣 / 刀具不可达结构？<br>
+□ 能否一次装夹完成？基准是否统一？<br>
+□ 孔与螺纹用的是标准规格？<br>
+□ 紧公差只标在关键配合面？<br>
+□ 表面处理已定？是否考虑了尺寸增量？<br>
+□ 大去除量件是否安排了去应力工序？<br>
+□ 图纸标齐：材料 + 状态（T6/T651）+ 公差 + 粗糙度 + 基准 + 表面处理 + 数量 + 版本</p></div>
+<div class="srcs">七条清单：<i class="st st-k3">Kimi K3</i>　六问：<i class="st st-mm">MiniMax M3</i>　八条清单：<i class="st st-glm">GLM 5.3</i>　图纸必备要素：<i class="st st-k3">Kimi K3</i> <i class="st st-ds">DeepSeek</i><br><b>八条下单检查清单</b>（含 datum 基准、检测方法、配合类型）：<i class="st st-cop">Copilot</i>（条数最多）<br><b>CMM 测量可达性 —— 避免不可见／不可测的特征</b>：<i class="st st-cop">Copilot</i>（唯一）<br><b>五坑归纳（深腔·薄壁·锐角·过严公差·难装夹）</b>：<i class="st st-hy">混元 Hy3</i></div>
+<h3 class="blk">💎 四句话记住全部</h3>
+<div class="grid2">
+<div class="card"><b class="t">原理</b><p>CNC 是"计算机指挥刀具把整块材料削成图纸形状"的减材工艺。分车削（工件转）和铣削（刀转），
+轴数越多能做的曲面越复杂，但 3 轴能干就别上 5 轴。</p></div>
+<div class="card"><b class="t">选材</b><p>默认 6061（好加工、能氧化、可焊接、便宜）；只有真需要高强度 / 高疲劳 / 减重才上 7075。
+要刚度别换料，改截面。</p></div>
+<div class="card"><b class="t">精度</b><p>普通 ±0.05~0.1 mm，精密 ±0.01~0.025 mm，超精密 ±0.005 mm 以内。
+公差不是越小越好，而是"够用 + 可测 + 便宜"。</p></div>
+<div class="card"><b class="t">设计</b><p>内角加圆角、壁厚够、腔孔别太深、少装夹 —— 这四条能避开 90%% 的加工问题和成本黑洞。</p></div>
+</div>
+<div class="srcs"><i class="st st-glm">GLM 5.3</i><i class="st st-mm">MiniMax M3</i><i class="st st-mi">小米 V2.6</i></div>
+</section>
+<section id="s2">
+<div class="sec-head"><div class="sec-num">2</div><div><h2>十七家模型的原始回答（未改写）</h2><div class="sub">同一问题，各自作答 · 保留原貌 · 按模型分组，每组含四问完整内容</div></div></div>
+<div class="cons"><b>✅ 说明</b><p>下面是十七个模型对同一问题的<b>完整原始回答</b>，未做交叉改写。带 ⚠️ 标记的是与基准库冲突、或判定为笔误 / 口径混用的地方，原样保留并附注。</p></div>
+<div class="aiblock">
+<div class="hd"><span class="nm" style="color:var(--dou)">豆包 2.1</span><span class="vv">App 默认模型</span><span class="sc" style="color:var(--dou)">终分 75.3</span></div>
+<div class="ds2">定义 + 完整流程 + 优缺点，规则与后果对照表，最易读</div>
+<div class="qbox" style="background:#f0f6fd;border-color:#d6e6f7;color:#1e4d7d;border-radius:10px;padding:9px 12px;margin:8px 0 12px"><div class="lb" style="color:var(--grey)">提问</div><pre style="font-size:12.3px;line-height:1.8">整理一个关于 1. CNC是什么？加工原理？
+2. CNC常用材料有哪些？6061和7075怎么选？
+3. 普通CNC加工精度大概多少？
+4. 设计CNC零件要注意什么？
+类似思维导图的文档</pre></div>
+<div class="qh">1. CNC 是什么？加工原理？</div>
+<div class="src dou"><div class="who">豆包<span class="v">2.1</span> <em>侧重：定义 + 完整流程 + 优缺点</em></div>
+<h4>一句话定义</h4>
+<p>把零件几何信息变成数字程序（G 代码），由计算机控制机床各轴运动、自动完成切削。本质是减材制造——从整块毛坯上"削掉"多余材料，与 3D 打印相反。</p>
+<h4>典型加工方式</h4>
+<ul>
+<li><b>铣削（加工中心）</b>：刀具旋转、工件移动，适合平面/型腔/孔/外形；3 轴最常见，加旋转轴成 4 轴、5 轴</li>
+<li><b>车削（数控车床）</b>：工件旋转、刀具直线进给，适合轴、盘等回转体零件</li>
+</ul>
+<h4>加工流程 5 步</h4>
+<p>CAD 建模 → CAM 编程生成刀路与 G 代码 → 装夹对刀 → 自动加工 → 检测交付（去毛刺后处理）</p>
+<h4>为什么选 CNC</h4>
+<p>精度高（可到 ±0.01 mm 级）、一致性好、材料广（金属/塑料都能切）、强度可靠（实心材料切削，力学性能优于打印件）；代价是单件有刀具与装夹成本，小批量最划算。</p></div>
+<div class="qh">2. CNC 常用材料有哪些？6061 和 7075 怎么选？</div>
+<div class="src dou"><div class="who">豆包<span class="v">2.1</span> <em>侧重：用途导向的材料表 + 选型口诀</em></div>
+<h4>常用材料</h4>
+<table class="mini">
+<tr><th>类别</th><th>牌号</th><th>特点</th><th>用途</th></tr>
+<tr><td class="k" rowspan="3">铝合金</td><td>6061</td><td>综合性能好、耐蚀、易加工、便宜</td><td>外壳、支架、通用结构件</td></tr>
+<tr><td>7075</td><td>强度极高、硬度高、价格贵</td><td>航空件、高强结构、模具</td></tr>
+<tr><td>5052</td><td>耐蚀、可折弯焊接</td><td>钣金、外壳</td></tr>
+<tr><td class="k" rowspan="2">不锈钢</td><td>304</td><td>耐蚀、强度好、价格适中</td><td>食品、一般耐蚀件</td></tr>
+<tr><td>316</td><td>耐蚀更强（耐氯离子）</td><td>医疗、船舶、化工</td></tr>
+<tr><td class="k">钢</td><td>45#</td><td>便宜、可热处理</td><td>结构件、轴类</td></tr>
+<tr><td class="k">铜</td><td>黄铜/紫铜</td><td>导电导热好、色泽美观</td><td>端子、水暖、装饰件</td></tr>
+<tr><td class="k">钛合金</td><td>TC4</td><td>强度高密度低耐蚀；难加工、贵</td><td>航空、医疗植入</td></tr>
+<tr><td class="k" rowspan="3">工程塑料</td><td>POM</td><td>耐磨、自润滑</td><td>齿轮、衬套</td></tr>
+<tr><td>尼龙 PA</td><td>韧性好、耐磨</td><td>耐磨结构件</td></tr>
+<tr><td>PMMA 亚克力</td><td>透明、易抛光</td><td>透明罩、展示件</td></tr>
+</table>
+<h4>6061 vs 7075（对比项最细，含"怎么理解"列）</h4>
+<table class="mini">
+<tr><th>对比项</th><th>6061-T6</th><th>7075-T6</th><th>怎么理解</th></tr>
+<tr><td class="k">合金系</td><td>6 系 Al-Mg-Si</td><td>7 系 Al-Zn-Mg-Cu</td><td>7075 靠锌强化</td></tr>
+<tr><td class="k">屈服强度</td><td>≈276 MPa</td><td>≈503 MPa</td><td>7075 高约 83%</td></tr>
+<tr><td class="k">抗拉强度</td><td>≈310 MPa</td><td>≈572 MPa</td><td>约强 85%</td></tr>
+<tr><td class="k">耐腐蚀</td><td>优良</td><td>较差</td><td>有应力腐蚀开裂风险</td></tr>
+<tr><td class="k">焊接性</td><td>好</td><td>差</td><td>不建议焊接</td></tr>
+<tr><td class="k">阳极氧化</td><td>颜色均匀</td><td>易色差</td><td>外观件选 6061</td></tr>
+<tr><td class="k">加工性</td><td>好</td><td>尚可（切削应力大）</td><td>加工后变形需注意</td></tr>
+<tr><td class="k">成本</td><td>低</td><td>高（约 1.5 倍以上）</td><td>材料与加工都贵</td></tr>
+</table>
+<h4>选型口诀</h4>
+<p>要焊接 / 耐蚀 / 阳极氧化颜色统一 / 预算有限 / 一般结构件 → <b>6061</b>；要极限强度 / 重量敏感 / 不焊接 / 高载荷 → <b>7075</b>。多数消费级与结构件场景，6061 足够且更划算。</p></div>
+<div class="qh">3. 普通 CNC 加工精度大概多少？</div>
+<div class="src dou"><div class="who">豆包<span class="v">2.1</span> <em>侧重：分三档 + 标注成本涨幅</em></div>
+<table class="mini">
+<tr><th>等级</th><th>公差范围</th><th>说明</th><th>场景</th></tr>
+<tr><td class="k">一般/标准</td><td>±0.05~0.1 mm（默认 ±0.05＝5 丝）</td><td>无需特殊工艺，图纸不标公差时默认执行</td><td>手板、外壳、支架</td></tr>
+<tr><td class="k">精密</td><td>±0.01~0.025 mm</td><td>需精加工、稳定装夹、过程检测，<b>成本上升 25%~100%</b></td><td>轴承座、配合面、密封面</td></tr>
+<tr><td class="k">高精密</td><td>±0.005 mm 及以内</td><td>需高精度机床、恒温、在线检测</td><td>航空航天、医疗、光学</td></tr>
+</table>
+<h4>另一个维度：表面粗糙度</h4>
+<ul><li>普通铣削 Ra ≈ 0.8~1.6 μm；精加工可到 Ra 0.4 μm，更高需磨削</li>
+<li><b>粗糙度与尺寸公差是两回事</b></li></ul>
+<h4>影响精度的因素</h4>
+<p>机床精度与轴重复定位精度、刀具磨损与刚性、材料硬度与内应力、装夹刚性、环境温度。</p></div>
+<div class="qh">4. 设计 CNC 零件要注意什么？</div>
+<div class="src dou"><div class="who">豆包<span class="v">2.1</span> <em>侧重：规则 + 后果对照表</em></div>
+<table class="mini">
+<tr><th>设计要点</th><th>推荐规则</th><th>原因/后果</th></tr>
+<tr><td class="k">内角圆角</td><td>避免 90° 尖角，R ≥ 型腔深度的 1/3（至少 ≥ 刀具半径）</td><td>铣刀是圆的，尖角只能 EDM 二次加工</td></tr>
+<tr><td class="k">型腔深宽比</td><td>槽深 ≤ 3~4 倍刀具直径</td><td>过深偏摆、振刀、易断刀</td></tr>
+<tr><td class="k">最小壁厚</td><td>金属 ≥0.8 mm（极限 0.5）；塑料 ≥1.5 mm（极限 1.0）</td><td>太薄振动变形</td></tr>
+<tr><td class="k">孔的设计</td><td>优先通孔；盲孔深度 ≤ 6 倍孔径</td><td>通孔好排屑，深盲孔要枪钻</td></tr>
+<tr><td class="k">螺纹</td><td>避免小于 M3</td><td>丝攻太细易折断</td></tr>
+<tr><td class="k">公差标注</td><td>只在功能配合面标紧公差，其余默认 ±0.125 mm</td><td>全图紧公差＝成本成倍</td></tr>
+<tr><td class="k">悬臂/薄片</td><td>尽量避免长悬臂、大薄板</td><td>切削力下弯曲变形</td></tr>
+<tr><td class="k">倒角</td><td>外棱边 0.2~0.5 mm 倒角或 C 角</td><td>去毛刺、装配顺滑</td></tr>
+<tr><td class="k">装夹基准</td><td>留出夹持位或工艺基准面</td><td>异形件不好夹、定位差</td></tr>
+</table>
+<p><b>一句话总结：</b>给刀具留足活动空间（圆角、宽度）、别让零件太薄太深、只对关键尺寸较真——CNC 又快又便宜又准。</p></div>
+</div>
+<div class="aiblock">
+<div class="hd"><span class="nm" style="color:var(--kimi)">Kimi K2.6</span><span class="vv">K2.6</span><span class="sc" style="color:var(--kimi)">终分 67.7</span></div>
+<div class="ds2">精简型代表，必要点全中但数值极少</div>
+<div class="qbox" style="background:#f0f6fd;border-color:#d6e6f7;color:#1e4d7d;border-radius:10px;padding:9px 12px;margin:8px 0 12px"><div class="lb" style="color:var(--grey)">提问</div><pre style="font-size:12.3px;line-height:1.8">整理一个关于 1. CNC是什么？加工原理？
+2. CNC常用材料有哪些？6061和7075怎么选？
+3. 普通CNC加工精度大概多少？
+4. 设计CNC零件要注意什么？
+类似思维导图的文档</pre></div>
+<div class="qh">1. CNC 是什么？加工原理？</div>
+<div class="src kimi"><div class="who">Kimi<span class="v">K2.6</span> <em>侧重：核心原理三句话 + 树状拆解</em></div>
+<h4>定义</h4>
+<ul>
+<li>CNC = Computer Numerical Control（计算机数字控制）</li>
+<li>由程序（G 代码）自动控制机床运动和加工</li>
+<li>本质：用软件代替人工操作机床</li>
+</ul>
+<h4>核心原理三句话</h4>
+<ul>
+<li><b>减材制造</b>：刀具旋转/进给，切削工件，去除多余材料</li>
+<li><b>数字控制</b>：程序 → 控制器 → 伺服电机 → 刀具运动</li>
+<li><b>多轴联动</b>：X/Y/Z 三直线轴（+ A/B/C 旋转轴 = 多轴）</li>
+</ul>
+<h4>工作流程</h4>
+<p>CAD 设计三维模型 → CAM 编程生成刀路 → G 代码 → 装夹固定工件 → 自动执行切削 → 后处理（去毛刺、清洗、检验）</p></div>
+<div class="qh">2. CNC 常用材料有哪些？6061 和 7075 怎么选？</div>
+<div class="src kimi"><div class="who">Kimi<span class="v">K2.6</span> <em>侧重：清单式速查 + 树状选型结论</em></div>
+<h4>常用材料速查</h4>
+<div class="kv">
+<span><b>铝合金</b>：6061 / 7075 / 5083 / 2024 —— 轻、易加工、性价比之王</span>
+<span><b>不锈钢</b>：303 / 304 / 316 —— 耐蚀，303 最易切削</span>
+<span><b>铜合金</b>：紫铜 / 黄铜 H62 —— 导电导热好</span>
+<span><b>碳钢</b>：45# 钢 / 40Cr —— 强度高、便宜</span>
+<span><b>钛合金</b>：TC4 —— 强度重量比极高，难加工、贵</span>
+<span><b>塑料</b>：POM / ABS / PC / PEEK —— POM 尺寸稳定，PEEK 耐高温</span>
+</div>
+<h4>6061 vs 7075</h4>
+<table class="mini">
+<tr><th>对比项</th><th>6061-T6</th><th>7075-T6</th></tr>
+<tr><td class="k">抗拉强度</td><td>310 MPa</td><td>570 MPa（约 1.8 倍）</td></tr>
+<tr><td class="k">加工性</td><td>好</td><td>较硬，费刀具</td></tr>
+<tr><td class="k">焊接性</td><td>好</td><td>差</td></tr>
+<tr><td class="k">耐腐蚀</td><td>好</td><td>一般，有应力腐蚀风险</td></tr>
+<tr><td class="k">阳极氧化</td><td>效果好，颜色均匀</td><td>容易发黑、色差</td></tr>
+<tr><td class="k">价格</td><td>便宜</td><td>贵（原文写"约 23 倍"）</td></tr>
+</table>
+<div class="fix">⚠️ 原文"约 23 倍"应为笔误，行业常见溢价是 <b>1.5 倍左右</b>，此处保留原文未改动。</div>
+<h4>一句话结论</h4>
+<p>承力结构、追求强度重量比 → 7075（航空、自行车件、无人机机架）；一般结构件、外观件、要焊接或阳极氧化 → 6061。<b>拿不准就选 6061。</b></p></div>
+<div class="qh">3. 普通 CNC 加工精度大概多少？</div>
+<div class="src kimi"><div class="who">Kimi<span class="v">K2.6</span> <em>侧重：数值最简洁 + 强调"实际精度会打折"</em></div>
+<ul>
+<li><b>尺寸公差</b>：普通 ±0.05 ~ ±0.1 mm（最常见）；精密 ±0.01 ~ ±0.02 mm；极限（磨削/精铣）±0.005 mm</li>
+<li><b>表面粗糙度</b>：普通铣削 Ra 1.6~3.2 μm；精铣 Ra 0.8 μm；再光就要抛光/研磨</li>
+</ul>
+<h4>影响因素</h4>
+<p>机床精度与刚性、刀具磨损、装夹变形、材料内应力释放变形、<b>长径比（刀越长精度越差）</b>。</p>
+<h4>特别提醒</h4>
+<p>标注公差在 ±0.1 mm 以内通常<b>不需要额外加价</b>。壁薄、细长的零件加工后容易变形，<b>实际精度往往比机床标称精度差</b>。</p></div>
+<div class="qh">4. 设计 CNC 零件要注意什么？</div>
+<div class="src kimi"><div class="who">Kimi<span class="v">K2.6</span> <em>侧重：按"几何/公差/工艺成本"三类组织</em></div>
+<h4>结构几何（最容易踩坑）</h4>
+<ul>
+<li>内圆角 ≥ 刀具半径（无法切出直角内角！）；圆角越大可用更粗更刚的刀、加工越快</li>
+<li>型腔/孔的深度与刀具直径比 ≤ 3~4 倍，太深会断刀、振刀</li>
+<li>铝件壁厚 ≥ 0.8~1 mm，钢件 ≥ 1.5 mm</li>
+<li>壁厚均匀，避免厚薄突变，减少加工变形和内应力</li>
+<li>考虑刀具可达性，勿设计"加工不到"的面</li>
+</ul>
+<h4>公差与标注</h4>
+<ul>
+<li>只标注关键尺寸公差，其他用默认 ±0.1 mm，<b>过度标注 = 白花钱</b></li>
+<li>公差从 ±0.1 收紧到 ±0.02，成本可能翻数倍</li>
+<li>统一基准，减少装夹次数</li>
+</ul>
+<h4>工艺与成本</h4>
+<ul>
+<li>尽量让特征能从单面加工完成，减少翻面装夹</li>
+<li>避免又小又深的孔（小径深孔极易断刀）</li>
+<li>考虑去毛刺可达性；预留表面处理余量</li>
+<li>简化形状、减少 5 轴需求、减少特殊规格螺纹</li>
+</ul></div>
+</div>
+<div class="aiblock">
+<div class="hd"><span class="nm" style="color:var(--k3)">Kimi K3</span><span class="vv">K3</span><span class="sc" style="color:var(--k3)">终分 91.5</span></div>
+<div class="ds2">原理最深，唯一讲插补与切削三要素；壁厚分材料双表 + 自检清单</div>
+<div class="qbox" style="background:#f0f6fd;border-color:#d6e6f7;color:#1e4d7d;border-radius:10px;padding:9px 12px;margin:8px 0 12px"><div class="lb" style="color:var(--grey)">提问</div><pre style="font-size:12.3px;line-height:1.8">整理一个关于 1. CNC是什么？加工原理？
+2. CNC常用材料有哪些？6061和7075怎么选？
+3. 普通CNC加工精度大概多少？
+4. 设计CNC零件要注意什么？
+类似思维导图的文档</pre></div>
+<div class="qh">1. CNC 是什么？加工原理？</div>
+<div class="src k3"><div class="who">Kimi<span class="v">K3</span> <em>侧重：原理最工程化（插补 + 切削三要素）</em></div>
+<h4>定义</h4>
+<ul>
+<li>CNC = Computer Numerical Control（计算机数控）</li>
+<li>用<b>程序（G 代码）</b>控制机床主轴与各轴运动，自动切除毛坯上的材料</li>
+<li>本质：减材制造（对整块材料"做减法"）；对立面：3D 打印（增材）、注塑（成型）</li>
+</ul>
+<h4>加工原理（四层展开，最细）</h4>
+<p>CAD 建模 → CAM 生成刀路 &amp; G 代码 → CNC 机床执行切削 → 零件</p>
+<ul>
+<li><b>主运动</b>：主轴带动刀具（铣）或工件（车）高速旋转</li>
+<li><b>进给运动</b>：刀具/工作台沿 X、Y、Z（+ A、B、C 旋转轴）移动</li>
+<li><b>插补</b>：数控系统按 G 代码做直线/圆弧插补，逼近目标轮廓</li>
+<li><b>切削三要素</b>：切削速度 vc、进给量 f、切削深度 ap</li>
+</ul>
+<h4>常见加工方式（唯一列表格化）</h4>
+<table class="mini">
+<tr><th>方式</th><th>原理</th><th>典型零件</th></tr>
+<tr><td class="k">铣削</td><td>工件固定、刀具旋转</td><td>外壳、面板、结构件</td></tr>
+<tr><td class="k">车削</td><td>工件旋转、刀具移动</td><td>轴、套、销、回转体</td></tr>
+<tr><td class="k">钻 / 镗</td><td>孔加工</td><td>孔系、精密孔</td></tr>
+<tr><td class="k">磨削</td><td>砂轮精加工</td><td>超精密表面</td></tr>
+<tr><td class="k">线切割</td><td>电极丝放电</td><td>模具、硬料轮廓</td></tr>
+</table>
+<h4>轴数</h4>
+<p>3 轴（最常见，平板/简单立体）→ 4 轴（加 1 旋转轴，可加工侧面）→ 5 轴（多角度、复杂曲面、少装夹，但<b>行程小、更贵</b>）</p>
+<h4>优缺点</h4>
+<p>✅ 精度高、重复性好、可做复杂曲面、小批量/打样无模具成本<br>
+❌ 材料利用率低、深腔/内尖角受刀具限制、精度越紧成本越高</p></div>
+<div class="qh">2. CNC 常用材料有哪些？6061 和 7075 怎么选？</div>
+<div class="src k3"><div class="who">Kimi<span class="v">K3</span> <em>侧重：参数最全（含延伸率/硬度/美元单价）</em></div>
+<h4>常用材料总览</h4>
+<div class="kv">
+<span><b>金属</b>：铝合金（6061、7075、5052）、不锈钢（303/304/316）、钢（45#、4140）、黄铜（H62/H59）、紫铜、钛合金（TC4）</span>
+<span><b>塑料</b>：POM（赛钢）、尼龙 PA、PTFE（特氟龙）、PEEK、ABS、PC、PMMA（亚克力）</span>
+</div>
+<p><b>选材 5 维度</b>：强度/硬度 → 重量 → 耐腐蚀 → 可加工性 → 成本 &amp; 表面处理</p>
+<h4>6061 vs 7075（指标最多的一版）</h4>
+<table class="mini">
+<tr><th>指标</th><th>6061-T6</th><th>7075-T6</th></tr>
+<tr><td class="k">合金系</td><td>铝-镁-硅（6 系）</td><td>铝-锌（7 系）</td></tr>
+<tr><td class="k">抗拉强度</td><td>≈310 MPa</td><td>≈505–570 MPa</td></tr>
+<tr><td class="k">屈服强度</td><td>≈275 MPa</td><td>≈500 MPa（高约 83%）</td></tr>
+<tr><td class="k">延伸率</td><td>12–17%</td><td>5–11%</td></tr>
+<tr><td class="k">硬度 HB</td><td>≈95</td><td>≈150</td></tr>
+<tr><td class="k">可加工性</td><td>优秀</td><td>良好（更硬、更磨损刀具）</td></tr>
+<tr><td class="k">耐腐蚀</td><td>优</td><td>中等（常需表面处理）</td></tr>
+<tr><td class="k">焊接性</td><td>好</td><td>差（基本不建议焊）</td></tr>
+<tr><td class="k">阳极氧化</td><td>优、色泽一致</td><td>可、易出色差</td></tr>
+<tr><td class="k">成本</td><td>低（约 $3–5/lb）</td><td>高（约 $6–10/lb，2–2.5 倍）</td></tr>
+<tr><td class="k">典型用途</td><td>外壳、支架、通用结构件</td><td>航空结构、模具、高载荷件、军工</td></tr>
+</table>
+<h4>选型口诀</h4>
+<ul>
+<li>🔹 要通用、可焊、耐腐、预算紧、做阳极氧化 → <b>6061</b></li>
+<li>🔹 要高强度、高比强度、承真实载荷、做模具/航空 → <b>7075</b></li>
+<li>🔹 记忆点：7075 屈服强度高约 83%，但成本 2–2.5 倍，且不可焊、耐腐较差</li>
+</ul></div>
+<div class="qh">3. 普通 CNC 加工精度大概多少？</div>
+<div class="src k3"><div class="who">Kimi<span class="v">K3</span> <em>侧重：IT 公差等级 + 形位精度数值</em></div>
+<h4>尺寸精度（IT 公差等级）</h4>
+<table class="mini">
+<tr><th>等级</th><th>公差范围</th><th>说明</th></tr>
+<tr><td class="k">普通 CNC</td><td>±0.015~0.03 mm（IT7–IT8）</td><td>常规铣/车，最常用</td></tr>
+<tr><td class="k">常规生产</td><td>±0.05~0.10 mm（ISO 2768-m）</td><td>最经济</td></tr>
+<tr><td class="k">精密 CNC</td><td>±0.005~0.01 mm（IT5–IT6）</td><td>成本 +20~40%</td></tr>
+<tr><td class="k">超精密（磨/研）</td><td>±0.001~0.002 mm</td><td>需恒温、CMM 检测</td></tr>
+</table>
+<p><b>分工艺经验值</b>：铣 ±0.1 → 0.025 → 0.0125 mm｜车 ±0.05 → 0.0125 → 0.005 mm｜磨 ±0.005 → 0.001 mm</p>
+<h4>形位精度（唯一给出具体数值的）</h4>
+<p>圆度 ≤0.001 mm｜平面度 0.002 mm/100mm｜同轴度 ≈0.003 mm｜垂直度 ≈0.005 mm/100mm｜平行度 ≈0.004 mm/100mm</p>
+<h4>表面粗糙度 Ra</h4>
+<p>普通外观 1.6–3.2 μm｜一般机械面 0.8 μm｜精密滑动/配合面 0.8 μm 或更优｜光学/抛光 0.1–0.4 μm</p>
+<h4>公差标注建议（省钱关键）</h4>
+<ul>
+<li>非关键尺寸：±0.1 mm；关键配合：±0.01 mm 或 H7/g6</li>
+<li>⚠️ 整图全标 ±0.01 → <b>成本增加 2–5 倍</b></li>
+</ul>
+<h4>影响精度的因素</h4>
+<p>材料、零件尺寸/几何复杂度、机床精度与刚性、装夹方式、刀具磨损、环境恒温。</p></div>
+<div class="qh">4. 设计 CNC 零件要注意什么？</div>
+<div class="src k3"><div class="who">Kimi<span class="v">K3</span> <em>侧重：壁厚分材料表 + 自检清单</em></div>
+<h4>🚨 内角圆角（最常踩坑）</h4>
+<ul>
+<li>内角无法做到尖角（刀具是圆的，物理限制）</li>
+<li>内角半径 ≥ 刀具半径；推荐 <b>R ≥ 1/3 × 腔深</b></li>
+<li>底部圆角建议 0.5 / 1 mm 或无；必须 90° 尖角 → 改用<b>燕尾 / T 型骨底切</b></li>
+</ul>
+<h4>壁厚（唯一分材料给两张表）</h4>
+<table class="mini">
+<tr><th>材料</th><th>最小壁厚</th><th>推荐壁厚</th></tr>
+<tr><td class="k">铝（6061/7075）</td><td>0.8–1.0 mm</td><td>1.5–2.0 mm</td></tr>
+<tr><td class="k">钢</td><td>1.5 mm</td><td>2.0–2.5 mm</td></tr>
+<tr><td class="k">不锈钢</td><td>2.0 mm</td><td>2.5–3.0 mm</td></tr>
+<tr><td class="k">钛合金</td><td>2.0 mm</td><td>2.5–3.0 mm</td></tr>
+<tr><td class="k">塑料</td><td>1.5 mm</td><td>2.5–3.0 mm</td></tr>
+</table>
+<p>薄壁 = 振动 + 变形 + 让刀，精度和表面都会掉</p>
+<h4>腔 / 槽深度</h4>
+<p>腔深 ≤ 4×腔宽；受限于 3–4×刀具直径；&gt; 6×刀具直径 = 深腔，成本上升</p>
+<h4>孔</h4>
+<ul>
+<li>最小孔径 ≥ 1 mm；孔深 ≤ 4×直径（推荐，典型 10×，极限约 40×）</li>
+<li>盲孔尽量改通孔；用标准钻头尺寸；高精度孔 → 铰/镗</li>
+</ul>
+<h4>装夹与刀具可达性</h4>
+<ul>
+<li>特征尽量同轴/同一面 → 减少装夹次数</li>
+<li>避免倒扣（undercut）、内凹、不可达深腔</li>
+<li>考虑 3 轴能否够到，复杂才上 5 轴；零件尺寸落在机床行程内</li>
+</ul>
+<h4>公差 &amp; 表面 / 其他要点</h4>
+<ul>
+<li>只对真正有功能需求的特征标紧公差；标注表面粗糙度；统一尺寸基准</li>
+<li>螺纹用标准规格；外露尖边倒角</li>
+<li>图纸必备：材料、热处理/状态（如 T6）、表面处理、关键尺寸、公差、粗糙度、基准</li>
+</ul>
+<h4>设计自检清单 ✅</h4>
+<div class="tagline">
+<i>[ ] 内角都有圆角（R ≥ 1/3 腔深）</i><i>[ ] 壁厚 ≥ 材料最小值</i>
+<i>[ ] 腔深 ≤ 4×腔宽、孔深 ≤ 4×孔径</i><i>[ ] 尽量减少装夹面</i>
+<i>[ ] 无倒扣 / 不可达结构</i><i>[ ] 紧公差只用在必要处</i>
+<i>[ ] 标注了材料、公差、粗糙度、表面处理</i>
+</div></div>
+</div>
+<div class="aiblock">
+<div class="hd"><span class="nm" style="color:var(--ds)">DeepSeek V4.1Flash</span><span class="vv">V4.1Flash</span><span class="sc" style="color:var(--ds)">终分 77.8</span></div>
+<div class="ds2">牌号与维度列得最全；唯一讲变形控制与交付文件</div>
+<div class="qbox" style="background:#f0f6fd;border-color:#d6e6f7;color:#1e4d7d;border-radius:10px;padding:9px 12px;margin:8px 0 12px"><div class="lb" style="color:var(--grey)">提问</div><pre style="font-size:12.3px;line-height:1.8">整理一个关于 1. CNC是什么？加工原理？
+2. CNC常用材料有哪些？6061和7075怎么选？
+3. 普通CNC加工精度大概多少？
+4. 设计CNC零件要注意什么？
+类似思维导图的文档</pre></div>
+<div class="qh">1. CNC 是什么？加工原理？</div>
+<div class="src ds"><div class="who">DeepSeek<span class="v">V4.1Flash</span> <em>侧重：类型最全 + 传动链 + 明确列限制</em></div>
+<h4>定义</h4>
+<p>用数字化程序控制机床运动、刀具路径和加工过程。</p>
+<h4>常见类型（列举最全）</h4>
+<ul>
+<li><b>工艺</b>：CNC 铣削、车削、钻孔、磨削、线切割、电火花</li>
+<li><b>构型</b>：3 轴、4 轴、5 轴、车铣复合</li>
+</ul>
+<h4>加工原理（传动链写全）</h4>
+<p>CAD 模型 → CAM 编程 → G 代码 → 控制器 → <b>伺服电机 / 丝杠 / 导轨</b> → 刀具与工件相对运动 → 切削 → 检验</p>
+<p>核心四要素：程序控制 + 精密传动 + 刀具切削 + <b>冷却排屑</b></p>
+<h4>特点（唯一明确列"限制"的）</h4>
+<ul>
+<li>优点：精度高、一致性好、适合复杂形状、中低批量</li>
+<li>限制：编程/设备成本、材料浪费、<b>深腔和内直角受限</b></li>
+</ul></div>
+<div class="qh">2. CNC 常用材料有哪些？6061 和 7075 怎么选？</div>
+<div class="src ds"><div class="who">DeepSeek<span class="v">V4.1Flash</span> <em>侧重：牌号最广 + 给出"选材依据"清单</em></div>
+<h4>常用材料（覆盖最广）</h4>
+<ul>
+<li><b>铝</b>：6061、7075、6082、2024、5052</li>
+<li><b>不锈钢</b>：304、316、<b>17-4PH</b>（沉淀硬化）</li>
+<li><b>钢</b>：45#、40Cr、模具钢、合金钢</li>
+<li><b>铜</b>：黄铜、紫铜、<b>铍铜</b></li>
+<li><b>钛</b>：TC4 / Ti-6Al-4V</li>
+<li><b>其他金属</b>：镁合金、工具钢</li>
+<li><b>塑料</b>：POM、ABS、PC、PMMA、PA、PTFE、PEEK、PET、PP</li>
+<li><b>非金属</b>：木材、亚克力、复合材料、泡沫、蜡</li>
+</ul>
+<h4>选材依据（唯一给出判断维度的）</h4>
+<p>强度、硬度、耐腐蚀、耐磨、耐温、重量、导电导热；加工性、表面处理、成本、批量、用途。</p>
+<h4>6061 / 7075</h4>
+<div class="kv">
+<span><b>6061</b>：Al-Mg-Si 可热处理强化；强度中等、耐蚀好、焊接好、易加工、阳极氧化好、成本低 → 支架、外壳、夹具、原型</span>
+<span><b>7075</b>：Al-Zn-Mg-Cu 航空铝；强度高、硬度高、抗疲劳好；耐蚀较差、焊接差、加工较难、成本高 → 高应力、轻量化、航空、无人机、高端自行车</span>
+</div>
+<h4>怎么选</h4>
+<p>要强度、轻量化、高应力 → 7075；要耐蚀、焊接、低成本、易加工、阳极氧化 → 6061；<b>潮湿腐蚀环境且无防护 → 少用 7075</b>；一般结构件、外壳、原型 → 优先 6061。</p></div>
+<div class="qh">3. 普通 CNC 加工精度大概多少？</div>
+<div class="src ds"><div class="who">DeepSeek<span class="v">V4.1Flash</span> <em>侧重：分工艺/分工序 + 形位公差与标准号</em></div>
+<h4>常见范围（按工艺拆得最细）</h4>
+<ul>
+<li><b>普通三轴铣</b>：±0.05 mm 常见；较好 ±0.02~0.05；精密 ±0.01；高精密 ±0.005 或更高</li>
+<li><b>CNC 车</b>：±0.02~0.05 mm 常见；精密 ±0.01~0.005 mm</li>
+<li><b>形位公差</b>：±0.02~0.05 mm 常见；精密 ±0.01 mm</li>
+<li><b>表面粗糙度</b>：Ra 1.6~3.2 μm 常见；精加工 Ra 0.8~1.6；磨削/抛光更低</li>
+<li><b>孔</b>：铣孔 ±0.05 mm；<b>铰孔 ±0.01 mm</b>；H7 常需铰孔或磨削</li>
+</ul>
+<h4>影响因素（列了 10 项）</h4>
+<p>机床刚性、机床精度、刀具、材料、装夹、切削参数、温度、排屑、编程、后处理。</p>
+<h4>提醒</h4>
+<ul>
+<li>精度要分三类：<b>尺寸公差、形位公差、表面粗糙度</b></li>
+<li>薄壁、深腔、细长件更难加工</li>
+<li>未注公差可参考 <b>ISO 2768-m / H</b> 等标准</li>
+</ul></div>
+<div class="qh">4. 设计 CNC 零件要注意什么？</div>
+<div class="src ds"><div class="who">DeepSeek<span class="v">V4.1Flash</span> <em>侧重：唯一讲"变形控制"与"交付文件"</em></div>
+<h4>刀具与几何</h4>
+<ul>
+<li>内直角不能直接铣出，需加圆角，R ≥ 刀具半径，<b>常见 R3/R6</b></li>
+<li>避免尖角、深窄槽、刀具不可达区域</li>
+<li>孔深径比 ≤ 4:1 较易加工，深孔需特殊工艺</li>
+<li>盲孔留钻尖角；螺纹优先标准公制螺纹</li>
+<li>最小壁厚：铝件 ≥1 mm，塑料 ≥1.5~2 mm</li>
+</ul>
+<h4>装夹与基准</h4>
+<p>统一基准减少装夹；预留夹持位或工艺凸台；五轴可减少装夹但成本更高。</p>
+<h4>公差与表面</h4>
+<p>只标关键尺寸，合理给公差；标注必要表面粗糙度；考虑表面处理余量（阳极氧化、喷砂、电镀、发黑）。</p>
+<h4>变形控制（独有）</h4>
+<ul>
+<li>7075、不锈钢易变形，<b>粗精加工分开</b></li>
+<li>去应力、对称加工、合理切削参数</li>
+<li>避免薄底、悬臂、细长柱</li>
+</ul>
+<h4>成本与可制造</h4>
+<p>优先标准刀具、简单形状；减少换刀、装夹、特殊刀具；批量大时考虑铸造或注塑替代。</p>
+<h4>交付文件（独有）</h4>
+<p><b>3D</b>：STEP / IGES；<b>2D</b>：关键尺寸、公差、材料、表面处理、数量，标注版本、基准、螺纹规格。</p></div>
+</div>
+<div class="aiblock">
+<div class="hd"><span class="nm" style="color:var(--yb)">元宝 HY4preview</span><span class="vv">HY4preview</span><span class="sc" style="color:var(--yb)">终分 77.5</span></div>
+<div class="ds2">可执行数值建议 + 降本优先级</div>
+<div class="qbox" style="background:#f0f6fd;border-color:#d6e6f7;color:#1e4d7d;border-radius:10px;padding:9px 12px;margin:8px 0 12px"><div class="lb" style="color:var(--grey)">提问</div><pre style="font-size:12.3px;line-height:1.8">整理一个关于 1. CNC是什么？加工原理？
+2. CNC常用材料有哪些？6061和7075怎么选？
+3. 普通CNC加工精度大概多少？
+4. 设计CNC零件要注意什么？
+类似思维导图的文档</pre></div>
+<div class="qh">1. CNC 是什么？加工原理？</div>
+<div class="src yb"><div class="who">元宝<span class="v">HY4preview</span> <em>侧重：完整链路 + 核心特点</em></div>
+<h4>定义</h4>
+<p>用数字化程序控制机床自动切削，属于减材制造——从整块料上切掉多余部分，和 3D 打印"加材料"正好相反。</p>
+<h4>完整链路</h4>
+<p>CAD 三维建模 → CAM 编程（选刀具、刀路、转速进给）→ 后处理生成 G 代码 → 机床执行 → 检验</p>
+<h4>加工原理</h4>
+<ul>
+<li>G 代码给出坐标与运动指令，驱动伺服电机，<b>闭环反馈实时纠偏</b></li>
+<li>主轴带动刀具高速旋转，工作台/主轴按 XYZ 轴进给</li>
+<li>刀具沿预设刀路逐层切除材料，得到目标形状</li>
+</ul>
+<h4>常见机床</h4>
+<p>三轴加工中心（最常用）、四轴/五轴（复杂曲面、一次装夹多面）、数控车（回转体）、车铣复合。</p>
+<h4>核心特点</h4>
+<p>重复精度高、适合复杂形状和小批量；材料利用率低于铸造/3D 打印，单件成本随批量下降明显。</p></div>
+<div class="qh">2. CNC 常用材料有哪些？6061 和 7075 怎么选？</div>
+<div class="src yb"><div class="who">元宝<span class="v">HY4preview</span> <em>侧重：对比表 + 一条反常识提醒</em></div>
+<h4>常用材料谱系</h4>
+<div class="kv">
+<span><b>铝合金</b>：6061、7075、2024、5083 —— 轻、易加工，最主流</span>
+<span><b>不锈钢</b>：303、304、316 —— 耐腐蚀，303 最易切削</span>
+<span><b>碳钢/合金钢</b>：45 钢、Q235、40Cr —— 强度高、成本低，需防锈</span>
+<span><b>铜合金</b>：黄铜 H62/H59、紫铜 —— 导电导热，电极、接插件</span>
+<span><b>钛合金</b>：TC4（Gr5）—— 强度高又轻、耐蚀，贵且难加工</span>
+<span><b>工程塑料</b>：POM、尼龙 PA、PC、PEEK、ABS —— 绝缘耐磨，PEEK 属高端</span>
+</div>
+<h4>6061-T6 vs 7075-T6</h4>
+<table class="mini">
+<tr><th>维度</th><th>6061-T6</th><th>7075-T6</th></tr>
+<tr><td class="k">抗拉强度</td><td>约 310 MPa</td><td>约 570 MPa（接近普通钢材）</td></tr>
+<tr><td class="k">屈服强度</td><td>约 276 MPa</td><td>约 500 MPa</td></tr>
+<tr><td class="k">加工性</td><td>很好，刀耗低</td><td>尚可，稍硬、刀具磨损略大</td></tr>
+<tr><td class="k">焊接性</td><td>好</td><td>差，不建议焊接</td></tr>
+<tr><td class="k">耐腐蚀</td><td>好</td><td>一般，需阳极氧化或涂层</td></tr>
+<tr><td class="k">表面处理</td><td>阳极氧化漂亮</td><td>偏灰黄</td></tr>
+<tr><td class="k">价格</td><td>低，性价比高</td><td>常高出 30%~50% 以上</td></tr>
+</table>
+<h4>选型口诀 + 提醒</h4>
+<p>综合性能、外观件、要焊接、要阳极氧化、要省钱 → <b>6061</b>；极限强度/刚度、轻量化受力件、航空/赛车 → <b>7075</b>。</p>
+<p><b>提醒：</b>强度不是唯一指标，很多"强度不够"靠<b>加厚壁厚、加筋</b>解决，比换 7075 便宜得多。</p></div>
+<div class="qh">3. 普通 CNC 加工精度大概多少？</div>
+<div class="src yb"><div class="who">元宝<span class="v">HY4preview</span> <em>侧重：分档 + 成本曲线提醒</em></div>
+<ul>
+<li><b>常规三轴加工中心</b>：稳定做到 ±0.05~0.1 mm，未注公差按 ISO 2768-m（或 GB/T 1804-m）</li>
+<li><b>稳定可控范围</b>：工艺成熟、设备良好可保持 ±0.02~0.05 mm</li>
+<li><b>高精度</b>：恒温 + 精加工/多次走刀可达 ±0.005~0.01 mm；再往上要上磨床、慢走丝、坐标镗</li>
+<li><b>表面粗糙度</b>：普通铣削 Ra 1.6~3.2 μm，精铣可达 Ra 0.8 μm，更高需磨/抛光</li>
+</ul>
+<h4>成本提示</h4>
+<p>公差每收紧一级，成本常<b>成倍上升</b>（更多工序、更慢走刀、更频繁检测）。只在配合位标严公差，其余用通用公差，是降本第一招。</p></div>
+<div class="qh">4. 设计 CNC 零件要注意什么？</div>
+<div class="src yb"><div class="who">元宝<span class="v">HY4preview</span> <em>侧重：可执行的数值建议 + 降本优先级</em></div>
+<ol style="margin-left:17px;font-size:12.9px;color:var(--txt)">
+<li style="margin-bottom:4px"><b>内圆角留够</b>：R ≥ 刀具半径，建议统一 <b>R1~R3</b> 并与常用刀径匹配（如 Ø6 刀 → R3）；必须清根时做让位槽/过切槽</li>
+<li style="margin-bottom:4px"><b>控制深宽比</b>：型腔深度 ≤ 约 4 倍宽度，孔深 ≤ 5~8 倍孔径</li>
+<li style="margin-bottom:4px"><b>壁厚合理</b>：铝件 ≥ 0.8~1 mm，钢件可略薄；避免又薄又高的筋</li>
+<li style="margin-bottom:4px"><b>减少装夹</b>：能一次装夹完成的不要分面；多面时留统一基准与定位孔</li>
+<li style="margin-bottom:4px"><b>孔按标准做</b>：孔径取标准钻径 <b>Ø3/4/5/6/8/10</b>，避免奇葩尺寸；螺纹 ≥ M3，盲孔留退刀空间</li>
+<li style="margin-bottom:4px"><b>公差够用就好</b>：只给关键配合尺寸标公差，避免全图标 ±0.01</li>
+<li style="margin-bottom:4px"><b>预留工艺结构</b>：倒角去毛刺 C0.3~C0.5、设置夹持面/工艺凸台、大平面留中间避空</li>
+<li style="margin-bottom:4px"><b>慎大面积复杂曲面</b>：往往被迫上五轴或多次装夹，价格陡增</li>
+<li style="margin-bottom:4px"><b>材料与坯料</b>：优先常见规格板材/棒料，尺寸贴近成品轮廓</li>
+</ol>
+<h4>一句话总结</h4>
+<p>先定材料 → 再做可加工性设计（圆角、深宽比、壁厚、装夹）→ 公差按需给 → 成本自然降。</p></div>
+</div>
+<div class="aiblock">
+<div class="hd"><span class="nm" style="color:var(--mi)">小米 MiMo V2.6</span><span class="vv">MiMo V2.6</span><span class="sc" style="color:var(--mi)">终分 98.3</span></div>
+<div class="ds2">内容量最大，参数维度最全；唯一给刚度与 T651</div>
+<div class="qbox" style="background:#f0f6fd;border-color:#d6e6f7;color:#1e4d7d;border-radius:10px;padding:9px 12px;margin:8px 0 12px"><div class="lb" style="color:var(--grey)">提问</div><pre style="font-size:12.3px;line-height:1.8">整理一个关于 1. CNC是什么？加工原理？
+2. CNC常用材料有哪些？6061和7075怎么选？
+3. 普通CNC加工精度大概多少？
+4. 设计CNC零件要注意什么？
+类似思维导图的文档</pre></div>
+<div class="qh">1. CNC 是什么？加工原理？</div>
+<div class="src mi"><div class="who">小米<span class="v">V2.6</span> <em>侧重：唯一讲"常用刀具"与完整工序流</em></div>
+<h4>定义</h4>
+<ul>
+<li>CNC = Computer Numerical Control（计算机数字控制）</li>
+<li>属于减材制造：从整块毛坯上切掉多余材料</li>
+<li>三要素：CAD 建模 → CAM 编程 → G 代码 → 机床执行</li>
+</ul>
+<h4>加工原理</h4>
+<ul>
+<li><b>主运动</b>：刀具高速旋转（主轴）→ 铣削 / 钻削 / 镗削</li>
+<li><b>进给运动</b>：工作台或主轴按 X/Y/Z 直线移动</li>
+<li><b>联动</b>：数控系统插补运算，多轴联动走出复杂轨迹</li>
+<li>本质：机床"照着数字图纸"一点点削出零件形状</li>
+</ul>
+<h4>主要类型</h4>
+<ul>
+<li>数控车床（车削）：工件转、刀不动 → 轴类、盘类、螺纹</li>
+<li>加工中心 / 数控铣（铣削）：刀转、工件动 → 平面、型腔、曲面</li>
+<li>车铣复合：一次装夹完成车 + 铣</li>
+<li>按轴数：3 轴（常规棱柱形）→ 4 轴（加旋转轴，斜孔/侧面特征）→ 5 轴（一次装夹多面，复杂曲面/倒扣/航空件）</li>
+</ul>
+<h4>常用刀具（独有）</h4>
+<div class="kv">
+<span><b>立铣刀（平底）</b> → 侧壁、底面</span>
+<span><b>球头刀</b> → 三维曲面</span>
+<span><b>钻头 / 铰刀 / 镗刀</b> → 孔加工（铰、镗可达 H7）</span>
+<span><b>丝锥</b> → 攻内螺纹</span>
+</div>
+<h4>典型流程（工序最完整）</h4>
+<p>3D 模型 → 工艺分析 → 选刀选夹 → CAM 生成刀路 → 后处理成 G 代码 → 装夹找正 → 对刀 → <b>试切首件</b> → <b>粗加工去余量 → 精加工保尺寸</b> → 检测（卡尺/三坐标）→ 去毛刺 → 表面处理</p></div>
+<div class="qh">2. CNC 常用材料有哪些？6061 和 7075 怎么选？</div>
+<div class="src mi"><div class="who">小米<span class="v">V2.6</span> <em>侧重：材料分类最细 + 唯一给"刚度几乎一样"的结论</em></div>
+<h4>常用材料大类（按类分树，覆盖最广）</h4>
+<table class="mini">
+<tr><th>大类</th><th>牌号</th><th>用途</th></tr>
+<tr><td class="k" rowspan="3">铝合金</td><td>6061-T6</td><td>通用之王，好加工、可阳极氧化</td></tr>
+<tr><td>7075-T6 / 2024 / 7050</td><td>高强度，航空受力件</td></tr>
+<tr><td>6063 / 5052</td><td>挤压型材、散热器 / 需成型、耐蚀</td></tr>
+<tr><td class="k" rowspan="2">不锈钢</td><td>304 / 316L</td><td>通用耐蚀</td></tr>
+<tr><td>17-4PH / S136 / 440C</td><td>沉淀硬化高强 / 耐磨镜面模具</td></tr>
+<tr><td class="k">钛合金</td><td>TC4(Gr5) / 纯钛 Gr2</td><td>高强轻质 / 耐蚀医疗</td></tr>
+<tr><td class="k" rowspan="2">碳钢合金钢</td><td>45# / 40Cr</td><td>轴类、齿轮</td></tr>
+<tr><td>SKD11 / DC53 / S7 / Q235 / SPCC</td><td>模具钢 / 结构钣金底材</td></tr>
+<tr><td class="k">铜合金</td><td>黄铜 H62 / C3604 / 紫铜 T2</td><td>易削接插件 / 导电散热</td></tr>
+<tr><td class="k" rowspan="2">工程塑料</td><td>POM / PEEK</td><td>精密齿轮 / 高温高强（贵）</td></tr>
+<tr><td>PA / PTFE / UHMWPE / ABS / PC / PMMA</td><td>耐磨自润滑 / 外壳透明件</td></tr>
+</table>
+<h4>6061 vs 7075 核心对比（维度最全）</h4>
+<table class="mini">
+<tr><th>对比项</th><th>6061-T6</th><th>7075-T6</th><th>结论</th></tr>
+<tr><td class="k">抗拉强度</td><td>≈310 MPa</td><td>≈572 MPa</td><td>7075 高 85%</td></tr>
+<tr><td class="k">屈服强度</td><td>≈276 MPa</td><td>≈503 MPa</td><td>7075 高 83%</td></tr>
+<tr><td class="k">疲劳强度</td><td>≈96 MPa</td><td>≈160 MPa</td><td>循环载荷用 7075</td></tr>
+<tr><td class="k">硬度</td><td>95 HB</td><td>150 HB</td><td>—</td></tr>
+<tr><td class="k">密度</td><td>2.70</td><td>2.81 g/cm³</td><td>7075 仅重 4%</td></tr>
+<tr><td class="k">弹性模量</td><td>69 GPa</td><td>71.7 GPa</td><td><b>同截面刚度几乎一样</b></td></tr>
+<tr><td class="k">切削性</td><td>优秀：切削力小、排屑顺、刀耗低</td><td>一般：偏硬偏脆，需降速、用硬质合金刀</td><td>6061 更省更快</td></tr>
+<tr><td class="k">阳极氧化</td><td>氧化膜均匀致密，深色染色一致</td><td>含锌 5–6%，染色不均、发花斑点、偏暗</td><td>外观件选 6061</td></tr>
+<tr><td class="k">焊接性</td><td>可 MIG/TIG 焊，焊缝约母材 80% 强度</td><td>基本不可焊（易热裂纹），只能铆/螺/胶接</td><td>需焊接选 6061</td></tr>
+<tr><td class="k">耐蚀 &amp; 应力</td><td>良好耐蚀，残余应力中等</td><td>中等耐蚀，T6 态易应力腐蚀开裂；精密件建议 <b>T651</b>（预拉伸消应力）</td><td>6061 更稳</td></tr>
+<tr><td class="k">价格</td><td>约 25~50 元/kg</td><td>约 38~60 元/kg</td><td>7075 贵 1.5~2 倍</td></tr>
+</table>
+<h4>一句话选型</h4>
+<ul>
+<li>默认选 <b>6061</b> → 支架、外壳、面板、夹具、机架、一般结构件</li>
+<li>才选 <b>7075</b> → 高静载 / 疲劳件 / 需轻量化减薄壁 / 航空受力件</li>
+<li>有阳极氧化染色要求 → 6061；需要焊接 → 6061</li>
+<li>❌ <b>常见误区</b>：见强度就无脑上 7075 → 性能过剩 + 涨价 + 变形 + 氧化翻车</li>
+</ul></div>
+<div class="qh">3. 普通 CNC 加工精度大概多少？</div>
+<div class="src mi"><div class="who">小米<span class="v">V2.6</span> <em>侧重：机床精度指标（定位/重复定位）+ GB/T 25372 等级</em></div>
+<h4>核心指标（普通机）</h4>
+<ul>
+<li><b>尺寸公差</b>：±0.01 ~ ±0.05 mm；行业默认（图纸不标注时）±0.05 mm</li>
+<li><b>定位精度</b>：±0.01 ~ ±0.02 mm（好机床 ±0.005）</li>
+<li><b>重复定位精度</b>：±0.002 ~ ±0.005 mm（批量一致性关键）</li>
+<li><b>表面粗糙度</b>：Ra 1.6 ~ 3.2 μm（精加工 Ra 0.8~1.6，粗加工 Ra 3.2~6.3）</li>
+</ul>
+<h4>分档参考</h4>
+<p>标准公差 ±0.125 mm（ISO 2768-m 级）｜紧公差 ±0.025 mm（配合面）｜超精密 ±0.005 mm（恒温精密机）｜公差等级：普通 IT9~IT13，精密 IT6~IT8</p>
+<h4>按机床等级 GB/T 25372（独有）</h4>
+<table class="mini">
+<tr><th>等级</th><th>定位精度</th><th>重复定位精度</th></tr>
+<tr><td class="k">普通级 P</td><td>≤0.02 mm</td><td>≤0.015 mm</td></tr>
+<tr><td class="k">精密级 M</td><td>≤0.012 mm</td><td>≤0.008 mm</td></tr>
+<tr><td class="k">高精度级 G</td><td>≤0.004 mm</td><td>≤0.003 mm</td></tr>
+</table>
+<h4>不同工艺能力</h4>
+<ul>
+<li>普通铣 / 车：±0.01 ~ ±0.05 mm，Ra 1.6~3.2</li>
+<li>精密加工中心：±0.005 ~ ±0.01 mm</li>
+<li>铰孔 / 镗孔：可到 H7 级（约 ±0.01 mm）</li>
+<li>磨削：±0.002 ~ ±0.005 mm，Ra 0.2~0.8</li>
+</ul>
+<h4>影响因素</h4>
+<p>机床本身（导轨、丝杠、主轴）、热变形（主轴发热、环境温差）、刀具磨损与让刀、装夹变形 / 薄壁振动、材料硬度不均与残余应力、操作与工艺参数（切削三要素）。</p>
+<h4>实用结论</h4>
+<p>一般零件按 <b>±0.05 mm</b> 标公差最经济；只有真正需要的配合面才标紧公差（成本翻倍）；公差不是越小越好，而是"<b>够用 + 可测 + 便宜</b>"。</p></div>
+<div class="qh">4. 设计 CNC 零件要注意什么？</div>
+<div class="src mi"><div class="who">小米<span class="v">V2.6</span> <em>侧重：DFM 分 A–F 六类，细节最多</em></div>
+<h4>A. 几何形状</h4>
+<table class="mini">
+<tr><th>特征</th><th>推荐值</th><th>极限值</th></tr>
+<tr><td class="k">内角 R</td><td>≥0.5 mm 且 ≥1/3 腔深；实操 R ≈ 1.3 × 刀具半径</td><td>≥ 刀具半径</td></tr>
+<tr><td class="k">型腔深度</td><td>≤ 4× 宽度（最佳 ≤3×）；&gt;6× 刀径即"深腔"</td><td>≤10× 刀具直径</td></tr>
+<tr><td class="k">最小壁厚</td><td>金属 0.8 mm（实用 1.0~1.5）／塑料 1.5 mm</td><td>0.5 / 1.0 mm</td></tr>
+<tr><td class="k">孔深径比</td><td>≤ 4×</td><td>10×（专用钻头可 40×）</td></tr>
+<tr><td class="k">最小孔径</td><td>标准钻头尺寸（非标要用立铣刀，贵）</td><td>≥ 1 mm</td></tr>
+<tr><td class="k">螺纹长度</td><td>&lt; 2× 孔径；未攻通预留 ≥1.5× 螺距</td><td>盲孔底留 1/2 孔径容屑</td></tr>
+<tr><td class="k">文字标识</td><td>阴文（凹刻），字深 ≤0.3 mm，避免凸字</td><td>—</td></tr>
+</table>
+<ul>
+<li><b>倒扣（Undercut）</b>：刀具自上而下够不到的区域，需避免，否则要 5 轴 / 电火花 / 分体设计</li>
+<li><b>筋与凸台</b>：筋厚 ≈ 相邻壁厚的 60%，防变形；高壁无支撑高度 &lt; 4× 特征宽度</li>
+<li>真要清角 → 电火花 / 线切割 / 改结构</li>
+</ul>
+<h4>B. 孔与螺纹</h4>
+<p>铝/塑料考虑<b>镶嵌铜螺母</b>（比裸螺纹更耐用）。</p>
+<h4>C. 公差与标注</h4>
+<ul>
+<li>默认用 ISO 2768-m（±0.05 mm 左右）；关键尺寸 IT7~IT8，非关键 IT10~IT11</li>
+<li>优先用 <b>GD&amp;T 形位公差</b>说清平行度/位置度/跳动</li>
+<li>装配留间隙：如 5 mm 轴配孔 → 孔做 5.1 mm</li>
+</ul>
+<h4>D. 装夹与工艺</h4>
+<p>设计天然夹紧面或工艺凸台/卡舌；尽量一次装夹多面；薄壁区远离夹持点与强切削区；大件考虑翻转与定位基准；<b>粗精分开 + 中途释放应力</b>。</p>
+<h4>E. 细节处理</h4>
+<ul>
+<li>全图统一标注"锐边倒钝"（break all edges）</li>
+<li>统一内角半径 → 全程同一把刀，省时省钱</li>
+<li>圆角略大于刀具半径（如 3.3 而非 3.175）→ 表面更光</li>
+<li>铝件：攻丝用大底孔、去毛刺彻底、软质材料包装</li>
+</ul>
+<h4>F. 选材 &amp; 表面处理提前规划（独有视角）</h4>
+<ul>
+<li>需阳极氧化 → 6061，注意<b>膜厚影响尺寸</b></li>
+<li>需焊接 → 6061，避开 7075；高受力 → 7075（<b>T651</b> 更稳定）</li>
+<li>精密薄壁 → 6061（7075 残余应力大易变形）</li>
+<li>表面处理是"设计阶段就要决定"的，不是最后一道工序</li>
+</ul></div>
+</div>
+<div class="aiblock">
+<div class="hd"><span class="nm" style="color:var(--qw)">千问 3.8</span><span class="vv">3.8</span><span class="sc" style="color:var(--qw)">终分 75.3</span></div>
+<div class="ds2">最短最口语，唯一提醒别用机加工刻字</div>
+<div class="qbox" style="background:#f0f6fd;border-color:#d6e6f7;color:#1e4d7d;border-radius:10px;padding:9px 12px;margin:8px 0 12px"><div class="lb" style="color:var(--grey)">提问</div><pre style="font-size:12.3px;line-height:1.8">整理一个关于 1. CNC是什么？加工原理？
+2. CNC常用材料有哪些？6061和7075怎么选？
+3. 普通CNC加工精度大概多少？
+4. 设计CNC零件要注意什么？
+类似思维导图的文档</pre></div>
+<div class="qh">1. CNC 是什么？加工原理？</div>
+<div class="src qw"><div class="who">千问<span class="v">3.8</span> <em>侧重：流程拆成 5 步，讲新人能懂的话</em></div>
+<h4>定义</h4>
+<p>CNC 是 Computer Numerical Control 的缩写，中文叫“计算机数控”。它不是人直接操作机床，而是用计算机程序控制机床完成切削、钻孔、铣削等加工动作。</p>
+<h4>加工原理（一条链路）</h4>
+<p>CAD 3D 模型 → CAM 编程 → 生成 G 代码 → 机床执行 → 得到零件</p>
+<h4>具体流程 5 步</h4>
+<table class="mini">
+<tr><th>步骤</th><th>内容</th></tr>
+<tr><td class="k">① 设计模型</td><td>用 CAD 软件画出零件三维模型</td></tr>
+<tr><td class="k">② 生成程序</td><td>用 CAM 软件把模型转成机床能识别的指令，如 G 代码、M 代码</td></tr>
+<tr><td class="k">③ 装夹与对刀</td><td>把毛坯装夹到机床，安装刀具并设定零点</td></tr>
+<tr><td class="k">④ 自动加工</td><td>机床按程序控制 X/Y/Z 轴以及主轴转速、进给速度，做减材加工</td></tr>
+<tr><td class="k">⑤ 检测与后处理</td><td>测量尺寸，必要时喷砂、阳极氧化、电镀等表面处理</td></tr>
+</table>
+<p class="note">特点：表述最口语化，唯一提到 M 代码与“设定零点”，适合零基础阅读。</p></div>
+<div class="qh">2. CNC 常用材料有哪些？6061 和 7075 怎么选？</div>
+<div class="src qw"><div class="who">千问<span class="v">3.8</span> <em>侧重：清单式材料 + 只比关键项</em></div>
+<h4>常见金属</h4>
+<div class="kv">
+<span><b>铝合金</b>：6061、7075、5052、6063、2024</span>
+<span><b>不锈钢</b>：304、316</span>
+<span><b>碳钢 / 合金钢</b></span>
+<span><b>铜 / 黄铜</b></span>
+<span><b>钛合金</b>：TA1、TC4</span>
+</div>
+<h4>常见塑料</h4>
+<p>ABS、PC、POM、尼龙 PA、PMMA 亚克力、PTFE 铁氟龙、PEEK</p>
+<h4>6061 vs 7075 核心区别</h4>
+<table class="mini">
+<tr><th>对比项</th><th>6061</th><th>7075</th></tr>
+<tr><td class="k">强度</td><td>中等，适合多数结构件</td><td>高，适合承力件</td></tr>
+<tr><td class="k">加工性</td><td>切削稳定，变形风险较低</td><td>内应力较大，薄壁易变形</td></tr>
+<tr><td class="k">表面处理</td><td>阳极氧化效果较稳定</td><td>深色阳极较常见，色差更敏感</td></tr>
+<tr><td class="k">成本</td><td>相对较低</td><td>通常更高</td></tr>
+<tr><td class="k">典型用途</td><td>外壳、支架、安装座、夹具</td><td>关节件、承力臂、轻量化骨架</td></tr>
+</table>
+<h4>优先选 6061</h4>
+<p>普通支架、外壳、盖板、安装板；需要彩色阳极氧化；研发阶段验证外形和装配；对成本和交期敏感。</p>
+<h4>优先选 7075</h4>
+<p>承受较大冲击、扭矩、拉压载荷；机器人关节、轻量化承力结构；对强度和刚性要求明显高于普通结构件。</p>
+<h4>注意点</h4>
+<ul>
+<li>7075 不一定“更高级就更合适”。非承力件用 7075，往往只会增加成本</li>
+<li>图纸上建议写清楚材料状态，例如 <b>6061-T6、7075-T651</b></li>
+<li>薄壁 7075 零件要注意应力释放和变形控制</li>
+</ul></div>
+<div class="qh">3. 普通 CNC 加工精度大概多少？</div>
+<div class="src qw"><div class="who">千问<span class="v">3.8</span> <em>侧重：四档分级最清爽，直接给“按什么理解”</em></div>
+<table class="mini">
+<tr><th>精度等级</th><th>典型公差范围</th><th>适用场景</th></tr>
+<tr><td class="k">普通加工</td><td>±0.05 ~ ±0.1 mm</td><td>一般结构件、外观件</td></tr>
+<tr><td class="k">较高精度</td><td>±0.02 ~ ±0.05 mm</td><td>配合件、定位件</td></tr>
+<tr><td class="k">精密加工</td><td>±0.01 mm 左右</td><td>关键孔位、轴承位</td></tr>
+<tr><td class="k">高精度加工</td><td>±0.005 mm 以内</td><td>精密仪器、航空航天</td></tr>
+</table>
+<h4>实际理解</h4>
+<ul>
+<li>普通 CNC 加工，通常可以按 <b>±0.05 ~ ±0.1 mm</b> 理解</li>
+<li>图纸没有特别标注时，很多加工厂会按 <b>ISO 2768-m</b> 等一般公差执行</li>
+<li>要求 ±0.01 mm 或更高时，成本、检测要求和加工时间都明显上升，通常<b>需要三坐标检测</b></li>
+</ul></div>
+<div class="qh">4. 设计 CNC 零件要注意什么？</div>
+<div class="src qw"><div class="who">千问<span class="v">3.8</span> <em>侧重：8 条要点，唯一讲“别用机加工刻字”</em></div>
+<ol style="margin-left:17px;font-size:12.9px;color:var(--txt)">
+<li style="margin-bottom:4px"><b>壁厚不要过薄</b>：金属最小 ≥0.8 mm（舒适 1.5~2.5）；塑料 ≥1.5 mm。太薄易振动变形，成本与报废率升高</li>
+<li style="margin-bottom:4px"><b>内角加圆角</b>：铣刀是圆柱形，做不出尖锐内直角；圆角半径可取刀具半径的 <b>1.3 倍</b>；同一零件尽量统一圆角半径</li>
+<li style="margin-bottom:4px"><b>孔和槽用标准尺寸</b>：优先标准钻头 3/4/5/6/8/10 mm；非标孔槽需定制刀具或改铣削，更贵</li>
+<li style="margin-bottom:4px"><b>避免过深型腔和深孔</b>：型腔深度 ≤ 宽度的 3~4 倍；深孔孔深 ≤ 孔径 10 倍，否则排屑、刚性、精度都变差</li>
+<li style="margin-bottom:4px"><b>减少翻面和装夹次数</b>：关键特征尽量同侧或相邻侧完成；多次翻面增加装夹误差和工时</li>
+<li style="margin-bottom:4px"><b>螺纹不要过长</b>：有效长度取孔径的 <b>1.5 倍</b>左右即可；过深对连接强度提升有限但成本增加</li>
+<li style="margin-bottom:4px"><b>公差只标在必要位置</b>：非关键尺寸用一般公差；全图标 ±0.01 mm 会显著提高成本</li>
+<li style="margin-bottom:4px"><b>避免不必要的文字和装饰</b>：刻字、浮雕、复杂 Logo 延长加工时间；需标识可考虑激光打标、丝印等后处理</li>
+</ol>
+<h4>快速记忆版</h4>
+<div class="tagline">
+<i>CNC 基础：计算机控制机床进行减材加工｜CAD→CAM→G代码→装夹→加工→检测｜精度高、一致性好、适合复杂零件</i>
+<i>常用材料：金属 铝合金/不锈钢/碳钢/铜/钛合金｜塑料 ABS/PC/POM/尼龙/PMMA/PEEK｜6061 通用稳定，7075 高强承力</i>
+<i>加工精度：普通 ±0.05~0.1｜较高 ±0.02~0.05｜精密 ±0.01｜高精度 ±0.005 以内</i>
+<i>设计要点：壁厚别太薄｜内角加圆角｜孔槽用标准尺寸｜型腔和孔别太深｜减少翻面装夹｜螺纹别过长｜公差只标关键位｜少用机加工刻字</i>
+</div></div>
+</div>
+<div class="aiblock">
+<div class="hd"><span class="nm" style="color:var(--glm)">GLM 5.3 flash</span><span class="vv">5.3 flash</span><span class="sc" style="color:var(--glm)">终分 94.1</span></div>
+<div class="ds2">公式与增量数值最多；唯一给表面处理尺寸增量表</div>
+<div class="qbox" style="background:#f0f6fd;border-color:#d6e6f7;color:#1e4d7d;border-radius:10px;padding:9px 12px;margin:8px 0 12px"><div class="lb" style="color:var(--grey)">提问</div><pre style="font-size:12.3px;line-height:1.8">整理一个关于 1. CNC是什么？加工原理？
+2. CNC常用材料有哪些？6061和7075怎么选？
+3. 普通CNC加工精度大概多少？
+4. 设计CNC零件要注意什么？
+类似思维导图的文档</pre></div>
+<div class="qh">1. CNC 是什么？加工原理？</div>
+<div class="src glm"><div class="who">GLM<span class="v">5.3 flash</span> <em>侧重：工艺/轴数表格化 + 提到走心机</em></div>
+<h4>定义</h4>
+<p>CNC = Computer Numerical Control（计算机数字控制），是一种<b>减材制造工艺</b>：通过预先编程的软件和代码（G-code / M-code）驱动机床，从实体毛坯上<b>逐层去除材料</b>，得到设计零件。</p>
+<p>流程链路：CAD 三维模型 → CAM 生成刀具路径 → 后处理输出 G-code → 机床按指令自动切削</p>
+<h4>核心原理</h4>
+<p>控制系统把设计图转译为<b>笛卡尔坐标系</b>中的轴移动指令，主轴带动刀具（或工件）高速旋转，按程序设定的进给速度、转速、切深去除材料。</p>
+<p>对比传统手动机床：微米级重复精度、复杂曲面加工能力、24h 自动化生产、批量一致性强。</p>
+<h4>常见加工工艺</h4>
+<table class="mini">
+<tr><th>工艺</th><th>刀具/工件状态</th><th>典型应用</th></tr>
+<tr><td class="k">CNC 铣削</td><td>刀具旋转、工件固定/移动</td><td>平面、槽、型腔、曲面、壳体、支架</td></tr>
+<tr><td class="k">CNC 车削</td><td>工件旋转、刀具移动</td><td>轴类、套筒、螺纹、盘类等回转体</td></tr>
+<tr><td class="k">钻 / 攻丝</td><td>钻头/丝锥进给</td><td>孔系、内螺纹（公制 6H/6G 标准等级）</td></tr>
+<tr><td class="k">镗孔 / 铰孔</td><td>精修孔径</td><td>IT6~IT7 级精密孔</td></tr>
+<tr><td class="k">磨削</td><td>砂轮</td><td>IT6 级以上、Ra&lt;0.4 μm 的精加工</td></tr>
+</table>
+<h4>轴数与适用场景</h4>
+<ul>
+<li><b>3 轴</b>：X/Y/Z 三直线轴，最常见、成本最低，适合平面和特征朝向单一的结构件</li>
+<li><b>4 轴</b>：增加一个旋转轴（A/B/C），减少装夹次数，适合沿圆柱分布的特征</li>
+<li><b>5 轴</b>：三直线轴 + 两旋转轴联动，刀具可多角度趋近工件，一次装夹完成复杂曲面、叶轮、精密模具</li>
+<li><b>车铣复合 / 走心机</b>：车削与铣削同机完成，走心式适合 &lt;42 mm 的细长精密件（如医疗器械轴类）</li>
+</ul>
+<p><b>一句话总结：</b>CNC 用程序代替人工，把 CAD 图纸“雕刻”成金属或塑料实体，减材、高精、自动化是其三大底色。</p></div>
+<div class="qh">2. CNC 常用材料有哪些？6061 和 7075 怎么选？</div>
+<div class="src glm"><div class="who">GLM<span class="v">5.3 flash</span> <em>侧重：唯一给“切削性评分”与“相对成本倍数”</em></div>
+<h4>常用材料速查</h4>
+<table class="mini">
+<tr><th>类别</th><th>典型牌号</th><th>核心特性</th><th>典型应用</th></tr>
+<tr><td class="k">铝合金</td><td>6061、7075、5052</td><td>轻质、易加工、导热好</td><td>电子外壳、结构件、无人机、自行车</td></tr>
+<tr><td class="k">不锈钢</td><td>SUS303、304、316</td><td>耐蚀、强度高、耐高温</td><td>医疗器械、食品设备、化工阀门</td></tr>
+<tr><td class="k">碳钢</td><td>45#、Q235</td><td>强度高、成本低、可热处理</td><td>机械结构、夹具</td></tr>
+<tr><td class="k">铜合金</td><td>黄铜 C360、紫铜</td><td>切削性极佳、导电导热优</td><td>接插件、散热件、装饰件</td></tr>
+<tr><td class="k">钛合金</td><td>TC4 (Ti-6Al-4V)</td><td>比强度高、生物相容、难加工</td><td>航空结构件、人工关节</td></tr>
+<tr><td class="k">工程塑料</td><td>POM、ABS、PEEK、尼龙</td><td>绝缘、轻、耐磨</td><td>治具、绝缘件、齿轮、样件</td></tr>
+</table>
+<h4>6061 vs 7075 关键对比</h4>
+<table class="mini">
+<tr><th>维度</th><th>6061-T6</th><th>7075-T6</th></tr>
+<tr><td class="k">抗拉强度</td><td>~310 MPa</td><td>~572 MPa（约 +85%）</td></tr>
+<tr><td class="k">屈服强度</td><td>~276 MPa</td><td>~503 MPa</td></tr>
+<tr><td class="k">布氏硬度</td><td>~95 HB</td><td>~150 HB</td></tr>
+<tr><td class="k">密度</td><td>2.70 g/cm³</td><td>2.81 g/cm³（几乎相同）</td></tr>
+<tr><td class="k">切削加工性</td><td><b>极佳（9/10，切屑漂亮）</b></td><td>良好（7/10，稍粘刀）</td></tr>
+<tr><td class="k">耐腐蚀性</td><td>良好（可直接户外使用）</td><td>一般（需涂层保护）</td></tr>
+<tr><td class="k">焊接性</td><td>优秀</td><td>差（易开裂）</td></tr>
+<tr><td class="k">阳极氧化</td><td>均匀光亮、上色漂亮</td><td>颜色偏暗、略不均</td></tr>
+<tr><td class="k">相对材料成本</td><td>1.0×（基准）</td><td><b>1.8~2.2×</b></td></tr>
+<tr><td class="k">典型应用</td><td>电池壳、电机外壳、PCB 支架、夹具、散热器</td><td>航空支架、无人机机臂、模具、高压受力件</td></tr>
+</table>
+<h4>选型决策</h4>
+<div class="kv">
+<span><b>选 6061</b>：需外观阳极氧化（亮色均匀）｜有焊接工序或潮湿/轻微腐蚀环境｜强度要求中等｜对成本交期敏感（供货快、便宜 40~60%）｜原型件和小批量</span>
+<span><b>选 7075</b>：关键受力件、高循环疲劳载荷（航空、赛车、军工）｜要求极致比强度（强度接近某些钢材但密度只有 1/3）｜图纸或客户明确指定牌号｜无焊接、无腐蚀环境的内部结构件</span>
+</div>
+<p><b>一句话总结：</b>通用件、外观件、预算紧 → 6061；高载荷、高比强度、不差钱 → 7075。两者不是“谁更好”，而是“分工不同”。</p></div>
+<div class="qh">3. 普通 CNC 加工精度大概多少？</div>
+<div class="src glm"><div class="who">GLM<span class="v">5.3 flash</span> <em>侧重：唯一量化“公差→成本倍数”曲线</em></div>
+<h4>公差等级（ISO IT 制）</h4>
+<p>IT 数字越小精度越高：IT6~IT7 精密级，IT8~IT9 一般精加工，IT10~IT12 普通级。</p>
+<p><b>成本随公差呈指数上升</b>：IT10（±0.10 mm）基准 1.0× → IT7（±0.025 mm）约 2.1× → IT6（±0.016 mm）约 3.2× → IT5（±0.011 mm）可达 <b>4.5×</b></p>
+<h4>不同工艺典型精度</h4>
+<table class="mini">
+<tr><th>工艺</th><th>最佳公差</th><th>标准公差</th><th>表面粗糙度</th></tr>
+<tr><td class="k">CNC 铣削</td><td>±0.005 mm</td><td>±0.015 mm</td><td>Ra 0.2~3.2 μm</td></tr>
+<tr><td class="k">CNC 车削</td><td>±0.002 mm</td><td>±0.010 mm</td><td>Ra 0.1~1.6 μm</td></tr>
+<tr><td class="k">5 轴加工</td><td>±0.003 mm</td><td>±0.012 mm</td><td>Ra 0.2~1.6 μm</td></tr>
+<tr><td class="k">钻孔 / 攻丝</td><td>±0.005 mm（孔位）</td><td>±0.015 mm</td><td>Ra 1.6~6.3 μm</td></tr>
+</table>
+<h4>行业常用档位（可直接套用）</h4>
+<ul>
+<li><b>普通商用件</b>：±0.05~±0.10 mm（约 IT10~IT12），Ra 3.2~6.3 μm，大多数结构零件够用</li>
+<li><b>精密机械件</b>：±0.025 mm（IT7），Ra 0.8~1.6 μm，配合面、轴承位</li>
+<li><b>高精密件</b>：±0.01~±0.005 mm（IT6~IT5），Ra 0.2~0.4 μm，需恒温环境、精密机床，常需配磨</li>
+<li><b>航空航天 / 医疗</b>：±0.002~±0.005 mm，Ra 0.2~0.8 μm，执行 AS9100 / ISO 13485</li>
+</ul>
+<h4>影响精度的关键因素</h4>
+<ul>
+<li>机床主轴径跳与定位精度（IT6 级要求主轴径跳 ≤0.002 mm）</li>
+<li>刀具磨损（需在线补偿）</li>
+<li>热变形（主轴冷机到热平衡 30 分钟内轴向伸长 <b>0.01~0.015 mm</b>）</li>
+<li>装夹刚度与工件残余应力释放</li>
+</ul>
+<p><b>一句话总结：</b>图纸不标注时默认按 ±0.1 mm 报价；±0.05 mm 是“常规”，±0.01 mm 已属“精密”，±0.005 mm 以内要慎用——公差每收紧一级，成本几乎翻倍。</p></div>
+<div class="qh">4. 设计 CNC 零件要注意什么？</div>
+<div class="src glm"><div class="who">GLM<span class="v">5.3 flash</span> <em>侧重：唯一讲“表面处理对尺寸的增量”</em></div>
+<h4>4.1 内角半径（最容易踩坑）</h4>
+<ul>
+<li>铣刀是圆柱形，尖内角物理上不可能加工出来，每个内角都会留下刀具半径的圆角</li>
+<li>经验规则：内角 R ≥ 型腔深度的 1/3；标准值 R1.0~R3.0 mm，最小 R0.5 mm</li>
+<li>推荐公式：<b>R =（深度/10）+ 0.5 mm</b>（例：30 mm 深腔 → 最小 R3.5 mm）</li>
+<li>比刀具半径大 30% 可显著延长刀具寿命并提高切削速度</li>
+</ul>
+<h4>4.2 深腔与深宽比</h4>
+<ul>
+<li>深宽比 ≤3:1 为佳，4:1 以上需加长刀具、进给骤降、周期翻 4~5 倍</li>
+<li>刀具直径与腔深关系：<b>D = 腔深/5</b>（例：30 mm 深 → 最小 Φ6 mm 刀）</li>
+<li>腔底应有 R0.5 mm 以上的底角圆角，避免应力集中</li>
+</ul>
+<h4>4.3 薄壁控制</h4>
+<ul>
+<li>金属最小壁厚 0.8 mm（量产推荐 1.5 mm）；塑料最小 1.5 mm（推荐 2.5 mm）</li>
+<li>不锈钢、钛合金建议 1.5~2.5 mm；6061 可做到 1.0 mm 稳定加工</li>
+<li>高度/厚度比建议 ≥3:1，过高薄壁易颤振变形</li>
+</ul>
+<h4>4.4 孔与螺纹</h4>
+<ul>
+<li>孔深 ≤4×孔径为标准钻削；4~10× 需啄钻或枪钻，需在图纸注明</li>
+<li>螺纹最小规格 M2（量产推荐 M3），深度 1.5×D（铝）/ 2×D（钢）</li>
+<li>盲孔螺纹底部留约 0.5×D 未攻丝段，避免丝锥折断</li>
+</ul>
+<h4>4.5 公差标注原则</h4>
+<ul>
+<li>只在关键配合面、功能面标严公差，非关键按 <b>ISO 2768-mK</b> 通用公差，可省约 <b>15% 成本</b></li>
+<li>配合孔预留间隙（如 Φ5 轴配 Φ5.1 孔），避免过盈装配风险</li>
+<li>螺纹按 6H/6G 标注；孔位公差 ±0.02 mm 常规够用</li>
+</ul>
+<h4>4.6 避免倒扣与侧凹</h4>
+<p>3 轴机床无法加工被遮挡的特征，倒扣需 5 轴或 EDM。无法避免时：倒扣深度 &lt;2 mm、宽度 &gt;4 mm，或改用 T 型槽刀。</p>
+<h4>4.7 表面处理对精度的影响（独有）</h4>
+<table class="mini">
+<tr><th>处理方式</th><th>尺寸影响</th><th>备注</th></tr>
+<tr><td class="k">阳极氧化 Type II</td><td>向外+向内各生长约 50%，每面约 <b>+5~12 μm</b></td><td>精密孔、螺纹需预缩尺寸或遮蔽</td></tr>
+<tr><td class="k">硬质阳极 Type III</td><td>每面 <b>+25~75 μm</b></td><td>深孔、轴承位慎用</td></tr>
+<tr><td class="k">电镀（镍/铬/锌）</td><td>单边增加镀层厚度</td><td>铝件镀前需锌化处理，成本高</td></tr>
+<tr><td class="k">钝化（不锈钢）</td><td>几乎无变化</td><td>304/316 首选</td></tr>
+<tr><td class="k">喷砂 / 抛光</td><td>微量减小 1~3 μm</td><td>通常作为阳极前处理</td></tr>
+</table>
+<p>阳极氧化件务必在设计阶段预留“镀前公差”——精密配合面要求遮蔽或预留加工余量，否则装配干涉。</p>
+<h4>4.8 装夹与批量成本</h4>
+<p>预留装夹基准面和加工凸台，减少专用夹具；复杂特征分工序可加工，但每多一次装夹损失一次精度；外形轮廓优先 <b>45° 倒角而非圆角</b>，加工更快更省；孔位、螺纹统一标准尺寸。</p>
+<h4>4.9 设计自查清单 ✅</h4>
+<div class="tagline">
+<i>✅ 所有内角有 R ≥0.5 mm 圆角</i><i>✅ 腔深 ≤3~4 倍宽度</i>
+<i>✅ 薄壁金属 ≥0.8 / 塑料 ≥1.5 mm</i><i>✅ 无倒扣结构</i>
+<i>✅ 严公差只标关键配合面</i><i>✅ 孔深 ≤4×D，螺纹深 ≤3×D</i>
+<i>✅ 阳极氧化件已考虑镀层增厚</i><i>✅ 装夹基准明确</i>
+</div>
+<h4>三个高频误区</h4>
+<ul>
+<li>“图纸全标 ±0.01 mm 更稳妥” ❌ → 成本翻 3~4 倍，多数尺寸按通用公差即可</li>
+<li>“内角画成直角最干净” ❌ → 铣刀物理做不到，需 EDM 或改 R 角</li>
+<li>“阳极氧化就是喷漆” ❌ → 会改变尺寸（每面 +5~25 μm），精密配合件必须预留或遮蔽</li>
+</ul></div>
+</div>
+<div class="aiblock">
+<div class="hd"><span class="nm" style="color:var(--mm)">MiniMax M3</span><span class="vv">M3</span><span class="sc" style="color:var(--mm)">终分 84.3</span></div>
+<div class="ds2">唯一用加工手感描述材料，比喻最形象</div>
+<div class="qbox" style="background:#f0f6fd;border-color:#d6e6f7;color:#1e4d7d;border-radius:10px;padding:9px 12px;margin:8px 0 12px"><div class="lb" style="color:var(--grey)">提问</div><pre style="font-size:12.3px;line-height:1.8">整理一个关于 1. CNC是什么？加工原理？
+2. CNC常用材料有哪些？6061和7075怎么选？
+3. 普通CNC加工精度大概多少？
+4. 设计CNC零件要注意什么？
+类似思维导图的文档</pre></div>
+<div class="qh">1. CNC 是什么？加工原理？</div>
+<div class="src mm"><div class="who">MiniMax<span class="v">M3</span> <em>侧重：比喻讲原理 + 唯一解释"插补"为什么能切曲线</em></div>
+<h4>中心一句话</h4>
+<p>CNC = 给你一把"听电脑话的菜刀"，按图纸把一块材料一点点削成你要的形状。（专业说法：减材制造 —— 从整块里"挖"出来，不是堆出来的）</p>
+<h4>1.1 它不是机器人，是机床 + 数控系统</h4>
+<ul>
+<li><b>硬件</b>：一个能转的主轴 + 几个能动的轴（X/Y/Z，加 A/B/C 走 4/5 轴）+ 装着工件的台面</li>
+<li><b>软件</b>：电脑里的 <b>G 代码</b>（一串坐标指令）告诉它"先去哪、再去哪、用多深、走多快"</li>
+<li><b>它没有眼睛，只照指令走</b> —— 图纸错了，它做错得很精确</li>
+</ul>
+<h4>1.2 加工链路</h4>
+<p>你画三维图（CAD）→ CAM 软件算刀路 → 导出 G 代码 → 机床照着跑 → 出零件</p>
+<p>这个链路任何一步错了，废件率都上升。所以 <b>DFM（可制造性设计）不是玄学，是省钱学</b>。</p>
+<h4>1.3 它怎么"切出曲线"（独有一问）</h4>
+<ul>
+<li>现实：刀具是圆的、直线移动的，<b>理论上只能切直线</b></li>
+<li>解法：<b>插补</b> —— 把曲线切成几百段小直线，一小段一小段逼近</li>
+<li>所以精度本质是"我切的每段直线离你想要的曲线有多近"</li>
+</ul>
+<h4>1.4 轴数 = 能从几个方向切</h4>
+<ul>
+<li><b>3 轴</b>（X/Y/Z）：板类、外壳、简单立体（90% 场景）</li>
+<li><b>4 轴</b>：加 1 旋转，带侧孔/侧槽的回转件</li>
+<li><b>5 轴</b>：刀具能"侧过身"切，复杂曲面用起来像开了外挂</li>
+<li><b>M3 直觉</b>：先想 3 轴能不能干，3 轴干不了才上 5 轴。5 轴机贵、行程小、编程难</li>
+</ul>
+<h4>1.5 常见工艺</h4>
+<p>铣（板类）、车（轴套）、钻/镗（孔）、磨（精修）、线切割（硬料/模具）</p></div>
+<div class="qh">2. CNC 常用材料有哪些？6061 和 7075 怎么选？</div>
+<div class="src mm"><div class="who">MiniMax<span class="v">M3</span> <em>侧重：材料"一句话印象" + 选料三问</em></div>
+<p>CNC 是个不挑食的胖子，但料决定难度和成本。</p>
+<h4>2.1 金属（按加工手感描述）</h4>
+<table class="mini">
+<tr><th>料</th><th>一句话印象</th></tr>
+<tr><td class="k">铝合金</td><td>软、轻、好切，最常用</td></tr>
+<tr><td class="k">不锈钢</td><td>硬、耐蚀，难加工（粘刀）</td></tr>
+<tr><td class="k">铜 / 黄铜</td><td>软但屑粘，刀要锋利</td></tr>
+<tr><td class="k">钛合金</td><td>又硬又弹，刀具杀手</td></tr>
+<tr><td class="k">钢（45#、4140）</td><td>常规结构件主力</td></tr>
+<tr><td class="k">镁合金</td><td>轻但易燃，屑要注意</td></tr>
+</table>
+<h4>2.2 塑料</h4>
+<ul>
+<li>易上手：ABS、PC、PMMA（亚克力）、尼龙、POM（赛钢）</li>
+<li>进阶：PEEK、PI（耐高温高强，贵）</li>
+<li>注意：塑料<b>吸水变形、热胀冷缩大，精度天然不如金属</b></li>
+</ul>
+<h4>2.3 选料三问（独有判断流程）</h4>
+<ol style="margin-left:17px;font-size:12.9px;color:var(--txt)">
+<li style="margin-bottom:3px">受力大不大？大 → 钢 / 钛 / 7075</li>
+<li style="margin-bottom:3px">接触水 / 化学品？要 → 不锈钢 / 涂层</li>
+<li style="margin-bottom:3px">要轻？便宜？快？ → 铝</li>
+</ol>
+<h4>2.4 6061 vs 7075：全能选手 vs 短跑冠军</h4>
+<table class="mini">
+<tr><th>指标</th><th>6061-T6</th><th>7075-T6</th></tr>
+<tr><td class="k">合金系</td><td>铝-镁-硅（6 系）</td><td>铝-锌-镁-铜（7 系）</td></tr>
+<tr><td class="k">屈服强度</td><td>276 MPa</td><td>503 MPa（高 ~83%）</td></tr>
+<tr><td class="k">抗拉强度</td><td>310 MPa</td><td>572 MPa（高 ~84%）</td></tr>
+<tr><td class="k">硬度 HB</td><td>95</td><td>150（高 ~58%）</td></tr>
+<tr><td class="k">焊接</td><td>✅ 可以</td><td>❌ 几乎不行（热裂）</td></tr>
+<tr><td class="k">耐腐蚀</td><td>好</td><td>一般（要阳极或涂层）</td></tr>
+<tr><td class="k">加工手感</td><td>丝滑，刀具舒服</td><td>偏硬，刀具磨损略快</td></tr>
+<tr><td class="k">阳极氧化</td><td>色泽一致，好看</td><td>可，但易出色差</td></tr>
+<tr><td class="k">密度</td><td>2.70 g/cm³</td><td>2.81 g/cm³（基本一样重）</td></tr>
+<tr><td class="k">价格</td><td>平价</td><td>贵 1.5–2.5 倍</td></tr>
+<tr><td class="k">典型用途</td><td>外壳、支架、通用结构</td><td>航空、高载、模具、军工</td></tr>
+</table>
+<h4>我的选料判断（3 问）</h4>
+<ul>
+<li>要焊接 → <b>6061</b>（7075 焊不动）</li>
+<li>真的高载荷/抗冲击 → <b>7075</b>（多花的钱值）</li>
+<li>都没特殊 → <b>默认 6061</b>，90% 场景够用</li>
+</ul>
+<p><b>M3 经验：</b>当你犹豫 6061 还是 7075，选 6061。需要 7075 的场景你会很清楚。</p></div>
+<div class="qh">3. 普通 CNC 加工精度大概多少？</div>
+<div class="src mm"><div class="who">MiniMax<span class="v">M3</span> <em>侧重：唯一给"公差配比"与工艺降级阈值</em></div>
+<p>精度是个钱堆出来的游戏，越细越贵。</p>
+<h4>3.1 三档精度（工厂报价分档）</h4>
+<table class="mini">
+<tr><th>档</th><th>公差</th><th>价格影响</th><th>适用</th></tr>
+<tr><td class="k">常规</td><td>±0.05–0.1 mm（ISO 2768-m）</td><td>默认不加钱</td><td>外壳、支架、非关键</td></tr>
+<tr><td class="k">精密</td><td>±0.01–0.025 mm</td><td>贵 1.5–3 倍</td><td>轴承位、定位面、精密轴</td></tr>
+<tr><td class="k">超精密</td><td>±0.002–0.005 mm</td><td>贵 5 倍+（+恒温）</td><td>光学、医疗、半导体</td></tr>
+</table>
+<h4>3.2 分工艺经验阈值</h4>
+<ul>
+<li>铣：标准 ±0.1 → 精 ±0.025 → 高 ±0.0125 mm</li>
+<li>车：标准 ±0.05 → 精 ±0.0125 → 极限 ±0.005 mm</li>
+<li>磨：±0.005 mm 起</li>
+</ul>
+<h4>3.3 表面粗糙度 Ra</h4>
+<ul>
+<li>普通铣削：Ra 1.6–3.2 μm；精铣/精车：Ra 0.8 μm；研磨/抛光：Ra 0.1–0.4 μm</li>
+<li>要 Ra 0.2 以下？<b>基本要磨或 EDM</b></li>
+</ul>
+<h4>3.4 影响精度的因素（按重要性排序）</h4>
+<p>材料（软的好控、硬的让刀）→ 几何复杂度（深腔、薄壁、悬臂让精度掉）→ 刀具磨损 → 装夹刚性 → 机床刚性+精度 → 环境温度（精密件要恒温）</p>
+<h4>3.5 我的"省精度"心法（独有）</h4>
+<ul>
+<li>别整图全写 ±0.01，报价立马翻 2–3 倍</li>
+<li>一份合理图的公差分布：<b>80% ±0.1 mm，15% ±0.05 mm，5% ±0.01 mm</b> —— 这种比例最划算</li>
+<li>配合用 ISO 标准（<b>H7/g6</b>），比写死 ±0.01 mm 更专业</li>
+</ul></div>
+<div class="qh">4. 设计 CNC 零件要注意什么？</div>
+<div class="src mm"><div class="who">MiniMax<span class="v">M3</span> <em>侧重：唯一给通孔/盲孔成本差与"上手自检 6 问"</em></div>
+<p>机床不是神，它有脾气。顺着它，省一半时间和钱。</p>
+<h4>4.1 圆角 = 内角必给</h4>
+<ul>
+<li>物理事实：刀具是圆的，内角永远做不出尖角</li>
+<li>内角半径 ≥ 刀具半径；建议 <b>R ≥ 1/3 × 腔深</b></li>
+<li>想"外观锐利"？<b>外边倒角做锐，里面 R 不能省</b></li>
+</ul>
+<h4>4.2 壁厚有底线</h4>
+<table class="mini">
+<tr><th>材料</th><th>最低</th><th>建议</th></tr>
+<tr><td class="k">铝</td><td>0.8 mm</td><td>1.5+ mm</td></tr>
+<tr><td class="k">钢</td><td>1.5 mm</td><td>2.0+ mm</td></tr>
+<tr><td class="k">不锈钢</td><td>2.0 mm</td><td>2.5+ mm</td></tr>
+<tr><td class="k">钛</td><td>2.0 mm</td><td>2.5+ mm</td></tr>
+<tr><td class="k">塑料</td><td>1.5 mm</td><td>2.5+ mm</td></tr>
+</table>
+<p>薄壁 = 让刀 + 振刀 + 表面差 + 易变形</p>
+<h4>4.3 腔 / 孔别太深</h4>
+<ul>
+<li>腔深 ≤ 4 × 腔宽</li>
+<li>孔深 ≤ 4 × 孔径 是稳的；<b>10× 勉强，20× 折磨</b>（断刀风险）</li>
+<li><b>通孔比盲孔便宜 30%+</b>（盲孔要慢钻、断屑）</li>
+<li><b>盲孔底部是尖锥</b>（钻头形状），不是平底 —— 装配时要留意</li>
+</ul>
+<h4>4.4 减少装夹 = 省钱一半</h4>
+<p>装夹次数 = 时间和误差的乘积。复杂件想一次装夹全做 → 考虑 5 轴或多工位夹具；避免倒扣、内凹、深不可达。</p>
+<h4>4.5 公差与表面，按需</h4>
+<p>紧公差 = 慢刀 + 精机 + 多检 = 贵；表面粗糙度同理：Ra 1.6 够用就别上 0.4。</p>
+<h4>4.6 上手自检 6 问 ✅</h4>
+<div class="tagline">
+<i>① 内角圆角给了吗（最容易踩坑）</i><i>② 壁厚够了吗</i>
+<i>③ 腔和孔深度合理吗</i><i>④ 能一次装夹搞定吗</i>
+<i>⑤ 公差和粗糙度有没有滥用紧的</i><i>⑥ 图纸标齐了吗：材料、状态（T6 等）、表面处理、关键尺寸、公差、粗糙度、基准</i>
+</div>
+<h4>一句话总结（M3 版）</h4>
+<p>CNC = 数控刀按图削材；料按强度和场景选（默认 6061，要高强度再 7075）；精度按"配合"分级、不滥用紧公差；设计四顺口溜 —— <b>圆角给够 / 壁厚达标 / 腔孔别贪深 / 一次装夹</b>。</p></div>
+</div>
+<div class="aiblock">
+<div class="hd"><span class="nm" style="color:var(--wx)">百度 秒哒</span><span class="vv">文心 4.5 Turbo</span><span class="sc" style="color:var(--wx)">终分 76.1</span></div>
+<div class="ds2">材料大类覆盖最广；G/M 代码分列 + 机床类型表</div>
+<div class="qbox" style="background:#f0f6fd;border-color:#d6e6f7;color:#1e4d7d;border-radius:10px;padding:9px 12px;margin:8px 0 12px"><div class="lb" style="color:var(--grey)">提问</div><pre style="font-size:12.3px;line-height:1.8">整理一个关于 1. CNC是什么？加工原理？
+2. CNC常用材料有哪些？6061和7075怎么选？
+3. 普通CNC加工精度大概多少？
+4. 设计CNC零件要注意什么？
+类似思维导图的文档</pre></div>
+<div class="qh">1. CNC 是什么？加工原理？</div>
+<div class="src wx"><div class="who">文心<span class="v">一言</span> <em>侧重：G/M 代码分列 + 机床类型表</em></div>
+<h4>定义</h4>
+<p>Computer Numerical Control，由计算机程序控制机床运动与加工过程。从早期 <b>NC（硬编码数控）</b>发展而来 —— 这一点只有它提到。</p>
+<h4>加工原理</h4>
+<ul>
+<li><b>G 代码</b>：控制运动轨迹（G00 快速定位 / G01 直线 / G02·G03 圆弧）</li>
+<li><b>M 代码</b>：控制辅助功能（M06 换刀 / M03·M05 主轴启停 / M08 冷却液）</li>
+</ul>
+<h4>完整流程 8 步</h4>
+<p>CAD 建模 → CAM 编程（选刀、设参数、算刀路）→ 后处理生成 G 代码 → 装夹与对刀 → 试切 → 正式加工 → 去毛刺 → 检测</p>
+<h4>常见机床类型</h4>
+<table class="mini"><tr><th>类型</th><th>特点</th><th>典型用途</th></tr>
+<tr><td class="k">加工中心</td><td>3 轴为主，可配 4/5 轴，带刀库</td><td>平面、型腔、曲面、钻孔攻丝</td></tr>
+<tr><td class="k">车削中心</td><td>工件旋转、刀具移动</td><td>轴类、套类、盘类回转体</td></tr>
+<tr><td class="k">数控磨床</td><td>高精度磨削</td><td>精密轴、平面</td></tr>
+<tr><td class="k">钻攻中心</td><td>高速小切削量</td><td>3C 小零件批量</td></tr>
+<tr><td class="k">线切割/EDM</td><td>非接触加工</td><td>硬材料、尖内角、特殊型腔</td></tr>
+</table></div>
+<div class="qh">2. CNC 常用材料有哪些？6061 和 7075 怎么选？</div>
+<div class="src wx"><div class="who">文心<span class="v">一言</span> <em>侧重：材料大类覆盖最广（含镁合金、Inconel、石墨、电木）</em></div>
+<h4>常用材料分类</h4>
+<table class="mini"><tr><th>类别</th><th>牌号</th><th>特点</th></tr>
+<tr><td class="k">铝合金</td><td>6061、7075、5083、2A12、5052、MIC-6</td><td>轻、易加工、散热好，最常用</td></tr>
+<tr><td class="k">不锈钢</td><td>304、316L、303、17-4PH</td><td>耐腐蚀、强度高，加工硬化明显</td></tr>
+<tr><td class="k">碳钢/合金钢</td><td>45#、Q235、40Cr、Cr12MoV、P20</td><td>强度高、便宜，需防锈</td></tr>
+<tr><td class="k">铜合金</td><td>T2 紫铜、H62 黄铜、铍铜</td><td>导电导热好，紫铜易粘刀</td></tr>
+<tr><td class="k">钛合金</td><td>TC4（Ti-6Al-4V）</td><td>比强度高、难加工、贵</td></tr>
+<tr><td class="k">镁合金</td><td>AZ91D</td><td>最轻，易燃需注意切屑处理</td></tr>
+<tr><td class="k">工程塑料</td><td>POM、ABS、PC、PA66、PEEK、PMMA、PTFE、电木</td><td>绝缘、轻、免表面处理</td></tr>
+<tr><td class="k">其他</td><td>锌合金、Inconel 718、石墨</td><td>特殊场景</td></tr>
+</table>
+<h4>6061 vs 7075</h4>
+<table class="mini"><tr><th>项</th><th>6061（T6）</th><th>7075（T6）</th></tr>
+<tr><td class="k">系列</td><td>Al-Mg-Si</td><td>Al-Zn-Mg-Cu</td></tr>
+<tr><td class="k">抗拉强度</td><td>≈310 MPa</td><td>≈510~570 MPa</td></tr>
+<tr><td class="k">屈服强度</td><td>≈276 MPa</td><td>≈455 MPa</td></tr>
+<tr><td class="k">硬度</td><td>≈95 HB</td><td>≈150 HB</td></tr>
+<tr><td class="k">焊接性</td><td>良好（可焊接）</td><td>差（一般不可焊，易裂纹）</td></tr>
+<tr><td class="k">阳极氧化</td><td>效果优秀、颜色均匀</td><td>颜色偏深、均匀性差，外观件慎用</td></tr>
+<tr><td class="k">价格</td><td>低（约为 7075 的 1/2~1/3）</td><td>高</td></tr>
+</table>
+<div class="fix">⚠️ 屈服 455 MPa 属<b>厚板最小值家族</b>（ASTM 25–50mm 段约 460），与同行的抗拉典型值口径混用 —— 触发「不可接受错误」第 6 条，V2.1 判 D2 = 0.5 组</div></div>
+<div class="qh">3. 普通 CNC 加工精度大概多少？</div>
+<div class="src wx"><div class="who">文心<span class="v">一言</span> <em>侧重：三档分级 + 形位公差量级</em></div>
+<h4>常规精度等级</h4>
+<table class="mini"><tr><th>等级</th><th>尺寸公差</th><th>说明</th></tr>
+<tr><td class="k">普通 CNC 铣/车</td><td>±0.05 ~ ±0.1 mm</td><td>一般加工厂默认可达</td></tr>
+<tr><td class="k">精密 CNC</td><td>±0.01 ~ ±0.025 mm</td><td>需好设备 + 精加工工序</td></tr>
+<tr><td class="k">超精密（磨/坐标镗）</td><td>±0.001 ~ ±0.005 mm</td><td>恒温车间、精磨工艺</td></tr>
+</table>
+<h4>其他精度指标</h4>
+<ul>
+<li>形位公差：平面度、垂直度、同轴度一般能控制在 0.01~0.05 mm 量级</li>
+<li>表面粗糙度：普通铣 Ra 1.6~3.2；精铣 Ra 0.8~1.6；精磨可达 Ra 0.2~0.4 μm</li>
+</ul>
+<h4>影响因素</h4>
+<p>机床精度（定位/重复定位）、刀具磨损、切削热与热变形、装夹变形、材料内应力释放、切削参数、测量误差。</p>
+<h4>给设计师的建议</h4>
+<p>图纸只给关键尺寸标公差（配合面、装配定位面），其余放开默认公差；精度每提高一个数量级，成本大致上一个台阶。</p></div>
+<div class="qh">4. 设计 CNC 零件要注意什么？</div>
+<div class="src wx"><div class="who">文心<span class="v">一言</span> <em>侧重：9 条要点，覆盖后处理与内应力</em></div>
+<h4>DFM 要点</h4>
+<ul>
+<li><b>壁厚</b>：铝件建议 ≥0.8 mm（极限 0.5），钢件 ≥1 mm；薄壁会振刀、变形、让刀；壁厚尽量均匀</li>
+<li><b>内角圆角</b>：铣刀是圆的，任何内凹直角都无法直接加工；R ≥ 刀具半径，经验 R ≥ 1/3~1/4 腔深；要尖角则改用线切割/EDM，或设计"清角沉槽"</li>
+<li><b>腔体深度</b>：型腔深度建议 ≤ 宽度 3~4 倍；太深会断刀、排屑困难、锥度明显</li>
+<li><b>孔设计</b>：优先标准钻头直径（Ø3/4/5/6）；盲孔底部是 118°/135° 锥尖，要平底需改铣削并注明；深孔（深/径 &gt;3~5）工艺性差；底孔深度要大于螺纹深度（留 3~5 倍螺距余量），尽量不用 &lt;M2</li>
+<li><b>基准与装夹</b>：设计基准、加工基准、检测基准三者统一；特征尽量朝向一致、一次装夹完成；避免大悬伸、细长结构</li>
+<li><b>内应力</b>：大去除量零件（厚板掏空）考虑粗加工 → 时效/去应力 → 精加工，否则加工后慢慢变形</li>
+<li><b>公差与标注</b>：只标关键公差，注明默认公差（如"未注公差 ±0.1"）；写明锐边倒角 C0.5、去毛刺要求</li>
+<li><b>表面处理</b>：明确处理方式；阳极氧化会微量增加尺寸（约 5~25 μm），配合面要预留；喷砂氧化能遮盖刀痕省钱；7075 做外观氧化效果差</li>
+<li><b>成本意识</b>：减少装夹次数、减少换刀、避免深腔小 R 角、避免薄壁、选用标准刀具；几件~几百件用 CNC，上万件考虑压铸/锻造毛坯 + CNC 精加工</li>
+</ul></div>
+</div>
+<div class="aiblock">
+<div class="hd"><span class="nm" style="color:var(--ry)">荣耀悠悠</span><span class="vv">模型暂未确定</span><span class="sc" style="color:var(--ry)">终分 55.4</span></div>
+<div class="ds2">极简清单式，场景化举例；精度口径偏乐观</div>
+<div class="qbox" style="background:#f0f6fd;border-color:#d6e6f7;color:#1e4d7d;border-radius:10px;padding:9px 12px;margin:8px 0 12px"><div class="lb" style="color:var(--grey)">提问</div><pre style="font-size:12.3px;line-height:1.8">整理一个关于 1. CNC是什么？加工原理？
+2. CNC常用材料有哪些？6061和7075怎么选？
+3. 普通CNC加工精度大概多少？
+4. 设计CNC零件要注意什么？
+类似思维导图的文档</pre></div>
+<div class="qh">1. CNC 是什么？加工原理？</div>
+<div class="src ry"><div class="who">荣耀<span class="v">悠悠</span> <em>侧重：极简清单式，最短的一家</em></div>
+<h4>定义（用词与其他家不同）</h4>
+<p>CNC 是 <b>Computerized</b> Numerical Control（计算机数控）的缩写 —— 注意它写的是 Computerized，其余十家均写 Computer。指通过预设程序自动控制机床加工过程的技术。</p>
+<h4>工作流程</h4>
+<p>工程师根据 3D 模型编写 G 代码程序 → 输入数控系统 → 系统解析指令 → 驱动伺服电机精确控制刀具运动轨迹。</p>
+<h4>典型应用</h4>
+<p>能完成铣削、车削、钻孔、攻丝等复杂工序，适用于轴类、盘类及异形零件加工。</p>
+<div class="tagline"><i>全文仅约 400 字</i><i>四问全部一句带过</i><i>必要点齐全但极浅</i></div></div>
+<div class="qh">2. CNC 常用材料有哪些？6061 和 7075 怎么选？</div>
+<div class="src ry"><div class="who">荣耀<span class="v">悠悠</span> <em>侧重：只给抗拉一个数值 + 场景化举例</em></div>
+<h4>铝合金系列（仅两项）</h4>
+<ul>
+<li><b>6061-T6</b>：综合性能最佳，抗拉约 310 MPa，加工容易且成本适中，适合 90% 通用场景。典型应用：智能音箱底座、电视背板、扫地机器人底盘、散热器</li>
+<li><b>7075-T6</b>：航空级高强度，抗拉 500–570 MPa，加工难度极大。典型应用：机器人重载关节壳体、高强度支架、航空结构件</li>
+</ul>
+<h4>选材决策逻辑</h4>
+<ul>
+<li>通用结构件 → 优先 6061，兼顾强度与成本</li>
+<li>极限承力部件 → 7075，但需接受 30% 以上成本增幅</li>
+<li>腐蚀环境 → 5052 铝合金，耐蚀性优于 6061</li>
+</ul>
+<table class="mini"><tr><th>维度</th><th>6061</th><th>7075</th></tr>
+<tr><td class="k">抗拉强度</td><td>310 MPa</td><td>500–570 MPa</td></tr>
+<tr><td class="k">加工难度</td><td>中等 ★★★☆</td><td>极高 ★★★★★</td></tr>
+<tr><td class="k">成本水平</td><td>基准价</td><td>高出 30–50%</td></tr>
+<tr><td class="k">热变形风险</td><td>低</td><td>高（需特殊工艺控制）</td></tr>
+<tr><td class="k">表面处理</td><td>阳极氧化效果佳</td><td>氧化后可能出现料花</td></tr>
+</table>
+<div class="fix">⚠️ 7075 抗拉给 500–570 未覆盖典型值 572；成本高 30–50% 低于基准库 1.5 倍下限 —— 按 V2.1 判为不可核验</div></div>
+<div class="qh">3. 普通 CNC 加工精度大概多少？</div>
+<div class="src ry"><div class="who">荣耀<span class="v">悠悠</span> <em>侧重：精度口径偏乐观</em></div>
+<h4>常规精度</h4>
+<ul>
+<li>尺寸公差：普通 CNC 可达 <b>±0.01 mm</b>，精密设备可控制在 ±0.005 mm</li>
+<li>表面粗糙度：精加工后 Ra 0.4–0.8 μm，喷砂处理可调整至 0.1–1.6 μm</li>
+</ul>
+<h4>精度影响因素</h4>
+<ul>
+<li><b>材料特性</b>：7075 比 6061 更易热变形，薄壁件平面度误差常超 0.2 mm</li>
+<li><b>设备等级</b>：普通设备适合 ±0.02 mm 要求，航空航天级需专用高精度机床</li>
+<li><b>工艺路线</b>：需严格区分粗/半精/精加工工序，精加工余量控制在 0.1–0.3 mm</li>
+</ul>
+<div class="fix">⚠️「普通 CNC 可达 ±0.01 mm」比另外十家的 ±0.05~0.1 紧了一档，属偏乐观口径；「精加工余量 0.1–0.3 mm」是它独有的实用数值</div></div>
+<div class="qh">4. 设计 CNC 零件要注意什么？</div>
+<div class="src ry"><div class="who">荣耀<span class="v">悠悠</span> <em>侧重：三条陷阱 + 三条原则，最短</em></div>
+<h4>结构设计陷阱</h4>
+<ul>
+<li><b>薄壁变形</b>：壁厚 &lt;1 mm 时需增加加强筋或调整装夹方式</li>
+<li><b>倒角缺失</b>：所有内角必须设计 ≥0.2 mm 倒角，避免应力集中开裂</li>
+<li><b>深腔限制</b>：深径比 &gt;5:1 的腔体加工难度剧增，建议拆分结构</li>
+</ul>
+<h4>工艺适配原则</h4>
+<ul>
+<li><b>图纸规范</b>：明确标注尺寸公差（通常 ±0.05–0.1 mm）、表面粗糙度要求</li>
+<li><b>材料预留</b>：7075 需预留更大加工余量应对热变形</li>
+<li><b>后处理兼容</b>：6061 适合阳极氧化，7075 氧化后可能出现料花问题</li>
+</ul>
+<p><b>重要提醒</b>：设计阶段必须考虑装夹可行性，避免出现无法固定的异形结构。</p>
+<div class="fix">⚠️ 内角「≥0.2 mm 倒角」这个数值偏小且表述不严谨 —— 其余十家给的是 R 圆角（≥0.5 mm 或 ≥1/3 腔深），倒角与圆角是两回事</div></div>
+</div>
+<div class="aiblock">
+<div class="hd"><span class="nm" style="color:var(--cop)">GitHub Copilot Free</span><span class="vv">自述 OpenAI／2024-06</span><span class="sc" style="color:var(--cop)">终分 73.8</span></div>
+<div class="ds2">系统组成最全 · 八条下单检查清单 · 唯一提公差链与 Helicoil；但 D1 状态错配</div>
+<div class="qbox" style="background:#f0f6fd;border-color:#d6e6f7;color:#1e4d7d;border-radius:10px;padding:9px 12px;margin:8px 0 12px"><div class="lb" style="color:var(--grey)">提问</div><pre style="font-size:12.3px;line-height:1.8">整理一个关于 1. CNC是什么？加工原理？
+2. CNC常用材料有哪些？6061和7075怎么选？
+3. 普通CNC加工精度大概多少？
+4. 设计CNC零件要注意什么？
+类似思维导图的文档</pre></div>
+<div class="qh">1. CNC 是什么？加工原理？</div>
+<div class="src cop"><div class="who">GitHub Copilot<span class="v">Free</span> <em>侧重：系统组成清单 + 关键参数</em></div>
+<h4>定义</h4>
+<p>Computer Numerical Control（数控加工），由计算机控制机床按预定程序自动加工零件。</p>
+<h4>加工原理（关键要点）</h4>
+<ul>
+<li>数控系统读取 CAM 生成的刀具路径（G-code / M-code）</li>
+<li>机床按坐标轴（常见 3/4/5 轴）移动刀具或工件</li>
+<li>刀具切削材料，实现去除加工（subtractive manufacturing）</li>
+<li>典型流程：设计（CAD）→ CAM 编程（刀路、进给/转速）→ 上机夹具定位 → 加工 → 检测 → 后处理（退火、表面处理）</li>
+</ul>
+<h4>组成</h4>
+<p>控制器、伺服/步进电机、主轴、刀库/换刀系统、工作台/夹具、冷却/润滑系统、测量/探针（可选）。</p>
+<h4>关键参数</h4>
+<p>坐标系、刀具半径／长度补偿、进给速度、主轴转速、切削深度、切削宽度（宽度/深度影响切削力和振动）。</p>
+<div class="fix">✅ 十二家里唯一把<b>机床物理组成</b>（控制器／伺服／刀库／冷却／探针）列全的；也是唯一把「刀具半径／长度补偿」列为关键参数的</div></div>
+<div class="qh">2. CNC 常用材料有哪些？6061 和 7075 怎么选？</div>
+<div class="src cop"><div class="who">GitHub Copilot<span class="v">Free</span> <em>侧重：按加工常见性排序 + 选用指南</em></div>
+<h4>常用材料</h4>
+<ul>
+<li>铝合金：6061、7075（轻质、易加工）</li>
+<li>碳钢：45#（中碳钢）、ISO 标准钢（强度高）</li>
+<li>不锈钢：304、316（耐腐蚀，但加工硬化、切削力大）</li>
+<li>黄铜：C360（易切削、良好导电、装饰性强）</li>
+<li>铜：用于导电／导热部件</li>
+<li>钛合金：Ti-6Al-4V（高强低密、昂贵、难加工）</li>
+<li>工程塑料：POM（Delrin）、尼龙、PTFE、PEEK（轻、耐化学）</li>
+</ul>
+<h4>6061 vs 7075</h4>
+<ul>
+<li><b>强度</b>：6061-T6 抗拉 ~240–310 MPa（根据状态）；7075-T6 抗拉 ~500–570 MPa</li>
+<li><b>加工性</b>：6061 加工性好、切削力小；7075 硬度高些，刀具磨损更快，需要更稳的夹具和更小切削参数</li>
+<li><b>耐腐蚀与表面处理</b>：6061 耐蚀性较好，阳极氧化效果稳定；7075 耐蚀性差于 6061，阳极氧化后需封孔处理</li>
+<li><b>焊接性／热处理</b>：6061 可焊；7075 不可或难以焊接（易开裂），通常作为热处理后的高强度材料使用</li>
+<li><b>价格</b>：7075 通常成本高于 6061，且可得性取决于规格</li>
+</ul>
+<h4>典型选用建议</h4>
+<ul>
+<li>要求高强度、轻量且承载关键结构（高强度梁、航空部件）→ 7075（注意：不能焊接，需适当防腐处理）</li>
+<li>需要良好加工性、耐腐蚀、焊接或成本敏感（外壳、夹具、一般结构件）→ 6061</li>
+</ul>
+<h4>设计时的提示</h4>
+<p>对于 7075，给加工和夹具留裕量，避免薄壁长悬挑，考虑热处理顺序（有时先热处理后精加工）。</p>
+<div class="fix">⚠️ <b>6061-T6 抗拉写 240–310 MPa：下界 240 是 T4 状态的值（T6 最小值应为 290 MPa）</b>——标着 T6 却给 T4 下界，属热处理状态与数值错配<br>⚠️ 7075 的 500–570 未覆盖典型值 572 MPa（与荣耀悠悠同一问题）</div></div>
+<div class="qh">3. 普通 CNC 加工精度大概多少？</div>
+<div class="src cop"><div class="who">GitHub Copilot<span class="v">Free</span> <em>侧重：三档分级 + 单独列重复定位精度</em></div>
+<h4>常见精度等级</h4>
+<table class="mini">
+<tr><th>工序</th><th>公差</th></tr>
+<tr><td class="k">粗加工（粗铣/粗车）</td><td>±0.05–0.2 mm</td></tr>
+<tr><td class="k">精加工（常规数控铣/车）</td><td>±0.01–0.05 mm（普通零件常见目标 ±0.02–0.05）</td></tr>
+<tr><td class="k">高精度／精密加工（精密加工中心或磨削后）</td><td>±0.005–0.01 mm（部分专业机床可达 ±0.001–0.002）</td></tr>
+<tr><td class="k">重复定位精度（数控系统+伺服的重复性）</td><td>通常 0.005–0.01 mm（高端机床更好）</td></tr>
+<tr><td class="k">孔位/孔径</td><td>钻孔粗加工后可打到 H7 宽松配合（再磨或铰孔可达 H7），孔径精度 ±0.01–0.03 mm</td></tr>
+</table>
+<h4>表面粗糙度 Ra</h4>
+<p>粗铣 Ra ~3.2–6.3 μm；精加工 Ra ~0.4–1.6 μm；磨削或超精加工可达 Ra &lt;0.2 μm。</p>
+<h4>影响精度的因素</h4>
+<p>机床刚性与精度、刀具磨损、夹具与定位、材料弹性、刀路与切削参数、温度／热膨胀、操作与工艺规划。</p>
+<h4>说明</h4>
+<p>实际能力依厂商、机床、刀具及夹具；<b>下单时与加工方确认可达到的公差和检测方法</b>（CMM、三坐标或千分尺）。</p>
+<div class="fix">✅ 唯一<b>单独列出「重复定位精度」</b>并区分于加工精度；✅ 唯一提醒<b>「下单时与加工方确认可达成公差与检测手段」</b>——车间沟通，其余十一家都没提</div></div>
+<div class="qh">4. 设计 CNC 零件要注意什么？</div>
+<div class="src cop"><div class="who">GitHub Copilot<span class="v">Free</span> <em>侧重：DFM 规则 + 八条下单检查清单</em></div>
+<h4>可加工性设计（DFM）</h4>
+<ul>
+<li><b>刀具半径限制</b>：任何内角最小半径等于或大于所用刀具半径（圆角 = 刀具半径）</li>
+<li><b>最小特征尺寸</b>：基于刀具直径（常见最小端铣刀直径 1–2 mm，很多车间更常用 3–6 mm）</li>
+<li><b>孔深径比</b>：推荐 ≤3:1，超过则需特殊钻头或分段加工（或改用深孔枪钻/镗）</li>
+<li><b>盲孔/深槽</b>：刀具伸长会降低刚性，避免深而窄的槽或口袋</li>
+<li><b>薄壁与悬臂</b>：避免过薄壁；若必须，增加肋或支撑，减少切削深度与进给</li>
+<li><b>最小壁厚</b>：铝常见 1–1.5 mm，塑料可更薄，但避免过薄导致变形</li>
+</ul>
+<h4>定位与夹具设计</h4>
+<ul>
+<li>提供平面或基准面用于夹持（至少 3 点定位，避免多夹具重复定位误差）</li>
+<li>设计定位基准（datum），明确图纸上的基准面和测量基准</li>
+<li>夹具夹紧面平整，避免薄片被扭曲</li>
+</ul>
+<h4>公差与配合</h4>
+<ul>
+<li>只对关键尺寸给公差（避免全图严苛公差导致成本大增）</li>
+<li>使用标准公差等级（ISO、ANSI），如一般尺寸 ±0.1 mm，配合孔用 H7/g6</li>
+<li>指定表面粗糙度要求（Ra）以及是否需要磨削或抛光</li>
+</ul>
+<h4>圆角、倒角与去毛刺</h4>
+<p>指定必要倒角／圆角（通常 0.5–1 mm 倒角用于装配和去毛刺）；标注去毛刺要求与公差方向。</p>
+<h4>螺纹与孔</h4>
+<p>螺纹深度与螺距匹配，盲孔螺纹底部留足余量，避免完全底孔。<b>若需要高精度螺纹，考虑攻丝后补孔或使用螺套（Helicoil）</b>。</p>
+<h4>表面处理／后处理</h4>
+<p>阳极氧化、喷砂、电镀等需在加工前预留表面余量（<b>阳极氧化厚度需封孔后尺寸变化</b>）；高强合金有时先热处理后精加工以避免变形。</p>
+<h4>检测与装配要点</h4>
+<ul>
+<li>设计时考虑检验夹具或 CMM 测量可达性；<b>避免不可见／不可测的特征</b></li>
+<li><b>装配公差链分析（stack-up）</b>确保配合件能装配</li>
+</ul>
+<h4>其他实用规则</h4>
+<ul>
+<li>优先使用标准尺寸（孔、螺纹、键槽）</li>
+<li>尽量避免深凹且无法用标准刀具到达的区域</li>
+<li>注明关键表面方向、功能性面与非关键面</li>
+</ul>
+<h4>简易设计／下单检查清单</h4>
+<ol>
+<li>已标注基准面（Datum）和测量基准吗？</li>
+<li>关键尺寸是否单独指定公差？其余尺寸是否使用一般公差？</li>
+<li>是否考虑刀具半径（内角/圆角）？最小孔径是否可用标准刀具？</li>
+<li>深孔、深槽、薄壁是否在可加工范围内（深径比、刀具伸长）？</li>
+<li>是否要求表面处理，是否考虑表面余量？</li>
+<li>是否给出装配公差链和配合类型（过盈/过渡/间隙）？</li>
+<li>是否说明材料牌号与热处理状态（例如 6061-T6）？</li>
+<li>是否指定检测方法（CMM、卡尺、三坐标）或检验关键点？</li>
+</ol>
+<div class="fix">✅ <b>五处十二家独有</b>：① 装配公差链分析（stack-up）② Helicoil 螺套 ③ CMM 测量可达性 ④ 阳极氧化需封孔处理 ⑤ 先热处理后精加工的顺序<br>⚠️ 两处保守过头：孔深径比 ≤3:1（主流是 ≤4×）；铝壁厚 1–1.5 mm（基准库最小 0.8 mm，它把推荐值当成了下限）</div></div>
+</div>
+
+<div class="aiblock">
+<div class="hd"><span class="nm" style="color:var(--hy)">腾讯混元 Hy3</span><span class="vv">Hy3</span><span class="sc" style="color:var(--hy)">终分 78.6</span></div>
+<div class="ds2">十四家里唯一直接交付成品 HTML 页面（深色主题／可折叠／带进度条）；把"翻面误差""温度漂移"量化成数字</div>
+<div class="qbox" style="background:#f0f6fd;border-color:#d6e6f7;color:#1e4d7d;border-radius:10px;padding:9px 12px;margin:8px 0 12px"><div class="lb" style="color:var(--grey)">提问</div><pre style="font-size:12.3px;line-height:1.8">整理一个关于 1. CNC是什么？加工原理？
+2. CNC常用材料有哪些？6061和7075怎么选？
+3. 普通CNC加工精度大概多少？
+4. 设计CNC零件要注意什么？
+类似思维导图的文档</pre></div>
+<div class="fix">✅ 交付形态特殊：给的不是文档而是 <b>一个可直接打开的 HTML 页面</b> —— 深色主题、四个可折叠节点、ISO 公差等级用进度条可视化、移动端适配，末尾带免责声明。其余十三家给的都是 Markdown／纯文本。</div>
+<div class="qh">1. CNC 是什么？加工原理？</div>
+<div class="src hy"><div class="who">混元<span class="v">Hy3</span> <em>侧重：类比讲解 + 闭环原理 + 七步流程</em></div>
+<h4>一句话定义</h4>
+<p>CNC = <b>Computer Numerical Control</b>（计算机数字控制）。把老师傅"手摇手柄"的动作全部翻译成数字指令，由计算机驱动机床自动切削。传统加工是"人推着刀走"，数控加工是"代码告诉机器怎么走"。</p>
+<h4>本质：减法制造</h4>
+<p>从一整块毛坯（方料/棒料/板料）出发，用高速旋转的刀具一层层去除材料，直到剩下你要的形状。所以 CNC 零件的原始形态一定是"比成品更大的一块料"——这也决定了它的材料利用率通常不高。</p>
+<h4>完整工作流（七步）</h4>
+<p>CAD 画 3D 模型 → CAM 生成刀路 → 后处理输出 G 代码 → 夹具固定毛坯 → 粗加工去余量 → 精加工保尺寸光洁 → CMM／卡尺核验</p>
+<h4>原理拆成三句话</h4>
+<ul>
+<li><b>控制：</b>控制器读取 G 代码／M 代码，做插补运算，把曲线轮廓切成无数微小直线段，再发给伺服电机</li>
+<li><b>运动：</b>主运动负责"切"（铣床刀具转、车床工件转），进给运动负责"对准了切"（X/Y/Z 轴移动）。3 轴只能从朝上的一面加工，4/5 轴多了旋转轴，能一次装夹做完多个面</li>
+<li><b>精度：</b>各轴装有编码器／光栅尺，实时回传实际位置，形成"指令—执行—检测—修正"的<b>闭环</b>，每秒重复成千上万次，所以精度不靠人眼</li>
+</ul>
+<h4>关键结论</h4>
+<p>刀具是圆的 → 内角必然带 R；刀具够不到 = 做不出来；精度靠闭环，不只靠机床贵；一次装夹做完，精度才稳。</p></div>
+<div class="qh">2. CNC 常用材料有哪些？6061 和 7075 怎么选？</div>
+<div class="src hy"><div class="who">混元<span class="v">Hy3</span> <em>侧重：选材三问 + 混合用料省钱</em></div>
+<h4>常用材料速查</h4>
+<table class="mini">
+<tr><th>类别</th><th>常用牌号</th><th>典型用途</th></tr>
+<tr><td class="k">铝合金</td><td>6061-T6、7075-T6、5052、2024</td><td>外壳、支架、散热器、自动化机架</td></tr>
+<tr><td class="k">不锈钢</td><td>304、316L、17-4PH</td><td>阀体、医疗件、食品级结构</td></tr>
+<tr><td class="k">碳钢/合金钢</td><td>45#、40Cr、4140</td><td>轴、齿轮、模具镶件、重载件</td></tr>
+<tr><td class="k">铜/黄铜</td><td>T2 紫铜、H62/H59 黄铜</td><td>导电件、散热件、阀芯</td></tr>
+<tr><td class="k">工程塑料</td><td>POM、尼龙、PTFE、PEEK、电木</td><td>绝缘件、耐磨衬套、夹具定位件</td></tr>
+<tr><td class="k">钛合金</td><td>TC4 (Ti-6Al-4V)</td><td>航空、医疗植入、高端运动器材</td></tr>
+</table>
+<p>选材第一问不是"哪个强"，而是<b>问自己三个问题</b>：要不要焊接？要不要阳极氧化上色？批量和预算是多少？</p>
+<h4>6061 vs 7075 正面对决（T6 状态）</h4>
+<table class="mini">
+<tr><th>对比项</th><th>6061-T6</th><th>7075-T6</th></tr>
+<tr><td class="k">抗拉强度</td><td>约 310 MPa</td><td>约 525–572 MPa</td></tr>
+<tr><td class="k">屈服强度</td><td>约 276 MPa</td><td>约 503 MPa（高出 75%–100%）</td></tr>
+<tr><td class="k">硬度</td><td>HB 95</td><td>HB 150</td></tr>
+<tr><td class="k">可加工性</td><td>优秀，刀具寿命长</td><td>良好，偏硬偏脆易粘刀</td></tr>
+<tr><td class="k">焊接性</td><td>常规氩弧焊即可</td><td>差，易裂，靠铆接/粘接</td></tr>
+<tr><td class="k">耐腐蚀性</td><td>好，自然氧化膜致密</td><td>中等，海洋/潮湿环境要加涂层</td></tr>
+<tr><td class="k">阳极氧化</td><td>着色均匀，外观件首选</td><td>偏暗，适合硬质氧化</td></tr>
+<tr><td class="k">价格/交期</td><td>便宜、供应充足</td><td>约 1.5–2 倍，采购周期长</td></tr>
+</table>
+<h4>选型决策</h4>
+<p><b>选 6061-T6</b>：一般结构件、支架、外壳、夹具、散热器、需要焊接或阳极氧化上色的外观件、原型打样、预算敏感项目。拿不准的时候默认从 6061 开始。<br>
+<b>选 7075-T6</b>：航空结构件（翼梁、机身框）、无人机机臂、赛车轮毂/悬挂、高强度模具与工装板、需要"又轻又扛"的受力件。注意：7075 务必确认做过 T6 时效，否则强度优势拿不到。</p>
+<h4>常见误区</h4>
+<ul>
+<li>"全用 7075 更保险" —— 价格翻倍、加工更慢，多数工况 6061 完全够，纯属浪费</li>
+<li>"该用 7075 却用 6061" —— 强度不够导致的失效，比多花的钱严重得多</li>
+<li><b>省钱技巧：主体 6061 + 关键受力点嵌入 7075 加强件，材料成本可降约三成</b></li>
+</ul>
+<div class="fix">✅ <b>三处十四家独有</b>：① 混合用料省钱路径（主体 6061 + 关键受力点嵌 7075，降本约三成）② 提醒"7075 务必确认做过 T6 时效"③ 选材三问（焊接／氧化／预算）</div></div>
+<div class="qh">3. 普通 CNC 加工精度大概多少？</div>
+<div class="src hy"><div class="who">混元<span class="v">Hy3</span> <em>侧重：按设备档次分档 + ISO 等级进度条 + 六个因素</em></div>
+<h4>按设备档次分档</h4>
+<table class="mini">
+<tr><th>档次</th><th>典型公差</th><th>说明</th></tr>
+<tr><td class="k">普通/标准加工</td><td>±0.05～0.10 mm</td><td>一般机械件、支架、非关键外壳</td></tr>
+<tr><td class="k">精密加工</td><td>±0.01～0.02 mm</td><td>定位特征、配合孔、中等配合件</td></tr>
+<tr><td class="k">高精度加工</td><td>±0.005～0.01 mm</td><td>液压件、精密轴、轴承座</td></tr>
+<tr><td class="k">超精密</td><td>≤ ±0.002 mm</td><td>光学、半导体、部分航空航天件</td></tr>
+</table>
+<p>普通三轴机常规生产条件约 <b>±0.05 mm</b>，保养良好、定期校准可稳定到 ±0.01～0.02 mm；高端 4/5 轴约 ±0.002 mm，航空航天与医疗的超精密设备才进入 1–5 微米区间。</p>
+<h4>对应 ISO 公差等级</h4>
+<p>IT12～13 粗车/粗铣 → IT10～11 普通车/铣 → IT7～8 精车/精铣 → IT5～6 磨削/精研 → IT2～4 研磨/超精。（页面用进度条可视化）</p>
+<p>同一公差等级在不同尺寸段对应的实际微米数不同（IT7 在 30mm 段约 21μm，在 100mm 段约 35μm），标注时以尺寸段查表为准。</p>
+<h4>表面粗糙度 Ra</h4>
+<p>普通铣削 Ra 1.6–3.2｜普通车削 Ra 1.25–2.5｜精密铣 Ra 0.8｜磨削 Ra 0.2–0.4｜镜面 Ra &lt;0.025</p>
+<h4>决定精度的六个因素</h4>
+<ul>
+<li><b>机床状态：</b>主轴跳动、丝杠磨损、导轨直线度——老旧设备精度会漂移</li>
+<li><b>刀具：</b>刀具磨损会直接复制成尺寸偏差，需按寿命定期更换</li>
+<li><b>材料：</b>铝切削干净、易保持公差；不锈钢与钛切削发热会热变形</li>
+<li><b>装夹：</b>工件在夹具里挪 0.02 mm，整批就废了</li>
+<li><b>环境：</b><b>温度波动 2℃ 就足以让精密铝件尺寸漂移</b></li>
+<li><b>二次装夹：</b><b>每翻一次面，累计引入约 0.02–0.05 mm 偏差——这是 5 轴机最大的价值</b></li>
+</ul>
+<h4>最值钱的一条经验</h4>
+<p>别给所有尺寸统一标 ±0.01。只在真正影响功能的特征上标严公差（配合面、孔径、密封槽），其余走常规公差。公差每收紧一档，就要付更慢的进给、更细的刀具、更多的检测和温控成本。</p>
+<div class="fix">✅ <b>两处十四家独有且量化</b>：① 二次装夹每翻一次面引入 0.02–0.05 mm 偏差（唯一把"5 轴为什么值钱"量化成数字）② 温度波动 2℃ 足以让精密铝件尺寸漂移（唯一给温度阈值）<br>⚠️ 普通阳极氧化写 5–20 μm：基准库 Type II 是每面 +5~12 μm，上界 20 超出</div></div>
+<div class="qh">4. 设计 CNC 零件要注意什么？</div>
+<div class="src hy"><div class="who">混元<span class="v">Hy3</span> <em>侧重：八条 DFM + 铝件专属细节 + 五个坑</em></div>
+<h4>① 内角必须带圆角</h4>
+<p>立铣刀是圆的，垂直内角必然留下刀具半径。<b>最小 R0.5 mm</b>，能大就大。经验法则：内角 R ≥ 型腔深度的 1/3。圆角越大 → 刀具越大 → 一次去除量越大 → 成本越低、表面越好。</p>
+<p>R3 以上：可用大刀满速跑｜R0.5：只能用 1mm 小刀爬｜标"锐角/清根"= 加钱工艺。<b>真需要方角：加"狗耳"清角（dogbone relief），或接受 EDM/线切割二次工艺。</b></p>
+<h4>② 壁厚别太薄</h4>
+<table class="mini">
+<tr><th>材料</th><th>绝对极限</th><th>舒适区</th></tr>
+<tr><td class="k">铝/黄铜</td><td>0.5 mm</td><td>0.8～1.0 mm</td></tr>
+<tr><td class="k">钢/不锈钢</td><td>0.8 mm</td><td>2.0 mm</td></tr>
+<tr><td class="k">塑料</td><td>1.0 mm</td><td>1.5 mm</td></tr>
+</table>
+<p>薄壁会振刀、让刀、变形；壁高超过壁厚 10 倍基本必振。必须薄就加筋（肋高 1–1.5 mm 就能把刚度翻倍），或降低壁高。</p>
+<h4>③ 型腔/深槽别太深</h4>
+<ul>
+<li>型腔深度建议 <b>≤ 4× 刀具直径</b>（也有按型腔宽度计的经验值）</li>
+<li>深腔底部加圆角或退刀槽，省掉二次清根</li>
+<li>太深就该考虑<b>分件装配</b>——往往比硬做深腔便宜一半</li>
+</ul>
+<h4>④ 孔与螺纹</h4>
+<p>盲孔 ≤ 3× 孔径；通孔永远比盲孔好做（排屑有出口）｜螺纹 ≤ 3× 直径，铝件 1.5～2 倍直径就够承载｜<b>钻尖自带 118° 锥底，要平底必须二次加工，别白标</b>｜&gt;10× 直径进入深孔钻领域，需啄钻循环、专用刀具</p>
+<h4>⑤ 公差只标该严的地方</h4>
+<p>标题栏给宽松的一般公差（如 ±0.1），只在配合面、孔径、密封槽等真正影响功能处单独标严。盲标 ±0.05 覆盖全部 60 个尺寸，是报价上涨最快的方式之一。</p>
+<h4>⑥ 装夹与基准</h4>
+<ul>
+<li>设计时就想清楚<b>这零件怎么夹</b>：留装夹余量、设工艺凸台，后期再补就晚了</li>
+<li>保证有<b>可靠的定位基准面</b>，基准面别被碰伤——后续加工全靠它</li>
+<li>尽量减少装夹次数：一面能做完的特征尽量安排在同一面</li>
+</ul>
+<h4>⑦ 表面处理要算进公差</h4>
+<p>硬质阳极氧化膜厚 25–60 μm，会明显改变尺寸，标公差时预留；普通阳极氧化 5–20 μm 用于装饰与防腐。外观件加工纹路（建议 Ra 0.8–1.6）在氧化后会更明显，去毛刺要彻底。</p>
+<h4>⑧ 铝件专属细节</h4>
+<p><b>别让铁件碰铝件（会嵌入铁屑→锈点）</b>｜攻丝底孔按上限、用切削液｜螺纹能粗就粗，细牙易滑丝｜精加工前让工件充分冷却｜<b>包装用珍珠棉，别用报纸</b></p>
+<h4>最容易踩的五个坑</h4>
+<p>深腔 · 薄壁 · 锐角 · 过严公差 · 难装夹。这五项几乎包揽了所有报价暴涨和交期延误。</p>
+<div class="fix">✅ <b>两处十四家独有</b>：① 别让铁件碰铝件（嵌入铁屑→锈点）② 包装用珍珠棉别用报纸<br>✅ 壁厚把"绝对极限"与"舒适区"分列（铝 0.5 / 0.8–1.0），比只给一个值的家严谨<br>⚠️ 螺纹 ≤3× 直径：主流是 1.5–2×（GLM 分铝/钢给 1.5×/2×），它放宽到 3×</div></div>
+</div>
+
+<div class="aiblock">
+<div class="hd"><span class="nm" style="color:var(--stp)">阶跃 Step 3.7 flash</span><span class="vv">3.7 flash</span><span class="sc" style="color:var(--stp)">终分 73.0</span></div>
+<div class="ds2">唯一讲清开环/半闭环/闭环三种控制；唯一按加工方式分精度并标注"丝"；但 6061 抗拉下界 205 属状态错配</div>
+<div class="qbox" style="background:#f0f6fd;border-color:#d6e6f7;color:#1e4d7d;border-radius:10px;padding:9px 12px;margin:8px 0 12px"><div class="lb" style="color:var(--grey)">提问</div><pre style="font-size:12.3px;line-height:1.8">整理一个关于 1. CNC是什么？加工原理？
+2. CNC常用材料有哪些？6061和7075怎么选？
+3. 普通CNC加工精度大概多少？
+4. 设计CNC零件要注意什么？
+类似思维导图的文档</pre></div>
+<div class="qh">1. CNC 是什么？加工原理？</div>
+<div class="src stp"><div class="who">Step<span class="v">3.7 flash</span> <em>侧重：控制方式分类 + 设备分类</em></div>
+<h4>基本定义</h4>
+<p>全称 Computer Numerical Control（计算机数字控制）。核心逻辑：用<b>计算机程序替代传统硬件电路</b>，精准控制机床运动轨迹与加工时序，实现自动化精密加工，广泛用于机械、航空航天、3C、医疗等领域。</p>
+<h4>核心加工流程</h4>
+<p>CAD建模设计 → 生成 G/M 代码加工程序 → CNC 系统解析指令 → 伺服驱动控制机床各轴+刀具按预设轨迹运动 → 切削去除余料 → 输出符合设计要求的零件</p>
+<h4>常见设备分类</h4>
+<ul>
+<li><b>铣削类</b>：三轴/五轴加工中心、高速加工中心、大板面 CNC 路由机</li>
+<li><b>车削类</b>：数控车床、车铣复合中心</li>
+<li><b>特种加工类</b>：线切割（WEDM）、电火花成形（EDM）、激光/水刀切割</li>
+</ul>
+<h4>控制方式</h4>
+<ul>
+<li><b>开环控制</b>：无位置检测，成本低、精度一般，适合简易经济型机床</li>
+<li><b>闭环控制</b>：带实时位置反馈，精度高、成本高，适合高精度加工</li>
+<li><b>半闭环控制</b>：检测丝杠/电机转角间接反馈，稳定性好，<b>是当前工业主流</b></li>
+</ul>
+<div class="fix">✅ <b>十四家唯一把三种控制方式（开环／半闭环／闭环）讲清并给出各自适用场景</b>；✅ "用计算机程序替代传统硬件电路"点出了 NC→CNC 的演进本质；✅ 唯一提到"大板面 CNC 路由机"</div></div>
+<div class="qh">2. CNC 常用材料有哪些？6061 和 7075 怎么选？</div>
+<div class="src stp"><div class="who">Step<span class="v">3.7 flash</span> <em>侧重：材料表含木材/复合材料 + 决策树打勾</em></div>
+<h4>金属类</h4>
+<table class="mini">
+<tr><th>类型</th><th>牌号</th><th>特点</th><th>场景</th></tr>
+<tr><td class="k">铝合金</td><td>6061、7075、5052、2024</td><td>轻质、高导热、易加工</td><td>航空航天、机器人、3C外壳、结构件</td></tr>
+<tr><td class="k">钢</td><td>S45C、42CrMo、SKD11</td><td>高强度、耐磨</td><td>模具、轴类、高载荷零件</td></tr>
+<tr><td class="k">不锈钢</td><td>SUS304、SUS316、17-4PH</td><td>耐腐蚀、耐高温</td><td>医疗器械、厨具、化工零件</td></tr>
+<tr><td class="k">铜合金</td><td>H62、铍铜、H96</td><td>高导电导热、易切削</td><td>电气连接器、散热件、装饰件</td></tr>
+<tr><td class="k">钛合金</td><td>TC4、TA2</td><td>高强度、耐腐蚀、生物相容</td><td>航空航天、医疗植入件、海洋零件</td></tr>
+</table>
+<h4>塑料类</h4>
+<p>ABS、POM（赛钢）、PC、PMMA（亚克力）、尼龙、PEEK（塑胶王）、PTFE（特氟龙）。重量轻、绝缘、耐腐蚀，适合外壳、绝缘件、耐磨件。</p>
+<h4>其他</h4>
+<p>木材（胡桃木、橡木，适合家具雕刻）、复合材料（碳纤维、玻璃纤维，适合运动器材、航空航天）。</p>
+<h4>6061 vs 7075 核心性能差异</h4>
+<table class="mini">
+<tr><th>维度</th><th>6061-T6（通用型）</th><th>7075-T6（航空级）</th></tr>
+<tr><td class="k">核心合金元素</td><td>镁、硅</td><td>锌、镁、铜</td></tr>
+<tr><td class="k">抗拉强度</td><td>205-310 MPa</td><td>524-572 MPa（约为6061的2倍）</td></tr>
+<tr><td class="k">焊接性</td><td>优秀，可焊接</td><td>极差，高锌易产生热裂纹，仅能铆接/螺栓连接</td></tr>
+<tr><td class="k">加工性</td><td>易切削、对刀具友好、加工效率高</td><td>强度高、刀具磨损快、内应力大易变形</td></tr>
+<tr><td class="k">耐腐蚀性</td><td>优秀</td><td>一般，需额外表面防护</td></tr>
+<tr><td class="k">阳极氧化效果</td><td>颜色均匀、一致性高</td><td>易出现色差，深色处理更常见</td></tr>
+<tr><td class="k">成本</td><td>低，性价比高</td><td>高，材料+加工成本比6061高30%-50%</td></tr>
+</table>
+<h4>选型决策树</h4>
+<p><b>优先 6061</b>：普通结构件、外壳、支架、夹具、工装治具｜需要焊接连接的零件｜要求彩色阳极氧化、表面处理一致性高｜研发早期打样、预算敏感｜薄壁但载荷不高<br>
+<b>优先 7075</b>：高载荷承力件、机器人关节连接件、轻量化骨架｜需要高强度、高刚性、抗疲劳的极端工况｜后续要做功能/冲击/疲劳测试｜极致减重需求且预算充足<br>
+<b>7075 加工注意点</b>：薄壁件必须做应力释放，不可焊接，加工前需确认表面处理方案</p>
+<div class="fix">⚠️ <b>6061-T6 抗拉写 205-310 MPa：下界 205 是 O 态（退火态）数值，T6 最小值应为 290 MPa</b> —— 与 Copilot 的 240 属同类状态错配，且偏离更远<br>⚠️ 7075 写"约为 6061 的 2 倍"：572/310 = 1.84 倍，实为约 1.8 倍<br>⚠️ 成本"高 30%-50%"：低于基准库 1.5–2 倍（即高 50%–100%），与元宝"30%~50% 以上"同一问题但无"以上"兜底</div></div>
+<div class="qh">3. 普通 CNC 加工精度大概多少？</div>
+<div class="src stp"><div class="who">Step<span class="v">3.7 flash</span> <em>侧重：按加工方式分档 + 车间口语"丝"</em></div>
+<h4>不同加工方式常规精度</h4>
+<table class="mini">
+<tr><th>加工方式</th><th>常规精度（1丝=0.01mm）</th><th>精加工极限</th><th>适用场景</th></tr>
+<tr><td class="k">三轴铣削（粗+精）</td><td>±0.02~0.05mm（2~5丝）</td><td>±0.01mm（1丝）</td><td>通用结构件、外壳、平面/曲面加工</td></tr>
+<tr><td class="k">数控车削</td><td>±0.01~0.03mm（1~3丝）</td><td>±0.005mm（0.5丝）</td><td>轴类、环类、旋转对称零件</td></tr>
+<tr><td class="k">五轴联动加工</td><td>±0.005~0.02mm</td><td>±0.003mm</td><td>复杂曲面、多面体、高精度零件</td></tr>
+<tr><td class="k">线切割/电火花</td><td>±0.01~0.03mm</td><td>±0.005mm</td><td>高硬度材料、尖角内腔、微细结构</td></tr>
+</table>
+<h4>表面粗糙度</h4>
+<p>普通精铣/精车 Ra 0.8~3.2μm｜高精度精加工 Ra 0.2~0.8μm｜磨削/抛光后 Ra 0.1μm 以下（接近镜面）</p>
+<h4>影响精度的核心因素</h4>
+<p>机床刚性、伺服系统精度、刀具磨损、切削热累积、装夹稳定性、材料内应力、工艺参数合理性。</p>
+<div class="fix">✅ <b>十四家唯一按"加工方式"而非"精度等级"分档</b>（三轴铣／数控车／五轴／线切割各给一组），并<b>唯一标注"丝"这个车间口语单位</b>（1丝=0.01mm）<br>⚠️ 三轴铣常规精度写 ±0.02~0.05mm，比主流口径 ±0.05~0.1mm 紧一档，偏乐观</div></div>
+<div class="qh">4. 设计 CNC 零件要注意什么？</div>
+<div class="src stp"><div class="who">Step<span class="v">3.7 flash</span> <em>侧重：硬规则 + 打样适配规则 + 避坑清单</em></div>
+<h4>结构设计硬规则</h4>
+<ul>
+<li><b>壁厚</b>：金属件最小 ≥0.8mm（推荐 1mm 以上），塑料件 ≥1.5mm，避免薄壁颤振、切削变形</li>
+<li><b>内角</b>：禁止 90° 尖角内直角，内角半径 ≥ 常用铣刀半径的 <b>130%</b>（如常用 R5 铣刀则内角 ≥R6.5）；深型腔拐角半径 ≥ 腔深的 1/3</li>
+<li><b>型腔/槽</b>：深宽比 ≤4:1，<b>槽宽 ≥ 刀具直径的 1.2 倍</b>，避免刀具悬空、断刀</li>
+<li><b>孔/螺纹</b>：优先标准钻头尺寸｜通孔深度 ≤ 直径的 4 倍，1.2~2mm 小孔深度 ≤5 倍直径｜螺纹有效长度 ≤ 孔径的 3 倍，盲孔底部留 0.5~1 倍孔径的无螺纹锥度，<b>孔口不要倒角</b>｜小尺寸螺纹（M2 以下）优先用成形丝攻或螺纹铣刀</li>
+<li><b>避免不可加工特征</b>：禁止设计弧形孔、小于 <b>2.5mm</b> 的微细特征（超出常规刀具加工极限），复杂特征可改用 EDM 放电加工</li>
+</ul>
+<h4>工艺适配规则</h4>
+<ul>
+<li><b>公差</b>：仅关键配合面标注严格公差，非功能面不用过度标注；<b>开粗公差设为余量的 1/5</b>，精加工公差设为 0.01mm 左右</li>
+<li><b>减少非功能性特征</b>：不必要的文字、logo、装饰性纹理直接后处理喷涂/雕刻，不要直接铣削</li>
+<li><b>基准</b>：统一装夹基准，给夹持区域留足够空间，避免功能配合面作为夹持面</li>
+<li><b>表面处理预留</b>：硬质阳极氧化预留 0.01~0.02mm 的膜厚补偿量，关键配合面处理前后需复检</li>
+</ul>
+<h4>小批量打样适配规则</h4>
+<p>边厚最小值 ≥1mm，底厚最小值 ≥1.5mm，实体间间隙 ≥1.2mm，特征高度 ≥1mm<br>
+腔内尖直角默认会转圆角，<b>深度 ≤5mm 时最小 R0.5，深度 &gt;5mm 时最小 R0.75</b><br>
+倒角按默认 C0.2 即可，特殊需求倒角范围 0.2~1mm、45°，避免系统判定不可加工</p>
+<h4>常见设计错误避坑</h4>
+<p>不要设计过薄壁（金属 &lt;0.8mm 易变形、断刀）｜不要过度标注公差（全图高精度大幅提升成本和废品率）｜不要设计无圆角内角（增加刀具损耗、降低效率）｜不要做过深窄腔（排屑困难、刀具断裂）｜不要用非标尺寸（增加刀具成本、延长周期）</p>
+<div class="fix">✅ <b>三处十四家独有</b>：① 槽宽 ≥ 刀具直径 1.2 倍 ② 开粗公差设为余量的 1/5 ③ 打样分档规则（边厚/底厚/间隙/特征高度 + 深度 ≤5mm 取 R0.5、&gt;5mm 取 R0.75）—— 明显来自某加工厂的实际打样规范<br>✅ 内角 130% 给了具体算例（R5 刀 → 内角 R6.5），比只写"1.3×"更好用<br>⚠️ <b>"孔口不要倒角"</b> 与其余十三家冲突（小米、GLM 均说"外露尖边倒角／锐边倒钝"），此项有争议<br>⚠️ 硬质阳极氧化预留 0.01~0.02mm（10–20μm），低于基准库 Type III 的 25~75μm<br>⚠️ "禁止小于 2.5mm 的微细特征"与同节"1.2~2mm 小孔"自相矛盾</div></div>
+<div class="srcnote">备注（原文照录）：以上内容基于行业通用 DFM 规范、主流 CNC 加工厂经验整理，具体参数可根据实际机床能力、材料特性、批量要求调整。</div>
+</div>
+
+<div class="aiblock">
+<div class="hd"><span class="nm" style="color:var(--mm31)">MiniMax 3.1 flash</span><span class="vv">3.1 flash</span><span class="sc" style="color:var(--mm31)">终分 88.6</span></div>
+<div class="ds2">十七家信息密度最高：切削四参数 S/F/ap/ae 带实测起点、六个误差源带具体数值、唯一纠"7075 更刚"误解</div>
+<div class="qbox" style="background:#f0f6fd;border-color:#d6e6f7;color:#1e4d7d;border-radius:10px;padding:9px 12px;margin:8px 0 12px"><div class="lb" style="color:var(--grey)">提问</div><pre style="font-size:12.3px;line-height:1.8">整理一个关于 1. CNC是什么？加工原理？
+2. CNC常用材料有哪些？6061和7075怎么选？
+3. 普通CNC加工精度大概多少？
+4. 设计CNC零件要注意什么？
+类似思维导图的文档</pre></div>
+<div class="qh">1. CNC 是什么？加工原理？</div>
+<div class="src mm31"><div class="who">MiniMax<span class="v">3.1 flash</span> <em>侧重：五大组成 + 插补离散化 + 切削四参数</em></div>
+<h4>定义</h4>
+<p>用数字程序替代手工操作机床，让刀具沿指定路径、以指定转速和进给，切出目标形状。</p>
+<h4>五大组成部分</h4>
+<ul>
+<li>① <b>机床本体</b>：X/Y/Z 轴导轨、丝杠、主轴、刀库、工作台</li>
+<li>② <b>数控系统</b>：CNC 控制器 —— 读代码、算插补、发脉冲</li>
+<li>③ <b>伺服驱动</b>：把脉冲变成电机转角与实际位移</li>
+<li>④ <b>反馈装置</b>：编码器 / 光栅尺，闭环纠偏</li>
+<li>⑤ <b>CAD/CAM</b>：从模型到刀路，再到 NC 代码</li>
+</ul>
+<h4>工作链路</h4>
+<p>图纸/三维模型 → 工艺规划 → CAM 编程 → 后处理 → 传输与试切 → 批量执行</p>
+<h4>核心原理：插补 = 把连续曲线「离散化」</h4>
+<ul>
+<li>把圆弧/样条拆成无数段极短的直线，各轴同步前进逼近轮廓</li>
+<li><b>段越短越贴合，但代码量与运算量越大 —— 精度与效率的根本取舍</b></li>
+<li>G01 直线插补 / G02·G03 圆弧插补 / G81·G83·G84·G85 复合循环</li>
+<li>G41·G42 刀补（按工件轮廓写）、G43 长度补偿、G54~G59 工件坐标系</li>
+</ul>
+<h4>四个核心参数（比刀路更要紧）</h4>
+<ul>
+<li><b>S 转速 rpm</b>：过低挤屑振刀，过高刀具烧伤、寿命骤降</li>
+<li><b>F 进给 mm/min</b>：过低表面粗糙积屑瘤，过高过载崩刃</li>
+<li><b>ap 背吃刀量</b>：决定一刀切多厚</li>
+<li><b>ae 侧吃刀量</b>：决定一刀覆盖多宽，影响刚性与让刀</li>
+<li>经验起点（铝件 φ10 四齿）：<b>S 6000~8000，F 800~1200，ap≈0.2D，ae≈0.3D，径向吃刀不小于刀径 30%</b></li>
+</ul>
+<h4>代码速查</h4>
+<p>G00/G01/G02/G03/G04 · G17-19/G20-21/G28/G90-91 · G40-44/G52 · G54-59 · M03/M04/M05/M08/M09 · M06/M30/M02/M00</p>
+<div class="fix">✅ <b>三处十七家独有</b>：① <b>切削四参数 S/F/ap/ae</b> 各给失效后果（过低/过高分别怎样）+ 铝件 φ10 四齿的实测起点值 ② <b>插补的"精度与效率根本取舍"</b>——段越短越贴合但代码量与运算量越大，这是唯一从计算代价角度解释插补的 ③ <b>G/M 代码速查表</b>（G41/42 刀补、G43 长度补偿、G81-85 复合循环），其余十六家只笼统提"G 代码"</div></div>
+<div class="qh">2. CNC 常用材料有哪些？6061 和 7075 怎么选？</div>
+<div class="src mm31"><div class="who">MiniMax<span class="v">3.1 flash</span> <em>侧重：加工性星级评分 + 纠正刚度误解</em></div>
+<h4>材料家族（★ 越多越好切）</h4>
+<table class="mini">
+<tr><th>材料</th><th>可加工性</th><th>关键提示</th></tr>
+<tr><td class="k">铝合金 6061/7075/2024</td><td>★★★★★</td><td>最常见的 CNC 材料</td></tr>
+<tr><td class="k">不锈钢 304/316/303</td><td>★★☆☆☆</td><td>粘刀、加工硬化、刀具磨损极快</td></tr>
+<tr><td class="k">铜/黄铜</td><td>★★★★★</td><td>最好加工也最好看，但很软易让刀</td></tr>
+<tr><td class="k">工程塑料 PEEK/POM/PMMA</td><td>★★★★☆</td><td>不怕刀怕热，装夹易压溃</td></tr>
+<tr><td class="k">钛合金 TC4</td><td>★☆☆☆☆</td><td>导热极差，刀具成本是铝的 5~10 倍</td></tr>
+<tr><td class="k">碳钢/模具钢 45#/SKD11</td><td>★★☆☆☆</td><td>热处理变形是主要风险</td></tr>
+<tr><td class="k">碳纤维板/铝蜂窝</td><td>★☆☆☆☆</td><td>分层起毛边，几乎必须真空吸附</td></tr>
+</table>
+<h4>6061-T6（通用首选）</h4>
+<p>抗拉 310MPa，屈服 276MPa，95HB，E=69GPa，<b>43% IACS</b>。可焊接、导电好、耐蚀优、阳极氧化成熟、应力小尺寸稳定。</p>
+<h4>7075-T6（高强度）</h4>
+<p>抗拉 572MPa，屈服 503MPa，150HB，E=69GPa，<b>23% IACS</b>。强度重量比最优、薄壁高刚度首选；代价是难加工、易崩刀、贵。加工用锋利大容屑槽刀具、降速提进给、充分冷却。</p>
+<h4>纠正常见误解</h4>
+<p><b>两者密度同为 2.70、弹性模量同为 69GPa，「7075 更刚」是错的，它只是更强；薄壁收益来自「同强度壁可以更薄」。</b></p>
+<h4>选型决策</h4>
+<ul>
+<li>通用结构件/成本敏感/批量 → 6061-T6</li>
+<li>需焊接/导电/接地 → 6061-T6</li>
+<li>受力大、体积受限、强度重量比极致 → 7075-T6/T651</li>
+<li>薄壁大跨度怕变形 → 7075</li>
+<li><b>潮湿盐雾环境 → 7075-T73（T6 有应力腐蚀开裂风险）</b></li>
+<li>强度+耐蚀都要 → 2024-T3</li>
+</ul>
+<h4>经验判据</h4>
+<p>① 真强度不够还是只是觉得不够刚 ② 预算能否吃下更贵的料+更慢的加工+更高报废率（7075 报价常高 1.5~3 倍）③ 环境会不会让 T6 开裂</p>
+<div class="fix">✅ <b>四处十七家独有</b>：① <b>唯一给出导电率 IACS</b>（6061 43%、7075 23%）② <b>唯一推荐 7075-T73 用于潮湿盐雾环境</b>（T6 有 SCC 风险）③ <b>唯一给材料加工性星级评分</b> ④ <b>唯一明确纠正"7075 更刚"这个流传很广的误解</b><br>⚠️ 但同一段写"弹性模量同为 69GPa"—— 基准库是 6061=68.9 / 7075=71.0，且它自己又说"薄壁收益来自同强度壁可以更薄"，内部略有张力<br>⚠️ 密度写"同为 2.70"：7075 应为 2.81，此项与基准库冲突<br>⚠️ "薄壁大跨度怕变形 → 7075"与小米"精密薄壁选 6061（7075 残余应力大）"结论相反</div></div>
+<div class="qh">3. 普通 CNC 加工精度大概多少？</div>
+<div class="src mm31"><div class="who">MiniMax<span class="v">3.1 flash</span> <em>侧重：六个误差源全部带数值 + 按性价比排序的改进手段</em></div>
+<h4>稳定公差带（mm）</h4>
+<p>粗加工 ±0.20 / 一般尺寸 ±0.10 / 常规铣关键面 ±0.05 / 车削 ±0.03 / 配磨 ±0.01</p>
+<h4>粗糙度 Ra（μm）</h4>
+<p>钻孔 3.2 / 粗铣 1.6~3.2 / 精铣光刀 0.8（<b>手摸不出刀痕的临界</b>）/ 研磨 0.2~0.4</p>
+<h4>其他精度指标</h4>
+<p>重复定位 ±0.003~±0.010；定位精度 ±0.01~±0.03；平行垂直度 0.02~0.05/100mm；粗牙螺纹 ISO 965 6H</p>
+<h4>六个误差源（全部带数值）</h4>
+<ul>
+<li>① <b>热变形（最大元凶）0.02~0.05mm</b>，开机先空跑 15~30min 热机</li>
+<li>② <b>装夹重复性 0.02~0.05</b>，薄壁件可到 0.1</li>
+<li>③ <b>刀具跳动与磨损</b>，主轴跳动 0.005~0.02，磨损吃掉 0.01~0.03</li>
+<li>④ 材料应力释放，加工后继续变形</li>
+<li>⑤ <b>机床几何精度</b>，丝杠反向间隙 0.01~0.03，务必做补偿</li>
+<li>⑥ 测量与判断，<b>常常比机床误差更大</b></li>
+</ul>
+<h4>提升手段（按性价比排序）</h4>
+<p>一次装夹做完所有精度面 &gt; 粗精分开留量 0.2~0.3 &gt; 热机恒温 20±2℃ &gt; 统一基准+工艺孔 &gt; 小刀低速收尾 &gt; 在线补偿</p>
+<h4>报价自检</h4>
+<p>全图只有 3~5 个关键尺寸需要 ±0.02~±0.05，其余放宽到 ±0.1~±0.2，<b>成本通常降 20%~30%</b></p>
+<div class="fix">✅ <b>三处十七家独有</b>：① <b>六个误差源每一项都给具体数值</b>（热变形 0.02~0.05、装夹 0.02~0.05、主轴跳动 0.005~0.02、丝杠反向间隙 0.01~0.03），其余十六家只列名目 ② <b>改进手段按性价比排序</b>（一次装夹 &gt; 粗精分开 &gt; 恒温 &gt; 统一基准 &gt; 小刀收尾 &gt; 在线补偿）③ <b>"全图只有 3~5 个关键尺寸需 ±0.02~0.05，成本降 20%~30%"</b>——把省钱量化成比例<br>✅ "开机先空跑 15~30min 热机"是可执行动作，多数家只说"热变形有影响"</div></div>
+<div class="qh">4. 设计 CNC 零件要注意什么？</div>
+<div class="src mm31"><div class="who">MiniMax<span class="v">3.1 flash</span> <em>侧重：全是带数字的可执行规则 + 打标要求</em></div>
+<h4>核心规范（全部带数值）</h4>
+<ul>
+<li><b>内圆角</b>：R ≥ 刀半径 + 0.5~1.0 mm（<b>图纸 R0.5 而刀 φ10 根本编不出程序</b>）</li>
+<li><b>深腔窄槽</b>：深度:刀径 ≤ 4:1（极限 5:1 配减振刀柄）</li>
+<li><b>薄壁</b>：≥ 1.5mm，厚度差 ≤ 0.5mm，大平面加交叉筋</li>
+<li><b>基准</b>：3-2-1 标注 A/B/C，关键尺寸同基准，预留 φ6 以上工艺孔</li>
+<li><b>螺纹</b>：盲孔深 = 螺纹深 + 1.5~2P，中心离边 ≥ 1.5×大径</li>
+<li><b>装夹</b>：关键面一次装夹完成，避免 &gt;45° 斜面斜孔</li>
+<li><b>公差</b>：关键面 ±0.02~±0.05，一般尺寸 ±0.1~±0.2（全图 ±0.02 是报价虚高主因）</li>
+<li><b>倒角</b>：全边 C0.5，锐边倒钝 Ra6.3~12.5</li>
+<li><b>排屑</b>：深径比 &gt;3 必须内冷或螺杆排屑</li>
+<li><b>表面处理</b>：硬质氧化单边预留 0.02~0.05mm，<b>写清按处理前还是处理后检验</b></li>
+<li><b>打标</b>：留 15×15mm 以上平面，深度 ≤0.1mm，位置在基准面</li>
+</ul>
+<h4>技术要求</h4>
+<p>未注公差 GB/T 1804-m、未注圆角、螺纹完整标注、纹理方向、检验方式、去毛刺</p>
+<div class="fix">✅ <b>四处十七家独有</b>：① <b>3-2-1 基准标注法（A/B/C）+ 预留 φ6 以上工艺孔</b> ② <b>打标规范（15×15mm 平面、深度 ≤0.1mm、位置在基准面）</b> ③ <b>"图纸 R0.5 而刀 φ10 根本编不出程序"</b>——把圆角规则讲成可判定的对错 ④ <b>"写清按处理前还是处理后检验"</b><br>✅ 薄壁给了"厚度差 ≤0.5mm"这个均匀性判据，其余十六家只说"壁厚尽量均匀"<br>⚠️ 内圆角"R ≥ 刀半径 + 0.5~1.0"与主流"R ≈ 1.3× 刀半径"口径不同（φ10 刀：它要 R5.5~6，主流要 R6.5）</div></div>
+</div>
+
+<div class="aiblock">
+<div class="hd"><span class="nm" style="color:var(--z360)">360 智脑</span><span class="vv">版本未标注</span><span class="sc" style="color:var(--z360)">终分 57.7</span></div>
+<div class="ds2">十七家最短：只给抗拉一个数值，第四问被截断在"设"字上；末尾主动标注"由AI搜集生成，仅供参考"</div>
+<div class="qbox" style="background:#f0f6fd;border-color:#d6e6f7;color:#1e4d7d;border-radius:10px;padding:9px 12px;margin:8px 0 12px"><div class="lb" style="color:var(--grey)">提问</div><pre style="font-size:12.3px;line-height:1.8">整理一个关于 1. CNC是什么？加工原理？
+2. CNC常用材料有哪些？6061和7075怎么选？
+3. 普通CNC加工精度大概多少？
+4. 设计CNC零件要注意什么？
+类似思维导图的文档</pre></div>
+<div class="fix">⚠️ <b>第四问原文被截断</b>：内容结束在「四、设」这个字上，下面的 DFM 正文全部缺失。以下按原样保留。</div>
+<div class="qh">1. CNC 是什么？加工原理？</div>
+<div class="src z360"><div class="who">360 智脑<span class="v">版本未标注</span> <em>侧重：极简词条式</em></div>
+<h4>定义</h4>
+<p>CNC（Computer Numerical Control）即计算机数字控制，是一种通过计算机程序控制机床运动，实现自动化加工的技术。</p>
+<h4>加工原理</h4>
+<ul>
+<li>将零件图纸转化为数控代码（G代码、M代码等），输入CNC系统</li>
+<li>系统根据代码指令控制刀具和工件的相对运动，通过切削去除材料，加工出所需形状和尺寸的零件</li>
+</ul>
+<div class="fix">全篇 1.1 节仅 3 句，是十七家里最简的；未提减材制造、未提轴数、未提装夹与后处理</div></div>
+<div class="qh">2. CNC 常用材料有哪些？6061 和 7075 怎么选？</div>
+<div class="src z360"><div class="who">360 智脑<span class="v">版本未标注</span> <em>侧重：只给抗拉一个数值</em></div>
+<h4>常用材料</h4>
+<ul>
+<li><b>金属类</b>：铝合金（6061、7075）、不锈钢、碳钢、钛合金、铜合金等</li>
+<li><b>非金属类</b>：塑料（ABS、POM、尼龙）、木材、复合材料等</li>
+</ul>
+<h4>6061 vs 7075 选型</h4>
+<ul>
+<li><b>6061 铝合金</b>：强度适中（抗拉强度约 <b>310MPa</b>），耐腐蚀性好，易加工，成本较低，适合对重量和加工性能有要求的一般结构件（如框架、外壳）</li>
+<li><b>7075 铝合金</b>：高强度（抗拉强度约 <b>500MPa 以上</b>），硬度高，但加工难度较大，成本较高，适合对强度和承重要求高的精密部件（如航空航天零件、高强度连接件）</li>
+</ul>
+<h4>选型关键</h4>
+<p>根据零件强度需求、加工复杂度、成本预算及环境适应性综合选择。</p>
+<div class="fix">⚠️ 只给抗拉一项数值：6061 的 310 对；7075 写"约 500MPa 以上"——"以上"是开放表述，覆盖了典型值 572，按区间外延规则判通过，但精度明显低于给出确定值的家<br>⚠️ 屈服、硬度、密度、弹性模量、疲劳、价格倍数全无</div></div>
+<div class="qh">3. 普通 CNC 加工精度大概多少？</div>
+<div class="src z360"><div class="who">360 智脑<span class="v">版本未标注</span> <em>侧重：两档分级 + 四因素</em></div>
+<h4>精度范围</h4>
+<ul>
+<li><b>一般精度</b>：±0.02mm ~ ±0.1mm（取决于机床类型、加工工艺及材料特性）</li>
+<li><b>高精度加工</b>：可达 ±0.005mm ~ ±0.01mm（需配合精密机床和严格工艺控制）</li>
+</ul>
+<h4>影响因素</h4>
+<p>刀具精度、机床定位精度、装夹方式、材料热变形等。</p>
+<div class="fix">两档分级的下界 ±0.02 偏乐观（主流普通档为 ±0.05~0.1）；未区分尺寸公差／形位公差／粗糙度</div></div>
+<div class="qh">4. 设计 CNC 零件要注意什么？—— 原文在此处截断</div>
+<div class="src z360"><div class="who">360 智脑<span class="v">版本未标注</span> <em>原文内容不完整</em></div>
+<h4>四、设</h4>
+<p style="color:#b91c1c"><i>（原文到此中断，以下内容为截断前残留片段）</i></p>
+<ul>
+<li>合理设置圆角、倒角，减少应力集中，便于加工</li>
+</ul>
+<h4>精度与公差</h4>
+<ul>
+<li>明确标注关键尺寸公差，非关键部位适当放宽，降低加工成本</li>
+<li>考虑材料热胀冷缩及加工余量</li>
+</ul>
+<h4>材料特性</h4>
+<ul>
+<li>根据材料硬度、韧性选择合适刀具和切削参数</li>
+<li>避免设计超出材料加工极限的结构</li>
+</ul>
+<h4>成本优化</h4>
+<ul>
+<li>减少不必要的复杂特征，简化结构</li>
+<li>合理利用对称性、重复特征，提高加工效率</li>
+</ul>
+<h4>装配兼容性</h4>
+<ul>
+<li>确保零件与其他组件的配合间隙合理，预留装配公差</li>
+<li>标注清晰的基准面和定位孔</li>
+</ul>
+<div class="fix">⚠️ 第四问缺失约三分之二：无壁厚数值、无内角圆角规则、无深径比、无孔螺纹规范、无装夹可达性——DFM 里最核心的量化规则全部缺失<br>✅ 但残留部分有两个有价值的角度：① <b>装配兼容性（配合间隙、装配公差）</b>——与 Copilot 的公差链分析同类 ② <b>合理利用对称性、重复特征提高加工效率</b></div></div>
+<div class="srcnote">原文末尾自带声明（照录）：以上内容可作为CNC加工基础知识的结构化参考，实际应用中需结合具体加工场景进一步细化。<br>以上内容由AI搜集并生成，仅供参考</div>
+</div>
+
+<div class="aiblock">
+<div class="hd"><span class="nm" style="color:var(--stp5)">阶跃 Step 5</span><span class="vv">Step 5</span><span class="sc" style="color:var(--stp5)">终分 89.5</span></div>
+<div class="ds2">十七家唯一的"真思维导图"成品：四分支卡片 + 一键展开/收起 + 打印导出 PDF；材料表含模具钢牌号与碳纤维除尘</div>
+<div class="qbox" style="background:#f0f6fd;border-color:#d6e6f7;color:#1e4d7d;border-radius:10px;padding:9px 12px;margin:8px 0 12px"><div class="lb" style="color:var(--grey)">提问</div><pre style="font-size:12.3px;line-height:1.8">整理一个关于 1. CNC是什么？加工原理？
+2. CNC常用材料有哪些？6061和7075怎么选？
+3. 普通CNC加工精度大概多少？
+4. 设计CNC零件要注意什么？
+类似思维导图的文档</pre></div>
+<div class="fix">✅ <b>交付的是可交互思维导图页面</b>：中心节点 → 四大分支卡片 → 每卡片内可折叠小节，带连接线的叶子列表、芯片组、流程条、对比表；工具栏三个按钮（全部展开／全部收起／打印导出 PDF），还有 @media print 打印样式。这是十七家里唯一真正做成"思维导图"形态的交付物。</div>
+<div class="qh">1. CNC 是什么？加工原理？</div>
+<div class="src stp5"><div class="who">Step<span class="v">5</span> <em>侧重：系统五大组成 + 六步流程 + 常见设备</em></div>
+<h4>一句话定义</h4>
+<p><b>CNC</b> = Computer Numerical Control，即<b>计算机数字控制</b>，俗称「数控」。把零件的加工轨迹与工艺写成<b>数字化程序</b>，由机床自动执行。常见叫法：CNC 加工、数铣、加工中心（铣削类最常用）。</p>
+<h4>系统五大组成</h4>
+<ul>
+<li><b>控制系统</b>：CNC 装置 + PLC，读程序、做插补运算、发运动指令</li>
+<li><b>伺服驱动</b>：驱动器 + 伺服电机，把电信号变成 X/Y/Z 轴的实际运动</li>
+<li><b>机床本体</b>：床身、主轴、导轨、丝杠、工作台，是精度的基础</li>
+<li><b>检测反馈</b>：编码器 / 光栅尺实时测位置，闭环纠偏</li>
+<li><b>辅助装置</b>：刀库 ATC、冷却、润滑、排屑、气动</li>
+</ul>
+<h4>加工原理 · 六步流程</h4>
+<p>CAD 建模 → CAM 编程 → 装夹对刀 → 插补运算 → 联动切削 → 检测</p>
+<ul>
+<li><b>① CAD 建模</b>：在软件中建出零件的三维模型</li>
+<li><b>② CAM 编程</b>：选刀具、定参数、生成刀路，后处理为 <b>G 代码</b></li>
+<li><b>③ 装夹对刀</b>：固定毛坯，寻边设定工件原点（如 G54）</li>
+<li><b>④ 插补运算</b>：控制器把曲线分解成各轴的微小直线段</li>
+<li><b>⑤ 多轴联动</b>：伺服电机驱动各轴协同，主轴带动刀具按轨迹切除材料</li>
+<li><b>⑥ 闭环修正</b>：编码器反馈实际位置，与指令比较并实时纠偏</li>
+<li><b>核心链条</b>：数字程序 → 插补 → 多轴联动 → 切除材料 → 反馈修正</li>
+</ul>
+<h4>常见数控设备</h4>
+<p>立式加工中心 VMC｜卧式加工中心 HMC｜3/4/5 轴铣床｜数控车床·车削中心｜车铣复合｜钻攻中心｜慢走丝/中走丝线切割｜电火花 EDM｜激光切割｜水刀切割。广义上，一切「程序控制进给与轨迹」的设备都算 CNC。</p>
+<h4>为什么用 CNC</h4>
+<ul>
+<li><b>精度高、一致性好</b>：程序化生产，人为因素少</li>
+<li><b>能做复杂形状</b>：曲面、异形、薄壁、多面特征</li>
+<li><b>柔性高</b>：改程序即可换产品，适合小批量、多品种</li>
+<li><b>自动化</b>：一人可看多台机床，支持夜班无人值守</li>
+<li><b>局限</b>：需编程与工艺准备，设备与刀具投入较高</li>
+</ul>
+<div class="fix">✅ 设备清单最全（10 类，含 <b>VMC/HMC 之分</b>与慢走丝/中走丝）；✅ 唯一在流程里明确写出「寻边设定工件原点（G54）」这一具体动作</div></div>
+<div class="qh">2. CNC 常用材料有哪些？6061 和 7075 怎么选？</div>
+<div class="src stp5"><div class="who">Step<span class="v">5</span> <em>侧重：模具钢牌号 + 十行对比表 + 五条决策</em></div>
+<h4>金属材料</h4>
+<ul>
+<li><b>铝合金（最常用）</b>：6061 / 7075 / 5052 / 6063 / 2024</li>
+<li><b>碳钢与合金钢</b>：45#、40Cr、Q235</li>
+<li><b>模具钢</b>：<b>P20 / 718H（预硬）、S136（耐蚀）、H13（热作）</b></li>
+<li><b>不锈钢</b>：304 / 316L / 303（易切削）/ 17-4PH（时效强化）</li>
+<li><b>铜及铜合金</b>：H59 / H62 黄铜、铍铜（电极、弹性元件）</li>
+<li><b>钛合金</b>：TC4（Ti-6Al-4V），比强度高但难加工</li>
+</ul>
+<h4>塑胶与非金属</h4>
+<ul>
+<li><b>工程塑料</b>：ABS、PC、PC+ABS、POM（赛钢）、PA 尼龙</li>
+<li><b>特种塑料</b>：PEEK、PTFE、PPS、亚克力 PMMA</li>
+<li><b>板/型材</b>：电木、环氧板 G10、亚克力、PVC、PP</li>
+<li><b>碳纤维板 CFRP</b>：硬度高、磨损刀具，粉尘需防护</li>
+<li><b>其他</b>：石墨（电极）、木材、双色板</li>
+</ul>
+<h4>6061 vs 7075 选型对比（十行）</h4>
+<table class="mini">
+<tr><th>项目</th><th>6061</th><th>7075</th></tr>
+<tr><td class="k">合金系</td><td>Al-Mg-Si 镁硅系</td><td>Al-Zn-Mg-Cu 锌镁铜系</td></tr>
+<tr><td class="k">抗拉强度 T6</td><td>≈310 MPa</td><td>≈570 MPa</td></tr>
+<tr><td class="k">屈服强度 T6</td><td>≈276 MPa</td><td>≈500 MPa</td></tr>
+<tr><td class="k">硬度</td><td>≈95 HB</td><td>≈150 HB</td></tr>
+<tr><td class="k">密度</td><td>2.70 g/cm³</td><td>2.81 g/cm³</td></tr>
+<tr><td class="k">耐腐蚀性</td><td>好（可阳极氧化增强）</td><td>较差，对应力腐蚀敏感</td></tr>
+<tr><td class="k">焊接性</td><td>好（TIG / MIG）</td><td>差，焊缝易裂、强度降</td></tr>
+<tr><td class="k">切削性</td><td>好，断屑顺畅</td><td>中，硬且粘刀、费刀</td></tr>
+<tr><td class="k">价格（参考）</td><td>基准 · 低</td><td>约 2~3 倍</td></tr>
+<tr><td class="k">典型应用</td><td>外壳、支架、散热器、治具</td><td>航空件、无人机、高负荷件</td></tr>
+</table>
+<h4>两者定位</h4>
+<p><b>6061「全能选手」</b>：强度中等，耐腐蚀、易焊接、易切削、价格低；阳极氧化效果好、颜色均匀。适合电子外壳、支架、型材框架、散热器、治具。<br>
+<b>7075「强度怪兽」</b>：强度接近 45 钢的一半，密度仅约钢的 1/3，比强度极高；短板是耐腐蚀差、难焊接、切削粘刀、价格高。适合航空航天结构件、无人机骨架、模具冲头、高负荷运动件。</p>
+<h4>五条决策</h4>
+<ul>
+<li>要强度 / 减重 → 7075（航空、无人机、高负荷结构）</li>
+<li>要耐蚀 / 户外 / 海边 → 6061</li>
+<li>要焊接 → 6061（7075 基本不建议焊）</li>
+<li>要外观 / 阳极氧化 → 6061</li>
+<li>要成本 / 大批量 → 6061</li>
+<li><b>口诀：要强度选 7075，要省心选 6061</b></li>
+</ul>
+<div class="fix">✅ <b>唯一给出模具钢具体牌号及用途</b>（P20/718H 预硬、S136 耐蚀、H13 热作）；✅ 唯一提 <b>环氧板 G10、双色板、石墨电极</b>；✅ 唯一提醒 <b>碳纤维粉尘需防护</b><br>✅ 密度 2.70 / 2.81 完全正确（对比 MiniMax 3.1 写"同为 2.70"）<br>⚠️ 价格"约 2~3 倍"：上界超基准库 1.5–2.5 倍</div></div>
+<div class="qh">3. 普通 CNC 加工精度大概多少？</div>
+<div class="src stp5"><div class="who">Step<span class="v">5</span> <em>侧重：稳定性提醒 + 形位公差 + 标注建议</em></div>
+<h4>尺寸精度</h4>
+<ul>
+<li><b>普通 CNC（三轴加工中心）</b>：<b>±0.05 ~ ±0.10 mm</b>，经济常用值</li>
+<li><b>精密 CNC</b>：±0.01 mm（恒温车间 + 专用工艺）</li>
+<li><b>数控车</b>：外圆一般 IT7~IT8，约 ±0.01~0.02 mm</li>
+<li><b>超精密</b>（坐标磨 / 精密车）：±0.001 mm 级（μm 级）</li>
+<li><b>注意：机床「定位精度 0.01 mm」≠ 零件「稳定做到 0.01 mm」，量产按 ±0.02~0.05 承诺更稳</b></li>
+</ul>
+<h4>表面粗糙度</h4>
+<p>粗铣 Ra 6.3~12.5｜半精铣 Ra 3.2｜精铣 Ra 1.6~0.8｜常用标注：Ra 3.2（一般面）、Ra 1.6（外观/配合面）、Ra 0.8（高光面）</p>
+<h4>形位公差</h4>
+<p>平面度 / 垂直度 / 同轴度：<b>0.02 ~ 0.05 mm</b> 较常见；与机床几何精度、刀具跳动、装夹次数强相关；<b>翻面加工时形位公差容易超差，尽量一次装夹完成</b>。</p>
+<h4>影响精度的六大因素</h4>
+<p>机床（定位精度、重复定位精度、刚性、热变形）｜刀具（悬伸过长、磨损、跳动）｜材料（铝软易粘刀、不锈钢粘刀硬化、薄壁让刀）｜夹具（夹紧力引起变形、定位重复性差）｜工艺（多次装夹翻面 → 基准转换误差累积）｜环境与测量（车间温度波动、量具与检测方法）</p>
+<h4>图纸公差标注建议</h4>
+<ul>
+<li>未注公差按 <b>GB/T 1804-m</b>（≈ ISO 2768-m，中等等级）</li>
+<li>只给<b>关键尺寸</b>标严，其余一律未注，省钱且快</li>
+<li>孔距、配合尺寸、基准要明确，避免尺寸链混乱</li>
+<li><b>公差越严 → 加工越慢、良率越低、价格越高</b></li>
+</ul>
+<div class="fix">✅ <b>唯一明确区分"机床标称精度"与"零件稳定可达精度"</b>——「定位精度 0.01 ≠ 稳定做到 0.01，量产按 ±0.02~0.05 承诺更稳」，这正是基准库 Q3-08「保证值 vs 可达值」想考的点，十七家只有它讲透<br>✅ 唯一给粗铣 Ra 6.3~12.5（多数家从 3.2 起算）<br>✅ 唯一提"避免尺寸链混乱"</div></div>
+<div class="qh">4. 设计 CNC 零件要注意什么？</div>
+<div class="src stp5"><div class="who">Step<span class="v">5</span> <em>侧重：六块 DFM + 五条错误 Top5 + 交图清单</em></div>
+<h4>结构工艺性（最易踩坑）</h4>
+<ul>
+<li><b>内角必须留 R</b>，且 R ≥ 刀具半径 —— <b>内直角铣不出来</b></li>
+<li>内拐角底部同样有刀具圆角，清角做不到；外轮廓尖角可以，内角必须圆角</li>
+<li><b>深孔/深腔</b>：钻孔 ≤3~5 倍径；铣刀悬伸 ≤3~4 倍径（越深越振刀、越贵）</li>
+<li><b>最小壁厚</b>：金属 ≥1 mm、塑料 ≥1.5 mm 左右，随尺寸增大</li>
+<li>壁厚尽量均匀，避免厚薄突变导致变形；<b>避免封闭内腔（封死无法加工）</b></li>
+<li>减小加工面积：大平面、大余量 = 费时费钱</li>
+</ul>
+<h4>装夹与基准</h4>
+<ul>
+<li>每多一次翻面装夹，误差就累积一次；能一次装夹完成的，不分面设计；条件允许上五轴</li>
+<li>预留夹持位 / 工艺台，加工后切除</li>
+<li>薄壁、细长件注意夹紧力与切削力引起的变形</li>
+<li><b>对称件注意夹紧力平衡，避免「夹起来就弹开」</b></li>
+</ul>
+<h4>公差与标注</h4>
+<ul>
+<li>按功能需要标公差，不要全部 ±0.01</li>
+<li>标注基准面 / 基准孔，避免封闭尺寸链</li>
+<li>螺纹标注规格 + 深度（如 M4 通孔、深 10），孔口留倒角</li>
+<li><b>阳极氧化膜厚 5~15 μm</b>：有配合要求的尺寸要预留</li>
+<li>明确去毛刺要求与允许的残余方向</li>
+</ul>
+<h4>成本优化</h4>
+<ul>
+<li>毛坯尽量接近成品（棒料/板料/型材），减少切削量</li>
+<li>孔径优先用<b>标准钻头、标准丝锥</b>（M2~M12）</li>
+<li>减少窄槽、深腔、小 R、清角等「高价特征」</li>
+<li>工序越少越便宜：合并特征、减少专用刀具</li>
+<li><b>数量参考：1~100 件适合 CNC；上万件考虑压铸/冲压/注塑</b></li>
+</ul>
+<h4>材料与热处理</h4>
+<ul>
+<li>需淬火/调质的零件：<b>粗加工 → 热处理 → 精加工</b></li>
+<li>薄壁、长条件选低应力工艺，分多次光刀；铝件大余量加工后建议去应力</li>
+<li>碳纤维、石墨等材料需专用刀具与除尘防护</li>
+</ul>
+<h4>图纸交付清单</h4>
+<ul>
+<li><b>3D 文件（STEP / STP）+ 2D 图纸（PDF）一起给</b></li>
+<li>材质 + 状态写清楚（如 AL 6061-T6、SUS 304）</li>
+<li>数量、表面处理（喷砂/阳极氧化/喷涂）、热处理</li>
+<li>去毛刺、倒角、关键尺寸与基准、特殊检测要求</li>
+</ul>
+<h4>常见错误 Top 5</h4>
+<p>❌ 壁太薄 → 加工完翘曲｜❌ 内直角 → 刀具进不去/应力裂纹｜❌ 公差全标 tight → 成本翻倍还做不出｜❌ 深腔不分件 → 5 轴都难搞｜❌ 不考虑装夹 → 上机根本夹不住</p>
+<div class="fix">✅ <b>三处十七家独有</b>：① <b>避免封闭内腔（封死无法加工）</b> ② <b>对称件夹紧力平衡，"夹起来就弹开"</b> ③ <b>图纸交付清单要求 3D(STEP) + 2D(PDF) 一起给</b><br>✅ 成本段给"1~100 件适合 CNC，上万件改压铸/冲压/注塑"，比只说"上万件改压铸"更完整<br>⚠️ 阳极氧化膜厚 5~15 μm：基准库 Type II 为每面 +5~12 μm，上界 15 略超（混元写 5–20 超得更多）</div></div>
+<div class="srcnote">页面末尾自带说明（照录）：本图为 CNC 加工通用知识地图，其中强度、硬度、价格与精度数值为行业常见参考值，实际以机床能力、材料批次与供应商工艺能力为准。建议：下单前与加工厂确认「可稳定实现的公差等级」与「最小特征尺寸」，再反推图纸标注，可显著降低成本与交期风险。</div>
+</div>
+
+</section>
+<section id="s3">
+<div class="sec-head"><div class="sec-num">3</div><div><h2>对比速查表</h2><div class="sub">数据密度 · 安全合规 · 必要点覆盖 · 风格分组</div></div></div>
+<h3 class="blk">📊 数据密度 D1–D6（满分 3）</h3>
+<div class="tbox"><table>
+<tr><th>#</th><th>维度</th><th>基准库固定值（6061 / 7075-T6）</th><th>来源</th></tr>
+<tr><td class="k">D1</td><td>抗拉强度</td><td>310 / 572 MPa（典型值）</td><td>ASM Handbook Vol.2</td></tr>
+<tr><td class="k">D2</td><td>屈服强度</td><td>276 / 503 MPa（典型值）</td><td>ASM Handbook Vol.2</td></tr>
+<tr><td class="k">D3</td><td>硬度</td><td>95 / 150 HB</td><td>ASM Vol.2 / Alcoa</td></tr>
+<tr><td class="k">D4</td><td>疲劳强度</td><td>95–97 / 159–160 MPa（旋转弯曲，5×10⁸，抛光）</td><td>ASTM E466</td></tr>
+<tr><td class="k">D5</td><td>密度</td><td>2.70 / 2.81 g/cm³</td><td>ASM Vol.2 / Alcoa</td></tr>
+<tr><td class="k">D6</td><td>弹性模量</td><td>68.9 / 71.0 GPa</td><td>ASM Vol.2 / 北航学报</td></tr>
+</table></div>
+<div class="tbox"><table>
+<tr><th>模型</th><th>完成组数</th><th>密度分</th><th>模型</th><th>完成组数</th><th>密度分</th></tr>
+<tr><td class="k">小米 V2.6</td><td>5.5 / 6</td><td><b>2.75</b></td><td class="k">豆包 2.1</td><td>2.0 / 6</td><td>1.00</td></tr>
+<tr><td class="k">GLM 5.3</td><td>4.0 / 6</td><td>2.00</td><td class="k">元宝</td><td>2.0 / 6</td><td>1.00</td></tr>
+<tr><td class="k">MiniMax M3</td><td>4.0 / 6</td><td>2.00</td><td class="k">Kimi K2.6</td><td>1.0 / 6</td><td>0.50</td></tr>
+<tr><td class="k">Kimi K3</td><td>3.0 / 6</td><td>1.50</td><td class="k">荣耀悠悠</td><td>0.5 / 6</td><td>0.25</td></tr>
+<tr><td class="k">GitHub Copilot</td><td>0.5 / 6</td><td>0.25</td><td class="k">阶跃 Step 3.7</td><td>0.5 / 6</td><td>0.25</td></tr>
+<tr><td class="k">腾讯混元 Hy3</td><td>3.0 / 6</td><td>1.50</td><td class="k">阶跃 Step 5</td><td>3.5 / 6</td><td>1.75</td></tr>
+<tr><td class="k">MiniMax 3.1</td><td>3.0 / 6</td><td>1.50</td><td class="k">360 智脑</td><td>0.5 / 6</td><td>0.25</td></tr>
+<tr><td class="k">文心一言</td><td>2.5 / 6</td><td>1.25</td><td class="k">DeepSeek / 千问</td><td>0 / 6</td><td>0.00</td></tr>
+</table></div>
+<p class="srcnote">D4 规则：数值对但缺三项条件（测试方式 / 循环次数 / 试样状态）计 0.5 组。小米给 96/160 未标条件 → 0.5 组；其余各家未提及 → 0 组（按"未提及 ≠ 错误"，不扣核心分）。</p>
+<h3 class="blk">🛡️ 安全合规分 · 三段式（满分 5）</h3>
+<div class="tbox"><table>
+<tr><th>段</th><th>满分</th><th>判定方式</th></tr>
+<tr><td class="k">A 风险识别广度</td><td>2</td><td>八类失效模式：变形 R1 / 刀具 R2 / 材料失效 R3 / 精度失控 R4 / 结构不可加工 R5 / 装夹 R6 / 后处理 R7 / 成本报废 R8。命中 2 类 0.5、3–4 类 1.0、5–6 类 1.5、7–8 类 2.0</td></tr>
+<tr><td class="k">B 规避动作</td><td>2</td><td>基础项 0.15（B1 圆角 · B2 壁厚 · B3 深径比 · B5 装夹，11 家全中）；高阶项 0.35（B4 变形控制工艺 · B6 倒扣规避 · B7 表面尺寸补偿 · B8 孔螺纹细节，命中率仅 4~9/11）。<b>不封顶</b></td></tr>
+<tr><td class="k">C 合规意识</td><td>1</td><td>标准号（ISO 2768 / GB/T 1804 / IT / GD&T）＋ 图纸要素（T6/T651 等）。两者皆有 1.0，有其一 0.5，<b>精简型保底 0.3</b></td></tr>
+</table></div>
+<div class="tbox"><table>
+<tr><th>模型</th><th>A /2</th><th>B /2</th><th>C /1</th><th>安全 /5</th><th>✗ 缺的高阶项</th></tr>
+<tr><td class="k">小米 V2.6</td><td>2.0</td><td>2.00</td><td>1.0</td><td><b>5.00</b></td><td>无（八项全中）</td></tr>
+<tr><td class="k">GLM 5.3</td><td>2.0</td><td>1.65</td><td>1.0</td><td>4.65</td><td>B4 变形控制工艺</td></tr>
+<tr><td class="k">文心一言</td><td>2.0</td><td>1.65</td><td>0.5</td><td>4.15</td><td>B6 倒扣</td></tr>
+<tr><td class="k">DeepSeek</td><td>1.8</td><td>1.65</td><td>1.0</td><td>4.45</td><td>B6 倒扣</td></tr>
+<tr><td class="k">Kimi K3</td><td>2.0</td><td>1.30</td><td>1.0</td><td>4.30</td><td>B4 + B7</td></tr>
+<tr><td class="k">MiniMax M3</td><td>2.0</td><td>1.30</td><td>1.0</td><td>4.30</td><td>B4 + B7</td></tr>
+<tr><td class="k">豆包 2.1</td><td>2.0</td><td>0.95</td><td>0.5</td><td>3.45</td><td>B4 + B6 + B7</td></tr>
+<tr><td class="k">千问 3.8</td><td>1.5</td><td>0.95</td><td>1.0</td><td>3.45</td><td>B4 + B6 + B7</td></tr>
+<tr><td class="k">Kimi K2.6</td><td>2.0</td><td>0.95</td><td>0.3</td><td>3.25</td><td>B4 + B6 + B8</td></tr>
+<tr><td class="k">元宝</td><td>1.5</td><td>0.95</td><td>0.5</td><td>2.95</td><td>B4 + B6 + B7</td></tr>
+<tr><td class="k">荣耀悠悠</td><td>1.5</td><td>0.95</td><td>0.5</td><td>2.95</td><td>B6 + B7 + B8</td></tr>
+<tr><td class="k">GitHub Copilot</td><td>2.0</td><td>2.00</td><td>1.0</td><td>5.00</td><td>八项全中（满分）</td></tr>
+<tr><td class="k">腾讯混元 Hy3</td><td>2.0</td><td>1.30</td><td>0.5</td><td>3.80</td><td>缺 B4 变形控制</td></tr>
+<tr><td class="k">阶跃 Step 3.7</td><td>2.0</td><td>1.65</td><td>0.5</td><td>4.15</td><td>缺 B6 倒扣规避</td></tr>
+<tr><td class="k">阶跃 Step 5</td><td>2.0</td><td>1.65</td><td>1.0</td><td>4.65</td><td>缺 B6 倒扣规避</td></tr>
+<tr><td class="k">MiniMax 3.1</td><td>2.0</td><td>1.65</td><td>1.0</td><td>4.65</td><td>缺 B6 倒扣规避</td></tr>
+<tr><td class="k">360 智脑</td><td>1.5</td><td>0.65</td><td>0.5</td><td>2.65</td><td>第三问截断，仅 B1+B2</td></tr>
+</table></div>
+<h3 class="blk">📋 必要点覆盖（17 项）</h3>
+<div class="tbox"><table>
+<tr><th>问题</th><th>必要点</th><th>命中家数</th></tr>
+<tr><td class="k">Q1</td><td>术语与定义 · 系统组成 · 加工原理 · 加工流程</td><td>11 / 11（Q1-01~04 全中）</td></tr>
+<tr><td class="k">Q2</td><td>材料大类 · 牌号/状态/热处理 · 选型维度 · 6061/7075 多维对比 · 条件化决策</td><td>Q2-01~03、05 全中；<b>Q2-04 仅 9/11</b>（DeepSeek、千问零数值）</td></tr>
+<tr><td class="k">Q3</td><td>精度术语区分 · 机床精度 vs 加工精度 · 影响因素 · 范围与条件</td><td>Q3-01~04 全中</td></tr>
+<tr><td class="k">Q4</td><td>DFM 总则 · 几何特征 · 公差与基准 · 装夹与可达性</td><td>Q4-01~04 全中</td></tr>
+</table></div>
+<h3 class="blk">🎭 风格分组</h3>
+<div class="grid2">
+<div class="card"><b class="t">精简型（字数 &lt; 中位 50%%）</b>
+<p>Kimi K2.6 · 元宝 · DeepSeek · 千问 · 荣耀悠悠<br>
+评分重点：必要点命中率、信息密度、效率。<b>未提扩展点不扣分，只不加长板分。</b></p></div>
+<div class="card"><b class="t">深度型（条件多、来源多、对比多）</b>
+<p>小米 V2.6 · GLM 5.3 flash<br>
+评分重点：扩展点、深度、可验证、反例。<b>但若冗余、偏题、幻觉，照扣。</b></p></div>
+<div class="card"><b class="t">标准型（四平八稳，覆盖主要点）</b>
+<p>豆包 2.1 · Kimi K3 · 文心一言 · MiniMax M3<br>
+评分重点：核心分、结构、可执行性。</p></div>
+<div class="card"><b class="t">风险标记</b>
+<p>本轮无事实幻觉、安全误导、伪造来源、完全偏题。<br>
+待数值核：K2.6「23 倍」· K3「±0.015~0.03」· 豆包「Ra 0.8~1.6」· 秒哒「屈服 455」· 荣耀「±0.01mm」· Copilot「6061 抗拉 240」· 混元「阳极 5–20μm」· Step 3.7「6061 抗拉 205 / 硬质阳极 10–20μm」· MiniMax 3.1「密度同为 2.70 / 模量同为 69」· Step 5 与混元「阳极上界超标」</p></div>
+</div>
+</section>
+<section id="s4">
+<div class="sec-head"><div class="sec-num">4</div><div><h2>评判标准与最终得分</h2><div class="sub">V2.1 冻结版 · 人工逐字判定 · 分母 118</div></div></div>
+<div class="cons"><b>✅ 为什么不按字数算分</b><p>V1 曾按篇幅与数值密度直接算综合分，结果是：Kimi K2.6 只有约 1200 字却必要点 17/17 全中，被压到 22 分。V2 改成<b>核心必要点保底 + 表现维度分开算 + 长板单独奖励 + 短板封顶扣分 + 精简型与深度型分组比较</b>，K2.6 回到 67.7。规则冻结后不再中途修改。</p></div>
+<h3 class="blk">📐 评分公式（V2.1 冻结版）</h3>
+<div class="card" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.2px;color:#1e4d7d;line-height:2">
+核心分 60 ＝ 25×正确性 + 20×必要点覆盖率 + 10×问题对应 + 5×安全合规<br>
+表现分 40 ＝ 深度条件10 + 可执行8 + 可验证7 + 结构导图6 + 精简效率5 + 一致性2 + 语言2<br>
+数据密度 3 ＝ 3 × min(1, D1–D6 完成组数 / 6)<br>
+长板加分 +15（上限）　　非致命短板扣分 −10（封顶）　　致命错误单独重罚（不封顶）<br>
+<b>原始分 = 60 + 40 + 3 + 15 − 10 = 118　　标准化分 = 原始分 / 118 × 100</b>
+</div>
+<h3 class="blk">🏆 最终排名（17 家）</h3>
+<div class="tbox"><table>
+<tr><th>#</th><th>模型</th><th>正确性</th><th>必要点</th><th>安全</th><th>核心/60</th><th>表现/40</th><th>密度/3</th><th>长板</th><th>终分</th></tr>
+<tr><td>1</td><td class="k">小米 MiMo V2.6</td><td>1.00</td><td>17/17</td><td>5.00</td><td>60.00</td><td>38.2</td><td>2.75</td><td>+15</td><td><b>98.3</b></td></tr>
+<tr><td>2</td><td class="k">GLM 5.3 flash</td><td>1.00</td><td>17/17</td><td>4.65</td><td>59.65</td><td>37.4</td><td>2.00</td><td>+12</td><td><b>94.1</b></td></tr>
+<tr><td>3</td><td class="k">Kimi K3</td><td>1.00</td><td>16/17</td><td>4.30</td><td>58.12</td><td>38.3</td><td>1.50</td><td>+10</td><td><b>91.5</b></td></tr>
+<tr><td>4</td><td class="k">阶跃 Step 5</td><td>1.00</td><td>17/17</td><td>4.65</td><td>59.65</td><td>34.5</td><td>1.75</td><td>+9</td><td><b>89.5</b></td></tr>
+<tr><td>5</td><td class="k">MiniMax 3.1 flash</td><td>0.93</td><td>17/17</td><td>4.65</td><td>59.13</td><td>34.0</td><td>1.50</td><td>+9</td><td><b>88.6</b></td></tr>
+<tr><td>6</td><td class="k">MiniMax M3</td><td>1.00</td><td>17/17</td><td>4.30</td><td>59.30</td><td>35.2</td><td>2.00</td><td>+3</td><td><b>84.3</b></td></tr>
+<tr><td>7</td><td class="k">腾讯混元 Hy3</td><td>0.92</td><td>17/17</td><td>3.80</td><td>56.80</td><td>29.5</td><td>1.50</td><td>+5</td><td><b>78.6</b></td></tr>
+<tr><td>8</td><td class="k">DeepSeek V4.1Flash</td><td>N/A</td><td>15/17</td><td>4.45</td><td>55.02</td><td>30.8</td><td>0.00</td><td>+6</td><td><b>77.8</b></td></tr>
+<tr><td>9</td><td class="k">元宝 HY4preview</td><td>1.00</td><td>17/17</td><td>2.95</td><td>57.95</td><td>29.5</td><td>1.00</td><td>+3</td><td><b>77.5</b></td></tr>
+<tr><td>10</td><td class="k">百度 秒哒 <small style="color:var(--grey)">文心 4.5 Turbo</small></td><td>0.80</td><td>16/17</td><td>4.15</td><td>52.97</td><td>29.6</td><td>1.25</td><td>+6</td><td><b>76.1</b></td></tr>
+<tr><td>11</td><td class="k">豆包 2.1</td><td>1.00</td><td>16/17</td><td>3.45</td><td>57.27</td><td>27.6</td><td>1.00</td><td>+3</td><td><b>75.3</b></td></tr>
+<tr><td>12</td><td class="k">千问 3.8</td><td>N/A</td><td>16/17</td><td>3.45</td><td>55.33</td><td>30.5</td><td>0.00</td><td>+3</td><td><b>75.3</b></td></tr>
+<tr><td>13</td><td class="k">GitHub Copilot Free</td><td>0.70</td><td>17/17</td><td>5.00</td><td>52.50</td><td>27.3</td><td>0.25</td><td>+8</td><td><b>73.8</b></td></tr>
+<tr><td>14</td><td class="k">阶跃 Step 3.7 flash</td><td>0.55</td><td>17/17</td><td>4.15</td><td>47.90</td><td>31.0</td><td>0.25</td><td>+7</td><td><b>73.0</b></td></tr>
+<tr><td>15</td><td class="k">Kimi K2.6</td><td>0.67</td><td>16/17</td><td>3.25</td><td>48.82</td><td>27.6</td><td>0.50</td><td>+3</td><td><b>67.7</b></td></tr>
+<tr><td>16</td><td class="k">360 智脑</td><td>0.50</td><td>13/17</td><td>2.65</td><td>38.15</td><td>20.5</td><td>0.25</td><td>+2</td><td><b>57.7</b></td></tr>
+<tr><td>17</td><td class="k">荣耀 悠悠 <small style="color:var(--grey)">模型未确定</small></td><td>0.33</td><td>16/17</td><td>2.95</td><td>40.02</td><td>22.1</td><td>0.25</td><td>+3</td><td><b>55.4</b></td></tr></table></div>
+<p class="srcnote">N/A = Q2 零数值陈述（全定性），按甲方案以 base/35×25 推算：既不当 0 分也不给满分，符合"未提及 ≠ 错误"。<br>Copilot 正确性 0.70：10 项判据中 8 项可核验，6061-T6 抗拉写 240–310（下界 240 属 T4 状态）与 7075 写 500–570（未覆盖 572）两项判未通过。<br>混元 0.92：11 项中 10 项通过，唯一未过的是普通阳极氧化写 5–20 μm（基准库 Type II 每面 +5~12 μm）。<br>Step 5 正确性 1.00：全部数值落在基准库范围内（价格"2~3 倍"上界超 1.5–2.5，但为参考值表述未计错）。<br>MiniMax 3.1 正确性 0.93：未过的是"两者密度同为 2.70"（7075 应为 2.81）与"弹性模量同为 69GPa"（应为 68.9 / 71.0）——即主动纠错那段自己写错了。<br>Step 3.7 正确性 0.55：11 项中 6 项通过 —— 未过的是 6061 抗拉下界 205（O 态值）、成本溢价 30–50%（低于 1.5–2 倍）、硬质阳极膜厚 10–20 μm（低于 25–75 μm）、三轴铣精度 ±0.02–0.05（偏乐观）、螺纹 ≤3× 孔径（宽于 1.5–2×）。</p>
+<h3 class="blk">⚠️ 八条「不可接受错误」</h3>
+<div class="tbox"><table>
+<tr><th>#</th><th>不可接受</th><th>本轮实例</th></tr>
+<tr><td class="k">1</td><td>典型值与最小值混用</td><td>文心：抗拉 510~570（典型）+ 屈服 455（厚板最小）</td></tr>
+<tr><td class="k">2</td><td>旋转弯曲疲劳与轴向疲劳混用</td><td>本轮无（仅小米提及且口径正确）</td></tr>
+<tr><td class="k">3</td><td>5×10⁸ 与 10⁷ 循环值混用</td><td>本轮无</td></tr>
+<tr><td class="k">4</td><td>硬质合金与 PCD 切削速度混用</td><td>某清单"三菱 4000 m/min"（应为 400）</td></tr>
+<tr><td class="k">5</td><td>钻削速度与铣削速度混用</td><td>京瓷 165（钻）vs 三菱 400（铣）</td></tr>
+<tr><td class="k">6</td><td>不同厚度分段的最小值混用</td><td>文心 455 ≈ 25–50mm 段 460，未标分段</td></tr>
+<tr><td class="k">7</td><td>只写 R=−1 而不标三项条件</td><td>小米给 96/160 未标条件 → D4 计 0.5 组</td></tr>
+<tr><td class="k">8</td><td>6061 弹性模量 68.9 套用于 7075</td><td>小米原稿曾写"69 GPa（6061 和 7075）"，已修正</td></tr>
+</table></div>
+<h3 class="blk">🔍 已知局限（照实记录，未修）</h3>
+<div class="diff"><b>这五条是评分体系自身的问题，不是某家答案的问题</b><ul>
+<li><b>正确性公式仍奖励沉默：</b>正确性 = 命中 / 自己提及数，只提 3 项且全对也是 1.00。改成分母用基准库"应备陈述数"可修，但会与"未提及 ≠ 错误"冲突，需先修订该条才能启用。</li>
+<li><b>甲方案的代价：</b>零数值陈述的模型核心分 51.7 / 55.3，与 9 项全对的小米（60.0）只差约 8 分 —— 数据密度在核心分里几乎不体现，差距主要落在表现分与长板分。</li>
+<li><b>A 项八类风险与 B 项八个动作由整理者归纳</b>，已挂可追溯来源，但"允许范围"列需评审组填写后才可用于判错，目前只用于判"有没有提到"。</li>
+<li><b>两处冻结期内新矛盾待下轮处理：</b>① 溢价区间是否允许"以上"等外延词兜底（元宝"30%%~50%% 以上"判过、荣耀"高出 30-50%"判不过）；② 区间型数值按上界/下界/中心值比对（570 判过、500–570 判不过、510~570 又判过）。</li>
+<li><b>版本不可比：</b>V2.0 分母 115，V2.1 分母 118，历史分须 ×115/118 折算后方可比较。</li>
+<li><b>荣耀悠悠的分数不可复现：</b>YOYO 不是单一模型，官方公开底座至少五层（自研魔法大模型 3.0 / MagicAgent 300 亿 MoE + 豆包 + DeepSeek-V4 + DeepSeek-R1），平台按场景路由。同一问题换个底座答案就变了，55.4 分只代表本次抽样。</li>
+<li><b>360 智脑的回答不完整：</b>第四问原文结束在「四、设」字上，DFM 正文缺失约三分之二（无壁厚数值、无内角规则、无深径比、无孔螺纹规范）。其 57.7 分<b>不代表该模型真实水平</b>，只代表本次不完整输出。若补测需重新提问并确认输出完整。</li>
+<li><b>状态错配已成系统性错误：</b>四家出现同类问题 —— Copilot「6061-T6 抗拉 240」（T4 值）、Step 3.7「205」（O 态值）、荣耀与 Step「7075 为 6061 的 2 倍」（实为 1.8 倍）、混元「阳极 5–20μm」（Type II 上界 12μm）。说明模型对<b>热处理状态与数值的绑定关系</b>普遍掌握不牢，建议基准库把「状态—数值—来源」做成强制三元组。</li>
+<li><b>三家身份为推断而非官方标注：</b>百度秒哒经查证日常默认基座为<b>文心 4.5 Turbo</b>（复杂逻辑才路由 X1T-Reasoning），属上一代性价比档而非 5.x 旗舰；GitHub Copilot Free 自述"OpenAI 模型／知识截至 2024-06"属模型自述未证实，且 Free 档底层会轮换；豆包 2.1 为用户确认的 App 默认模型。评分按内容不按身份，但解读分数时须考虑档位差异——秒哒用非旗舰档拿 76.1，与实际能力档位相比属超常发挥。</li>
+</ul></div>
+</section>
+<section id="s5">
+<div class="sec-head"><div class="sec-num">5</div><div><h2>引用文献与资料</h2><div class="sub">56 篇论文 · 工程实务文献与标准 · 基准库来源</div></div></div>
+<div class="warn"><b>⚠️ 关于 56 篇论文的可用性</b>这批论文几乎全部是「CNC 过程的智能监测与优化」研究前沿（刀具磨损监测 ~11 篇、数字孪生热误差 ~13 篇、参数优化能耗 ~8 篇、表面粗糙度 ~9 篇），而四个问题考的是工程实务基础。<b>四问 48 个检查项中，Q2 材料选型整问 12 项 0 篇支撑</b>（其中 5 个是必要点）。真正能用于判分的只有：论文 41（热误差占比）、论文 6/7/35（薄壁颤振与变形）。材料、公差、DFM 部分改用手册与标准补齐。</div>
+<h3 class="blk">🪪 十二家的身份标注（影响分数解读）</h3>
+<div class="tbox"><table>
+<tr><th>模型</th><th>身份标注</th><th>确定性</th><th>说明</th></tr>
+<tr><td class="k">豆包 2.1</td><td>豆包 App 默认模型</td><td>用户确认</td><td>字节自研单一底座，版本会静默更新</td></tr>
+<tr><td class="k">百度 秒哒</td><td><b>文心 4.5 Turbo</b></td><td>已查证</td><td>秒哒日常默认基座；复杂逻辑场景路由 X1T-Reasoning。属 4.5 代性价比档，非 5.x 旗舰</td></tr>
+<tr><td class="k">荣耀悠悠</td><td><b>模型暂未确定</b></td><td>不可确定</td><td>五层混合路由：魔法大模型 3.0 + MagicAgent + 豆包 + DeepSeek-V4 + R1，分数不可复现</td></tr>
+<tr><td class="k">GitHub Copilot</td><td>Free 档（自述 OpenAI／2024-06）</td><td>未证实</td><td>模型自述版本与知识截止日常常出错；Free 档底层会轮换</td></tr>
+<tr><td class="k">腾讯混元 Hy3</td><td>Hy3</td><td>已标注</td><td>走腾讯云混元原生接口，绕开元宝 App 封装</td></tr>
+<tr><td class="k">阶跃 Step 3.7 flash</td><td>3.7 flash</td><td>已标注</td><td>阶跃星辰，10/15 已开源 Step 5 Preview（600B/27B）</td></tr>
+<tr><td class="k">MiniMax 3.1 flash</td><td>3.1 flash</td><td>已标注</td><td>与 MiniMax M3 同厂不同档，可对比同厂档位差异</td></tr>
+<tr><td class="k">360 智脑</td><td>版本未标注</td><td>未标注</td><td>第四问回答被截断，DFM 规则大量缺失</td></tr>
+<tr><td class="k">阶跃 Step 5</td><td>Step 5</td><td>已标注</td><td>与 Step 3.7 flash 同厂不同档</td></tr>
+<tr><td class="k">其余八家</td><td>版本由用户在对话中指定</td><td>已标注</td><td>小米 V2.6／Kimi K2.6／Kimi K3／DeepSeek V4.1Flash／元宝 HY4preview／千问 3.8／GLM 5.3／MiniMax M3</td></tr>
+</table></div>
+<h3 class="blk">📄 与大文直接相关的论文（仅 4 篇）</h3>
+<div class="tbox"><table>
+<tr><th>编号</th><th>论文</th><th>可用内容</th><th>用于大文哪一段</th><th>状态</th></tr>
+<tr><td class="k">论文 41</td><td>MSIFN 数字孪生热误差补偿（Expert Systems with Applications, 2025）</td><td>热误差占总体加工误差 40%%~70%%</td><td>3.4 影响因素</td><td>原论文未核到，已改用袁景丽 2025 中文综述</td></tr>
+<tr><td class="k">论文 7</td><td>薄壁铣削颤振抑制综述（Int. J. Extreme Manufacturing, 2025）</td><td>薄壁颤振机理与抑制策略</td><td>4.2 壁厚底线</td><td>DOI 为占位符 adXXXXX</td></tr>
+<tr><td class="k">论文 6</td><td>航空薄壁结构件铣削颤振综述（Proc. IMechE Part B, 2025）</td><td>薄壁动态特性与预测方法</td><td>4.2 / 4.5</td><td>—</td></tr>
+<tr><td class="k">论文 35</td><td>预应力辅助加工（Prestress Assisted Machining, 2025）</td><td>施加预应力可控制振动颤振、增加刚性</td><td>4.5 变形控制</td><td>—</td></tr>
+</table></div>
+<h3 class="blk">📚 工程实务文献与标准（真正用于判分的来源）</h3>
+<div class="tbox"><table>
+<tr><th>类别</th><th>资料</th><th>权威等级</th><th>提供的大文内容</th><th>状态</th></tr>
+<tr><td class="k">手册</td><td>ASM Handbook Vol.2: Properties and Selection — Nonferrous Alloys</td><td>最高</td><td>6061/7075 全部力学性能定值</td><td>已核（屈服 276 / 503、抗拉 310 / 572、硬度 95 / 150）</td></tr>
+<tr><td class="k">标准</td><td>ASTM B209 / B209M-21a（铝板带材）</td><td>高</td><td>最小保证值与厚度分段</td><td>现行版已确认，完整公差表需购买</td></tr>
+<tr><td class="k">标准</td><td>ISO 2768-1</td><td>高</td><td>未注线性尺寸公差 f / m / c</td><td>已核（三个分段逐格比对）</td></tr>
+<tr><td class="k">标准</td><td>GB/T 1804-2000</td><td>高</td><td>未注公差，与 ISO 2768-1 数值一致</td><td>已核</td></tr>
+<tr><td class="k">标准</td><td>GB/T 1184-1996</td><td>高</td><td>形位公差未注公差值</td><td>已核标准信息</td></tr>
+<tr><td class="k">标准</td><td>GB/T 25372</td><td>高</td><td>机床精度 P / M / G 三级</td><td>已核</td></tr>
+<tr><td class="k">厂商</td><td>Alcoa / Novelis / Kaiser datasheet</td><td>高</td><td>实测性能、T651、T73 抗 SCC</td><td>需 ULProspector 注册</td></tr>
+<tr><td class="k">刀具</td><td>三菱 HT110 / MD220、京瓷 301M</td><td>中高</td><td>切削速度与进给</td><td>已核（400 / 800 / 165 m/min）</td></tr>
+<tr><td class="k">手册</td><td>嘉立创 FA「切削加工的经济精度」</td><td>中高</td><td>IT 等级与加工阶段对应</td><td>已核</td></tr>
+<tr><td class="k">DFM</td><td>Fictiv / RivCut / UnionFab / 拓发 CNC DFM 指南</td><td>中</td><td>壁厚、切深比、倒扣、倒角、检查清单</td><td>已核</td></tr>
+<tr><td class="k">教材</td><td>《机床数控技术》《机械设备数控技术》《智能数控加工技术》</td><td>中高</td><td>系统组成、插补原理、加工流程</td><td>书目与章节已定位，原文未取</td></tr>
+<tr><td class="k">手册</td><td>《中国航空材料手册》第 3 卷（铝合金、镁合金）</td><td>高</td><td>国产牌号对照</td><td>已确认存在，数据待取</td></tr>
+<tr><td class="k">综述</td><td>袁景丽《数控机床温度场和热误差研究综述》2025</td><td>中高</td><td>热误差占比 40%%~70%%</td><td>知网可查，DOI 可追溯</td></tr>
+</table></div>
+<h3 class="blk">📑 原 56 篇论文的完整清单（按主题分布）</h3>
+<div class="tbox"><table>
+<tr><th>主题</th><th>篇数</th><th>编号</th><th>与四问的关系</th></tr>
+<tr><td class="k">综述类</td><td>9</td><td>论文 1–9</td><td>偏智能制造前沿，与四问无直接交集</td></tr>
+<tr><td class="k">刀具磨损与状态监测</td><td>11</td><td>论文 10–20</td><td>论文 20 给出"6%%~20%% 停机由刀具磨损引起"，可作背景</td></tr>
+<tr><td class="k">工艺参数优化</td><td>8</td><td>论文 21–28</td><td>论文 21、25 给能耗与粗糙度量化值</td></tr>
+<tr><td class="k">表面质量与加工误差</td><td>9</td><td>论文 29–37</td><td>论文 35、36 与薄壁变形相关</td></tr>
+<tr><td class="k">数字孪生与智能制造</td><td>12</td><td>论文 38–50</td><td><b>论文 41 唯一可用</b>（热误差占比）</td></tr>
+<tr><td class="k">中文核心补充</td><td>6</td><td>论文 51–56</td><td>论文 51 给"大型飞机薄壁件材料去除比例达 95%%"</td></tr>
+</table></div>
+<div class="srcs">权重 S 级 12 篇（论文 1、2、8、10、12、21、22、29、34、38、41、42）为必读，A 级约 30 篇为推荐精读，B 级 4 篇（19、26、28、52、53）为参考阅读。</div>
+<h3 class="blk">📌 待核与待补</h3>
+<div class="diff"><b>以下项目尚未完成，如实列出</b><ul>
+<li><b>论文真实性未全部核验</b> —— 曾尝试检索论文 41 与论文 2 原文未直接命中，56 篇的 DOI 与量化数据建议逐条核过再进基准库。</li>
+<li><b>论文 7 的 DOI 是占位符</b>：10.1088/2631-7990/adXXXXX，尾部 XXXXX 不是真实 DOI 字符，不可引用。</li>
+<li><b>ASTM B209/B209M-21a 完整公差表</b>需购买（$100 / 111€），目前只有力学性能最小值表。</li>
+<li><b>Alcoa 6061-T651 与 7075-T6 完整 datasheet</b> 需 ULProspector 免费账号下载。</li>
+<li><b>《中国航空材料手册》第 3 卷</b>数据未直接命中，需通过航空工业出版社或知网获取。</li>
+<li><b>Q1 三本教材</b>已定位书目与章节结构，但未取得原文。</li>
+</ul></div>
+</section>
+
+<div class="foot">
+  融合大文由 17 个 AI 模型的回答整理而成，数值以 ASM Handbook Vol.2 / ASTM B209 / ISO 2768-1 / GB/T 1804-2000 校核<br>
+  十七家原始回答均保留原貌未改写 · 评分采用 V2.1 冻结版（分母 118，人工逐字判定）· 引用文献 56 篇论文 + 13 类工程实务资料<br>
+  制作日期：2026-10-17
+</div>
+</div>
+<div id="prog"></div>
+<button id="top" title="回到顶部">↑</button>
+<button id="tt" title="切换深色 / 浅色">🌙</button>
+<script>
+(function(){
+  var $=function(s){return document.querySelector(s)};
+  var $$=function(s){return [].slice.call(document.querySelectorAll(s))};
+
+  /* ---------- 1. 十七家：折叠包装 ---------- */
+  var blocks=$$('.aiblock');
+  blocks.forEach(function(b){
+    var hd=b.querySelector('.hd');
+    if(!hd) return;
+    var body=document.createElement('div');
+    body.className='ai-body';
+    var n=hd.nextElementSibling;
+    while(n){ var nx=n.nextElementSibling; body.appendChild(n); n=nx; }
+    b.appendChild(body);
+    var tw=document.createElement('span');
+    tw.className='tw'; tw.textContent='▸';
+    hd.insertBefore(tw, hd.firstChild);
+    hd.setAttribute('role','button'); hd.setAttribute('tabindex','0');
+    hd.title='点击展开 / 收起';
+    function tog(){ b.classList.toggle('open'); }
+    hd.addEventListener('click',tog);
+    hd.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); tog(); }
+    });
+    // 分数用于排序
+    var sc=b.querySelector('.sc');
+    var m=sc?sc.textContent.match(/([\d.]+)/):null;
+    b.dataset.score=m?parseFloat(m[1]):0;
+    b.dataset.name=(b.querySelector('.nm')?b.querySelector('.nm').textContent:'')+' '+(b.querySelector('.vv')?b.querySelector('.vv').textContent:'');
+  });
+
+  // 默认展开冠军（分数最高）
+  if(blocks.length){
+    var best=blocks[0];
+    blocks.forEach(function(b){ if(+b.dataset.score > +best.dataset.score) best=b; });
+    best.classList.add('open');
+  }
+
+  /* ---------- 1.5 融合大文：来源角标开关 ---------- */
+  var sec1=document.querySelector('#s1');
+  if(sec1){
+    var bar=document.createElement('div');
+    bar.className='mtools';
+    bar.innerHTML='<button id="stTog" class="act">隐藏来源角标</button>'+
+      '<span class="cnt">共 '+document.querySelectorAll('#s1 .st').length+' 个来源标记 · 彩色=AI，灰色=论文/手册/标准</span>';
+    var c=sec1.querySelector('.cons');
+    sec1.insertBefore(bar, c?c.nextSibling:sec1.children[1]);
+    var on=true;
+    document.querySelector('#stTog').onclick=function(){
+      on=!on;
+      document.body.classList.toggle('nost',!on);
+      this.classList.toggle('act',on);
+      this.textContent=on?'隐藏来源角标':'显示来源角标';
+    };
+  }
+
+  /* ---------- 2. 工具栏 ---------- */
+  var wrap=document.querySelector('#s2');
+  if(wrap){
+    var tools=document.createElement('div');
+    tools.className='mtools';
+    tools.innerHTML=
+      '<input id="msearch" type="search" placeholder="搜索模型名…" aria-label="搜索模型">'+
+      '<button id="mAll">全部展开</button>'+
+      '<button id="mNone">全部收起</button>'+
+      '<button id="mSort">按分数排序</button>'+
+      '<span class="cnt" id="mcnt"></span>';
+    var cons=wrap.querySelector('.cons');
+    wrap.insertBefore(tools, cons?cons.nextSibling:wrap.firstChild.nextSibling);
+
+    var sorted=false;
+    function refresh(){
+      var vis=blocks.filter(function(b){return !b.classList.contains('hide')});
+      $('#mcnt').textContent='显示 '+vis.length+' / '+blocks.length+' 家';
+    }
+    $('#mAll').onclick=function(){ blocks.forEach(function(b){b.classList.add('open')}) };
+    $('#mNone').onclick=function(){ blocks.forEach(function(b){b.classList.remove('open')}) };
+    $('#mSort').onclick=function(){
+      sorted=!sorted;
+      this.classList.toggle('act',sorted);
+      this.textContent=sorted?'恢复原顺序':'按分数排序';
+      var box=wrap;
+      if(sorted){
+        blocks.slice().sort(function(a,b){return b.dataset.score-a.dataset.score})
+          .forEach(function(b){box.appendChild(b)});
+      }else{
+        blocks.slice().sort(function(a,b){return a.dataset.orig-b.dataset.orig})
+          .forEach(function(b){box.appendChild(b)});
+      }
+    };
+    $('#msearch').oninput=function(){
+      var q=this.value.trim().toLowerCase();
+      blocks.forEach(function(b){
+        b.classList.toggle('hide', q && b.dataset.name.toLowerCase().indexOf(q)<0);
+      });
+      refresh();
+    };
+    refresh();
+  }
+  // 记住原始顺序
+  blocks.forEach(function(b,i){ b.dataset.orig=i; });
+
+  /* ---------- 3. 阅读进度条 + 回到顶部 ---------- */
+  /* 动态计算吸顶偏移：nav 实际高度 + 间距，杜绝两层 sticky 重合 */
+  var navEl=$('.nav');
+  function layout(){
+    var nh = navEl ? navEl.getBoundingClientRect().height : 0;
+    if(!nh || nh < 20) nh = 52;            // 兜底：无法测量时按单行导航估算
+    var base = Math.round(8 + nh + 8);     // nav top(8) + 高 + 呼吸间隙
+    $$('.mtools').forEach(function(t){ t.style.top = base+'px'; });
+    document.documentElement.style.setProperty('--spy', (base+nh+40)+'px');
+  }
+  layout();
+  window.addEventListener('resize', layout);
+  if(window.ResizeObserver && navEl){
+    new ResizeObserver(layout).observe(navEl);
+  }
+
+  var prog=$('#prog'), top=$('#top');
+  function onScroll(){
+    var h=document.documentElement;
+    var max=h.scrollHeight-h.clientHeight;
+    var p=max>0?(h.scrollTop||document.body.scrollTop)/max:0;
+    prog.style.width=(p*100).toFixed(2)+'%';
+    top.classList.toggle('show', (h.scrollTop||document.body.scrollTop)>420);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  onScroll();
+  top.onclick=function(){ window.scrollTo({top:0,behavior:'smooth'}) };
+
+  /* ---------- 4. 导航 scrollspy ---------- */
+  var navs=$$('.nav a');
+  var secs=navs.map(function(a){ return document.querySelector(a.getAttribute('href')) });
+  var cur=-1;
+  function spy(){
+    var off=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--spy'))||150;
+    var y=window.scrollY+off, idx=0;
+    secs.forEach(function(sec,i){ if(sec && sec.offsetTop<=y) idx=i; });
+    if(idx!==cur){ cur=idx;
+      navs.forEach(function(a,i){ a.classList.toggle('on', i===idx) });
+    }
+  }
+  window.addEventListener('scroll',spy,{passive:true});
+  window.addEventListener('scroll',layout,{passive:true});
+  spy();
+
+  /* ---------- 5. 暗色模式 ---------- */
+  var tt=$('#tt');
+  function setTheme(t){
+    document.documentElement.setAttribute('data-theme',t);
+    tt.textContent = t==='dark'?'☀️':'🌙';
+    try{ localStorage.setItem('cnc-theme',t) }catch(e){}
+  }
+  var saved=null; try{ saved=localStorage.getItem('cnc-theme') }catch(e){}
+  if(!saved){ saved = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'; }
+  setTheme(saved);
+  tt.onclick=function(){
+    setTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');
+  };
+
+  /* ---------- 6. 锚点跳转补偿 ---------- */
+  navs.forEach(function(a){
+    a.addEventListener('click',function(e){
+      var t=document.querySelector(a.getAttribute('href'));
+      if(t){ e.preventDefault();
+        var nh=navEl?navEl.getBoundingClientRect().height:50;
+        var y=t.getBoundingClientRect().top+window.scrollY-(nh+18);
+        window.scrollTo({top:y,behavior:'smooth'}); }
+    });
+  });
+
+  /* ---------- 7. 表格横向可拖 ---------- */
+  $$('.tbox').forEach(function(box){
+    box.setAttribute('tabindex','0');
+  });
+})();
+</script>
+
+</body>
+</html>
