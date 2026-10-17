@@ -229,81 +229,7 @@ transition:transform .2s;flex:none}
 body.nost .st{display:none}
 body.nost .srcs{display:none}
 
-/* ---------- 暗色模式：逐类精确配色（不用 brightness 粗暴压暗） ---------- */
-[data-theme="dark"]{
-  --ink:#dde5f0; --txt:#bccbdd; --grey:#8497ae;
-  --line:#2a3648; --hair:rgba(255,255,255,.10);
-  --bg:#0e141d; --soft:#161f2b; --soft2:#1d2836;
-  --navy:#16202e; --blue:#4a83c4;
-}
-[data-theme="dark"] body{background:var(--bg);color:var(--ink)}
-[data-theme="dark"] .hero{
-  background:linear-gradient(120deg,#16202e 0%,#1d2f45 60%,#25517d 100%)!important;
-  box-shadow:0 12px 38px rgba(0,0,0,.45)}
-[data-theme="dark"] .hero h1,[data-theme="dark"] .qbox{color:#eaf1fa}
-[data-theme="dark"] .qbox{background:rgba(255,255,255,.07)!important;border-color:rgba(255,255,255,.14)!important}
-[data-theme="dark"] .qbox pre{background:#131c28!important;color:var(--txt);border-color:var(--hair)!important}
-
-[data-theme="dark"] .nav{background:rgba(22,31,43,.94)!important;border-color:var(--line)!important}
-[data-theme="dark"] .nav a{color:var(--txt);border-color:transparent}
-[data-theme="dark"] .nav a:hover{background:var(--soft2);color:#dce8f5}
-[data-theme="dark"] .nav a.on{background:var(--blue);color:#fff;border-color:var(--blue)}
-
-[data-theme="dark"] .mtools{background:rgba(20,28,39,.94)!important;border-color:var(--line)!important}
-[data-theme="dark"] .mtools input,[data-theme="dark"] .mtools button{
-  background:var(--soft)!important;color:var(--txt)!important;border-color:var(--line)!important}
-[data-theme="dark"] .mtools button:hover{background:var(--soft2)!important}
-[data-theme="dark"] .mtools .cnt{background:var(--soft2);color:var(--grey)}
-[data-theme="dark"] .mtools input::placeholder{color:var(--grey)}
-
-[data-theme="dark"] .aiblock{background:#141d29!important;border-color:var(--line)!important;
-  box-shadow:0 1px 3px rgba(0,0,0,.3)}
-[data-theme="dark"] .aiblock:hover{border-color:rgba(74,131,196,.4)!important;box-shadow:0 3px 14px rgba(0,0,0,.35)}
-[data-theme="dark"] .aiblock.open{border-color:rgba(74,131,196,.5)!important;box-shadow:0 6px 22px rgba(0,0,0,.4)}
-[data-theme="dark"] .aiblock>.hd .vv{background:var(--soft2);color:var(--txt)}
-[data-theme="dark"] .aiblock>.hd .sc{background:linear-gradient(135deg,#4a83c4,#6aa3e0);color:#fff}
-[data-theme="dark"] .aiblock .ds2{color:var(--grey)}
-
-[data-theme="dark"] .src{background:#131c27!important;border-color:var(--line)!important}
-[data-theme="dark"] .src h4{color:#cfdcec}
-[data-theme="dark"] .src table{background:#131c27;border-color:var(--line)}
-[data-theme="dark"] .src .who em{color:var(--grey)}
-[data-theme="dark"] .qh{background:var(--soft)!important;color:#a9c6e6;border-color:var(--line)!important;
-  border-left-color:var(--blue)!important}
-
-[data-theme="dark"] .card{background:#141d29;border-color:var(--line)}
-[data-theme="dark"] .cons{background:#132019!important;border-color:#234034!important}
-[data-theme="dark"] .cons b{color:#7fd4a4}
-[data-theme="dark"] .cons p{color:#a8c6b4}
-[data-theme="dark"] .diff{background:#211c11!important;border-color:#3d3420!important}
-[data-theme="dark"] .diff b{color:#e0b968}
-[data-theme="dark"] .diff ul,[data-theme="dark"] .diff li{color:#c3b48c}
-
-[data-theme="dark"] .tbox{background:#141d29;border-color:var(--line)}
-[data-theme="dark"] .tbox th{background:var(--navy);color:#cfe0f2}
-[data-theme="dark"] .tbox td{color:var(--txt);border-color:var(--line)}
-[data-theme="dark"] .tbox tr:nth-child(even) td{background:rgba(255,255,255,.022)}
-[data-theme="dark"] table.cmp th,[data-theme="dark"] table.mini th{background:var(--navy)!important}
-[data-theme="dark"] table.cmp td,[data-theme="dark"] table.mini td{color:var(--txt);border-color:var(--line)}
-
-[data-theme="dark"] .blk{color:#cfdcec}
-[data-theme="dark"] .sub2{color:#a9c6e6}
-[data-theme="dark"] .srcs,[data-theme="dark"] .srcnote{color:var(--grey)}
-[data-theme="dark"] .foot{color:var(--grey)}
-[data-theme="dark"] .legend span{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.16)}
-[data-theme="dark"] .sec-num{background:var(--blue)}
-[data-theme="dark"] .st{filter:saturate(.82) brightness(.86)}
-[data-theme="dark"] #top,[data-theme="dark"] #tt{background:#1a2432;color:var(--txt);border-color:var(--line)}
-[data-theme="dark"] ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-color:var(--bg)}
-[data-theme="dark"] ::selection{background:rgba(74,131,196,.32)}
-
-/* 主题开关 */
-#tt{position:fixed;right:14px;bottom:68px;z-index:150;width:42px;height:42px;border-radius:50%;
-border:1px solid var(--line);background:#fff;cursor:pointer;font-size:16px;
-box-shadow:0 4px 16px rgba(30,58,95,.18);display:flex;align-items:center;justify-content:center}
-
 @media (max-width:560px){
-  #tt{width:38px;height:38px;bottom:62px;right:10px}
   #top{width:38px;height:38px;right:10px}
   .nav{max-height:none;overflow-x:auto;flex-wrap:nowrap}
   .nav a{flex:0 0 auto}
@@ -311,10 +237,9 @@ box-shadow:0 4px 16px rgba(30,58,95,.18);display:flex;align-items:center;justify
   .mtools .cnt{width:100%;margin-left:0}
 }
 @media print{
-  #prog,#top,#tt,.mtools{display:none}
+  #prog,#top,.mtools{display:none}
   .aiblock:not(.open)>.ai-body{display:block}
 }
-
 
 /* ============================================================
    视觉重构 v3 —— 统一设计 token / 圆角体系 / 层级 / 间距
@@ -459,11 +384,8 @@ table tr:last-child td:last-child{border-bottom-right-radius:var(--r-md)}
 #top{width:44px;height:44px;border-radius:50%;
   background:#fff;border:1px solid var(--hair);box-shadow:var(--sh-3);
   bottom:20px;right:16px;font-size:18px;transition:opacity .25s,transform .25s}
-#tt{width:44px;height:44px;border-radius:50%;
-  background:#fff;border:1px solid var(--hair);box-shadow:var(--sh-3);
-  bottom:72px;right:16px;font-size:17px;transition:transform .2s}
-#top:hover,#tt:hover{transform:translateY(-2px);box-shadow:var(--sh-4)}
-#tt:active{transform:scale(.92)}
+
+#top:hover{transform:translateY(-2px);box-shadow:var(--sh-4)}
 
 /* 滚动条：细一点更高级 */
 ::-webkit-scrollbar{width:9px;height:9px}
@@ -478,7 +400,7 @@ table tr:last-child td:last-child{border-bottom-right-radius:var(--r-md)}
 /* 打印 */
 @media print{
   .aiblock,.tbox,.card,.cons,.diff{box-shadow:none!important}
-  #top,#tt,#prog,.mtools{display:none!important}
+  #top,#prog,.mtools{display:none!important}
 }
 
 </style>
@@ -512,7 +434,6 @@ table tr:last-child td:last-child{border-bottom-right-radius:var(--r-md)}
     <span><i class="i-stp5"></i>Step 5</span>
   </div>
 </div>
-
 
 <nav class="nav">
   <a href="#s1">① 融合大文（带来源）</a>
@@ -2810,7 +2731,6 @@ table tr:last-child td:last-child{border-bottom-right-radius:var(--r-md)}
 </div>
 <div id="prog"></div>
 <button id="top" title="回到顶部">↑</button>
-<button id="tt" title="切换深色 / 浅色">🌙</button>
 <script>
 (function(){
   var $=function(s){return document.querySelector(s)};
@@ -2959,21 +2879,7 @@ table tr:last-child td:last-child{border-bottom-right-radius:var(--r-md)}
   window.addEventListener('scroll',layout,{passive:true});
   spy();
 
-  /* ---------- 5. 暗色模式 ---------- */
-  var tt=$('#tt');
-  function setTheme(t){
-    document.documentElement.setAttribute('data-theme',t);
-    tt.textContent = t==='dark'?'☀️':'🌙';
-    try{ localStorage.setItem('cnc-theme',t) }catch(e){}
-  }
-  var saved=null; try{ saved=localStorage.getItem('cnc-theme') }catch(e){}
-  if(!saved){ saved = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'; }
-  setTheme(saved);
-  tt.onclick=function(){
-    setTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');
-  };
-
-  /* ---------- 6. 锚点跳转补偿 ---------- */
+  /* ---------- 5. 锚点跳转补偿 ---------- */
   navs.forEach(function(a){
     a.addEventListener('click',function(e){
       var t=document.querySelector(a.getAttribute('href'));
@@ -2984,7 +2890,7 @@ table tr:last-child td:last-child{border-bottom-right-radius:var(--r-md)}
     });
   });
 
-  /* ---------- 7. 表格横向可拖 ---------- */
+  /* ---------- 6. 表格横向可拖 ---------- */
   $$('.tbox').forEach(function(box){
     box.setAttribute('tabindex','0');
   });
